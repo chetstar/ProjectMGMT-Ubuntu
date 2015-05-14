@@ -1,6 +1,6 @@
 from app import app,models, db
 # from forms import goal_form, strategy_form, project_form, task_form,DeleteRow_form,ldapA,LoginForm, Request, Which,Staff
-from forms import LoginForm, Request, Which,Staff,ldapA
+from forms import LoginForm, RequestData, Which,Staff,ldapA
 import datetime
 from sqlalchemy.orm.attributes import get_history
 from werkzeug import secure_filename
@@ -67,6 +67,10 @@ def user_loader(user_id):
     g.user=current_user
     return models.User.query.get(user_id)
 
+@app.route("/main")
+def main():
+    return render_template("index.html")
+
 
 
 @app.route("/logout")
@@ -119,7 +123,7 @@ def myrequest():
 @login_required
 def view_request(id):
     request_to_edit=models.Request.query.filter_by(id=int(id)).first() 
-    form=Request(obj=request_to_edit)
+    form=RequestData(obj=request_to_edit)
     # form.populate_obj(request_to_edit)
     # import pdb;pdb.set_trace()
     if request.method == 'POST':
@@ -139,7 +143,7 @@ def view_request(id):
 @login_required
 def edit_request(id):
     request_to_edit=models.Request.query.filter_by(id=int(id)).first() 
-    form=Request(obj=request_to_edit)
+    form=RequestData(obj=request_to_edit)
     # form.populate_obj(request_to_edit)
     # import pdb;pdb.set_trace()
     if request.method == 'POST':
@@ -166,7 +170,7 @@ def followup():
 @app.route("/requestform/<WHICH>",methods=["GET","POST"])
 @login_required
 def requestform(WHICH):
-    form = Request()
+    form = RequestData()
     # import pdb;pdb.set_trace()
     if form.validate_on_submit():
       print 'submit'

@@ -16,7 +16,7 @@ class LoginForm(Form):
     submit=SubmitField('Submit')
 
 # [validators.Required(),validators.Length(min=2, max=50)]
-class Request(Form):
+class RequestData(Form):
     # test= QuerySelectField(query_factory=Requests.with_entities(Requests.id)) 
     jobTitle= TextField('This will be the name we use to communicate about the request.',validators=[validators.Required(),validators.Length(min=2, max=50)])#,
     emanio = BooleanField('Yes, I have looked at Context.', default=False)
