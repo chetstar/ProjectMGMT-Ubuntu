@@ -293,9 +293,8 @@ def navstart():
 
 
 @app.route('/', methods=['GET', 'POST'])
-@app.route('/index', methods=['GET', 'POST'])
 def index():
-    return redirect('http://hpmxl2221nxk:8080/')
+    return redirect('http://hpmxl2221nxk:5000/')
 #     pform=project_form()
 #     tform=task_form()
 #     sform=strategy_form()
@@ -319,7 +318,7 @@ def index():
 
 @app.route('/start', methods=['GET','POST'])
 def start():
-    return redirect('http://hpmxl2221nxk:8080/start')
+    return redirect('http://hpmxl2221nxk:5000/start')
 
 # @app.route('/ProjectTree/<name>', methods=['GET','POST'])
 # def project_outline(name):
