@@ -59,28 +59,28 @@ class Staff(Form):
     status= SelectField(u'What Hour?',coerce=int, choices=[(8,'8 am'), (9, '9 am'), (10, '10 am'),
         (11, '11 am'), (12, 'Noon'), (13, '1 pm'), (14, '2 pm'), (15, '3 pm'), (16, '4 pm'), (17, '5 pm')])
     RejkeyQuestions= RadioField('', choices=[('MHS','MHS'),('SUD','SUD Services')],coerce=unicode)
-    Rejproblem= 
-    RejspecialFacts= 
-    RejrequestDate= 
-    RejrequestedBy= 
-    Rejdeadlinedate= 
-    Rejpriority=  
-    RejdeliveryFormat=
-    Rejtimeframe= 
-    RejtimeBreakdown=
-    RejspecialPop=  
-    Rejagency=  
-    Rejru =  
-    RejtypeOfService=  
-    RejjobTitle=  
-    RejlongDescription= 
-    RejspecialInstructions=
-    Rejaudience= 
-    RejcolumnsRequired=  
-    Rejdeadlinetime = 
-    RejdeadlineWhy =  
-    Rejtimeframestart = 
-    Rejtimeframeend=  
+    # Rejproblem= 
+    # RejspecialFacts= 
+    # RejrequestDate= 
+    # RejrequestedBy= 
+    # Rejdeadlinedate= 
+    # Rejpriority=  
+    # RejdeliveryFormat=
+    # Rejtimeframe= 
+    # RejtimeBreakdown=
+    # RejspecialPop=  
+    # Rejagency=  
+    # Rejru =  
+    # RejtypeOfService=  
+    # RejjobTitle=  
+    # RejlongDescription= 
+    # RejspecialInstructions=
+    # Rejaudience= 
+    # RejcolumnsRequired=  
+    # Rejdeadlinetime = 
+    # RejdeadlineWhy =  
+    # Rejtimeframestart = 
+    # Rejtimeframeend=  
     submit=SubmitField('Submit')
 
 

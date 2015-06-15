@@ -50,7 +50,7 @@ Bootstrap(app)
 from app import views, models
 admin = Admin(app)
 
-# admin.add_view(ModelView(models.Projects, db.session))
+admin.add_view(ModelView(models.User, db.session))
 # admin.add_view(ModelView(models.Goals, db.session))
 # admin.add_view(ModelView(models.Strategies, db.session))
 # admin.add_view(ModelView(models.Tasks, db.session))
