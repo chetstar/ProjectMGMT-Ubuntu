@@ -3,6 +3,8 @@ from wtforms import validators
 from wtforms import widgets
 from wtforms import TextField, BooleanField, SubmitField, DateField,TextAreaField,SelectMultipleField,IntegerField,PasswordField,StringField,DateTimeField,FormField,RadioField,SelectField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
+import datetime
+from wtforms.fields.html5 import DateField
 
 class Which(Form):
     formtype = RadioField('how ready are you', choices=[('Long','<h3>Standard data request form (Designed to guide you through your request)</h3><br>'),
@@ -51,36 +53,58 @@ class Staff(Form):
     assinged= TextField('Staff Assigned?') 
     completeDate= DateTimeField( 'Date Completed',  format='%c')
     reviewed= TextField('Reviewed by?') 
-    Response= TextAreaField('')
+    Response=  TextAreaField('Explantion')
     ourdeadline= DateField( '',  format='%m/%d/%Y',)
-    supervisor= SelectField(u'What Hour?',coerce=int, choices=[(8,'8 am'), (9, '9 am'), (10, '10 am'),
-        (11, '11 am'), (12, 'Noon'), (13, '1 pm'), (14, '2 pm'), (15, '3 pm'), (16, '4 pm'), (17, '5 pm')])
+    supervisor= SelectField(u'Send email to sup?',coerce=int, choices=[(1,'email'), (0, 'do not email')])
     cc_sup=RadioField('Is this MHS or SUD Services related?', choices=[('MHS','MHS'),('SUD','SUD Services')],coerce=unicode)
-    status= SelectField(u'What Hour?',coerce=int, choices=[(8,'8 am'), (9, '9 am'), (10, '10 am'),
-        (11, '11 am'), (12, 'Noon'), (13, '1 pm'), (14, '2 pm'), (15, '3 pm'), (16, '4 pm'), (17, '5 pm')])
+    status= SelectField(u'Status?',coerce=int, choices=[(0,'Lower Priority Request'), (1, 'Incomplete Request'), (2, 'Pending review'),
+        (3, 'Assigned'), (4, 'Complete'), (5, 'Rejected')])
     RejkeyQuestions= RadioField('', choices=[('MHS','MHS'),('SUD','SUD Services')],coerce=unicode)
-    # Rejproblem= 
-    # RejspecialFacts= 
-    # RejrequestDate= 
-    # RejrequestedBy= 
-    # Rejdeadlinedate= 
-    # Rejpriority=  
-    # RejdeliveryFormat=
-    # Rejtimeframe= 
-    # RejtimeBreakdown=
-    # RejspecialPop=  
-    # Rejagency=  
-    # Rejru =  
-    # RejtypeOfService=  
-    # RejjobTitle=  
-    # RejlongDescription= 
-    # RejspecialInstructions=
-    # Rejaudience= 
-    # RejcolumnsRequired=  
-    # Rejdeadlinetime = 
-    # RejdeadlineWhy =  
-    # Rejtimeframestart = 
-    # Rejtimeframeend=  
+    Rejproblem= TextAreaField('Explantion')
+    RejspecialFacts=  TextAreaField('Explantion')
+    RejrequestDate=  TextAreaField('Explantion')
+    RejrequestedBy=  TextAreaField('Explantion')
+    Rejdeadlinedate=  TextAreaField('Explantion')
+    Rejpriority=   TextAreaField('Explantion')
+    RejdeliveryFormat= TextAreaField('Explantion')
+    Rejtimeframe=  TextAreaField('Explantion')
+    RejtimeBreakdown= TextAreaField('Explantion')
+    RejspecialPop=   TextAreaField('Explantion')
+    Rejagency=   TextAreaField('Explantion')
+    Rejru =   TextAreaField('Explantion')
+    RejtypeOfService=   TextAreaField('Explantion')
+    RejjobTitle=   TextAreaField('Explantion')
+    RejlongDescription=  TextAreaField('Explantion')
+    RejspecialInstructions= TextAreaField('Explantion')
+    Rejaudience=  TextAreaField('Explantion')
+    RejcolumnsRequired=   TextAreaField('Explantion')
+    Rejdeadlinetime =  TextAreaField('Explantion')
+    RejdeadlineWhy =   TextAreaField('Explantion')
+    Rejtimeframestart =  TextAreaField('Explantion')
+    Rejtimeframeend=   TextAreaField('Explantion')
+    RejBoolkeyQuestions= BooleanField('Incomplete.', default=False)
+    RejBoolproblem= BooleanField('Incomplete.', default=False)
+    RejBoolspecialFacts= BooleanField('Incomplete.', default=False)
+    RejBoolrequestDate= BooleanField('Incomplete.', default=False)
+    RejBoolrequestedBy= BooleanField('Incomplete.', default=False)
+    RejBooldeadlinedate= BooleanField('Incomplete.', default=False)
+    RejBoolpriority=  BooleanField('Incomplete.', default=False)
+    RejBooldeliveryFormat=BooleanField('Incomplete.', default=False)
+    RejBooltimeframe= BooleanField('Incomplete.', default=False)
+    RejBooltimeBreakdown=BooleanField('Incomplete.', default=False)
+    RejBoolspecialPop=  BooleanField('Incomplete.', default=False)
+    RejBoolagency=  BooleanField('Incomplete.', default=False)
+    RejBoolru =  BooleanField('Incomplete.', default=False)
+    RejBooltypeOfService=  BooleanField('Incomplete.', default=False)
+    RejBooljobTitle=  BooleanField('Incomplete.', default=False)
+    RejBoollongDescription= BooleanField('Incomplete.', default=False)
+    RejBoolspecialInstructions=BooleanField('Incomplete.', default=False)
+    RejBoolaudience= BooleanField('Incomplete.', default=False)
+    RejBoolcolumnsRequired=  BooleanField('Incomplete.', default=False)
+    RejBooldeadlinetime = BooleanField('Incomplete.', default=False)
+    RejBooldeadlineWhy =  BooleanField('Incomplete.', default=False)
+    RejBooltimeframestart = BooleanField('Incomplete.', default=False)
+    RejBooltimeframeend=  BooleanField('Incomplete.', default=False)
     submit=SubmitField('Submit')
 
 
