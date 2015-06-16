@@ -204,3 +204,9 @@ class Request(db.Model):
 
     def __repr__(self):
         return '<%r>' % (self.jobTitle)
+
+def getRequestor():
+    u = Request.query
+    return u
+
+

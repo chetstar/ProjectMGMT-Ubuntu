@@ -5,6 +5,7 @@ from wtforms import TextField, BooleanField, SubmitField, DateField,TextAreaFiel
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 import datetime
 from wtforms.fields.html5 import DateField
+from app.models import getRequestor
 
 class Which(Form):
     formtype = RadioField('how ready are you', choices=[('Long','<h3>Standard data request form (Designed to guide you through your request)</h3><br>'),
@@ -107,7 +108,11 @@ class Staff(Form):
     RejBooltimeframeend=  BooleanField('Incomplete.', default=False)
     submit=SubmitField('Submit')
 
-
+class filterRequests(Form):
+    status= SelectField(u'Status?',coerce=int, choices=[(0,'Lower Priority Request'), (1, 'Incomplete Request'), (2, 'Pending review'),
+        (3, 'Assigned'), (4, 'Complete'), (5, 'Rejected')])
+    requestor = QuerySelectField(u'requestor', query_factory=getRequestor, get_label='requestedBy')
+    submitFilter=SubmitField('Filter')
 # class project_form(Form):
 #     project = TextField('Project *', [validators.Required(),validators.Length(min=2, max=50)] ) 
 #     projectleader = TextField('Project Leader *(required)', [validators.Required(),validators.Length(min=4, max=35,message='not the right length')] ) 

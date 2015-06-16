@@ -1,6 +1,6 @@
 from app import app,models, db
 # from forms import goal_form, strategy_form, project_form, task_form,DeleteRow_form,ldapA,LoginForm, Request, Which,Staff
-from forms import LoginForm, RequestData, Which,Staff,ldapA
+from forms import LoginForm, RequestData, Which,Staff,ldapA, filterRequests
 import datetime
 from sqlalchemy.orm.attributes import get_history
 from werkzeug import secure_filename
@@ -165,6 +165,16 @@ def followup():
     # import pdb;pdb.set_trace()
     requestlist= models.Request.query.filter_by(email=g.user.email).all() 
     return render_template("followup.html",email=g.user.email,name=g.user.name,requestlist=requestlist)
+
+
+@app.route("/request_management",methods=["GET","POST"])
+@login_required
+def Request_management():
+    # import pdb;pdb.set_trace()
+    form=filterRequests()
+    requestlist= models.Request.query.all() 
+    return render_template("request_management.html",email=g.user.email,name=g.user.name,requestlist=requestlist,form=form)
+    
 
     
 @app.route("/requestform/<WHICH>",methods=["GET","POST"])
