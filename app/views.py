@@ -172,6 +172,12 @@ def followup():
 def Request_management():
     # import pdb;pdb.set_trace()
     form=filterRequests()
+    RB= list(set([h.requestedBy for h in models.Request.query.all()]))
+    RB.append('chet')
+    form.requestor.choices=zip(RB,RB)
+    AT= list(set([h.assigned for h in models.Request.query.all()]))
+    AT.append('chet')
+    form.assigned.choices=zip(RB,RB)
     requestlist= models.Request.query.all() 
     return render_template("request_management.html",email=g.user.email,name=g.user.name,requestlist=requestlist,form=form)
     
@@ -189,7 +195,7 @@ def requestform(WHICH):
         keyQuestions=form.keyQuestions.data, problem=form.problem.data,specialFacts=form.specialFacts.data,requestedBy=form.requestedBy.data, priority=form.priority.data,
         timeframe=form.timeframe.data,timeBreakdown=form.timeBreakdown.data,specialPop=form.specialPop.data,agency=form.agency.data,ru=form.ru.data,
          specialInstructions=form.specialInstructions.data, typeOfService=form.typeOfService.data, timeframestart=form.timeframestart.data, timeframeend=form.timeframeend.data, 
-         longDescription=form.longDescription.data, requestDate=datetime.datetime.utcnow(),
+         longDescription=form.longDescription.data, requestDate=datetime.datetime.utcnow(),assigned="Unassigned",
          audience=form.audience.data,  columnsRequired=form.columnsRequired.data, deadlinetime=form.deadlinetime.data, deadlineWhy=form.deadlineWhy.data)
       db.session.add(p)
       db.session.commit()

@@ -36,7 +36,7 @@ class RequestData(Form):
     deadlinedate= DateField( '',  format='%m/%d/%Y',)
     deadlineWhy = TextField('Why?')
     priority= RadioField('Priority', choices=[('1','1. Just Curious'),('2','2. Low Priority'),('3','3. Medium'),('4','4. Top Priority'),('5','5. Extremely Urgent')],coerce=unicode,validators=[validators.Required()])
-    requestedBy= TextField("If this isn't your request, who is it for?") 
+    requestedBy= SelectField(u"If this isn't your request, who is it for?",coerce=unicode, choices=[("test1",'test1'), ('2', 'test2')]) 
     # deliveryFormat= TextField('Format for Delivery', [validators.Required(),validators.Length(min=2, max=50)] ) 
     # start and end?
     timeframe= TextField('From what time frame do you want data? E.g., Most recent fiscal year? Most recent calendar year? Some other period?',  ) 
@@ -51,12 +51,11 @@ class RequestData(Form):
     submit=SubmitField('Submit')
 
 class Staff(Form):
-    assinged= TextField('Staff Assigned?') 
+    assigned= TextField('Staff Assigned?') 
     completeDate= DateTimeField( 'Date Completed',  format='%c')
     reviewed= TextField('Reviewed by?') 
     Response=  TextAreaField('Explantion')
     ourdeadline= DateField( '',  format='%m/%d/%Y',)
-    supervisor= SelectField(u'Send email to sup?',coerce=int, choices=[(1,'email'), (0, 'do not email')])
     cc_sup=RadioField('Is this MHS or SUD Services related?', choices=[('MHS','MHS'),('SUD','SUD Services')],coerce=unicode)
     status= SelectField(u'Status?',coerce=int, choices=[(0,'Lower Priority Request'), (1, 'Incomplete Request'), (2, 'Pending review'),
         (3, 'Assigned'), (4, 'Complete'), (5, 'Rejected')])
@@ -108,10 +107,16 @@ class Staff(Form):
     RejBooltimeframeend=  BooleanField('Incomplete.', default=False)
     submit=SubmitField('Submit')
 
+# count distinct "name" values
+# session.query(func.count(distinct(User.name)))
+# http://stackoverflow.com/questions/21579373/sqlalchemy-wtforms-set-default-selected-value-for-queryselectfield
 class filterRequests(Form):
-    status= SelectField(u'Status?',coerce=int, choices=[(0,'Lower Priority Request'), (1, 'Incomplete Request'), (2, 'Pending review'),
-        (3, 'Assigned'), (4, 'Complete'), (5, 'Rejected')])
-    requestor = QuerySelectField(u'requestor', query_factory=getRequestor, get_label='requestedBy')
+    status= SelectField(u'Status?',coerce=int, choices=[(99,'All'),(0,'Lower Priority Request'), (1, 'Incomplete Request'), (2, 'Pending review'),
+        (3, 'Assigned'), (4, 'Complete'), (5, 'Rejected')],default=99)
+    requestor= SelectField(u'request',default='chet')
+    assigned= SelectField(u'assigned',default='chet')
+    # requestor = QuerySelectField(u'Requestor', query_factory=getRequestor, get_label='requestedBy')
+    # assigned = QuerySelectField(u'Assigned', query_factory=getRequestor, get_label='assigned')
     submitFilter=SubmitField('Filter')
 # class project_form(Form):
 #     project = TextField('Project *', [validators.Required(),validators.Length(min=2, max=50)] ) 

@@ -142,6 +142,7 @@ class Request(db.Model):
     audience= db.Column(db.String(64), index=True)
     columnsRequired= db.Column(db.String(64), index=True)
     assinged= db.Column(db.String(64), index=True)
+    assigned= db.Column(db.String(64), index=True)
     completeDate= db.Column(db.Date)
     reviewed= db.Column(db.String(64), index=True)
     userCategory= db.Column(db.String(64), index=True)
@@ -205,8 +206,10 @@ class Request(db.Model):
     def __repr__(self):
         return '<%r>' % (self.jobTitle)
 
+from sqlalchemy import distinct
+
 def getRequestor():
-    u = Request.query
+    u = db.session.query(distinct(Request.requestedBy)).all
     return u
 
 
