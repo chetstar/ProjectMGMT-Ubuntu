@@ -188,6 +188,7 @@ def followup():
 @login_required
 def Request_management():
     form=filterRequests()
+    formRequest = RequestData( )
       # db.session.query(models.Request).filter(models.Request.requestedBy.like('2'))\
       # .filter(models.Request.requestedBy.like('2'))\
       # .filter(models.Request.assigned.like('Unassigned')).all()
@@ -208,7 +209,6 @@ def Request_management():
     form.assigned.choices=zip(AT,AT)
     requestlist= models.Request.query.all() 
     if form.validate_on_submit():
-        # import pdb;pdb.set_trace()
         if form.status.data=='No Filter' and form.assigned.data=='No Filter' and form.requestedBy.data=='No Filter':
                 requestlist= models.Request.query.all() 
         elif form.status.data != 'No Filter' and form.assigned.data=='No Filter' and form.requestedBy.data=='No Filter':
@@ -233,7 +233,7 @@ def Request_management():
                               # requestlist = db.session.query(models.Request).filter(models.Request.status.like(form.status.data))\
       # .filter(models.Request.requestedBy.like('2'))\
       # .filter(models.Request.assigned.like('Unassigned')).all()
-    return render_template("request_management.html",email=g.user.email,name=g.user.name,requestlist=requestlist,form=form)
+    return render_template("request_management.html",email=g.user.email,name=g.user.name,requestlist=requestlist,form=form,formRequest=formRequest)
     
 def flash_errors(form):
     for field, errors in form.errors.items():

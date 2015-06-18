@@ -49,8 +49,6 @@ class RequestData(Form):
     specialFacts= TextAreaField('Are there any facts or circumstances we should know to fulfill this request?') 
     note = TextAreaField('Note',)
     submit=SubmitField('Submit')
-
-class Staff(Form):
     assigned= TextField('Staff Assigned?') 
     completeDate= DateTimeField( 'Date Completed',  format='%c')
     reviewed= TextField('Reviewed by?') 
