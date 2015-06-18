@@ -119,6 +119,13 @@
 <!-- <h3>{{ form.specialFacts.label }}</h3> -->
 <p>{{ wtf.form_field(form.specialFacts) }}</p> 
 
+
+<!-- long form only -->
+
+<h4>What are all the data points you want?</h4>
+<p>{{ wtf.form_field(form.columnsRequired) }}</p> 
+
+
 <p>{{ wtf.form_field(form.submit) }}</p>
 
 

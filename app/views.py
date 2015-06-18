@@ -1,6 +1,6 @@
 from app import app,models, db
 # from forms import goal_form, strategy_form, project_form, task_form,DeleteRow_form,ldapA,LoginForm, Request, Which,Staff
-from forms import LoginForm, RequestData, Which,Staff,ldapA, filterRequests
+from forms import LoginForm, RequestData, Which,ldapA, filterRequests
 import datetime
 from sqlalchemy.orm.attributes import get_history
 from werkzeug import secure_filename
@@ -138,6 +138,23 @@ def view_request(id):
     return render_template('view_request.html',request_to_edit=request_to_edit ,name=g.user.name,form=form)
 
 
+@app.route('/adminedit/<id>/', methods=['GET', 'POST'])
+@login_required
+def admin_edit(id):
+    request_to_edit=models.Request.query.filter_by(id=int(id)).first() 
+    form=RequestData(obj=request_to_edit)
+    # form.populate_obj(request_to_edit)
+    # import pdb;pdb.set_trace()
+    if request.method == 'POST':
+        # import pdb;pdb.set_trace()
+        request_to_edit.note=form.note.data
+        db.session.commit()
+        return redirect(url_for('allrequest'))
+    # if delete_form.validate_on_submit():
+    #     db.session.delete(ptask)
+    #     db.session.commit()
+    #     return redirect(url_for('task_outline',name=name,goal=goal,strategy=strategy))
+    return render_template('admin_edit.html',request_to_edit=request_to_edit ,name=g.user.name,form=form)
 
 @app.route('/edit_request/<id>/', methods=['GET', 'POST'])
 @login_required
@@ -170,18 +187,61 @@ def followup():
 @app.route("/request_management",methods=["GET","POST"])
 @login_required
 def Request_management():
-    # import pdb;pdb.set_trace()
     form=filterRequests()
+      # db.session.query(models.Request).filter(models.Request.requestedBy.like('2'))\
+      # .filter(models.Request.requestedBy.like('2'))\
+      # .filter(models.Request.assigned.like('Unassigned')).all()
+      # import pdb;pdb.set_trace()
+      # p=models.Request(email=g.user.email,username=g.user.name,jobTitle=form.jobTitle.data,deadlinedate=form.deadlinedate.data,emanio=form.emanio.data,MHorSUD=form.MHorSUD.data,
+      #   keyQuestions=form.keyQuestions.data, problem=form.problem.data,specialFacts=form.specialFacts.data,requestedBy=form.requestedBy.data, priority=form.priority.data,
+      #   timeframe=form.timeframe.data,timeBreakdown=form.timeBreakdown.data,specialPop=form.specialPop.data,agency=form.agency.data,ru=form.ru.data,
+      #    specialInstructions=form.specialInstructions.data, typeOfService=form.typeOfService.data, timeframestart=form.timeframestart.data, timeframeend=form.timeframeend.data, 
+      #    longDescription=form.longDescription.data, requestDate=datetime.datetime.utcnow(),assigned="Unassigned",
+      #    audience=form.audience.data,  columnsRequired=form.columnsRequired.data, deadlinetime=form.deadlinetime.data, deadlineWhy=form.deadlineWhy.data)
+      # db.session.add(p)
+      # db.session.commit() 
     RB= list(set([h.requestedBy for h in models.Request.query.all()]))
-    RB.append('chet')
-    form.requestor.choices=zip(RB,RB)
+    RB.append('No Filter')
+    form.requestedBy.choices=zip(RB,RB)
     AT= list(set([h.assigned for h in models.Request.query.all()]))
-    AT.append('chet')
-    form.assigned.choices=zip(RB,RB)
+    AT.append('No Filter')
+    form.assigned.choices=zip(AT,AT)
     requestlist= models.Request.query.all() 
+    if form.validate_on_submit():
+        # import pdb;pdb.set_trace()
+        if form.status.data=='No Filter' and form.assigned.data=='No Filter' and form.requestedBy.data=='No Filter':
+                requestlist= models.Request.query.all() 
+        elif form.status.data != 'No Filter' and form.assigned.data=='No Filter' and form.requestedBy.data=='No Filter':
+            requestlist = db.session.query(models.Request).filter(models.Request.status.like(form.status.data)).all()
+        elif form.status.data == 'No Filter' and form.assigned.data!='No Filter' and form.requestedBy.data=='No Filter':
+            requestlist = db.session.query(models.Request).filter(models.Request.assigned.like(form.assigned.data)).all()
+        elif form.status.data == 'No Filter' and form.assigned.data=='No Filter' and form.requestedBy.data!='No Filter':
+            requestlist = db.session.query(models.Request).filter(models.Request.requestedBy.like(form.requestedBy.data)).all()
+        elif form.status.data != 'No Filter' and form.assigned.data=='No Filter' and form.requestedBy.data!='No Filter':
+            requestlist = db.session.query(models.Request).filter(models.Request.requestedBy.like(form.requestedBy.data))\
+            .filter(models.Request.status.like(form.status.data)).all()
+        elif form.status.data == 'No Filter' and form.assigned.data !='No Filter' and form.requestedBy.data!='No Filter':
+            requestlist = db.session.query(models.Request).filter(models.Request.requestedBy.like(form.requestedBy.data))\
+            .filter(models.Request.assigned.like(form.assigned.data)).all()
+        elif form.status.data != 'No Filter' and form.assigned.data !='No Filter' and form.requestedBy.data =='No Filter':
+            requestlist = db.session.query(models.Request).filter(models.Request.status.like(form.status.data))\
+            .filter(models.Request.assigned.like(form.assigned.data)).all()
+        elif form.status.data != 'No Filter' and form.assigned.data !='No Filter' and form.requestedBy.data !='No Filter':
+            requestlist = db.session.query(models.Request).filter(models.Request.status.like(form.status.data))\
+            .filter(models.Request.requestedBy.like(form.requestedBy.data))\
+            .filter(models.Request.assigned.like(form.assigned.data)).all()
+                              # requestlist = db.session.query(models.Request).filter(models.Request.status.like(form.status.data))\
+      # .filter(models.Request.requestedBy.like('2'))\
+      # .filter(models.Request.assigned.like('Unassigned')).all()
     return render_template("request_management.html",email=g.user.email,name=g.user.name,requestlist=requestlist,form=form)
     
-
+def flash_errors(form):
+    for field, errors in form.errors.items():
+        for error in errors:
+            flash(u"Error in the %s field - %s" % (
+                getattr(form, field).label.text,
+                error
+            ))
     
 @app.route("/requestform/<WHICH>",methods=["GET","POST"])
 @login_required
@@ -195,13 +255,13 @@ def requestform(WHICH):
         keyQuestions=form.keyQuestions.data, problem=form.problem.data,specialFacts=form.specialFacts.data,requestedBy=form.requestedBy.data, priority=form.priority.data,
         timeframe=form.timeframe.data,timeBreakdown=form.timeBreakdown.data,specialPop=form.specialPop.data,agency=form.agency.data,ru=form.ru.data,
          specialInstructions=form.specialInstructions.data, typeOfService=form.typeOfService.data, timeframestart=form.timeframestart.data, timeframeend=form.timeframeend.data, 
-         longDescription=form.longDescription.data, requestDate=datetime.datetime.utcnow(),assigned="Unassigned",
+         longDescription=form.longDescription.data, requestDate=datetime.datetime.utcnow(),assigned="Unassigned",status='Pending Review',
          audience=form.audience.data,  columnsRequired=form.columnsRequired.data, deadlinetime=form.deadlinetime.data, deadlineWhy=form.deadlineWhy.data)
       db.session.add(p)
       db.session.commit()
       return redirect(url_for('followup'))
     else:
-        flash('validation fail')
+        flash_errors(form)
     if WHICH=='1':
         print 'short!!'
         return render_template("short.html",email=g.user.email,name=g.user.name,form=form)

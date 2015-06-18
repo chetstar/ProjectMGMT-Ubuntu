@@ -111,10 +111,11 @@ class Staff(Form):
 # session.query(func.count(distinct(User.name)))
 # http://stackoverflow.com/questions/21579373/sqlalchemy-wtforms-set-default-selected-value-for-queryselectfield
 class filterRequests(Form):
-    status= SelectField(u'Status?',coerce=int, choices=[(99,'All'),(0,'Lower Priority Request'), (1, 'Incomplete Request'), (2, 'Pending review'),
-        (3, 'Assigned'), (4, 'Complete'), (5, 'Rejected')],default=99)
-    requestor= SelectField(u'request',default='chet')
-    assigned= SelectField(u'assigned',default='chet')
+    status= SelectField(u'Status?',coerce=unicode, choices=[('No Filter','No Filter'),('Lower Priority Request','Lower Priority Request'),\
+     ('Incomplete Request','Incomplete Request'), ('Pending Review', 'Pending Review'),
+        ('Assigned', 'Assigned'), ('Complete', 'Complete'), ('Rejected', 'Rejected')],default='No Filter')
+    requestedBy= SelectField(u'Requestor',default='No Filter')
+    assigned= SelectField(u'Assigned',default='No Filter')
     # requestor = QuerySelectField(u'Requestor', query_factory=getRequestor, get_label='requestedBy')
     # assigned = QuerySelectField(u'Assigned', query_factory=getRequestor, get_label='assigned')
     submitFilter=SubmitField('Filter')

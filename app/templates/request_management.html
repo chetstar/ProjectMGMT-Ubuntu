@@ -54,7 +54,7 @@
         <div class="container-fluid">
             </div>
         </div>
-    </header>}}
+    </header>
 <br>
 <br>
 <br>
@@ -68,18 +68,8 @@
          {{ wtf.quick_form(form) }}
             </div>
         </div>
-    </header>}}
- <div class="container">
-   <div class="jumbotron">
-   <div class="alert alert-warning" role="alert">
-  <h1>Thank you for submitting.</h1>
-  <h2>We will respond to {{email}}</h2><br>
-<br></p>
-</div>
+    </header>
 
- <div class="row">
- <div class="alert alert-info" role="alert">
- <p>  <h4>{{g.user.name}}'s Requests</h4>
         <div class="col-md-1">
         </div><div class="col-md-12">
         {% if requestlist==[] %} No requests {% else %} 
@@ -89,6 +79,9 @@
          <h3><strong><tr><th>Job Title</th>
          <th>Request Date</th>
          <th>Deadline</th>
+         <th>Requestor</th>
+         <th>staff</th>
+                  <th>status</th>
            <th></th>
          
          <th></th></tr></strong></h3>
@@ -100,16 +93,63 @@
            {% if "Chet" in g.user.name %}  <tr><td><li><a href="{{ url_for('view_request', id = field.id) }}" >{{field.jobTitle}} </a>  </td> {% else %} 
             <tr><td><li>{{field.jobTitle}}  </td>{% endif %}
           <td>{{field.requestDate.isoformat().split('T')[0]}} </td>
-          <td>{{field.deadlinedate.isoformat().split('T')[0]}}</td>
-
-       <td><a href="{{ url_for('edit_request', id = field.id) }}" ><span class="glyphicon glyphicon-pencil"></span> Add a note </a> </td>
+          <td>{{field.deadlinedate}}</td>
+          <td>{{field.requestedBy}}</td>
+          <td>{{field.assigned}}</td>
+          <td>{{field.status}}</td>
        </tr>  </li>
           {% endfor %}</ol></tbody> </table> {% endif %}
 </div>
  </div></div></div>
     </div></div>
 </div></div>
+</td></tr></li></td></tr></ol></tbody></table></div></body></div></div>
+<br>
+<div class='row'></div>
 
-
+        <div class="col-md-12">
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+   <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingTwo">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Collapsible Group Item #2
+        </a>
+      </h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+      <div class="panel-body">
+        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+      </div>
+    </div>
+  </div>
+    <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingTwo">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Collapsible Group Item #2
+        </a>
+      </h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+      <div class="panel-body">
+        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+      </div>
+    </div>
+  </div>
+    <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingTwo">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Collapsible Group Item #2
+        </a>
+      </h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+      <div class="panel-body">
+        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+      </div>
+    </div>
+  </div>
 {% endblock %}
 
