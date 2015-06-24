@@ -2,7 +2,19 @@
 <!-- extend base layout -->
 {% extends "index.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
+ {% import "bootstrap/fixes.html" as fixes %}
 
+<html>
+   {% block head %}
+
+  {{super()}}
+  {{fixes.ie8()}}
+
+
+    <!--  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">-->
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/datepicker.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/datepicker3.css') }}">
+{% endblock %}
 {% block navbar %}
 
 
@@ -174,8 +186,12 @@
 <div class="row">
 <div class="alert alert-info" role="alert">
 <p> <h4>{{g.user.name}}'s Requests</h4>
-<div class="col-md-1">
-</div><div class="col-md-12">
+
+</div></p></div></div></div>
+<div class="row">
+
+<div class="col-md-1"></div>
+<div class="col-md-11">
 {% if requestlist==[] %} No requests {% else %}
 <table class="table table-striped" >
 <!-- <table id="myTable" class="tablesorter"> -->
@@ -189,8 +205,7 @@
 <tbody>
 <ol type="1">
 {% for field in requestlist %}
-{% if "Chet" in g.user.name %} <tr><td><li> <a href="{{ url_for('admin_edit', id = field.id,a=a,s=s,r=r)  }}" >{{field.jobTitle}}    </td> {% else %}
-<tr><td><li>{{field.jobTitle}} </td>{% endif %}
+<tr><td><li> <a href="{{ url_for('admin_edit', id = field.id,a=a,s=s,r=r)  }}" >{{field.jobTitle}}    </td> 
 <td>{{field.requestDate.isoformat().split('T')[0]}} </td>
 <td>{{field.deadlinedate.isoformat().split('T')[0]}}</td>
 <td><a href="{{ url_for('edit_request', id = field.id) }}" ><span class="glyphicon glyphicon-pencil"></span> Add a note </a> </td>
@@ -199,137 +214,83 @@
 </div>
 </div></div></div>
 </div></div>
+ <div class="container" color=black>
+      
+        <div class="col-md-1">
+        </div><div class="col-md-12">
 <form method=post >   
- 
-<h3>How do you want to refer to this request?</h3>
-<p>{{ wtf.form_field(form.jobTitle) }}</p>    
-<div class='row '><div class='span4'>{{ wtf.form_field(form.    agency) }}</div><div class='span2'></div> <div class='span1'>{{ wtf.form_field(form.    RejBoolagency) }}</div> <div class='span2.5'>{{ wtf.form_field(form.    Rejxagency      ) }}</div>  </div>
-<div class='row '><div class='span2.5'>{{ wtf.form_field(form.    audience) }}</div>  <div class='span1'>{{ wtf.form_field(form.    RejBoolaudience) }}</div> <div class='span2.5'>{{ wtf.form_field(form.    Rejxaudience    ) }}</div>  </div>
-<div class='row '><div class='span2.5'>{{ wtf.form_field(form.    columnsRequired) }}</div> <div class='span1'>{{ wtf.form_field(form.    RejBoolcolumnsRequired) }}</div>  <div class='span2.5'>{{ wtf.form_field(form.    RejxcolumnsRequired     ) }}</div>  </div>
-<div class='row '><div class='span2.5'>{{ wtf.form_field(form.    deadlinedate) }}</div>  <div class='span1'>{{ wtf.form_field(form.    RejBooldeadlinedate) }}</div> <div class='span2.5'>{{ wtf.form_field(form.    Rejxdeadlinedate    ) }}</div>  </div>
-<div class='row '><div class='span2.5'>{{ wtf.form_field(form.    deadlinetime ) }}</div> <div class='span1'>{{ wtf.form_field(form.    RejBooldeadlinetime ) }}</div>  <div class='span2.5'>{{ wtf.form_field(form.    Rejxdeadlinetime      ) }}</div>  </div>
-<div class='row '><div class='span2.5'>{{ wtf.form_field(form.    deadlineWhy ) }}</div>  <div class='span1'>{{ wtf.form_field(form.    RejBooldeadlineWhy ) }}</div> <div class='span2.5'>{{ wtf.form_field(form.    RejxdeadlineWhy         ) }}</div>  </div>
-      
-<div class='row '><div class='span2.5'>{{ wtf.form_field(form.    jobTitle) }}</div>  <div class='span1'>{{ wtf.form_field(form.    RejBooljobTitle) }}</div> <div class='span2.5'>{{ wtf.form_field(form.    RejxjobTitle    ) }}</div>  </div>
-<div class='row '><div class='span2.5'>{{ wtf.form_field(form.    keyQuestions) }}</div>  <div class='span1'>{{ wtf.form_field(form.    RejBoolkeyQuestions) }}</div> <div class='span2.5'>{{ wtf.form_field(form.    RejxkeyQuestions   ) }}</div> </div>
-<div class='row '><div class='span2.5'>{{ wtf.form_field(form.    longDescription) }}</div> <div class='span1'>{{ wtf.form_field(form.    RejBoollongDescription) }}</div>  <div class='span2.5'>{{ wtf.form_field(form.    RejxlongDescription     ) }}</div>  </div>
-<div class='row '><div class='span2.5'>{{ wtf.form_field(form.    priority) }}</div>  <div class='span1'>{{ wtf.form_field(form.    RejBoolpriority) }}</div> <div class='span2.5'>{{ wtf.form_field(form.    Rejxpriority    ) }}</div>  </div>
-<div class='row '><div class='span2.5'>{{ wtf.form_field(form.    problem) }}</div> <div class='span1'>{{ wtf.form_field(form.    RejBoolproblem) }}</div>  <div class='span2.5'>{{ wtf.form_field(form.    Rejxproblem       ) }}</div>  </div>
-<div class='row '><div class='span2.5'>{{ wtf.form_field(form.    requestDate) }}</div> <div class='span1'>{{ wtf.form_field(form.    RejBoolrequestDate) }}</div>  <div class='span2.5'>{{ wtf.form_field(form.    RejxrequestDate       ) }}</div>  </div>
-<div class='row '><div class='span2.5'>{{ wtf.form_field(form.    requestedBy) }}</div> <div class='span1'>{{ wtf.form_field(form.    RejBoolrequestedBy) }}</div>  <div class='span2.5'>{{ wtf.form_field(form.    RejxrequestedBy     ) }}</div>  </div>
-<div class='row '><div class='span2.5'>{{ wtf.form_field(form.    ru ) }}</div> <div class='span1'>{{ wtf.form_field(form.    RejBoolru ) }}</div>  <div class='span2.5'>{{ wtf.form_field(form.    Rejxru      ) }}</div>  </div>
-<div class='row '><div class='span2.5'>{{ wtf.form_field(form.    specialFacts) }}</div>  <div class='span1'>{{ wtf.form_field(form.    RejBoolspecialFacts) }}</div> <div class='span2.5'>{{ wtf.form_field(form.    RejxspecialFacts      ) }}</div>  </div>
-<div class='row '><div class='span2.5'>{{ wtf.form_field(form.    specialInstructions) }}</div> <div class='span1'>{{ wtf.form_field(form.    RejBoolspecialInstructions) }}</div>  <div class='span2.5'>{{ wtf.form_field(form.    RejxspecialInstructions     ) }}</div>  </div>
-<div class='row '><div class='span2.5'>{{ wtf.form_field(form.    specialPop) }}</div>  <div class='span1'>{{ wtf.form_field(form.    RejBoolspecialPop) }}</div> <div class='span2.5'>{{ wtf.form_field(form.    RejxspecialPop      ) }}</div>  </div>
-<div class='row '><div class='span2.5'>{{ wtf.form_field(form.    timeBreakdown) }}</div> <div class='span1'>{{ wtf.form_field(form.    RejBooltimeBreakdown) }}</div>  <div class='span2.5'>{{ wtf.form_field(form.    RejxtimeBreakdown       ) }}</div>  </div>
-<div class='row '><div class='span2.5'>{{ wtf.form_field(form.    timeframe) }}</div> <div class='span1'>{{ wtf.form_field(form.    RejBooltimeframe) }}</div>  <div class='span2.5'>{{ wtf.form_field(form.    Rejxtimeframe     ) }}</div>  </div>
-<div class='row '><div class='span2.5'>{{ wtf.form_field(form.    timeframeend) }}</div>  <div class='span1'>{{ wtf.form_field(form.    RejBooltimeframeend) }}</div> <div class='span2.5'>{{ wtf.form_field(form.    Rejxtimeframeend    ) }}</div>  </div>
-<div class='row '><div class='span2.5'>{{ wtf.form_field(form.    timeframestart ) }}</div> <div class='span1'>{{ wtf.form_field(form.    RejBooltimeframestart ) }}</div>  <div class='span2.5'>{{ wtf.form_field(form.    Rejxtimeframestart        ) }}</div>  </div>
-<div class='row '><div class='span2.5'>{{ wtf.form_field(form.    typeOfService) }}</div> <div class='span1'>{{ wtf.form_field(form.    RejBooltypeOfService) }}</div>  <div class='span2.5'>{{ wtf.form_field(form.    RejxtypeOfService       ) }}</div>  </div>
-<div class='row '><div class='span2.5'>{{ wtf.form_field(form.    emanio) }}</div>  <div class='span1'>{{ wtf.form_field(form.RejBoolemanio) }}</div> <div class='span2.5'>{{ wtf.form_field(form.Rejxemanio) }}</div>  </div>
-<div class='row '><div class='span4'>{{ wtf.form_field(form.    assigned) }}</div><div class='span2'></div>     </div>
-      
-<div class='row '><div class='span2.5'>{{ wtf.form_field(form.    cc_sup) }}</div>      </div>
-<div class='row '><div class='span2.5'>{{ wtf.form_field(form.    completeDate) }}</div>      </div>
-      
-      
-<div class='row '><div class='span2.5'>{{ wtf.form_field(form.    MHorSUD) }}</div>     </div>
-<div class='row '><div class='span2.5'>{{ wtf.form_field(form.    note) }}</div>      </div>
-<div class='row '><div class='span2.5'>{{ wtf.form_field(form.    ourdeadline) }}</div>     </div>
-      
-      
-<div class='row '><div class='span2.5'>{{ wtf.form_field(form.    reviewed) }}</div>      </div>
-<div class='row '><div class='span2.5'>{{ wtf.form_field(form.    status) }}</div>      </div>
-<div class='row '><div class='span2.5'>{{ wtf.form_field(form.    supervisor) }}</div>      </div>
+ <table class="table table-striped" >
+<!-- <table id="myTable" class="tablesorter"> -->
+<thead>
+<h3><strong><tr><th>Question</th>
+<th>Inappropes</th>
+<th>why</th></tr></strong></h3>
+</thead>
+<tbody>
+<ol type="1">
 
-    
-     {{ form.hidden_tag() }}
-     <h3>Have you verified your request is not in an existing dashboard?</h3> <h4>If not click <a href="http://covecontext/RunDashboard.i4?dashUUID=2e74cf96-b33b-4a7a-b53f-4310ce259dc6&primaryOrg=1&clientOrg=1">
- here </a> for Context! Table of Contents.</h4> </div>
-<div class='row '><div class='span12'>{{ wtf.form_field(form.agency) }}{{ wtf.form_field(form.RejBoolagency) }}{{ wtf.form_field(form.Rejxagency) }}</div></div> 
- 
-   <div class='row '><div class='span2.5'>{{ wtf.form_field(form.    emanio) }}</div>  <div class='span1'>{{ wtf.form_field(form.RejBoolemanio) }}</div> <div class='span2.5'>{{ wtf.form_field(form.Rejxemanio) }}</div> </div>
-  <div class="row ">
+<tr><td><div class='row '><div class='span4'>{{ wtf.form_field(form.    jobTitle) }}</div><div class='span2'></div></td>  <td><div class='span1'>{{ wtf.form_field(form.    RejBooljobTitle) }}</div></td>  <td><div class='span2.5'>{{ wtf.form_field(form.    RejxjobTitle    ) }}</div></td> </div></tr>
 
- 
+<tr><td><div class='row '><div class='span4'>
+{{''.join(form.agency.data)}}
+  </div>
+</div>
+             
+              </div><div class='span2'></div></td>  <td><div class='span1'>{{ wtf.form_field(form.    RejBoolagency) }}</div></td>  <td><div class='span2.5'>{{ wtf.form_field(form.    Rejxagency      ) }}</div></td> </div></tr>
+<tr><td><div class='row '><div class='span4'>{{ wtf.form_field(form.    audience) }}</div><div class='span2'></div></td>  <td><div class='span1'>{{ wtf.form_field(form.    RejBoolaudience) }}</div></td>  <td><div class='span2.5'>{{ wtf.form_field(form.    Rejxaudience    ) }}</div></td> </div></tr>
+<tr><td><div class='row '><div class='span4'><h4>What are all the data points you want?</h4>{{ wtf.form_field(form.    columnsRequired) }}</div><div class='span2'></div></td> <td><div class='span1'>{{ wtf.form_field(form.    RejBoolcolumnsRequired) }}</div></td> <td><div class='span2.5'>{{ wtf.form_field(form.    RejxcolumnsRequired     ) }}</div></td> </div></tr>
+<tr><td><div class='row '><div class='span4'> <label>           When would you like to recieve this by?
 
+                        </label><input data-provide="datepicker" data-date-format="mm/dd/yyyy" id="deadlinedate"  type="text" value="{{ form.deadlinedate.data.strftime('%m/%d/%Y') }}" name="deadlinedate" ></input> </div><div class='span2'></div></td>  <td><div class='span1'>{{ wtf.form_field(form.    RejBooldeadlinedate) }}</div></td>  <td><div class='span2.5'>{{ wtf.form_field(form.    Rejxdeadlinedate    ) }}</div></td> </div></tr>
+<tr><td><div class='row '><div class='span4'>{{ wtf.form_field(form.    deadlinetime ) }}</div><div class='span2'></div></td> <td><div class='span1'>{{ wtf.form_field(form.    RejBooldeadlinetime ) }}</div></td> <td><div class='span2.5'>{{ wtf.form_field(form.    Rejxdeadlinetime      ) }}</div></td> </div></tr>
+<tr><td><div class='row '><div class='span4'>{{ wtf.form_field(form.    deadlineWhy ) }}</div><div class='span2'></div></td>  <td><div class='span1'>{{ wtf.form_field(form.    RejBooldeadlineWhy ) }}</div></td>  <td><div class='span2.5'>{{ wtf.form_field(form.    RejxdeadlineWhy         ) }}</div></td> </div></tr>
+
+<tr><td><div class='row '><div class='span4'>{{ wtf.form_field(form.    keyQuestions) }}</div><div class='span2'></div></td>  <td><div class='span1'>{{ wtf.form_field(form.    RejBoolkeyQuestions) }}</div></td>  <td><div class='span2.5'>{{ wtf.form_field(form.    RejxkeyQuestions   ) }}</div></td>  </div></tr>
+<tr><td><div class='row '><div class='span4'>{{ wtf.form_field(form.    longDescription) }}</div><div class='span2'></div></td> <td><div class='span1'>{{ wtf.form_field(form.    RejBoollongDescription) }}</div></td> <td><div class='span2.5'>{{ wtf.form_field(form.    RejxlongDescription     ) }}</div></td> </div></tr>
+<tr><td><div class='row '><div class='span4'>
 <h4>{{ form.priority.label }}</h4>
-<p>{{ wtf.form_field(form.priority) }}</p> 
-
-<h3>Is this MHS or SUD Services related?</h3>
-<p>{{ wtf.form_field(form.MHorSUD) }}</p> <br>
-
-   <div class="row ">
-    <div class="span3">
-                 <label>           When would you like to recieve this by?
-
-                        </label>
-<input data-provide="datepicker" data-date-format="mm/dd/yyyy" id="deadlinedate"  type="text" value="{{ form.deadlinedate.data }}" name="deadlinedate" ></input>  </div><div class="span1.5">{{ wtf.form_field(form.deadlinetime) }}</div><div class="span4.5">{{ wtf.form_field(form.deadlineWhy) }}</div>
-  <div class="row ">
-    <div class="span8">
-<br>
-<!-- <h3>{{ form.audience.label }}</h3> -->
-<p>{{ wtf.form_field(form.audience) }}</p> 
-
-<!-- <h3>Describe what you want to investigate.</h3> -->
-<p>{{ wtf.form_field(form.longDescription) }}</p> 
-
-<!-- <h3>{{ form.keyQuestions.label }}</h3> -->
-<p>{{ wtf.form_field(form.keyQuestions) }}</p> 
-
-<!-- <h3>{{ form.problem.label }}</h3> -->
-<p>{{ wtf.form_field(form.problem) }}</p> 
-
-
-<!-- long form only -->
-<!-- <h4>What are all the data points you want?</h4>
-<p>{{ wtf.form_field(form.columnsRequired) }}</p> 
- -->
-<!-- <h3>{{ form.agency.label }}</h3> -->
-<p>{{ wtf.form_field(form.agency) }}</p> 
-
-<strong>For what Programs?</strong>
-<p>{{ wtf.form_field(form.ru) }}</p> 
+<p>{{ wtf.form_field(form.priority) }}</p> </div><div class='span2'></div></td>  <td><div class='span1'>{{ wtf.form_field(form.    RejBoolpriority) }}</div></td>  <td><div class='span2.5'>{{ wtf.form_field(form.    Rejxpriority    ) }}</div></td> </div></tr>
+<tr><td><div class='row '><div class='span4'>{{ wtf.form_field(form.    problem) }}</div><div class='span2'></div></td> <td><div class='span1'>{{ wtf.form_field(form.    RejBoolproblem) }}</div></td> <td><div class='span2.5'>{{ wtf.form_field(form.    Rejxproblem       ) }}</div></td> </div></tr>
+<tr><td><div class='row '><div class='span4'>Requested submited {{ form.requestDate.data }} </div><div class='span2'></div></td> <td><div class='span1'>{{ wtf.form_field(form.    RejBoolrequestDate) }}</div></td> <td><div class='span2.5'>{{ wtf.form_field(form.    RejxrequestDate       ) }}</div></td> </div></tr>
+<tr><td><div class='row '><div class='span4'>{{ wtf.form_field(form.    requestedBy) }}</div><div class='span2'></div></td> <td><div class='span1'>{{ wtf.form_field(form.    RejBoolrequestedBy) }}</div></td> <td><div class='span2.5'>{{ wtf.form_field(form.    RejxrequestedBy     ) }}</div></td> </div></tr>
+<tr><td><div class='row '><div class='span4'>{{ wtf.form_field(form.    ru ) }}</div><div class='span2'></div></td> <td><div class='span1'>{{ wtf.form_field(form.    RejBoolru ) }}</div></td> <td><div class='span2.5'>{{ wtf.form_field(form.    Rejxru      ) }}</div></td> </div></tr>
+<tr><td><div class='row '><div class='span4'>{{ wtf.form_field(form.    specialFacts) }}</div><div class='span2'></div></td>  <td><div class='span1'>{{ wtf.form_field(form.    RejBoolspecialFacts) }}</div></td>  <td><div class='span2.5'>{{ wtf.form_field(form.    RejxspecialFacts      ) }}</div></td> </div></tr>
+<tr><td><div class='row '><div class='span4'>{{ wtf.form_field(form.    specialInstructions) }}</div><div class='span2'></div></td> <td><div class='span1'>{{ wtf.form_field(form.    RejBoolspecialInstructions) }}</div></td> <td><div class='span2.5'>{{ wtf.form_field(form.    RejxspecialInstructions     ) }}</div></td> </div></tr>
+<tr><td><div class='row '><div class='span4'>{{ wtf.form_field(form.    specialPop) }}</div><div class='span2'></div></td>  <td><div class='span1'>{{ wtf.form_field(form.    RejBoolspecialPop) }}</div></td>  <td><div class='span2.5'>{{ wtf.form_field(form.    RejxspecialPop      ) }}</div></td> </div></tr>
+<tr><td><div class='row '><div class='span4'><strong>What's the smallest increment of time you want to see the data. E.g., month, quarterly, or annually.</strong>{{ wtf.form_field(form.    timeBreakdown) }}</div><div class='span2'></div></td> <td><div class='span1'>{{ wtf.form_field(form.    RejBooltimeBreakdown) }}</div></td> <td><div class='span2.5'>{{ wtf.form_field(form.    RejxtimeBreakdown       ) }}</div></td> </div></tr>
 
 
 
-<!-- <h3>{{ form.requestedBy.label }}</h3> -->
-<p>{{ wtf.form_field(form.requestedBy) }}</p> 
 
-<!-- <h3>{{ form.timeframe.label }}</h3> -->
-<p>{{ wtf.form_field(form.timeframe) }}</p> 
- <div class="row ">
-    <div class="span4">
-                 <label>           Time frame Start
+<tr><td><div class='row '><div class='span4'>{{ wtf.form_field(form.    timeframe) }}</div><div class='span2'></div></td> <td><div class='span1'>{{ wtf.form_field(form.    RejBooltimeframe) }}</div></td> <td><div class='span2.5'>{{ wtf.form_field(form.    Rejxtimeframe     ) }}</div></td> </div></tr>
+<tr><td><div class='row '><div class='span4'><label>           timeframeend
 
                         </label>
-<input data-provide="datepicker" data-date-format="mm/dd/yyyy" id="timeframestart"  type="text" value="{{ form.timeframestart.data }}" name="timeframestart" ></input>  </div><div class="span2.5"></div>
-                 <label>           Time frame End
+<input data-provide="datepicker" data-date-format="mm/dd/yyyy" id="timeframeend"  type="text" value="{{ form.timeframeend.data.strftime('%m/%d/%Y') }}" name="timeframeend" ></input> </div><div class='span2'></div></td>  <td><div class='span1'>{{ wtf.form_field(form.RejBooltimeframeend) }}</div></td>  <td><div class='span2.5'>{{ wtf.form_field(form.Rejxtimeframeend    ) }}</div></td> </div></tr>
+<tr><td><div class='row '><div class='span4'><label>          timeframestart
 
                         </label>
-<input data-provide="datepicker" data-date-format="mm/dd/yyyy" id="timeframeend"  type="text" value="{{ form.timeframeend.data }}" name="timeframeend" ></input>  </div><div class="span1.5"></div></div></div><br>
-  <div class="row ">
-    <div class="span8">
-<strong>What's the smallest increment of time you want to see the data. E.g., month, quarterly, or annually.</strong>
-<p>{{ wtf.form_field(form.timeBreakdown) }}</p> 
+<input data-provide="datepicker" data-date-format="mm/dd/yyyy" id="timeframestart"  type="text" value="{{ form.timeframestart.data.strftime('%m/%d/%Y') }}" name="timeframestart" ></input> </div><div class='span2'></div></td> <td><div class='span1'>{{ wtf.form_field(form.    RejBooltimeframestart ) }}</div></td> <td><div class='span2.5'>{{ wtf.form_field(form.    Rejxtimeframestart        ) }}</div></td> </div></tr>
+<tr><td><div class='row '><div class='span4'>{{ wtf.form_field(form.    typeOfService) }}</div><div class='span2'></div></td> <td><div class='span1'>{{ wtf.form_field(form.    RejBooltypeOfService) }}</div></td> <td><div class='span2.5'>{{ wtf.form_field(form.    RejxtypeOfService       ) }}</div></td> </div></tr>
+<tr><td><div class='row '><div class='span4'>{{ wtf.form_field(form.    emanio) }}</div><div class='span2'></div></td>  <td><div class='span1'>{{ wtf.form_field(form.RejBoolemanio) }}</div></td>  <td><div class='span2.5'>{{ wtf.form_field(form.Rejxemanio) }}</div></td> </div></tr>
+<tr><td><div class='row '><div class='span4'><h3>Is this MHS or SUD Services related?</h3>{{ wtf.form_field(form.    MHorSUD) }}</div><div class='span2'></div></td> <td><div class='span1'>{{ wtf.form_field(form.    RejBoolMHorSUD) }}</div></td> <td><div class='span2.5'>{{ wtf.form_field(form.    RejxMHorSUD) }}</div></td>  </div>
+<tr><td><div class='row '><div class='span4'>{{ wtf.form_field(form.    assigned) }}</div><div class='span2'></div></td>      </div></tr>
+      
+<tr><td><div class='row '><div class='span4'>cc sup?{{ wtf.form_field(form.cc_sup) }}</div><div class='span2'></div></td>      </div></tr>
+<tr><td><div class='row '><div class='span4'><label>           Complete Date
 
-<!-- <h3>{{ form.specialPop.label }}</h3> -->
-<p>{{ wtf.form_field(form.specialPop) }}</p> 
-
-<!-- <h3>{{ form.typeOfService.label }}</h3> -->
-<p>{{ wtf.form_field(form.typeOfService) }}</p> 
-<!-- <h3>{{ form.specialInstructions.label }}</h3> -->
-<p>{{ wtf.form_field(form.specialInstructions) }}</p> 
-<!-- <h3>{{ form.specialFacts.label }}</h3> -->
-<p>{{ wtf.form_field(form.specialFacts) }}</p> 
+                        </label>
+<input data-provide="datepicker" data-date-format="mm/dd/yyyy" id="completeDate"  type="text" value="{{ form.completeDate.data }}" name="completeDate" ></input> </div><div class='span2'></div></td>      </div></tr>
 
 
-<!-- long form only -->
-
-<h4>What are all the data points you want?</h4>
-<p>{{ wtf.form_field(form.columnsRequired) }}</p> 
+</div><div class='span2'></div></td>
+</tr> </ol></tbody> </table> 
 <div class='row '><div class='span2.5'>{{ wtf.form_field(form.submit) }}</div>
 </div></div></div></div>
+    
+     {{ form.hidden_tag() }}
+
+
 
 
 </form>
@@ -344,3 +305,11 @@
 </div>
 {% endblock %}
 
+ {% block scripts %}
+
+{{ super() }}
+
+           <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-datepicker.js') }}"></script>
+               
+                <script type="text/javascript" src="{{ url_for('static', filename='js/html5shiv.js') }}"></script>
+  {% endblock %}

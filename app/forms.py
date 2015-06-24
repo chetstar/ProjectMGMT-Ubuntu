@@ -7,6 +7,232 @@ import datetime
 from wtforms.fields.html5 import DateField
 from app.models import getRequestor
 
+agenList=[
+('A Better Way','A Better Way'),
+('A COLLABORATIVE EFFORT GROUP','A COLLABORATIVE EFFORT GROUP'),
+('Abode Services','Abode Services'),
+('Achieve','Achieve'),
+('ACMC HIGHLAND HOSPITAL AOD/MH','ACMC HIGHLAND HOSPITAL AOD/MH'),
+('Adode Services','Adode Services'),
+('Afghan Coalition','Afghan Coalition'),
+('Alameda','Alameda'),
+('ALAMEDA COUNTY FOSTER CARE ASO','ALAMEDA COUNTY FOSTER CARE ASO'),
+('Alameda Family Services','Alameda Family Services'),
+('ALLIED PSYCHOLOGICAL SERVICES','ALLIED PSYCHOLOGICAL SERVICES'),
+('ALLIED PSYCHOLOGY GROUP INC','ALLIED PSYCHOLOGY GROUP INC'),
+('Alta Bates','Alta Bates'),
+('Alternative Family Services','Alternative Family Services'),
+('ANKA','ANKA'),
+('Ann Martin','Ann Martin'),
+('Asian Community','Asian Community'),
+('BACS','BACS'),
+('BAY AREA CHILDREN FIRST PRG','BAY AREA CHILDREN FIRST PRG'),
+('BAY AREA CLINIC FOR SELF & REL','BAY AREA CLINIC FOR SELF & REL'),
+('Bay Area Community Resources','Bay Area Community Resources'),
+('Bay Area Youth Center','Bay Area Youth Center'),
+('BAY PSYCHIATRIC ASSOC GRP','BAY PSYCHIATRIC ASSOC GRP'),
+('Bayfront','Bayfront'),
+('Behavioral Health Care','Behavioral Health Care'),
+('BEHAVIORAL HEALTH QUEST GRP','BEHAVIORAL HEALTH QUEST GRP'),
+('BEHAVIORAL PED. OF BAY AREA','BEHAVIORAL PED. OF BAY AREA'),
+('Berkeley','Berkeley'),
+('Berkeley Academy','Berkeley Academy'),
+('Berkeley Place','Berkeley Place'),
+('BERKELEY THERAPY INSTITUTE','BERKELEY THERAPY INSTITUTE'),
+('Bonita','Bonita'),
+('Boss','Boss'),
+('Brighter Beginnings','Brighter Beginnings'),
+('Building Future Calworks','Building Future Calworks'),
+('Burt Center','Burt Center'),
+('BYA','BYA'),
+('CALIFORNIA SCHOOL PROF PSYCHOL','CALIFORNIA SCHOOL PROF PSYCHOL'),
+('California Specialty','California Specialty'),
+('CAPE','CAPE'),
+('CATHOLIC CHARTIES ARCHDCSE SF','CATHOLIC CHARTIES ARCHDCSE SF'),
+('CATHOLIC COUNSELING SERVICE','CATHOLIC COUNSELING SERVICE'),
+('CAUCUS OF SAN LEANDRO','CAUCUS OF SAN LEANDRO'),
+('Center for Discovery','Center for Discovery'),
+('Center for Family Counseling','Center for Family Counseling'),
+('Center for Independent Living','Center for Independent Living'),
+('CERI','CERI'),
+('CHAA','CHAA'),
+('Charis','Charis'),
+('Charter','Charter'),
+('Child and Youth Crisis Team','Child and Youth Crisis Team'),
+('CHILD THERAPY INST OF MARIN','CHILD THERAPY INST OF MARIN'),
+("Children's Learning Center","Children's Learning Center"),
+('Childrens Hospital','Childrens Hospital'),
+('Circle PreSchool','Circle PreSchool'),
+('City of Fremont','City of Fremont'),
+('CJ Mental Health','CJ Mental Health'),
+('COMMUNITY DRUG COUNCIL','COMMUNITY DRUG COUNCIL'),
+('COMPREHENSIVE PSYCHIATRIC SERV','COMPREHENSIVE PSYCHIATRIC SERV'),
+('Con Rep','Con Rep'),
+('Conservatorship','Conservatorship'),
+('County Access Svcs','County Access Svcs'),
+('County MHS','County MHS'),
+('Crestwood','Crestwood'),
+('Crisis Response','Crisis Response'),
+('CSS','CSS'),
+('DAVIS STREET COMMUN CNTR PRG','DAVIS STREET COMMUN CNTR PRG'),
+('Devereaux','Devereaux'),
+('DN Associates','DN Associates'),
+('Early Childhood','Early Childhood'),
+('Earth Circles','Earth Circles'),
+('East Oakland','East Oakland'),
+('EBAC','EBAC'),
+('EBCRP','EBCRP'),
+('Eden','Eden'),
+('Eden Hospital','Eden Hospital'),
+('Edgewood','Edgewood'),
+('EMQ','EMQ'),
+('Esther Clark','Esther Clark'),
+('Families First','Families First'),
+('Family Paths','Family Paths'),
+('Family Service Agency SF','Family Service Agency SF'),
+('Family Service San Leandro','Family Service San Leandro'),
+('Family Services','Family Services'),
+('Family Stress','Family Stress'),
+('Family Support Services','Family Support Services'),
+('FELDMAN JANICE S','FELDMAN JANICE S'),
+('FFS ARROYO COUNSELING SERVICE','FFS ARROYO COUNSELING SERVICE'),
+('FFS BAY AREA PSYCHOTHERAPY SVC','FFS BAY AREA PSYCHOTHERAPY SVC'),
+('FFS BEHAVIORAL PEDIATRICS INC','FFS BEHAVIORAL PEDIATRICS INC'),
+('FFS CALIF MEDICAL FOUNDATION','FFS CALIF MEDICAL FOUNDATION'),
+('FFS CENTER FOR FAMILY COUNSEL','FFS CENTER FOR FAMILY COUNSEL'),
+('FFS CHARIS YOUTH CENTER','FFS CHARIS YOUTH CENTER'),
+('FFS DEL VALLE CLINIC','FFS DEL VALLE CLINIC'),
+('FFS FULL CIRCLE PROGRAMS INC','FFS FULL CIRCLE PROGRAMS INC'),
+('FFS OASIS CENTER INC','FFS OASIS CENTER INC'),
+('FFS SCRIPPS PSYCHOLOGICAL ASSC','FFS SCRIPPS PSYCHOLOGICAL ASSC'),
+('FFS SURVIVORS INTERNATIONAL','FFS SURVIVORS INTERNATIONAL'),
+('FFS THE 14TH ST MEDICAL GROUP','FFS THE 14TH ST MEDICAL GROUP'),
+('Fred Finch','Fred Finch'),
+('FREMONT PSYCHIATRY MED GROUP','FREMONT PSYCHIATRY MED GROUP'),
+('FRUGE PSYCHOLOGICAL ASSOC GRP','FRUGE PSYCHOLOGICAL ASSOC GRP'),
+('GART','GART'),
+('GATEWAY COUNSELING GROUP','GATEWAY COUNSELING GROUP'),
+("Girl's Inc.","Girl's Inc."),
+('Girls Inc','Girls Inc'),
+('Glass','Glass'),
+('Goals for Women','Goals for Women'),
+('Guidance Clinic','Guidance Clinic'),
+('HCSA','HCSA'),
+('HIAWATHA HARRIS INC.','HIAWATHA HARRIS INC.'),
+('Highland','Highland'),
+('HIGHVIEW CONVALESCENT HOSPITAL','HIGHVIEW CONVALESCENT HOSPITAL'),
+('Hold for next provider','Hold for next provider'),
+('Horizon','Horizon'),
+('Hospital','Hospital'),
+('HUMBOLDT COUNTY MNTL HLTH DEPT','HUMBOLDT COUNTY MNTL HLTH DEPT'),
+('Hume Center','Hume Center'),
+('INTEGRATED COUNSEL/CONSULTSRVC','INTEGRATED COUNSEL/CONSULTSRVC'),
+('INTERNATIONAL PSY CONSLTG INST','INTERNATIONAL PSY CONSLTG INST'),
+('JDT Consultants','JDT Consultants'),
+('Jewish Family','Jewish Family'),
+('John George','John George'),
+('KAIR IN-HOME SOCIAL SRVCS GRP','KAIR IN-HOME SOCIAL SRVCS GRP'),
+('KAIROS UNLIMITED','KAIROS UNLIMITED'),
+('KAISER PERMANENTE GRP PRACTICE','KAISER PERMANENTE GRP PRACTICE'),
+('Kidango','Kidango'),
+('La Cheim','La Cheim'),
+('La Clinica','La Clinica'),
+('La Familia','La Familia'),
+('Langley Porter','Langley Porter'),
+('LifeLong','LifeLong'),
+('Lincoln','Lincoln'),
+('MEDICAL HILL BAY AREA NEUROPGM','MEDICAL HILL BAY AREA NEUROPGM'),
+('MEDICAL HILL SNF DAY AUGMENTAT','MEDICAL HILL SNF DAY AUGMENTAT'),
+('Milhous','Milhous'),
+('Mt Diablo','Mt Diablo'),
+('Multilingual Counseling','Multilingual Counseling'),
+('Napa','Napa'),
+('Native American','Native American'),
+('Neuro Psych Alliance GRP','Neuro Psych Alliance GRP'),
+('New Bridge','New Bridge'),
+('NORTH BERKELEY COUNSELING CENT','NORTH BERKELEY COUNSELING CENT'),
+('NURSES IN ACTION','NURSES IN ACTION'),
+('Oakland','Oakland'),
+('Opportunity Plus','Opportunity Plus'),
+('Options','Options'),
+('OUSD','OUSD'),
+('Out of County Hospital','Out of County Hospital'),
+('PACIFIC CENTER FOR HUMAN GROWT','PACIFIC CENTER FOR HUMAN GROWT'),
+("Pacific Children's Center","Pacific Children's Center"),
+('PACIFIC FORENSIC PSY ASSOC GRP','PACIFIC FORENSIC PSY ASSOC GRP'),
+('Pathways to Wellness','Pathways to Wellness'),
+('PSC','PSC'),
+('PSY THERAPY INST INDIV FAM&COM','PSY THERAPY INST INDIV FAM&COM'),
+('PSYCHOLOGICAL TREATMENT SVCS','PSYCHOLOGICAL TREATMENT SVCS'),
+('R & R','R & R'),
+('R House','R House'),
+('Recovery Innovations','Recovery Innovations'),
+('Refuge','Refuge'),
+('RICHARD G JIMENEZ MD INC','RICHARD G JIMENEZ MD INC'),
+('RIDING HIGH EQUESTRIAN PROGRAM','RIDING HIGH EQUESTRIAN PROGRAM'),
+('River Oak','River Oak'),
+('Ross Hospital','Ross Hospital'),
+("Saint Vincent's","Saint Vincent's"),
+('SANTA CLARA VALLEY MNTL HLTH','SANTA CLARA VALLEY MNTL HLTH'),
+('Schuman Liles','Schuman Liles'),
+('SECOND CHANCE','SECOND CHANCE'),
+('Seneca','Seneca'),
+('SENIOR PSYCHOLOGY SERVICES','SENIOR PSYCHOLOGY SERVICES'),
+('SHASTA COUNTY MNTL HLTH DEPT','SHASTA COUNTY MNTL HLTH DEPT'),
+('SHERIFF YFSB','SHERIFF YFSB'),
+('Sierra Vista','Sierra Vista'),
+('ST JOSEPHS CNTR DEAF/HARD HEAR','ST JOSEPHS CNTR DEAF/HARD HEAR'),
+("St Luke's Hospital","St Luke's Hospital"),
+("ST MARY'S CENTER","ST MARY'S CENTER"),
+("ST. MARY'S MEDICAL CENTER","ST. MARY'S MEDICAL CENTER"),
+('STANISLAUS COUNTY DEP MNTL HLT','STANISLAUS COUNTY DEP MNTL HLT'),
+('Star View','Star View'),
+('Starlight','Starlight'),
+('Stars','Stars'),
+('Summit View','Summit View'),
+('Sunbridge','Sunbridge'),
+('Sunny Hills','Sunny Hills'),
+('SUTTER-YUBA MENTAL HLTH SRVCS','SUTTER-YUBA MENTAL HLTH SRVCS'),
+('System of Care','System of Care'),
+('TEENS IN CRISIS','TEENS IN CRISIS'),
+('TeleCare','TeleCare'),
+('The Help Group','The Help Group'),
+('THE LINK TO CHILDREN PRG','THE LINK TO CHILDREN PRG'),
+('The Wright Institute','The Wright Institute'),
+('Through the Looking Glass','Through the Looking Glass'),
+('Thunder Road','Thunder Road'),
+('Tiburcio Vasquez','Tiburcio Vasquez'),
+('TRADITIONS BEHAV HEALTH GROUP','TRADITIONS BEHAV HEALTH GROUP'),
+('TRADITIONS BEHAVIORAL HLTH GRP','TRADITIONS BEHAVIORAL HLTH GRP'),
+('Tri-City','Tri-City'),
+('TRI-CITY HEALTH CENTER GRP','TRI-CITY HEALTH CENTER GRP'),
+('TRI-VALLEY HAVEN','TRI-VALLEY HAVEN'),
+('TRIAD FAMILY SERVICES','TRIAD FAMILY SERVICES'),
+('TRINITY HEALTH CENTER','TRINITY HEALTH CENTER'),
+('True to Life','True to Life'),
+('TRUST','TRUST'),
+('TURNING POINT COUNSELING CNTR','TURNING POINT COUNSELING CNTR'),
+('UCSF Center on Deafness','UCSF Center on Deafness'),
+('Unity','Unity'),
+('Unity Care','Unity Care'),
+('UNITY CONCEPTS INC','UNITY CONCEPTS INC'),
+('Valley','Valley'),
+('VALLEY COMMUNITY HEALTH CTR','VALLEY COMMUNITY HEALTH CTR'),
+('VALUE OPTIONS INC','VALUE OPTIONS INC'),
+('Victor','Victor'),
+('Vocational','Vocational'),
+('West Coast','West Coast'),
+('West Oakland','West Oakland'),
+('WILLIAM SPIVEY PHD INC dba F/C','WILLIAM SPIVEY PHD INC dba F/C'),
+('YOUTH HOMES INC','YOUTH HOMES INC'),
+('Youth Uprising','Youth Uprising'),
+]
+
+class MultiCheckboxField(SelectMultipleField):
+    widget = widgets.ListWidget(prefix_label=False)
+    option_widget = widgets.CheckboxInput() 
+
+
 class Which(Form):
     formtype = RadioField('how ready are you', choices=[('Long','<h3>Standard data request form (Designed to guide you through your request)</h3><br>'),
         ('Short',"<h3>Data Partner's Advanced form (<strong>be prepared to list all of the columns in the data request</strong>)</h3><br>")],coerce=unicode)
@@ -37,7 +263,7 @@ class RequestData(Form):
     Rejxproblem= TextAreaField('Explantion')
     audience= TextAreaField('With whom or in what forum do you plan to share this data?',)
     columnsRequired= TextAreaField('These are all the columns you will get in your report (chose <a href="//127.0.0.1:8080/long"> general form  </a>if you are unsure)<br> Be sure to include Agency/RUs needed, time frame, special population, etc.,' )
-    agency= TextField('For what Agencies do you want this data?', ) 
+    agency= SelectMultipleField('For what Agencies do you want this data?',coerce=unicode, choices=agenList)
     Rejxagency=   TextAreaField('Explantion',default='')
     RejBoolagency=  BooleanField('Incomplete.', default=False)
     ru = TextField("Leave blank if you want all RU's for Agency specified above",  ) 
@@ -59,15 +285,18 @@ class RequestData(Form):
     specialFacts= TextAreaField('Are there any facts or circumstances we should know to fulfill this request?') 
     note = TextAreaField('Note',)
     submit=SubmitField('Submit')
-    assigned= TextField('Staff Assigned?') 
+    assigned= SelectField('Staff Assigned?',choices=[('Chet','Chet'),('Gabriel','Gabriel'),\
+     ('John','John'), ('Dr. Hall', 'Dr. Hall'),
+        ('Assigned', 'Assigned'), ('Complete', 'Complete'), ('Rejected', 'Rejected')],) 
     completeDate= DateTimeField( 'Date Completed',  format='%c')
     reviewed= TextField('Reviewed by?') 
     Response=  TextAreaField('Explantion')
     ourdeadline= DateField( '',  format='%m/%d/%Y',)
-    cc_sup=RadioField('Is this MHS or SUD Services related?', choices=[('MHS','MHS'),('SUD','SUD Services')],coerce=unicode)
-    status= SelectField(u'Status?',coerce=int, choices=[(0,'Lower Priority Request'), (1, 'Incomplete Request'), (2, 'Pending review'),
-        (3, 'Assigned'), (4, 'Complete'), (5, 'Rejected')])
-    RejxkeyQuestions= RadioField('', choices=[('MHS','MHS'),('SUD','SUD Services')],coerce=unicode)
+    cc_sup=RadioField('Send email to supervisor?', choices=[('yes','Yes'),('No','No')],coerce=unicode,default='No')
+    status= SelectField(u'Status?',coerce=unicode, choices=[('No Filter','No Filter'),('Lower Priority Request','Lower Priority Request'),\
+     ('Incomplete Request','Incomplete Request'), ('Pending Review', 'Pending Review'),
+        ('Assigned', 'Assigned'), ('Complete', 'Complete'), ('Rejected', 'Rejected')],default='No Filter')
+    RejxkeyQuestions= TextAreaField('Explantion')
     RejxspecialFacts=  TextAreaField('Explantion')
     RejxrequestDate=  TextAreaField('Explantion')
     RejxrequestedBy=  TextAreaField('Explantion')
@@ -88,6 +317,8 @@ class RequestData(Form):
     RejxdeadlineWhy =   TextAreaField('Explantion',default='')
     Rejxtimeframestart =  TextAreaField('Explantion',default='')
     Rejxtimeframeend=   TextAreaField('Explantion',default='')
+    RejxMHorSUD=   TextAreaField('Explantion',default='')
+    RejBoolMHorSUD= BooleanField('Incomplete.', default=False)
     RejBoolkeyQuestions= BooleanField('Incomplete.', default=False)
     RejBoolspecialFacts= BooleanField('Incomplete.', default=False)
     RejBoolrequestDate= BooleanField('Incomplete.', default=False)
@@ -154,3 +385,4 @@ class ldapA(Form):
     username = TextField('Username', [validators.Length(min=4, max=25)])
     password = PasswordField('Password', [validators.Required()])
     submitd = SubmitField('Login')
+
