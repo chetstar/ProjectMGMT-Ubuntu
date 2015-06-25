@@ -288,7 +288,7 @@ class RequestData(Form):
     assigned= SelectField('Staff Assigned?',choices=[('Chet','Chet'),('Gabriel','Gabriel'),\
      ('John','John'), ('Dr. Hall', 'Dr. Hall'),
         ('Assigned', 'Assigned'), ('Complete', 'Complete'), ('Rejected', 'Rejected')],) 
-    completeDate= DateTimeField( 'Date Completed',  format='%c')
+    completeDate= DateTimeField( 'Date Completed',  format='%m/%d/%Y')
     reviewed= TextField('Reviewed by?') 
     Response=  TextAreaField('Explantion')
     ourdeadline= DateField( '',  format='%m/%d/%Y',)
