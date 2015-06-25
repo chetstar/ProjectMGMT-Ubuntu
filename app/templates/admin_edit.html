@@ -220,20 +220,25 @@
 </div>
 </div></div></div>
 </div></div>
+
  <div class="container" color=black>
       
         <div class="col-md-1">
         </div><div class="col-md-12">
+          <div class="alert alert-info ">
+       <div class='row '><div class='span4'>Requestor: {{ request_to_edit.username }} </div></div>
+         <div class='row '><div class='span4'> Email: {{request_to_edit.email}}</div></div></div>
 <form method=post >   
  <table class="table table-striped" >
 <!-- <table id="myTable" class="tablesorter"> -->
 <thead>
 <h3><strong><tr><th>Question</th>
 <th>Inappropes</th>
-<th>why</th></tr></strong></h3>
+<th>why<white>______________________</white></th></tr></strong></h3>
 </thead>
 <tbody>
 <ol type="1">
+
 
 <tr><td><div class='row '><div class='span4'>{{ wtf.form_field(form.status) }}</div></div></td> </div></tr>
 <tr><td><div class='row '><div class='span4'>{{ wtf.form_field(form.    jobTitle) }}</div><div class='span2'></div></td>  <td><div class='span1'>{{ wtf.form_field(form.    RejBooljobTitle) }}</div></td>  <td><div class='span2.5'>{{ wtf.form_field(form.    RejxjobTitle    ) }}</div></td> </div></tr>
@@ -287,12 +292,15 @@
 <tr><td><div class='row '><div class='span4'><label>           Complete Date
 
                         </label>
+                         {% if form.completeDate.data %}
+       <input data-provide="datepicker" data-date-format="mm/dd/yyyy" id="completeDate"  type="text" value="{{ form.completeDate.data.strftime('%m/%d/%Y')  }}" name="completeDate" ></input> </div><div class='span2'></div></td>      </div></tr>
+     {%else%}
 <input data-provide="datepicker" data-date-format="mm/dd/yyyy" id="completeDate"  type="text" value="{{ form.completeDate.data }}" name="completeDate" ></input> </div><div class='span2'></div></td>      </div></tr>
-
+ {% endif %}
 
 </div><div class='span2'></div></td>
 </tr> </ol></tbody> </table> 
-<div class='row '><div class='span2.5'>{{ wtf.form_field(form.submit) }}</div>
+<div class='row '><div class='span2.5'>{{ wtf.form_field(form.submitRequest) }}</div>
 </div></div></div></div>
     
      {{ form.hidden_tag() }}

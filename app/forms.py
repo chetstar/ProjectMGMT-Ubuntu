@@ -284,15 +284,13 @@ class RequestData(Form):
     specialInstructions= TextField('Any special instructions?',  ) 
     specialFacts= TextAreaField('Are there any facts or circumstances we should know to fulfill this request?') 
     note = TextAreaField('Note',)
-    submit=SubmitField('Submit')
-    assigned= SelectField('Staff Assigned?',choices=[('Chet','Chet'),('Gabriel','Gabriel'),\
-     ('John','John'), ('Dr. Hall', 'Dr. Hall'),
-        ('Assigned', 'Assigned'), ('Complete', 'Complete'), ('Rejected', 'Rejected')],) 
+    assigned= SelectField('Staff Assigned?',choices=[('Chet','Chet'),('Gabriel','Gabriel'),
+     ('John','John'), ('Dr. Hall', 'Dr. Hall'),('Assigned', 'Assigned'), ('Complete', 'Complete'), ('Rejected', 'Rejected'),("Unassigned","Unassigned")],default = "Unassigned") 
     completeDate= DateTimeField( 'Date Completed',  format='%m/%d/%Y')
     reviewed= TextField('Reviewed by?') 
     Response=  TextAreaField('Explantion')
     ourdeadline= DateField( '',  format='%m/%d/%Y',)
-    cc_sup=RadioField('Send email to supervisor?', choices=[('yes','Yes'),('No','No')],coerce=unicode,default='No')
+    cc_sup=BooleanField('Send request to supervisor?', default=False)
     status= SelectField(u'Status?',coerce=unicode, choices=[('No Filter','No Filter'),('Lower Priority Request','Lower Priority Request'),\
      ('Incomplete Request','Incomplete Request'), ('Pending Review', 'Pending Review'),
         ('Assigned', 'Assigned'), ('Complete', 'Complete'), ('Rejected', 'Rejected')],default='No Filter')
@@ -340,7 +338,7 @@ class RequestData(Form):
     RejBooldeadlineWhy =  BooleanField('Incomplete.', default=False)
     RejBooltimeframestart = BooleanField('Incomplete.', default=False)
     RejBooltimeframeend=  BooleanField('Incomplete.', default=False)
-    submit=SubmitField('Submit')
+    submitRequest=SubmitField('Submit')
 
 # count distinct "name" values
 # session.query(func.count(distinct(User.name)))

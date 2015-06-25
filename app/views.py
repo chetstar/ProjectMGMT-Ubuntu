@@ -153,7 +153,11 @@ def admin_edit(id,a,s,r):
     # requestlist=rl
     # requestlist= models.Request.query.all() 
     # import pdb;pdb.set_trace()
-    if formfilter.validate_on_submit():
+
+    # if request.method == 'POST' and  formFilter.submitrequest.data:
+    # import pdb;pdb.set_trace()
+    if formfilter.validate_on_submit() and formfilter.submitFilter.data:
+        # import pdb;pdb.set_trace()
         s=formfilter.status.data
         a=formfilter.assigned.data
         r=formfilter.requestedBy.data
@@ -202,9 +206,9 @@ def admin_edit(id,a,s,r):
         requestlist = db.session.query(models.Request).filter(models.Request.status.like(formfilter.status.data))\
         .filter(models.Request.requestedBy.like(formfilter.requestedBy.data))\
         .filter(models.Request.assigned.like(formfilter.assigned.data)).all()
-    if form.validate_on_submit():
+    if form.validate_on_submit() and form.submitRequest.data:
         # import pdb;pdb.set_trace()
-        p=models.Request.query.filter_by(id=int(id)).first() 
+        p=request_to_edit 
     #     request_to_edit(status=form.status.data, agency=form.agency.data,         RejBoolagency=form.RejBoolagency.data,       Rejxagency      =form.Rejxagency.data, 
     # audience=form.audience.data,         RejBoolaudience=form.RejBoolaudience.data,       Rejxaudience    =form.Rejxaudience.data, 
     # columnsRequired=form.columnsRequired.data,       RejBoolcolumnsRequired=form.RejBoolcolumnsRequired.data,         RejxcolumnsRequired     =form.RejxcolumnsRequired.data, 
@@ -234,8 +238,7 @@ def admin_edit(id,a,s,r):
     # note=form.note.data,   ourdeadline=form.ourdeadline.data,       
     # requestDeadlineLapse=form.requestDeadlineLapse.data, reviewed=form.reviewed.data,status=form.status.data,supervisor=form.supervisor.data,         userCategory=form.userCategory.data,         
     # username =form.username.data, )    
-        p.status=form.status.data      
-        p.agency=form.agency.data
+        p.status=form.status.data    
         p.RejBoolagency=form.RejBoolagency.data  
         p.Rejxagency=form.Rejxagency.data
         p.audience=form.audience.data
@@ -246,53 +249,87 @@ def admin_edit(id,a,s,r):
         p.RejxcolumnsRequired=form.RejxcolumnsRequired.data
         p.deadlinedate=form.deadlinedate.data
         p.RejBooldeadlinedate=form.RejBooldeadlinedate.data
-        p.Rejxdeadlinedate=form.Rejxdeadlinedate.data, 
-        # p.deadlinetime=form.deadlinetime.data,  p.RejBooldeadlinetime=form.RejBooldeadlinetime.data,    p.Rejxdeadlinetime=form.Rejxdeadlinetime.data, 
-        # p.deadlineWhy=form.deadlineWhy.data,    p.RejBooldeadlineWhy=form.RejBooldeadlineWhy.data,  p.RejxdeadlineWhy=form.RejxdeadlineWhy.data, 
-        # p.jobTitle=form.jobTitle.data,  p.RejBooljobTitle=form.RejBooljobTitle.data,    p.RejxjobTitle=form.RejxjobTitle.data, 
-        # p.keyQuestions=form.keyQuestions.data,  p.RejBoolkeyQuestions=form.RejBoolkeyQuestions.data,    p.RejxkeyQuestions=form.RejxkeyQuestions.data, 
-        # p.longDescription=form.longDescription.data,    p.RejBoollongDescription=form.RejBoollongDescription.data,  p.RejxlongDescription=form.RejxlongDescription.data, 
-        # p.priority=form.priority.data,  p.RejBoolpriority=form.RejBoolpriority.data,    p.Rejxpriority=form.Rejxpriority.data, 
-        # p.problem=form.problem.data,    p.RejBoolproblem=form.RejBoolproblem.data,  p.Rejxproblem=form.Rejxproblem.data, 
-        # p.requestDate=form.requestDate.data,    p.RejBoolrequestDate=form.RejBoolrequestDate.data,  p.RejxrequestDate=form.RejxrequestDate.data, 
-        # p.requestedBy=form.requestedBy.data,    p.RejBoolrequestedBy=form.RejBoolrequestedBy.data,  p.RejxrequestedBy=form.RejxrequestedBy.data, 
-        # p.ru=form.ru.data,  p.RejBoolru=form.RejBoolru.data,    p.Rejxru=form.Rejxru.data, 
-        # p.specialFacts=form.specialFacts.data,  p.RejBoolspecialFacts=form.RejBoolspecialFacts.data,    p.RejxspecialFacts=form.RejxspecialFacts.data, 
-        # p.specialInstructions=form.specialInstructions.data,    p.RejBoolspecialInstructions=form.RejBoolspecialInstructions.data,  p.RejxspecialInstructions=form.RejxspecialInstructions.data, 
-        # p.specialPop=form.specialPop.data,  p.RejBoolspecialPop=form.RejBoolspecialPop.data,    p.RejxspecialPop=form.RejxspecialPop.data, 
-        # p.timeBreakdown=form.timeBreakdown.data,    p.RejBooltimeBreakdown=form.RejBooltimeBreakdown.data,  p.RejxtimeBreakdown=form.RejxtimeBreakdown.data, 
-        # p.timeframe=form.timeframe.data,    p.RejBooltimeframe=form.RejBooltimeframe.data,  p.Rejxtimeframe=form.Rejxtimeframe.data, 
-        # p.timeframeend=form.timeframeend.data,  p.RejBooltimeframeend=form.RejBooltimeframeend.data,    p.Rejxtimeframeend=form.Rejxtimeframeend.data, 
-        # p.timeframestart=form.timeframestart.data,  p.RejBooltimeframestart=form.RejBooltimeframestart.data,    p.Rejxtimeframestart=form.Rejxtimeframestart.data, 
-        # p.typeOfService=form.typeOfService.data,    
-        # p.RejBooltypeOfService=form.RejBooltypeOfService.data,  
-        # p.RejxtypeOfService=form.RejxtypeOfService.data, 
-        # p.emanio=form.emanio.data,  
-        # p.RejBoolemanio=form.RejBoolemanio.data,    
-        # p.Rejxemanio=form.Rejxemanio.data, 
-        # p.assigned=form.assigned.data,      
-        # p.assinged=form.assinged.data,      
-        # p.cc_sup=form.cc_sup.data,      
-        # p.completeDate=form.completeDate.data,      
-        # p.email=form.email.data,        
-        # p.id=form.id.data,      
-        # p.MHorSUD=form.MHorSUD.data,    
-        # p.RejBoolMHorSUD=form.RejBoolMHorSUD.data,  
-        # p.RejxMHorSUD=form.RejxMHorSUD.data, 
-        # p.note=form.note.data,      
-        # p.ourdeadline=form.ourdeadline.data,        
-        # p.requestDeadlineLapse=form.requestDeadlineLapse.data,      
-        # p.reviewed=form.reviewed.data,      
-        # p.status=form.status.data,      
-        # p.supervisor=form.supervisor.data,      
-        # p.userCategory=form.userCategory.data,      
-        # p.username=form.username.data           
-        # db.session.add(p)
+        p.Rejxdeadlinedate=form.Rejxdeadlinedate.data
+        p.deadlinetime=form.deadlinetime.data
+        p.RejBooldeadlinetime=form.RejBooldeadlinetime.data
+        p.Rejxdeadlinetime=form.Rejxdeadlinetime.data
+        p.deadlineWhy=form.deadlineWhy.data
+        p.RejBooldeadlineWhy=form.RejBooldeadlineWhy.data
+        p.RejxdeadlineWhy=form.RejxdeadlineWhy.data        
+        p.jobTitle=form.jobTitle.data  
+        p.RejBooljobTitle=form.RejBooljobTitle.data  
+        p.RejxjobTitle=form.RejxjobTitle.data
+        p.keyQuestions=form.keyQuestions.data  
+        p.RejBoolkeyQuestions=form.RejBoolkeyQuestions.data    
+        p.RejxkeyQuestions=form.RejxkeyQuestions.data
+        p.longDescription=form.longDescription.data    
+        p.RejBoollongDescription=form.RejBoollongDescription.data
+        p.RejxlongDescription=form.RejxlongDescription.data
+        p.priority=form.priority.data  
+        p.RejBoolpriority=form.RejBoolpriority.data    
+        p.Rejxpriority=form.Rejxpriority.data
+        p.problem=form.problem.data    
+        p.RejBoolproblem=form.RejBoolproblem.data  
+        p.Rejxproblem=form.Rejxproblem.data 
+        p.requestDate=form.requestDate.data    
+        p.RejBoolrequestDate=form.RejBoolrequestDate.data  
+        p.RejxrequestDate=form.RejxrequestDate.data 
+        p.requestedBy=form.requestedBy.data 
+        p.RejBoolrequestedBy=form.RejBoolrequestedBy.data 
+        p.RejxrequestedBy=form.RejxrequestedBy.data
+        p.ru=form.ru.data  
+        p.RejBoolru=form.RejBoolru.data   
+        p.Rejxru=form.Rejxru.data 
+        p.specialFacts=form.specialFacts.data
+        p.RejBoolspecialFacts=form.RejBoolspecialFacts.data   
+        p.RejxspecialFacts=form.RejxspecialFacts.data
+        p.specialInstructions=form.specialInstructions.data  
+        p.RejBoolspecialInstructions=form.RejBoolspecialInstructions.data  
+        p.RejxspecialInstructions=form.RejxspecialInstructions.data 
+        p.specialPop=form.specialPop.data  
+        p.RejBoolspecialPop=form.RejBoolspecialPop.data    
+        p.RejxspecialPop=form.RejxspecialPop.data 
+        p.timeBreakdown=form.timeBreakdown.data    
+        p.RejBooltimeBreakdown=form.RejBooltimeBreakdown.data  
+        p.RejxtimeBreakdown=form.RejxtimeBreakdown.data 
+        p.timeframe=form.timeframe.data   
+        p.RejBooltimeframe=form.RejBooltimeframe.data  
+        p.Rejxtimeframe=form.Rejxtimeframe.data
+        p.timeframeend=form.timeframeend.data
+        p.RejBooltimeframeend=form.RejBooltimeframeend.data   
+        p.Rejxtimeframeend=form.Rejxtimeframeend.data
+        p.timeframestart=form.timeframestart.data
+        p.RejBooltimeframestart=form.RejBooltimeframestart.data   
+        p.Rejxtimeframestart=form.Rejxtimeframestart.data
+        p.typeOfService=form.typeOfService.data    
+        p.RejBooltypeOfService=form.RejBooltypeOfService.data  
+        p.RejxtypeOfService=form.RejxtypeOfService.data 
+        p.emanio=form.emanio.data  
+        p.RejBoolemanio=form.RejBoolemanio.data   
+        p.Rejxemanio=form.Rejxemanio.data 
+        p.assigned=form.assigned.data     
+        p.cc_sup=form.cc_sup.data     
+        p.completeDate=form.completeDate.data                
+        p.MHorSUD=form.MHorSUD.data    
+        p.RejBoolMHorSUD=form.RejBoolMHorSUD.data 
+        p.RejxMHorSUD=form.RejxMHorSUD.data
+        p.note=form.note.data      
+        p.ourdeadline=form.ourdeadline.data            
+        p.reviewed=form.reviewed.data     
+        p.status=form.status.data     
+        p.supervisor=form.supervisor.data                
         db.session.commit() 
-
+        flash("Changes saved")
+        # import pdb;pdb.set_trace()
+        # s=formfilter.status.data
+        # a=formfilter.assigned.data
+        # r=formfilter.requestedBy.data
+    else:
+        flash_errors(form)
                               # requestlist = db.session.query(models.Request).filter(models.Request.status.like(form.status.data))\
       # .filter(models.Request.requestedBy.like('2'))\
       # .filter(models.Request.assigned.like('Unassigned')).all()
+    # import pdb;pdb.set_trace()
     return render_template('admin_edit.html',a=a,s=s,r=r,request_to_edit=request_to_edit,email=g.user.email ,name=g.user.name,form=form,requestlist=requestlist,formfilter=formfilter)
 
 @app.route('/edit_request/<id>/', methods=['GET', 'POST'])
@@ -400,7 +437,7 @@ def requestform(WHICH):
         keyQuestions=form.keyQuestions.data, problem=form.problem.data,specialFacts=form.specialFacts.data,requestedBy=form.requestedBy.data, priority=form.priority.data,
         timeframe=form.timeframe.data,timeBreakdown=form.timeBreakdown.data,specialPop=form.specialPop.data,ru=form.ru.data,agency=','.join(form.agency.data),
          specialInstructions=form.specialInstructions.data, typeOfService=form.typeOfService.data, timeframestart=form.timeframestart.data, timeframeend=form.timeframeend.data, 
-         longDescription=form.longDescription.data, requestDate=datetime.datetime.utcnow(),assigned="Unassigned",status="Pending Review",cc_sup="No",completeDate=datetime.datetime.utcnow(),
+         longDescription=form.longDescription.data, requestDate=datetime.datetime.utcnow(),assigned="Unassigned",status="Pending Review",completeDate=datetime.datetime.utcnow(),
          audience=form.audience.data,  columnsRequired=form.columnsRequired.data, deadlinetime=form.deadlinetime.data, deadlineWhy=form.deadlineWhy.data)
       db.session.add(p)
       db.session.commit()
