@@ -134,7 +134,7 @@ class Request(db.Model):
     timeframe= db.Column(db.String(64), index=True)
     timeBreakdown= db.Column(db.String(64), index=True)
     specialPop= db.Column(db.String(64), index=True)
-    agency= db.Column(db.String(64), index=True)
+    agency= db.Column(db.String(400), index=True)
     ru = db.Column(db.String(64), index=True)
     typeOfService= db.Column(db.String(64), index=True)
     jobTitle= db.Column(db.String(64), unique=True)
