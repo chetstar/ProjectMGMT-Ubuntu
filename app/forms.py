@@ -293,7 +293,7 @@ class RequestData(Form):
     cc_sup=BooleanField('Send request to supervisor?', default=False)
     status= SelectField(u'Status?',coerce=unicode, choices=[('No Filter','No Filter'),('Lower Priority Request','Lower Priority Request'),\
      ('Incomplete Request','Incomplete Request'), ('Pending Review', 'Pending Review'),
-        ('Assigned', 'Assigned'), ('Complete', 'Complete'), ('Rejected', 'Rejected')],default='No Filter')
+        ('Assigned', 'Assigned'), ('Complete', 'Complete'), ('Rejected-Hold', 'Rejected-Hold'),("Rejected-Send Back to user","Rejected-Send Back to user")],default='No Filter')
     RejxkeyQuestions= TextAreaField('Explantion')
     RejxspecialFacts=  TextAreaField('Explantion')
     RejxrequestDate=  TextAreaField('Explantion')
@@ -346,7 +346,7 @@ class RequestData(Form):
 class filterRequests(Form):
     status= SelectField(u'Status?',coerce=unicode, choices=[('No Filter','No Filter'),('Lower Priority Request','Lower Priority Request'),\
      ('Incomplete Request','Incomplete Request'), ('Pending Review', 'Pending Review'),
-        ('Assigned', 'Assigned'), ('Complete', 'Complete'), ('Rejected', 'Rejected')],default='No Filter')
+        ('Assigned', 'Assigned'), ('Complete', 'Complete'), ('Rejected-Hold', 'Rejected-Hold'),("Rejected-Send Back to user","Rejected-Send Back to user")],default='No Filter')
     requestedBy= SelectField(u'Requestor',default='No Filter')
     assigned= SelectField(u'Assigned',default='No Filter')
     # requestor = QuerySelectField(u'Requestor', query_factory=getRequestor, get_label='requestedBy')
