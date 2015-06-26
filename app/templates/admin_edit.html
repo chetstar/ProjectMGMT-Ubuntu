@@ -78,8 +78,10 @@
 
  <header>
         <div class="container" color=black>
-         {{ wtf.quick_form(formfilter) }}
-         <a href="{{ url_for('Request_management')}}" >No Filters    </a>
+       <!--  <div class="row">
+      
+       <div class="col-md-4">    -->      {{ wtf.quick_form(formfilter,form_type='basic') }}
+         <a href="{{ url_for('Request_management')}}" >No Filters    </a><!-- </div></div> -->
             </div>
         </div>
     </header>
@@ -178,12 +180,12 @@
   <h1>Hi {{name}} </h1></div>
 </div></div>
 
+
 </div></div>
 
         
          <div class="row ">
-
-
+ 
 <div class="row">
 <div class="alert alert-info" role="alert">
 </div></p></div></div></div>
@@ -220,7 +222,7 @@
 </div>
 </div></div></div>
 </div></div>
-
+<!-- <section id="services"> -->
  <div class="container" color=black>
       
         <div class="col-md-1">
@@ -233,13 +235,11 @@
 <!-- <table id="myTable" class="tablesorter"> -->
 <thead>
 <h3><strong><tr><th>Question</th>
-<th>Inappropes</th>
-<th>why<white>______________________</white></th></tr></strong></h3>
+<th>Inappropes</th><font color="white">________________</font>
+<th>why<font color="white">______________________</font></th></tr></strong></h3>
 </thead>
 <tbody>
 <ol type="1">
-
-
 <tr><td><div class='row '><div class='span4'>{{ wtf.form_field(form.status) }}</div></div></td> </div></tr>
 <tr><td><div class='row '><div class='span4'>{{ wtf.form_field(form.    jobTitle) }}</div><div class='span2'></div></td>  <td><div class='span1'>{{ wtf.form_field(form.    RejBooljobTitle) }}</div></td>  <td><div class='span2.5'>{{ wtf.form_field(form.    RejxjobTitle    ) }}</div></td> </div></tr>
 
@@ -289,14 +289,7 @@
 <tr><td><div class='row '><div class='span4'>{{ wtf.form_field(form.    assigned) }}</div><div class='span2'></div></td>      </div></tr>
       
 <tr><td><div class='row '><div class='span4'>cc sup?{{ wtf.form_field(form.cc_sup) }}</div><div class='span2'></div></td>      </div></tr>
-<tr><td><div class='row '><div class='span4'><label>           Complete Date
 
-                        </label>
-                         {% if form.completeDate.data %}
-       <input data-provide="datepicker" data-date-format="mm/dd/yyyy" id="completeDate"  type="text" value="{{ form.completeDate.data.strftime('%m/%d/%Y')  }}" name="completeDate" ></input> </div><div class='span2'></div></td>      </div></tr>
-     {%else%}
-<input data-provide="datepicker" data-date-format="mm/dd/yyyy" id="completeDate"  type="text" value="{{ form.completeDate.data }}" name="completeDate" ></input> </div><div class='span2'></div></td>      </div></tr>
- {% endif %}
 
 </div><div class='span2'></div></td>
 </tr> </ol></tbody> </table> 
@@ -309,6 +302,7 @@
 
 
 </form>
+<!-- </section> -->
   <!-- {{ wtf.quick_form(form) }} -->
  
       </span>
