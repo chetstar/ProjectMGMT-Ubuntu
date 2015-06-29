@@ -345,6 +345,38 @@ class RequestData(Form):
         ('Save and Submit','Save and Submit')],default = "Save and Hold") 
     submitRequest=SubmitField('Submit')
 
+class UserRequestData(Form):
+    # test= QuerySelectField(query_factory=Requests.with_entities(Requests.id)) 
+    jobTitle= TextField('This will be the name we use to communicate about the request.',validators=[validators.Required(),validators.Length(min=2, max=50)])#,
+    supervisor= TextField('Who is your supervisor.')#,
+    emanio = BooleanField('Yes, I have looked at Context.', default=False)
+    requestDate = DateField( 'request date',  format='%m/%d/%Y',)
+    MHorSUD= RadioField('Is this MHS or SUD Services related?', choices=[('MHS','MHS'),('SUD','SUD Services')],coerce=unicode)
+    longDescription= TextAreaField('Describe what you want to investigate.',validators=[validators.Required(),validators.Length(min=2, max=120)])
+    keyQuestions= TextAreaField('What are the questions you want answered?',validators=[validators.Required(),validators.Length(min=2, max=120)])
+    problem= TextAreaField('If the data shows a problem, describe your intervention or what data you might you need for that intervention')
+    audience= TextAreaField('With whom or in what forum do you plan to share this data?',)
+    columnsRequired= TextAreaField('These are all the columns you will get in your report (chose <a href="//127.0.0.1:8080/long"> general form  </a>if you are unsure)<br> Be sure to include Agency/RUs needed, time frame, special population, etc.,' )
+    agency= SelectMultipleField('For what Agencies do you want this data?',coerce=unicode, choices=agenList)
+    ru = TextField("Leave blank if you want all RU's for Agency specified above",  ) 
+    deadlinetime = SelectField(u'What Hour?',coerce=int, choices=[(8,'8 am'), (9, '9 am'), (10, '10 am'),
+        (11, '11 am'), (12, 'Noon'), (13, '1 pm'), (14, '2 pm'), (15, '3 pm'), (16, '4 pm'), (17, '5 pm')])
+    deadlinedate= DateField( '',  format='%m/%d/%Y',)
+    deadlineWhy = TextField('Why?')
+    priority= RadioField('Priority', choices=[('1','1. Just Curious'),('2','2. Low Priority'),('3','3. Medium'),('4','4. Top Priority'),('5','5. Extremely Urgent')],coerce=unicode,validators=[validators.Required()])
+    requestedBy= SelectField(u"If this isn't your request, who is it for?",coerce=unicode, choices=[("test1",'test1'), ('2', 'test2')]) 
+    timeframe= TextField('From what time frame do you want data? E.g., Most recent fiscal year? Most recent calendar year? Some other period?',  ) 
+    timeframestart= DateField( '',  format='%m/%d/%Y',)
+    timeframeend= DateField( '',  format='%m/%d/%Y',)
+    timeBreakdown = TextField("If annual, specify Fiscal Year or Calendar.",  ) 
+    specialPop= TextField('Are you interested in any demographics (age, ethnicity) or special populations (foster kids or disabled adults, and so on)?',  ) 
+    typeOfService= TextField('Are there specific types of services you want? e.g. Crisis, Hospital, etc.', ) 
+    specialInstructions= TextField('Any special instructions?',  ) 
+    specialFacts= TextAreaField('Are there any facts or circumstances we should know to fulfill this request?') 
+    UserAction= SelectField('Are you finished editing?',choices=[('Save and Hold','Save and Hold'),
+        ('Save and Submit','Save and Submit')],default = "Save and Hold") 
+    submitRequest=SubmitField('Submit')
+
 # count distinct "name" values
 # session.query(func.count(distinct(User.name)))
 # http://stackoverflow.com/questions/21579373/sqlalchemy-wtforms-set-default-selected-value-for-queryselectfield

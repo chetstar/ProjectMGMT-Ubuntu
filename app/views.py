@@ -1,6 +1,6 @@
 from app import app,models, db
 # from forms import goal_form, strategy_form, project_form, task_form,DeleteRow_form,ldapA,LoginForm, Request, Which,Staff
-from forms import LoginForm, RequestData, Which,ldapA, filterRequests
+from forms import LoginForm, RequestData, Which,ldapA, filterRequests, UserRequestData
 import datetime
 from sqlalchemy.orm.attributes import get_history
 from werkzeug import secure_filename
@@ -214,7 +214,7 @@ def admin_edit(id,a,s,r):
         .filter(models.Request.staffback.has(staff=formfilter.assigned.data)).all()
     if form.submitRequest.data:
         if form.validate_on_submit():
-            import pdb;pdb.set_trace()                
+            # import pdb;pdb.set_trace()                
             form.agency.data=request_to_edit.agency
             # form.assigned.data=form.assigned.data.staff
             if form.status.data=="Complete":
@@ -341,8 +341,8 @@ def flash_errors(form):
 @app.route("/requestform/<WHICH>",methods=["GET","POST"])
 @login_required
 def requestform(WHICH):
-    form = RequestData()
-    form.staffback.data=models.Staff.query.filter_by(staff="Unassigned").first()
+    form = UserRequestData()
+    # form.staffback.data=models.Staff.query.filter_by(staff="Unassigned").first()
     # import pdb;pdb.set_trace()
     if form.validate_on_submit():
       print 'submit'
@@ -354,7 +354,7 @@ def requestform(WHICH):
       p=models.Request(email=g.user.email,username=g.user.name,jobTitle=form.jobTitle.data,deadlinedate=form.deadlinedate.data,
         emanio=form.emanio.data,MHorSUD=form.MHorSUD.data,
         keyQuestions=form.keyQuestions.data, problem=form.problem.data,specialFacts=form.specialFacts.data,requestedBy=form.requestedBy.data, 
-        priority=form.priority.data,
+        priority=form.priority.data,staffback=models.Staff.query.filter_by(staff="Unassigned").first(),
         timeframe=form.timeframe.data,timeBreakdown=form.timeBreakdown.data,specialPop=form.specialPop.data,ru=form.ru.data,
         agency=', '.join(form.agency.data),
          specialInstructions=form.specialInstructions.data, typeOfService=form.typeOfService.data, timeframestart=form.timeframestart.data, 
