@@ -148,7 +148,7 @@ def admin_edit(id,a,s,r):
     RB= list(set([h.requestedBy for h in models.Request.query.all()]))
     RB.append('No Filter')
     formfilter.requestedBy.choices=zip(RB,RB)
-    AT= list(set([h.assigned for h in models.Request.query.all()]))
+    AT= list(set([h.staffback for h in models.Request.query.all()]))
     AT.append('No Filter')
     formfilter.assigned.choices=zip(AT,AT)
     # requestlist=rl
@@ -158,7 +158,7 @@ def admin_edit(id,a,s,r):
     # if request.method == 'POST' and  formFilter.submitrequest.data:
     # import pdb;pdb.set_trace()
     if formfilter.submitFilter.data:
-        if formfilter.validate_on_submit():
+        # if formfilter.validate_on_submit():
             s=formfilter.status.data
             a=formfilter.assigned.data
             r=formfilter.requestedBy.data
@@ -168,7 +168,7 @@ def admin_edit(id,a,s,r):
             elif formfilter.status.data != 'No Filter' and formfilter.assigned.data=='No Filter' and formfilter.requestedBy.data=='No Filter':
                 requestlist = db.session.query(models.Request).filter(models.Request.status.like(formfilter.status.data)).all()
             elif formfilter.status.data == 'No Filter' and formfilter.assigned.data!='No Filter' and formfilter.requestedBy.data=='No Filter':
-                requestlist = db.session.query(models.Request).filter(models.Request.assigned.like(formfilter.assigned.data)).all()
+                requestlist = db.session.query(models.Request).filter(models.Request.staffback.has(staff=formfilter.assigned.data)).all()
             elif formfilter.status.data == 'No Filter' and formfilter.assigned.data=='No Filter' and formfilter.requestedBy.data!='No Filter':
                 requestlist = db.session.query(models.Request).filter(models.Request.requestedBy.like(formfilter.requestedBy.data)).all()
             elif formfilter.status.data != 'No Filter' and formfilter.assigned.data=='No Filter' and formfilter.requestedBy.data!='No Filter':
@@ -176,14 +176,14 @@ def admin_edit(id,a,s,r):
                 .filter(models.Request.status.like(formfilter.status.data)).all()
             elif formfilter.status.data == 'No Filter' and formfilter.assigned.data !='No Filter' and formfilter.requestedBy.data!='No Filter':
                 requestlist = db.session.query(models.Request).filter(models.Request.requestedBy.like(formfilter.requestedBy.data))\
-                .filter(models.Request.assigned.like(formfilter.assigned.data)).all()
+                .filter(models.Request.staffback.has(staff=formfilter.assigned.data)).all()
             elif formfilter.status.data != 'No Filter' and formfilter.assigned.data !='No Filter' and formfilter.requestedBy.data =='No Filter':
                 requestlist = db.session.query(models.Request).filter(models.Request.status.like(formfilter.status.data))\
-                .filter(models.Request.assigned.like(formfilter.assigned.data)).all()
+                .filter(models.Request.staffback.has(staff=formfilter.assigned.data)).all()
             elif formfilter.status.data != 'No Filter' and formfilter.assigned.data !='No Filter' and formfilter.requestedBy.data !='No Filter':
                 requestlist = db.session.query(models.Request).filter(models.Request.status.like(formfilter.status.data))\
                 .filter(models.Request.requestedBy.like(formfilter.requestedBy.data))\
-                .filter(models.Request.assigned.like(formfilter.assigned.data)).all()
+                .filter(models.Request.staffback.has(staff=formfilter.assigned.data)).all()
             # formfilter.status.data=s
             # formfilter.assigned.data=a
             # formfilter.requestedBy.data=r
@@ -196,7 +196,7 @@ def admin_edit(id,a,s,r):
     elif formfilter.status.data != 'No Filter' and formfilter.assigned.data=='No Filter' and formfilter.requestedBy.data=='No Filter':
         requestlist = db.session.query(models.Request).filter(models.Request.status.like(formfilter.status.data)).all()
     elif formfilter.status.data == 'No Filter' and formfilter.assigned.data!='No Filter' and formfilter.requestedBy.data=='No Filter':
-        requestlist = db.session.query(models.Request).filter(models.Request.assigned.like(formfilter.assigned.data)).all()
+        requestlist = db.session.query(models.Request).filter(models.Request.staffback.has(staff=formfilter.assigned.data)).all()
     elif formfilter.status.data == 'No Filter' and formfilter.assigned.data=='No Filter' and formfilter.requestedBy.data!='No Filter':
         requestlist = db.session.query(models.Request).filter(models.Request.requestedBy.like(formfilter.requestedBy.data)).all()
     elif formfilter.status.data != 'No Filter' and formfilter.assigned.data=='No Filter' and formfilter.requestedBy.data!='No Filter':
@@ -204,20 +204,21 @@ def admin_edit(id,a,s,r):
         .filter(models.Request.status.like(formfilter.status.data)).all()
     elif formfilter.status.data == 'No Filter' and formfilter.assigned.data !='No Filter' and formfilter.requestedBy.data!='No Filter':
         requestlist = db.session.query(models.Request).filter(models.Request.requestedBy.like(formfilter.requestedBy.data))\
-        .filter(models.Request.assigned.like(formfilter.assigned.data)).all()
+        .filter(models.Request.staffback.has(staff=formfilter.assigned.data)).all()
     elif formfilter.status.data != 'No Filter' and formfilter.assigned.data !='No Filter' and formfilter.requestedBy.data =='No Filter':
         requestlist = db.session.query(models.Request).filter(models.Request.status.like(formfilter.status.data))\
-        .filter(models.Request.assigned.like(formfilter.assigned.data)).all()
+        .filter(models.Request.staffback.has(staff=formfilter.assigned.data)).all()
     elif formfilter.status.data != 'No Filter' and formfilter.assigned.data !='No Filter' and formfilter.requestedBy.data !='No Filter':
         requestlist = db.session.query(models.Request).filter(models.Request.status.like(formfilter.status.data))\
         .filter(models.Request.requestedBy.like(formfilter.requestedBy.data))\
-        .filter(models.Request.assigned.like(formfilter.assigned.data)).all()
+        .filter(models.Request.staffback.has(staff=formfilter.assigned.data)).all()
     if form.submitRequest.data:
         if form.validate_on_submit():
-            # import pdb;pdb.set_trace()
             form.agency.data=request_to_edit.agency
+            # form.assigned.data=form.assigned.data.staff
             if form.status.data=="Complete":
                 form.completeDate=datetime.datetime.utcnow()
+            import pdb;pdb.set_trace()                
             form.populate_obj(request_to_edit)
             # request_to_edit.save()
             db.session.commit()
@@ -278,17 +279,18 @@ def Request_management():
     RB= list(set([h.requestedBy for h in models.Request.query.all()]))
     RB.append('No Filter')
     form.requestedBy.choices=zip(RB,RB)
-    AT= list(set([h.assigned for h in models.Request.query.all()]))
+    AT= list(set([h.staffback for h in models.Request.query.all()]))
     AT.append('No Filter')
     form.assigned.choices=zip(AT,AT)
     requestlist= models.Request.query.all() 
-    if form.validate_on_submit():
+    # if form.validate_on_submit():
+    if form.submitFilter.data:
         if form.status.data=='No Filter' and form.assigned.data=='No Filter' and form.requestedBy.data=='No Filter':
                 requestlist= models.Request.query.all() 
         elif form.status.data != 'No Filter' and form.assigned.data=='No Filter' and form.requestedBy.data=='No Filter':
             requestlist = db.session.query(models.Request).filter(models.Request.status.like(form.status.data)).all()
         elif form.status.data == 'No Filter' and form.assigned.data!='No Filter' and form.requestedBy.data=='No Filter':
-            requestlist = db.session.query(models.Request).filter(models.Request.assigned.like(form.assigned.data)).all()
+            requestlist = db.session.query(models.Request).filter(models.Request.staffback.has(staff=form.assigned.data)).all()
         elif form.status.data == 'No Filter' and form.assigned.data=='No Filter' and form.requestedBy.data!='No Filter':
             requestlist = db.session.query(models.Request).filter(models.Request.requestedBy.like(form.requestedBy.data)).all()
         elif form.status.data != 'No Filter' and form.assigned.data=='No Filter' and form.requestedBy.data!='No Filter':
@@ -296,14 +298,14 @@ def Request_management():
             .filter(models.Request.status.like(form.status.data)).all()
         elif form.status.data == 'No Filter' and form.assigned.data !='No Filter' and form.requestedBy.data!='No Filter':
             requestlist = db.session.query(models.Request).filter(models.Request.requestedBy.like(form.requestedBy.data))\
-            .filter(models.Request.assigned.like(form.assigned.data)).all()
+            .filter(models.Request.staffback.has(staff=form.assigned.data)).all()
         elif form.status.data != 'No Filter' and form.assigned.data !='No Filter' and form.requestedBy.data =='No Filter':
             requestlist = db.session.query(models.Request).filter(models.Request.status.like(form.status.data))\
-            .filter(models.Request.assigned.like(form.assigned.data)).all()
+            .filter(models.Request.staffback.has(staff=form.assigned.data)).all()
         elif form.status.data != 'No Filter' and form.assigned.data !='No Filter' and form.requestedBy.data !='No Filter':
             requestlist = db.session.query(models.Request).filter(models.Request.status.like(form.status.data))\
             .filter(models.Request.requestedBy.like(form.requestedBy.data))\
-            .filter(models.Request.assigned.like(form.assigned.data)).all()
+            .filter(models.Request.staffback.has(staff=form.assigned.data)).all()
     else:
         form.status.data='No Filter'  
         form.assigned.data='No Filter'  
@@ -313,6 +315,19 @@ def Request_management():
       # .filter(models.Request.assigned.like('Unassigned')).all()
     return render_template("request_management.html",email=g.user.email,name=g.user.name,requestlist=requestlist,form=form,formRequest=formRequest,
      s=form.status.data,a= form.assigned.data,r= form.requestedBy.data)
+
+# db.session.query(
+#     models.Staff.id,
+#     models.Request
+#     ).join(models.Request, models.Staff.request).all()
+# db.session.query(models.Request).join(models.Request, models.Staff.request).filter(models.Staff.id.any(1)).all()
+# models.
+# patients = Patient.query.filter(Patient.mother.has(phenoscore=10))
+# or join (usually faster):
+
+# patients = Patient.query.join(Patient.mother, aliased=True)\
+#                     .filter_by(phenoscore=10)
+# db.session.query(models.Request).filter(models.Request.staffback.has(staff='fake user')).all()
     
 def flash_errors(form):
     for field, errors in form.errors.items():
@@ -330,13 +345,22 @@ def requestform(WHICH):
     # import pdb;pdb.set_trace()
     if form.validate_on_submit():
       print 'submit'
-      import pdb;pdb.set_trace()
-      p=models.Request(email=g.user.email,username=g.user.name,jobTitle=form.jobTitle.data,deadlinedate=form.deadlinedate.data,emanio=form.emanio.data,MHorSUD=form.MHorSUD.data,
-        keyQuestions=form.keyQuestions.data, problem=form.problem.data,specialFacts=form.specialFacts.data,requestedBy=form.requestedBy.data, priority=form.priority.data,
-        timeframe=form.timeframe.data,timeBreakdown=form.timeBreakdown.data,specialPop=form.specialPop.data,ru=form.ru.data,agency=', '.join(form.agency.data),
-         specialInstructions=form.specialInstructions.data, typeOfService=form.typeOfService.data, timeframestart=form.timeframestart.data, timeframeend=form.timeframeend.data, 
+      # import pdb;pdb.set_trace()
+      # p=models.Request(email=g.user.email,username=g.user.name,
+      #  requestDate=datetime.datetime.utcnow(),assigned="Unassigned",status="Pending Review")
+      # form.agency.data=', '.join(form.agency.data)
+      # form.populate_obj(p)
+      p=models.Request(email=g.user.email,username=g.user.name,jobTitle=form.jobTitle.data,deadlinedate=form.deadlinedate.data,
+        emanio=form.emanio.data,MHorSUD=form.MHorSUD.data,
+        keyQuestions=form.keyQuestions.data, problem=form.problem.data,specialFacts=form.specialFacts.data,requestedBy=form.requestedBy.data, 
+        priority=form.priority.data,
+        timeframe=form.timeframe.data,timeBreakdown=form.timeBreakdown.data,specialPop=form.specialPop.data,ru=form.ru.data,
+        agency=', '.join(form.agency.data),
+         specialInstructions=form.specialInstructions.data, typeOfService=form.typeOfService.data, timeframestart=form.timeframestart.data, 
+         timeframeend=form.timeframeend.data, 
          longDescription=form.longDescription.data, requestDate=datetime.datetime.utcnow(),assigned="Unassigned",status="Pending Review",
-         audience=form.audience.data,  columnsRequired=form.columnsRequired.data, deadlinetime=form.deadlinetime.data, deadlineWhy=form.deadlineWhy.data)
+         audience=form.audience.data,  columnsRequired=form.columnsRequired.data, deadlinetime=form.deadlinetime.data, 
+         deadlineWhy=form.deadlineWhy.data)
       db.session.add(p)
       db.session.commit()
       #send email to user and admin
@@ -697,6 +721,7 @@ def start():
 #     func.count(Tasks.id).label("total"),
 #     ).outerjoin(Goals, Projects.goals).outerjoin(Strategies, Goals.strategies).outerjoin(Tasks, Strategies.tasks).group_by(Projects.id))   
 #     return render_template("graph_stats.html", P=P,q_sum=q_sum,zipit=zip(P,q_sum))
+
 
 
 

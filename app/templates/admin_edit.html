@@ -213,7 +213,7 @@
 <td>{{field.requestDate.isoformat().split('T')[0]}} </td>
 <td>{{field.deadlinedate.isoformat().split('T')[0]}}</td>
         <td>{{field.requestedBy}}</td>
-          <td>{{field.assigned}}</td>
+          <td>{{field.staffback.staff}}</td>
           <td>{{field.status}}</td>
           <td><a href="{{ url_for('edit_request', id = field.id) }}" ><span class="glyphicon glyphicon-pencil"></span> Add a note </a> </td>
   
@@ -235,7 +235,7 @@
 <!-- <table id="myTable" class="tablesorter"> -->
 <thead>
 <h3><strong><tr><th>Question</th>
-<th>Inappropes</th><font color="white">________________</font>
+<th>Inappropriate Response </th><font color="white">____________________</font>
 <th>why<font color="white">______________________</font></th></tr></strong></h3>
 </thead>
 <tbody>
@@ -286,8 +286,9 @@
 <tr><td><div class='row '><div class='span4'>{{ wtf.form_field(form.    typeOfService) }}</div><div class='span2'></div></td> <td><div class='span1'>{{ wtf.form_field(form.    RejBooltypeOfService) }}</div></td> <td><div class='span2.5'>{{ wtf.form_field(form.    RejxtypeOfService       ) }}</div></td> </div></tr>
 <tr><td><div class='row '><div class='span4'>{{ wtf.form_field(form.    emanio) }}</div><div class='span2'></div></td>  <td><div class='span1'>{{ wtf.form_field(form.RejBoolemanio) }}</div></td>  <td><div class='span2.5'>{{ wtf.form_field(form.Rejxemanio) }}</div></td> </div></tr>
 <tr><td><div class='row '><div class='span4'><h3>Is this MHS or SUD Services related?</h3>{{ wtf.form_field(form.    MHorSUD) }}</div><div class='span2'></div></td> <td><div class='span1'>{{ wtf.form_field(form.    RejBoolMHorSUD) }}</div></td> <td><div class='span2.5'>{{ wtf.form_field(form.    RejxMHorSUD) }}</div></td>  </div>
-<tr><td><div class='row '><div class='span4'>{{ wtf.form_field(form.    assigned) }}</div><div class='span2'></div></td>      </div></tr>
-      
+  <tr><td><div class='row '><div class='span4'>{{ wtf.form_field(form.    staffback) }}</div><div class='span2'></div></td>      </div></tr>
+  
+
 <tr><td><div class='row '><div class='span4'>cc sup?{{ wtf.form_field(form.cc_sup) }}</div><div class='span2'></div></td>      </div></tr>
 
 
