@@ -285,7 +285,7 @@ class RequestData(Form):
     specialFacts= TextAreaField('Are there any facts or circumstances we should know to fulfill this request?') 
     note = TextAreaField('Note',)
     # assigned = QuerySelectField(u'Staff', query_factory=getRequestor, get_label='staff')
-    staffback = QuerySelectField(u'Staff', query_factory=getRequestor, get_label='staff')
+    staffback = QuerySelectField(u'Staff', query_factory=getRequestor, get_label='staff',default="Unassigned")
     # staff_id = QuerySelectField(u'Staff', query_factory=getRequestor, get_label='staff')
     # assigned= SelectField('Staff Assigned?',choices=[('Chet','Chet'),('Gabriel','Gabriel'),
      # ('John','John'), ('Dr. Hall', 'Dr. Hall'),('Assigned', 'Assigned'), ('Complete', 'Complete'), ('Rejected', 'Rejected'),("Unassigned","Unassigned")],default = "Unassigned") 

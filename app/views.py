@@ -214,11 +214,11 @@ def admin_edit(id,a,s,r):
         .filter(models.Request.staffback.has(staff=formfilter.assigned.data)).all()
     if form.submitRequest.data:
         if form.validate_on_submit():
+            import pdb;pdb.set_trace()                
             form.agency.data=request_to_edit.agency
             # form.assigned.data=form.assigned.data.staff
             if form.status.data=="Complete":
                 form.completeDate=datetime.datetime.utcnow()
-            import pdb;pdb.set_trace()                
             form.populate_obj(request_to_edit)
             # request_to_edit.save()
             db.session.commit()
@@ -342,6 +342,7 @@ def flash_errors(form):
 @login_required
 def requestform(WHICH):
     form = RequestData()
+    form.staffback.data=models.Staff.query.filter_by(staff="Unassigned").first()
     # import pdb;pdb.set_trace()
     if form.validate_on_submit():
       print 'submit'
