@@ -124,27 +124,27 @@ def myrequest():
 def view_request(id):
     test=models.Request.query.filter_by(id=int(id)).first() 
     form=RequestData(obj=test)
-    form.agency.data=''.join(form.agency.data).split(',')
     test
     import pdb;pdb.set_trace()
     if form.submitRequest.data:
-        if form.validate_on_submit():
-            # import pdb;pdb.set_trace()                
-            form.agency.data=','.join(form.agency.data)
-            # form.assigned.data=form.assigned.data.staff
-            if form.status.data=="Complete":
-                if ''.join(get_history(test,'status')[1])==(form.status.data) and test.completeDate != None:
-                    print 'still complete'
-                else:
-                    test.completeDate=datetime.datetime.utcnow()
+        form.agency.data=','.join(form.agency.data)
+    # if form.validate_on_submit():
+        # import pdb;pdb.set_trace()                
+        # form.assigned.data=form.assigned.data.staff
+        if form.status.data=="Complete":
+            if ''.join(get_history(test,'status')[1])==(form.status.data) and test.completeDate != None:
+                print 'still complete'
             else:
-                test.completeDate=None
-            form.populate_obj(test)
-            db.session.commit()
-            flash("Changes saved")
-            return 'chet'
+                test.completeDate=datetime.datetime.utcnow()
         else:
-            flash_errors(form)
+            test.completeDate=None
+        form.populate_obj(reqest.form, test)
+        db.session.commit()
+        flash("Changes saved")
+        return 'chet'
+        # else:
+        #     flash_errors(form)
+    form.agency.data=''.join(form.agency.data).split(',')
     # else:
     #     flash_errors(form)
     #     # import pdb;pdb.set_trace()
