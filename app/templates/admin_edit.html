@@ -227,7 +227,7 @@
       
         <div class="col-md-1">
         </div><div class="col-md-12">
-          <div class="alert alert-info ">
+          <div class="alert alert-info ">{%if request_to_edit.completeDate %} Date Complete {{request_to_edit.completeDate }} {%else%}{% endif %}
        <div class='row '><div class='span4'>Requestor: {{ request_to_edit.username }} </div></div>
          <div class='row '><div class='span4'> Email: {{request_to_edit.email}}</div></div></div>
 <form method=post >   
@@ -243,13 +243,13 @@
 <tr><td><div class='row '><div class='span4'>{{ wtf.form_field(form.status) }}</div></div></td> </div></tr>
 <tr><td><div class='row '><div class='span4'>{{ wtf.form_field(form.    jobTitle) }}</div><div class='span2'></div></td>  <td><div class='span1'>{{ wtf.form_field(form.    RejBooljobTitle) }}</div></td>  <td><div class='span2.5'>{{ wtf.form_field(form.    RejxjobTitle    ) }}</div></td> </div></tr>
 <!-- <tr><td><div class='row '><div class='span4'>{{ wtf.form_field(form.agency) }}</div></div></td> </div></tr> -->
-<tr><td><div class='row '><div class='span4'> {% if form.agency.data %} <div class="well">{{''.join(form.agency.data)}} </div>{% else %} No Agencies listed{% endif %}
+<tr><td><div class='row '><div class='span4'> {% if form.agency.data %} <div class="well">{{ wtf.form_field(form.agency    ) }} data= {{form.agency.data}} </div>{% else %} No Agencies listed{% endif %}
 
   </div></div>
 
              
               </div><div class='span2'></div></td>  <td><div class='span1'>{{ wtf.form_field(form.    RejBoolagency) }}</div></td>  <td><div class='span2.5'>{{ wtf.form_field(form.    Rejxagency      ) }}</div></td> </div></tr>
-<tr><td><div class='row '><div class='span4'>{{ wtf.form_field(form.    audience) }}</div><div class='span2'></div></td>  <td><div class='span1'>{{ wtf.form_field(form.    RejBoolaudience) }}</div></td>  <td><div class='span2.5'>{{ wtf.form_field(form.    Rejxaudience    ) }}</div></td> </div></tr>
+<tr><td><div class='row '><div class='span4'>{{form.audience.data}}</div><div class='span2'></div></td>  <td><div class='span1'>{{ wtf.form_field(form.    RejBoolaudience) }}</div></td>  <td><div class='span2.5'>{{ wtf.form_field(form.    Rejxaudience    ) }}</div></td> </div></tr>
 <tr><td><div class='row '><div class='span4'><h4>What are all the data points you want?</h4>{{ wtf.form_field(form.    columnsRequired) }}</div><div class='span2'></div></td> <td><div class='span1'>{{ wtf.form_field(form.    RejBoolcolumnsRequired) }}</div></td> <td><div class='span2.5'>{{ wtf.form_field(form.    RejxcolumnsRequired     ) }}</div></td> </div></tr>
 <tr><td><div class='row '><div class='span4'> <label>           When would you like to recieve this by?
 

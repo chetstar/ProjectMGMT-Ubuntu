@@ -130,6 +130,7 @@ class Request(db.Model):
     RejBooltimeframeend=  db.Column(db.Boolean())     
     Rejxtimeframeend=  db.Column(db.String(120), index=True)
     staff_id = db.Column(db.Integer, db.ForeignKey('staff.id'))
+    status_id = db.Column(db.Integer, db.ForeignKey('status.id'))
     def __repr__(self):
         return '%r' % (self.jobTitle)
 
@@ -141,6 +142,12 @@ class Staff(db.Model):
     def __repr__(self):
         return (self.staff)
 
+class Status(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    status = db.Column(db.String(100))
+    request = db.relationship('Request', lazy='dynamic', backref='statusback',cascade="all, delete-orphan")
+    def __repr__(self):
+        return (self.status)
 
 from sqlalchemy import distinct
 

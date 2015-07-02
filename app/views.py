@@ -122,20 +122,39 @@ def myrequest():
 @app.route('/viewrequest/<id>/', methods=['GET', 'POST'])
 @login_required
 def view_request(id):
-    request_to_edit=models.Request.query.filter_by(id=int(id)).first() 
-    form=RequestData(obj=request_to_edit)
-    # form.populate_obj(request_to_edit)
-    # import pdb;pdb.set_trace()
-    if request.method == 'POST':
-        # import pdb;pdb.set_trace()
-        request_to_edit.note=form.note.data
-        db.session.commit()
-        return redirect(url_for('allrequest'))
+    test=models.Request.query.filter_by(id=int(id)).first() 
+    form=RequestData(obj=test)
+    form.agency.data=''.join(form.agency.data).split(',')
+    test
+    import pdb;pdb.set_trace()
+    if form.submitRequest.data:
+        if form.validate_on_submit():
+            # import pdb;pdb.set_trace()                
+            form.agency.data=','.join(form.agency.data)
+            # form.assigned.data=form.assigned.data.staff
+            if form.status.data=="Complete":
+                if ''.join(get_history(test,'status')[1])==(form.status.data) and test.completeDate != None:
+                    print 'still complete'
+                else:
+                    test.completeDate=datetime.datetime.utcnow()
+            else:
+                test.completeDate=None
+            form.populate_obj(test)
+            db.session.commit()
+            flash("Changes saved")
+            return 'chet'
+        else:
+            flash_errors(form)
+    # else:
+    #     flash_errors(form)
+    #     # import pdb;pdb.set_trace()
+    #     test.note=form.note.data
+    #     db.session.commit()
     # if delete_form.validate_on_submit():
     #     db.session.delete(ptask)
     #     db.session.commit()
     #     return redirect(url_for('task_outline',name=name,goal=goal,strategy=strategy))
-    return render_template('view_request.html',request_to_edit=request_to_edit ,name=g.user.name,form=form)
+    return render_template('view_request.html',request_to_edit =test,name=g.user.name,form=form)
 
 
 @app.route('/adminedit/<id>/<a>/<s>/<r>', methods=['GET', 'POST'])
@@ -214,18 +233,25 @@ def admin_edit(id,a,s,r):
         .filter(models.Request.staffback.has(staff=formfilter.assigned.data)).all()
     if form.submitRequest.data:
         if form.validate_on_submit():
-            # import pdb;pdb.set_trace()                
-            form.agency.data=request_to_edit.agency
+            import pdb;pdb.set_trace()                
+            form.agency.data=','.join(form.agency.data)
             # form.assigned.data=form.assigned.data.staff
             if form.status.data=="Complete":
-                form.completeDate=datetime.datetime.utcnow()
+                if ''.join(get_history(request_to_edit,'status')[1])==(form.status.data) and request_to_edit.completeDate != None:
+                    print 'still complete'
+                else:
+                    request_to_edit.completeDate=datetime.datetime.utcnow()
+            else:
+                request_to_edit.completeDate=None
             form.populate_obj(request_to_edit)
             # request_to_edit.save()
             db.session.commit()
             flash("Changes saved")
         else:
             flash_errors(form)
-        print 'pdb inside save'
+    else:
+        form.agency.data=''.join(form.agency.data).split(',')
+        # print 'pdb inside save'
         # import pdb;pdb.set_trace()
     # import pdb;pdb.set_trace()
     return render_template('admin_edit.html',a=a,s=s,r=r,request_to_edit=request_to_edit,email=g.user.email,id=id,
@@ -356,7 +382,7 @@ def requestform(WHICH):
         keyQuestions=form.keyQuestions.data, problem=form.problem.data,specialFacts=form.specialFacts.data,requestedBy=form.requestedBy.data, 
         priority=form.priority.data,staffback=models.Staff.query.filter_by(staff="Unassigned").first(),
         timeframe=form.timeframe.data,timeBreakdown=form.timeBreakdown.data,specialPop=form.specialPop.data,ru=form.ru.data,
-        agency=', '.join(form.agency.data),
+        agency=','.join(form.agency.data),
          specialInstructions=form.specialInstructions.data, typeOfService=form.typeOfService.data, timeframestart=form.timeframestart.data, 
          timeframeend=form.timeframeend.data, 
          longDescription=form.longDescription.data, requestDate=datetime.datetime.utcnow(),assigned="Unassigned",status="Pending Review",
