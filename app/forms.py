@@ -5,7 +5,7 @@ from wtforms import TextField, BooleanField, SubmitField, DateField,TextAreaFiel
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 import datetime
 from wtforms.fields.html5 import DateField
-from app.models import getRequestor
+from app.models import getStaff, getStatus
 
 agenList=[
 ('A Better Way','A Better Way'),
@@ -285,7 +285,7 @@ class RequestData(Form):
     specialFacts= TextAreaField('Are there any facts or circumstances we should know to fulfill this request?') 
     note = TextAreaField('Note',)
     # assigned = QuerySelectField(u'Staff', query_factory=getRequestor, get_label='staff')
-    staffback = QuerySelectField(u'Staff', query_factory=getRequestor, get_label='staff',default="Unassigned")
+    staffback = QuerySelectField(u'Staff', query_factory=getStaff, get_label='staff',default="Unassigned")
     # staff_id = QuerySelectField(u'Staff', query_factory=getRequestor, get_label='staff')
     # assigned= SelectField('Staff Assigned?',choices=[('Chet','Chet'),('Gabriel','Gabriel'),
      # ('John','John'), ('Dr. Hall', 'Dr. Hall'),('Assigned', 'Assigned'), ('Complete', 'Complete'), ('Rejected', 'Rejected'),("Unassigned","Unassigned")],default = "Unassigned") 
@@ -294,9 +294,10 @@ class RequestData(Form):
     Response=  TextAreaField('Explantion')
     ourdeadline= DateField( '',  format='%m/%d/%Y',)
     cc_sup=BooleanField('Send request to supervisor?', default=False)
-    status= SelectField(u'Status?',coerce=unicode, choices=[('No Filter','No Filter'),('Needs Action','Needs Action'),('Lower Priority Request','Lower Priority Request'),\
-     ('Incomplete Request','Incomplete Request'), ('Pending Review', 'Pending Review'),
-        ('Assigned', 'Assigned'), ('Complete', 'Complete'), ('Rejected-Hold', 'Rejected-Hold'),("Rejected-Send Back to user","Rejected-Send Back to user")],default='No Filter')
+    statusback = QuerySelectField(u'Status', query_factory=getStatus, get_label='status',default="Pending Review")
+    # status= SelectField(u'Status?',coerce=unicode, choices=[('No Filter','No Filter'),('User Responded','User Responded'),('Needs Action','Needs Action'),('Lower Priority Request','Lower Priority Request'),\
+    #  ('Incomplete Request','Incomplete Request'), ('Pending Review', 'Pending Review'),
+    #     ('Assigned', 'Assigned'), ('Complete', 'Complete'), ('Rejected-Hold', 'Rejected-Hold'),("Rejected-Send Back to user","Rejected-Send Back to user")],default='No Filter')
     RejxkeyQuestions= TextAreaField('Explantion')
     RejxspecialFacts=  TextAreaField('Explantion')
     RejxrequestDate=  TextAreaField('Explantion')
@@ -341,8 +342,8 @@ class RequestData(Form):
     RejBooldeadlineWhy =  BooleanField('Incomplete.', default=0)
     RejBooltimeframestart = BooleanField('Incomplete.', default=0)
     RejBooltimeframeend=  BooleanField('Incomplete.', default=0)
-    UserAction= SelectField('Are you finished editing?',choices=[('Save and Hold','Save and Hold'),
-        ('Save and Submit','Save and Submit')],default = "Save and Hold") 
+    UserAction= SelectField('Are you finished editing?',choices=[('No, I want save and keep working','No, I want save and keep working'),
+        ('Save, and send back for review','Save, and send back for review')],default = "No, I want save and keep working") 
     submitRequest=SubmitField('Submit')
 
 class UserRequestData(Form):
@@ -381,9 +382,10 @@ class UserRequestData(Form):
 # session.query(func.count(distinct(User.name)))
 # http://stackoverflow.com/questions/21579373/sqlalchemy-wtforms-set-default-selected-value-for-queryselectfield
 class filterRequests(Form):
-    status= SelectField(u'Status?',coerce=unicode, choices=[('No Filter','No Filter'),('Needs Action','Needs Action'),('Lower Priority Request','Lower Priority Request'),\
-     ('Incomplete Request','Incomplete Request'), ('Pending Review', 'Pending Review'),
-        ('Assigned', 'Assigned'), ('Complete', 'Complete'), ('Rejected-Hold', 'Rejected-Hold'),("Rejected-Send Back to user","Rejected-Send Back to user")],default='No Filter')
+    # status= SelectField(u'Status?',coerce=unicode, choices=[('No Filter','No Filter'),('User Responded','User Responded'),('Needs Action','Needs Action'),('Lower Priority Request','Lower Priority Request'),\
+    #  ('Incomplete Request','Incomplete Request'), ('Pending Review', 'Pending Review'),
+    #     ('Assigned', 'Assigned'), ('Complete', 'Complete'), ('Rejected-Hold', 'Rejected-Hold'),("Rejected-Send Back to user","Rejected-Send Back to user")],default='No Filter')
+    status= SelectField(u'Status',default='No Filter')
     requestedBy= SelectField(u'Requestor',default='No Filter')
     assigned= SelectField(u'Assigned',default='No Filter')
     # requestor = QuerySelectField(u'Requestor', query_factory=getRequestor, get_label='requestedBy')

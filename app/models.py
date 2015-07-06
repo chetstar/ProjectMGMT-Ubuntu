@@ -131,6 +131,11 @@ class Request(db.Model):
     Rejxtimeframeend=  db.Column(db.String(120), index=True)
     staff_id = db.Column(db.Integer, db.ForeignKey('staff.id'))
     status_id = db.Column(db.Integer, db.ForeignKey('status.id'))
+    Rejxemanio=  db.Column(db.String(120), index=True)
+    RejBoolemanio=  db.Column(db.Boolean()) 
+    RejxMHorSUD=  db.Column(db.String(120), index=True)
+    RejBoolMHorSUD=  db.Column(db.Boolean())   
+    UserAction=  db.Column(db.String(120), index=True)
     def __repr__(self):
         return '%r' % (self.jobTitle)
 
@@ -151,8 +156,10 @@ class Status(db.Model):
 
 from sqlalchemy import distinct
 
-def getRequestor():
+def getStaff():
     u = Staff.query
     return u
 
-
+def getStatus():
+    u = Status.query
+    return u

@@ -213,7 +213,7 @@
 <td>{{field.deadlinedate.isoformat().split('T')[0]}}</td>
         <td>{{field.requestedBy}}</td>
           <td>{{field.staffback.staff}}</td>
-          <td>{{field.status}}</td>
+          <td>{{field.statusback}}</td>
           <td><a href="{{ url_for('edit_request', id = field.id) }}" ><span class="glyphicon glyphicon-pencil"></span> Add a note </a> </td>
   
 </tr> </li>
@@ -239,7 +239,7 @@
 </thead>
 <tbody>
 <ol type="1">
-<tr><td><div class='row '><div class='span4'>{{ wtf.form_field(form.status) }}</div></div></td> </div></tr>
+<tr><td><div class='row '><div class='span4'>{{ wtf.form_field(form.statusback) }}</div></div></td> </div></tr>
 <tr><td><div class='row '><div class='span4'>{{ wtf.form_field(form.    jobTitle) }}</div><div class='span2'></div></td>  <td><div class='span1'>{{ wtf.form_field(form.    RejBooljobTitle) }}</div></td>  <td><div class='span2.5'>{{ wtf.form_field(form.    RejxjobTitle    ) }}</div></td> </div></tr>
 <!-- <tr><td><div class='row '><div class='span4'>{{ wtf.form_field(form.agency) }}</div></div></td> </div></tr> -->
 <tr><td><div class='row '><div class='span4'> {% if form.agency.data %} <div class="well">{{ wtf.form_field(form.agency    ) }} data= {{form.agency.data}} </div>{% else %} No Agencies listed{% endif %}
@@ -286,9 +286,10 @@
 <tr><td><div class='row '><div class='span4'>{{ wtf.form_field(form.    emanio) }}</div><div class='span2'></div></td>  <td><div class='span1'>{{ wtf.form_field(form.RejBoolemanio) }}</div></td>  <td><div class='span2.5'>{{ wtf.form_field(form.Rejxemanio) }}</div></td> </div></tr>
 <tr><td><div class='row '><div class='span4'><h3>Is this MHS or SUD Services related?</h3>{{ wtf.form_field(form.    MHorSUD) }}</div><div class='span2'></div></td> <td><div class='span1'>{{ wtf.form_field(form.    RejBoolMHorSUD) }}</div></td> <td><div class='span2.5'>{{ wtf.form_field(form.    RejxMHorSUD) }}</div></td>  </div>
   <tr><td><div class='row '><div class='span4'>{{ wtf.form_field(form.    staffback) }}</div><div class='span2'></div></td>      </div></tr>
-  
+  <tr><td><div class='row '><div class='span4'>{{ wtf.form_field(form.UserAction) }}</div><div class='span2'></div></td></div></td></tr>
 
 <tr><td><div class='row '><div class='span4'>cc sup?{{ wtf.form_field(form.cc_sup) }}</div><div class='span2'></div></td>      </div></tr>
+<tr><td><div class='row '><div class='span4'>Additional Notes{{ wtf.form_field(form.note) }}</div><div class='span2'></div></td>      </div></tr>
 
 
 </div><div class='span2'></div></td>
