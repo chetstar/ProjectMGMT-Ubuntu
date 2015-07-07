@@ -109,6 +109,8 @@ class Request(db.Model):
     Rejxagency=  db.Column(db.String(120), index=True)
     RejBoolru =  db.Column(db.Boolean())      
     Rejxru =  db.Column(db.String(120), index=True)
+    RejBoolsupervisor =  db.Column(db.Boolean())      
+    Rejxsupervisor =  db.Column(db.String(120), index=True)
     RejBooltypeOfService=  db.Column(db.Boolean())        
     RejxtypeOfService=  db.Column(db.String(120), index=True)
     RejBooljobTitle=  db.Column(db.Boolean())     

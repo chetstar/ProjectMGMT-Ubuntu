@@ -8,7 +8,7 @@ db.session.add(x)
 db.session.commit()
 g=models.Staff(staff='Unassigned',privelage='')
 x=models.Staff(staff='Chet Meinzer',privelage='admin')
-y=models.Staff(staff='fake user',privelage='')
+y=models.Staff(staff='Hall',privelage='')
 
 db.session.add(y)
 db.session.add(x)

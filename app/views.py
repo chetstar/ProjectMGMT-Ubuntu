@@ -423,9 +423,10 @@ def requestform(WHICH):
       # form.agency.data=', '.join(form.agency.data)
       # form.populate_obj(p)
       p=models.Request(email=g.user.email,username=g.user.name,jobTitle=form.jobTitle.data,deadlinedate=form.deadlinedate.data,
-        emanio=form.emanio.data,MHorSUD=form.MHorSUD.data,
-        keyQuestions=form.keyQuestions.data, problem=form.problem.data,specialFacts=form.specialFacts.data,requestedBy=form.requestedBy.data, 
-        priority=form.priority.data,staffback=models.Staff.query.filter_by(staff="Unassigned").first(),statusback=models.Status.query.filter_by(status="Pending Review").first(),
+        emanio=form.emanio.data,MHorSUD=form.MHorSUD.data,supervisor=form.supervisor.data,
+        keyQuestions=form.keyQuestions.data, problem=form.problem.data,specialFacts=form.specialFacts.data,requestedBy=g.user.name, 
+        priority=form.priority.data,staffback=models.Staff.query.filter_by(staff="Unassigned").first(),
+        statusback=models.Status.query.filter_by(status="Pending Review").first(),
         timeframe=form.timeframe.data,timeBreakdown=form.timeBreakdown.data,specialPop=form.specialPop.data,ru=form.ru.data,
         agency=','.join(form.agency.data),
          specialInstructions=form.specialInstructions.data, typeOfService=form.typeOfService.data, timeframestart=form.timeframestart.data, 
