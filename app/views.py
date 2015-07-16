@@ -1,6 +1,6 @@
 from app import app,models, db
 # from forms import goal_form, strategy_form, project_form, task_form,DeleteRow_form,ldapA,LoginForm, Request, Which,Staff
-from forms import LoginForm, RequestData, Which,Staff,ldapA
+from forms import LoginForm, RequestData, Which,ldapA, filterRequests, UserRequestData
 import datetime
 from sqlalchemy.orm.attributes import get_history
 from werkzeug import secure_filename
@@ -20,6 +20,33 @@ import ldap
 from flask import render_template, flash, redirect,Flask,Response,request,url_for, g,session,jsonify
 login_manager = LoginManager()
 login_manager.init_app(app) 
+
+
+requestvars=['agency',
+'audience',
+'columnsRequired',
+'deadlinedate',
+'deadlinetime',
+'deadlineWhy',
+'jobTitle',
+'keyQuestions',
+'longDescription',
+'priority',
+'problem',
+'requestDate',
+'requestedBy',
+'ru',
+'specialFacts',
+'specialInstructions',
+'specialPop',
+'timeBreakdown',
+'timeframe',
+'timeframeend',
+'timeframestart',
+'typeOfService',
+'emanio',
+'MHorSUD',]
+
 
 # login_manager.session_protection = None
 #login_managerlogin_view = 'login'
@@ -68,6 +95,7 @@ def user_loader(user_id):
     return models.User.query.get(user_id)
 
 @app.route("/main")
+@login_required
 def main():
     return render_template("main.html")
 
@@ -122,22 +150,153 @@ def myrequest():
 @app.route('/viewrequest/<id>/', methods=['GET', 'POST'])
 @login_required
 def view_request(id):
-    request_to_edit=models.Request.query.filter_by(id=int(id)).first() 
-    form=RequestData(obj=request_to_edit)
-    # form.populate_obj(request_to_edit)
+    test=models.Request.query.filter_by(id=int(id)).first() 
+    form=RequestData(obj=test)
+    test
     # import pdb;pdb.set_trace()
-    if request.method == 'POST':
-        # import pdb;pdb.set_trace()
-        request_to_edit.note=form.note.data
-        db.session.commit()
-        return redirect(url_for('allrequest'))
+    if form.submitRequest.data:
+        form.agency.data=','.join(form.agency.data)
+        for field in requestvars:
+            fbool_value=getattr(test,"RejBool"+field)
+            if fbool_value==True:
+                f_value =getattr(test,field)
+                fform_value=getattr(form,field).data
+                f_value=fform_value         
+                setattr(test, field, fform_value)   
+        test.UserAction=form.UserAction.data        
+        import pdb;pdb.set_trace()
+        db.session.commit()   
+    # if form.validate_on_submit():
+        # import pdb;pdb.set_trace()                
+        # form.assigned.data=form.assigned.data.staff
+        if form.status.data=="Complete":
+            if ''.join(get_history(test,'status')[1])==(form.status.data) and test.completeDate != None:
+                print 'still complete'
+            else:
+                test.completeDate=datetime.datetime.utcnow()
+        else:
+            test.completeDate=None
+        # form.populate_obj(reqest.form, test)
+        # db.session.commit()
+        flash("Changes saved")
+        return redirect(url_for('followup'))
+        # else:
+        #     flash_errors(form)
+    form.agency.data=''.join(form.agency.data).split(',')
+    # else:
+    #     flash_errors(form)
+    #     # import pdb;pdb.set_trace()
+    #     test.note=form.note.data
+    #     db.session.commit()
     # if delete_form.validate_on_submit():
     #     db.session.delete(ptask)
     #     db.session.commit()
     #     return redirect(url_for('task_outline',name=name,goal=goal,strategy=strategy))
-    return render_template('view_request.html',request_to_edit=request_to_edit ,name=g.user.name,form=form)
+    return render_template('view_request.html',request_to_edit =test,name=g.user.name,form=form)
 
 
+@app.route('/adminedit/<id>/<a>/<s>/<r>', methods=['GET', 'POST'])
+@login_required
+def admin_edit(id,a,s,r):
+    request_to_edit=models.Request.query.filter_by(id=int(id)).first() 
+    form=RequestData(obj=request_to_edit)
+    # import pdb;pdb.set_trace()
+    formfilter=filterRequests()
+    RB= list(set([h.requestedBy for h in models.Request.query.all()]))
+    RB.append('No Filter')
+    formfilter.requestedBy.choices=zip(RB,RB)
+    AT= list(set([h.staffback for h in models.Request.query.all()]))
+    AT.append('No Filter')
+    formfilter.assigned.choices=zip(AT,AT)
+    ST= list(set([h.statusback for h in models.Request.query.all()]))
+    ST.append('No Filter')
+    formfilter.status.choices=zip(ST,ST)
+    # requestlist=rl
+    # requestlist= models.Request.query.all() 
+    # import pdb;pdb.set_trace()
+
+    # if request.method == 'POST' and  formFilter.submitrequest.data:
+    # import pdb;pdb.set_trace()
+    if formfilter.submitFilter.data:
+        # if formfilter.validate_on_submit():
+            s=formfilter.status.data
+            a=formfilter.assigned.data
+            r=formfilter.requestedBy.data
+            # form=RequestData(obj=request_to_edit)
+            if formfilter.status.data=='No Filter' and formfilter.assigned.data=='No Filter' and formfilter.requestedBy.data=='No Filter':
+                    requestlist= models.Request.query.all() 
+            elif formfilter.status.data != 'No Filter' and formfilter.assigned.data=='No Filter' and formfilter.requestedBy.data=='No Filter':
+                requestlist = db.session.query(models.Request).filter(models.Request.statusback.has(status=formfilter.status.data)).all()
+            elif formfilter.status.data == 'No Filter' and formfilter.assigned.data!='No Filter' and formfilter.requestedBy.data=='No Filter':
+                requestlist = db.session.query(models.Request).filter(models.Request.staffback.has(staff=formfilter.assigned.data)).all()
+            elif formfilter.status.data == 'No Filter' and formfilter.assigned.data=='No Filter' and formfilter.requestedBy.data!='No Filter':
+                requestlist = db.session.query(models.Request).filter(models.Request.requestedBy.like(formfilter.requestedBy.data)).all()
+            elif formfilter.status.data != 'No Filter' and formfilter.assigned.data=='No Filter' and formfilter.requestedBy.data!='No Filter':
+                requestlist = db.session.query(models.Request).filter(models.Request.requestedBy.like(formfilter.requestedBy.data))\
+                .filter(models.Request.statusback.has(status=formfilter.status.data)).all()
+            elif formfilter.status.data == 'No Filter' and formfilter.assigned.data !='No Filter' and formfilter.requestedBy.data!='No Filter':
+                requestlist = db.session.query(models.Request).filter(models.Request.requestedBy.like(formfilter.requestedBy.data))\
+                .filter(models.Request.staffback.has(staff=formfilter.assigned.data)).all()
+            elif formfilter.status.data != 'No Filter' and formfilter.assigned.data !='No Filter' and formfilter.requestedBy.data =='No Filter':
+                requestlist = db.session.query(models.Request).filter(models.Request.statusback.has(status=formfilter.status.data))\
+                .filter(models.Request.staffback.has(staff=formfilter.assigned.data)).all()
+            elif formfilter.status.data != 'No Filter' and formfilter.assigned.data !='No Filter' and formfilter.requestedBy.data !='No Filter':
+                requestlist = db.session.query(models.Request).filter(models.Request.statusback.has(status=formfilter.status.data))\
+                .filter(models.Request.requestedBy.like(formfilter.requestedBy.data))\
+                .filter(models.Request.staffback.has(staff=formfilter.assigned.data)).all()
+            # formfilter.status.data=s
+            # formfilter.assigned.data=a
+            # formfilter.requestedBy.data=r
+            return redirect(url_for('admin_edit',id=id,a=a,s=s,r=r))
+    formfilter.status.data=s
+    formfilter.assigned.data=a
+    formfilter.requestedBy.data=r
+    if formfilter.status.data=='No Filter' and formfilter.assigned.data=='No Filter' and formfilter.requestedBy.data=='No Filter':
+            requestlist= models.Request.query.all() 
+    elif formfilter.status.data != 'No Filter' and formfilter.assigned.data=='No Filter' and formfilter.requestedBy.data=='No Filter':
+        requestlist = db.session.query(models.Request).filter(models.Request.statusback.has(status=formfilter.status.data)).all()
+    elif formfilter.status.data == 'No Filter' and formfilter.assigned.data!='No Filter' and formfilter.requestedBy.data=='No Filter':
+        requestlist = db.session.query(models.Request).filter(models.Request.staffback.has(staff=formfilter.assigned.data)).all()
+    elif formfilter.status.data == 'No Filter' and formfilter.assigned.data=='No Filter' and formfilter.requestedBy.data!='No Filter':
+        requestlist = db.session.query(models.Request).filter(models.Request.requestedBy.like(formfilter.requestedBy.data)).all()
+    elif formfilter.status.data != 'No Filter' and formfilter.assigned.data=='No Filter' and formfilter.requestedBy.data!='No Filter':
+        requestlist = db.session.query(models.Request).filter(models.Request.requestedBy.like(formfilter.requestedBy.data))\
+        .filter(models.Request.statusback.has(status=formfilter.status.data)).all()
+    elif formfilter.status.data == 'No Filter' and formfilter.assigned.data !='No Filter' and formfilter.requestedBy.data!='No Filter':
+        requestlist = db.session.query(models.Request).filter(models.Request.requestedBy.like(formfilter.requestedBy.data))\
+        .filter(models.Request.staffback.has(staff=formfilter.assigned.data)).all()
+    elif formfilter.status.data != 'No Filter' and formfilter.assigned.data !='No Filter' and formfilter.requestedBy.data =='No Filter':
+        requestlist = db.session.query(models.Request).filter(models.Request.statusback.has(status=formfilter.status.data))\
+        .filter(models.Request.staffback.has(staff=formfilter.assigned.data)).all()
+    elif formfilter.status.data != 'No Filter' and formfilter.assigned.data !='No Filter' and formfilter.requestedBy.data !='No Filter':
+        requestlist = db.session.query(models.Request).filter(models.Request.statusback.has(status=formfilter.status.data))\
+        .filter(models.Request.requestedBy.like(formfilter.requestedBy.data))\
+        .filter(models.Request.staffback.has(staff=formfilter.assigned.data)).all()
+    if form.submitRequest.data:
+        if form.validate_on_submit():
+            import pdb;pdb.set_trace()                
+            form.agency.data=','.join(form.agency.data)
+            # form.assigned.data=form.assigned.data.staff
+            if form.statusback.data=="Complete":
+                if ''.join(get_history(request_to_edit,'statusback')[1])==(form.statusback.data) and request_to_edit.completeDate != None:
+                    print 'still complete'
+                else:
+                    request_to_edit.completeDate=datetime.datetime.utcnow()
+            else:
+                request_to_edit.completeDate=None
+            form.populate_obj(request_to_edit)
+            # request_to_edit.save()
+            db.session.commit()
+            flash("Changes saved")
+        else:
+            flash_errors(form)
+    else:
+        form.agency.data=''.join(form.agency.data).split(',')
+        # print 'pdb inside save'
+        # import pdb;pdb.set_trace()
+    # import pdb;pdb.set_trace()
+    return render_template('admin_edit.html',a=a,s=s,r=r,request_to_edit=request_to_edit,email=g.user.email,id=id,
+        name=g.user.name,form=form,requestlist=requestlist,formfilter=formfilter)
 
 @app.route('/edit_request/<id>/', methods=['GET', 'POST'])
 @login_required
@@ -162,67 +321,198 @@ def edit_request(id):
 @app.route("/followup",methods=["GET","POST"])
 @login_required
 def followup():
+    print 'follow up'
     # import pdb;pdb.set_trace()
-    requestlist= models.Request.query.filter_by(email=g.user.email).all() 
-    return render_template("followup.html",email=g.user.email,name=g.user.name,requestlist=requestlist)
+    # requestlist= models.Request.query.filter_by(email=g.user.email).all() 
+    return render_template("followup.html",email=g.user.email,name=g.user.name)
 
+
+@app.route("/request_management",methods=["GET","POST"])
+@login_required
+def Request_management():
+    form=filterRequests()
+    formRequest = RequestData( )
+      # db.session.query(models.Request).filter(models.Request.requestedBy.like('2'))\
+      # .filter(models.Request.requestedBy.like('2'))\
+      # .filter(models.Request.assigned.like('Unassigned')).all()
+      # import pdb;pdb.set_trace()
+      # p=models.Request(email=g.user.email,username=g.user.name,jobTitle=form.jobTitle.data,deadlinedate=form.deadlinedate.data,emanio=form.emanio.data,MHorSUD=form.MHorSUD.data,
+      #   keyQuestions=form.keyQuestions.data, problem=form.problem.data,specialFacts=form.specialFacts.data,requestedBy=form.requestedBy.data, priority=form.priority.data,
+      #   timeframe=form.timeframe.data,timeBreakdown=form.timeBreakdown.data,specialPop=form.specialPop.data,agency=form.agency.data,ru=form.ru.data,
+      #    specialInstructions=form.specialInstructions.data, typeOfService=form.typeOfService.data, timeframestart=form.timeframestart.data, timeframeend=form.timeframeend.data, 
+      #    longDescription=form.longDescription.data, requestDate=datetime.datetime.utcnow(),assigned="Unassigned",
+      #    audience=form.audience.data,  columnsRequired=form.columnsRequired.data, deadlinetime=form.deadlinetime.data, deadlineWhy=form.deadlineWhy.data)
+      # db.session.add(p)
+      # db.session.commit() 
+    RB= list(set([h.requestedBy for h in models.Request.query.all()]))
+    RB.append('No Filter')
+    form.requestedBy.choices=zip(RB,RB)
+    AT= list(set([h.staffback for h in models.Request.query.all()]))
+    AT.append('No Filter')
+    form.assigned.choices=zip(AT,AT)
+    ST= list(set([h.statusback for h in models.Request.query.all()]))
+    ST.append('No Filter')
+    form.status.choices=zip(ST,ST)
+    requestlist= models.Request.query.all() 
+    # if form.validate_on_submit():
+    if form.submitFilter.data:
+        if form.status.data=='No Filter' and form.assigned.data=='No Filter' and form.requestedBy.data=='No Filter':
+                requestlist= models.Request.query.all() 
+        elif form.status.data != 'No Filter' and form.assigned.data=='No Filter' and form.requestedBy.data=='No Filter':
+            requestlist = db.session.query(models.Request).filter(models.Request.statusback.has(status=form.status.data)).all()
+        elif form.status.data == 'No Filter' and form.assigned.data!='No Filter' and form.requestedBy.data=='No Filter':
+            requestlist = db.session.query(models.Request).filter(models.Request.staffback.has(staff=form.assigned.data)).all()
+        elif form.status.data == 'No Filter' and form.assigned.data=='No Filter' and form.requestedBy.data!='No Filter':
+            requestlist = db.session.query(models.Request).filter(models.Request.requestedBy.like(form.requestedBy.data)).all()
+        elif form.status.data != 'No Filter' and form.assigned.data=='No Filter' and form.requestedBy.data!='No Filter':
+            requestlist = db.session.query(models.Request).filter(models.Request.requestedBy.like(form.requestedBy.data))\
+            .filter(models.Request.statusback.has(status=form.status.data)).all()
+        elif form.status.data == 'No Filter' and form.assigned.data !='No Filter' and form.requestedBy.data!='No Filter':
+            requestlist = db.session.query(models.Request).filter(models.Request.requestedBy.like(form.requestedBy.data))\
+            .filter(models.Request.staffback.has(staff=form.assigned.data)).all()
+        elif form.status.data != 'No Filter' and form.assigned.data !='No Filter' and form.requestedBy.data =='No Filter':
+            requestlist = db.session.query(models.Request).filter(models.Request.statusback.has(status=form.status.data))\
+            .filter(models.Request.staffback.has(staff=form.assigned.data)).all()
+        elif form.status.data != 'No Filter' and form.assigned.data !='No Filter' and form.requestedBy.data !='No Filter':
+            requestlist = db.session.query(models.Request).filter(models.Request.statusback.has(status=form.status.data))\
+            .filter(models.Request.requestedBy.like(form.requestedBy.data))\
+            .filter(models.Request.staffback.has(staff=form.assigned.data)).all()
+    else:
+        form.status.data='No Filter'  
+        form.assigned.data='No Filter'  
+        form.requestedBy.data='No Filter'
+                              # requestlist = db.session.query(models.Request).filter(models.Request.statusback.has(status=form.status.data))\
+      # .filter(models.Request.requestedBy.like('2'))\
+      # .filter(models.Request.assigned.like('Unassigned')).all()
+    return render_template("request_management.html",email=g.user.email,name=g.user.name,requestlist=requestlist,form=form,formRequest=formRequest,
+     s=form.status.data,a= form.assigned.data,r= form.requestedBy.data)
+
+# db.session.query(
+#     models.Staff.id,
+#     models.Request
+#     ).join(models.Request, models.Staff.request).all()
+# db.session.query(models.Request).join(models.Request, models.Staff.request).filter(models.Staff.id.any(1)).all()
+# models.
+# patients = Patient.query.filter(Patient.mother.has(phenoscore=10))
+# or join (usually faster):
+
+# patients = Patient.query.join(Patient.mother, aliased=True)\
+#                     .filter_by(phenoscore=10)
+# db.session.query(models.Request).filter(models.Request.staffback.has(staff='fake user')).all()
     
+def flash_errors(form):
+    for field, errors in form.errors.items():
+        for error in errors:
+            flash(u"Error in the %s field - %s" % (
+                getattr(form, field).label.text,
+                error
+            ))
+# agency=','.join(form.agency.data)
+
 @app.route("/requestform/<WHICH>",methods=["GET","POST"])
 @login_required
 def requestform(WHICH):
-    form = RequestData()
+    form = UserRequestData()
+    # form.staffback.data=models.Staff.query.filter_by(staff="Unassigned").first()
     # import pdb;pdb.set_trace()
     if form.validate_on_submit():
       print 'submit'
       # import pdb;pdb.set_trace()
-      p=models.Request(email=g.user.email,username=g.user.name,jobTitle=form.jobTitle.data,deadlinedate=form.deadlinedate.data,emanio=form.emanio.data,MHorSUD=form.MHorSUD.data,
-        keyQuestions=form.keyQuestions.data, problem=form.problem.data,specialFacts=form.specialFacts.data,requestedBy=form.requestedBy.data, priority=form.priority.data,
-        timeframe=form.timeframe.data,timeBreakdown=form.timeBreakdown.data,specialPop=form.specialPop.data,agency=form.agency.data,ru=form.ru.data,
-         specialInstructions=form.specialInstructions.data, typeOfService=form.typeOfService.data, timeframestart=form.timeframestart.data, timeframeend=form.timeframeend.data, 
-         longDescription=form.longDescription.data, requestDate=datetime.datetime.utcnow(),
-         audience=form.audience.data,  columnsRequired=form.columnsRequired.data, deadlinetime=form.deadlinetime.data, deadlineWhy=form.deadlineWhy.data)
+      # p=models.Request(email=g.user.email,username=g.user.name,
+      #  requestDate=datetime.datetime.utcnow(),assigned="Unassigned",status="Pending Review")
+      # form.agency.data=', '.join(form.agency.data)
+      # form.populate_obj(p)
+      p=models.Request(email=g.user.email,username=g.user.name,jobTitle=form.jobTitle.data,deadlinedate=form.deadlinedate.data,
+        emanio=form.emanio.data,MHorSUD=form.MHorSUD.data,supervisor=form.supervisor.data,
+        keyQuestions=form.keyQuestions.data, problem=form.problem.data,specialFacts=form.specialFacts.data,requestedBy=g.user.name, 
+        priority=form.priority.data,staffback=models.Staff.query.filter_by(staff="Unassigned").first(),
+        statusback=models.Status.query.filter_by(status="Pending Review").first(),
+        timeframe=form.timeframe.data,timeBreakdown=form.timeBreakdown.data,specialPop=form.specialPop.data,ru=form.ru.data,
+        agency=','.join(form.agency.data),
+         specialInstructions=form.specialInstructions.data, typeOfService=form.typeOfService.data, timeframestart=form.timeframestart.data, 
+         timeframeend=form.timeframeend.data, 
+         longDescription=form.longDescription.data, requestDate=datetime.datetime.utcnow(),assigned="Unassigned",status="Pending Review",
+         audience=form.audience.data,  columnsRequired=form.columnsRequired.data, deadlinetime=form.deadlinetime.data, 
+         deadlineWhy=form.deadlineWhy.data)
       db.session.add(p)
       db.session.commit()
-      return redirect(url_for('followup'))
+      #send email to user and admin
+      return redirect(url_for('Request_management'))
     else:
-        flash('validation fail')
+        flash_errors(form)
     if WHICH=='1':
         print 'short!!'
         return render_template("short.html",email=g.user.email,name=g.user.name,form=form)
     else:
         return render_template("long.html",email=g.user.email,name=g.user.name,form=form)
 
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
+        # next = flask.request.args.get('next')
         try:
-            l = ldap.initialize("ldap://10.129.18.101")
-            l.simple_bind_s("program\%s" % form.username.data,form.password.data)
+            # l = ldap.initialize("ldap://10.129.18.101")
+            # l.simple_bind_s("program\%s" % form.username.data,form.password.data)
             print "Authentification Successful"
-            r=l.search_s('cn=Users,dc=BHCS,dc=Internal',ldap.SCOPE_SUBTREE,'(sAMAccountName=*%s*)' % form.username.data,['mail','objectGUID','displayName'])
-            email=r[0][1]['mail'][0]   
+            # r=l.search_s('cn=Users,dc=BHCS,dc=Internal',ldap.SCOPE_SUBTREE,'(sAMAccountName=*%s*)' % form.username.data,['mail','objectGUID','displayName'])
+            # email=r[0][1]['mail'][0]   
             # print email
-            GUID=r[0][1]['objectGUID'][0]   
-            FullName=r[0][1]['displayName'][0] 
-            import uuid
-            guid = uuid.UUID(bytes=GUID)
+            # GUID=r[0][1]['objectGUID'][0]   
+            # FullName=r[0][1]['displayName'][0] 
+            # import uuid
+            # guid = uuid.UUID(bytes=GUID)
             # print form.remember_me.data
             # g.user = current_user
-            if not models.User.query.filter_by(email=unicode(email)).first(): 
-              p=models.User(name=FullName,email=email)
-              db.session.add(p)
-              db.session.commit()            
+            # if not models.User.query.filter_by(email=unicode(email)).first(): 
+            #   p=models.User(name=FullName,email=email)
+            #   db.session.add(p)
+            #   db.session.commit()   
+            namedb=models.User.query.filter_by(name=unicode(form.username.data)).first()
+            email=models.User.query.first().email         
             login_user(user_loader(unicode(email)),remember=form.remember_me.data)
             flash("Logged in successfully.")
             g.email=email
             session['logged_in'] = True
             # import pdb;pdb.set_trace()
-            return redirect( url_for("pickaform"))
+            return redirect( url_for("main"))
         except Exception as e:
             flash("Invalid Credentials.")
             return render_template("login.html", form=form)
     return render_template("login.html", form=form)
+
+# @app.route("/login", methods=["GET", "POST"])
+# def login():
+#     form = LoginForm()
+#     if form.validate_on_submit():
+#         try:
+#             l = ldap.initialize("ldap://10.129.18.101")
+#             l.simple_bind_s("program\%s" % form.username.data,form.password.data)
+#             print "Authentification Successful"
+#             r=l.search_s('cn=Users,dc=BHCS,dc=Internal',ldap.SCOPE_SUBTREE,'(sAMAccountName=*%s*)' % form.username.data,['mail','objectGUID','displayName'])
+#             email=r[0][1]['mail'][0]   
+#             # print email
+#             GUID=r[0][1]['objectGUID'][0]   
+#             FullName=r[0][1]['displayName'][0] 
+#             import uuid
+#             guid = uuid.UUID(bytes=GUID)
+#             # print form.remember_me.data
+#             # g.user = current_user
+#             if not models.User.query.filter_by(email=unicode(email)).first(): 
+#               p=models.User(name=FullName,email=email)
+#               db.session.add(p)
+#               db.session.commit()            
+#             login_user(user_loader(unicode(email)),remember=form.remember_me.data)
+#             flash("Logged in successfully.")
+#             g.email=email
+#             session['logged_in'] = True
+#             # import pdb;pdb.set_trace()
+#             return redirect( url_for("pickaform"))
+#         except Exception as e:
+#             flash("Invalid Credentials.")
+#             return render_template("login.html", form=form)
+#     return render_template("login.html", form=form)
 # USERS.get('\x92\xbc\xe1\x9d\xf2\x03\x96K\x9d\xbb\xe7\x91\x1f\x07N\x86')
 # @app.route('/')
 # def index():

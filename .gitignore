@@ -30,7 +30,8 @@ var/
 *.manifest
 *.spec
 startboot*
-
+*.pyc
+.pyc
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt

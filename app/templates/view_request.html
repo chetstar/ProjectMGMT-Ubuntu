@@ -5,11 +5,55 @@
 {% block content %}
           
   <h1>Hi {{name}} </h1>
-    <div class="row">     <div class='col-sm-2'></div>
-         <div class='col-sm-8'><div class="well">
-        
-  <form method=post >   
-  {{ wtf.quick_form(form) }} </form>
-   </div>
-   <div class="row">     </div></div></div>    
+<div class="container" color=black>
+      
+       
+          <div class="alert alert-info ">
+       <div class='row '><div class='span4'>   {{request_to_edit.jobTitle}} </div></div>
+       <div class='row '><div class='span4'>Requestor: {{ request_to_edit.username }} </div></div>
+         <div class='row '><div class='span4'> Email: {{request_to_edit.email}}</div></div></div>
+<form method=post >   
+ <table class="table table-striped" >
+<!-- <table id="myTable" class="tablesorter"> -->
+<thead>
+<h3><strong><tr><th>our response</th>
+<th>Please change this field</th><font color="white">________________</font>
+<th><font color="white">______________________</font></th></tr></strong></h3>
+</thead></div>
+<tbody>
+<ol type="1">
+{{ form.hidden_tag() }}
+{% if form.RejBoolagency.data %}  <tr><td><div class='row '><div class='span3'>{{form.Rejxagency.data}}</div></td> <td><div class='span3'>{{ wtf.form_field(form.agency) }} </div></td> <td><div class='span2.5'></div></td> </div></tr></td>{% endif %}
+{% if form.RejBoolaudience.data %}  <tr><td><div class='row '><div class='span3'>{{form.Rejxaudience.data}}</div></td> <td><div class='span3'>{{ wtf.form_field(form.audience) }} </div></td> <td><div class='span2.5'></div></td> </div></tr></td>{% endif %}
+{% if form.RejBoolcolumnsRequired.data %}  <tr><td><div class='row '><div class='span3'>{{form.RejxcolumnsRequired.data}}</div></td> <td><div class='span3'>{{ wtf.form_field(form.columnsRequired) }} </div></td> <td><div class='span2.5'></div></td> </div></tr></td>{% endif %}
+
+
+
+{% if form.RejBooldeadlinedate.data %}  <tr><td><div class='row '><div class='span3'>{{form.Rejxdeadlinedate.data}}</div></td> <td><div class='span3'>{{ wtf.form_field(form.deadlinedate) }} </div></td> <td><div class='span2.5'></div></td> </div></tr></td>{% endif %}
+{% if form.RejBooldeadlinetime.data %}  <tr><td><div class='row '><div class='span3'>{{form.Rejxdeadlinetime.data}}</div></td> <td><div class='span3'>{{ wtf.form_field(form.deadlinetime) }} </div></td> <td><div class='span2.5'></div></td> </div></tr></td>{% endif %}
+{% if form.RejBooldeadlineWhy.data %}  <tr><td><div class='row '><div class='span3'>{{form.RejxdeadlineWhy.data}}</div></td> <td><div class='span3'>{{ wtf.form_field(form.deadlineWhy) }} </div></td> <td><div class='span2.5'></div></td> </div></tr></td>{% endif %}
+{% if form.RejBooljobTitle.data %}  <tr><td><div class='row '><div class='span3'>{{form.RejxjobTitle.data}}</div></td> <td><div class='span3'>{{ wtf.form_field(form.jobTitle) }} </div></td> <td><div class='span2.5'></div></td> </div></tr></td>{% endif %}
+{% if form.RejBoolkeyQuestions.data %}  <tr><td><div class='row '><div class='span3'>{{form.RejxkeyQuestions.data}}</div></td> <td><div class='span3'>{{ wtf.form_field(form.keyQuestions) }} </div></td> <td><div class='span2.5'></div></td> </div></tr></td>{% endif %}
+{% if form.RejBoollongDescription.data %}  <tr><td><div class='row '><div class='span3'>{{form.RejxlongDescription.data}}</div></td> <td><div class='span3'>{{ wtf.form_field(form.longDescription) }} </div></td> <td><div class='span2.5'></div></td> </div></tr></td>{% endif %}
+{% if form.RejBoolpriority.data %}  <tr><td><div class='row '><div class='span3'>{{form.Rejxpriority.data}}</div></td> <td><div class='span3'>{{ wtf.form_field(form.priority) }} </div></td> <td><div class='span2.5'></div></td> </div></tr></td>{% endif %}
+{% if form.RejBoolproblem.data %}  <tr><td><div class='row '><div class='span3'>{{form.Rejxproblem.data}}</div></td> <td><div class='span3'>{{ wtf.form_field(form.problem) }} </div></td> <td><div class='span2.5'></div></td> </div></tr></td>{% endif %}
+{% if form.RejBoolrequestDate.data %}  <tr><td><div class='row '><div class='span3'>{{form.RejxrequestDate.data}}</div></td> <td><div class='span3'>{{ wtf.form_field(form.requestDate) }} </div></td> <td><div class='span2.5'></div></td> </div></tr></td>{% endif %}
+{% if form.RejBoolsupervisor.data %}  <tr><td><div class='row '><div class='span3'>{{form.Rejxsupervisor.data}}</div></td> <td><div class='span3'>{{ wtf.form_field(form.supervisor) }} </div></td> <td><div class='span2.5'></div></td> </div></tr></td>{% endif %}
+{% if form.RejBoolru.data %}  <tr><td><div class='row '><div class='span3'>{{form.Rejxru.data}}</div></td> <td><div class='span3'>{{ wtf.form_field(form.ru) }} </div></td> <td><div class='span2.5'></div></td> </div></tr></td>{% endif %}
+{% if form.RejBoolspecialFacts.data %}  <tr><td><div class='row '><div class='span3'>{{form.RejxspecialFacts.data}}</div></td> <td><div class='span3'>{{ wtf.form_field(form.specialFacts) }} </div></td> <td><div class='span2.5'></div></td> </div></tr></td>{% endif %}
+{% if form.RejBoolspecialInstructions.data %}  <tr><td><div class='row '><div class='span3'>{{form.RejxspecialInstructions.data}}</div></td> <td><div class='span3'>{{ wtf.form_field(form.specialInstructions) }} </div></td> <td><div class='span2.5'></div></td> </div></tr></td>{% endif %}
+{% if form.RejBoolspecialPop.data %}  <tr><td><div class='row '><div class='span3'>{{form.RejxspecialPop.data}}</div></td> <td><div class='span3'>{{ wtf.form_field(form.specialPop) }} </div></td> <td><div class='span2.5'></div></td> </div></tr></td>{% endif %}
+{% if form.RejBooltimeBreakdown.data %}  <tr><td><div class='row '><div class='span3'>{{form.RejxtimeBreakdown.data}}</div></td> <td><div class='span3'>{{ wtf.form_field(form.timeBreakdown) }} </div></td> <td><div class='span2.5'></div></td> </div></tr></td>{% endif %}
+{% if form.RejBooltimeframe.data %}  <tr><td><div class='row '><div class='span3'>{{form.Rejxtimeframe.data}}</div></td> <td><div class='span3'>{{ wtf.form_field(form.timeframe) }} </div></td> <td><div class='span2.5'></div></td> </div></tr></td>{% endif %}
+{% if form.RejBooltimeframeend.data %}  <tr><td><div class='row '><div class='span3'>{{form.Rejxtimeframeend.data}}</div></td> <td><div class='span3'>{{ wtf.form_field(form.timeframeend) }} </div></td> <td><div class='span2.5'></div></td> </div></tr></td>{% endif %}
+{% if form.RejBooltimeframestart.data %}  <tr><td><div class='row '><div class='span3'>{{form.Rejxtimeframestart.data}}</div></td> <td><div class='span3'>{{ wtf.form_field(form.timeframestart) }} </div></td> <td><div class='span2.5'></div></td> </div></tr></td>{% endif %}
+{% if form.RejBooltypeOfService.data %}  <tr><td><div class='row '><div class='span3'>{{form.RejxtypeOfService.data}}</div></td> <td><div class='span3'>{{ wtf.form_field(form.typeOfService) }} </div></td> <td><div class='span2.5'></div></td> </div></tr></td>{% endif %}
+{% if form.RejBoolemanio.data %}  <tr><td><div class='row '><div class='span3'>{{form.Rejxemanio.data}}</div></td> <td><div class='span3'>{{ wtf.form_field(form.emanio) }} </div></td> <td><div class='span2.5'></div></td> </div></tr></td>{% endif %}
+{% if form.RejBoolMHorSUD.data %}  <tr><td><div class='row '><div class='span3'>{{form.RejxMHorSUD.data}}</div></td> <td><div class='span3'>{{ wtf.form_field(form.MHorSUD) }} </div></td> <td><div class='span2.5'></div></td> </div></tr></td>{% endif %}
+<td><div class='row '><div class='span4'>{{ wtf.form_field(form.UserAction) }}</div></td> </div></tr></td></div></div>
+</tr></ol></tbody></table><div class='row '><div class='span2.5'>{{ wtf.form_field(form.submitRequest) }}</form>
+
+
+</div></div></div></div></div>  </div></div></div></div>
+      </div></div></div>    </div>
 {% endblock %}

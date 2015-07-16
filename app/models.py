@@ -4,50 +4,16 @@ from sqlalchemy.orm import relationship
 #     id = db.Column(db.Integer, primary_key=True)
 #     name = db.Column(db.String(50))
 #     projectleader = db.Column(db.String(35))    
-#     goals = db.relationship('Goals', lazy='dynamic', backref='proj',cascade="all, delete-orphan"
-#                                )
+
 #     def __repr__(self):
 #         return '<Project %r>' % (self.name)
 
-# class Goals(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     goal = db.Column(db.String(200))
-#     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
-#     strategies = db.relationship('Strategies',lazy='dynamic',order_by="Strategies.order", backref='goa',cascade="all, delete-orphan")
-#     order = db.Column(db.Integer)                                     
 
-#     def __repr__(self):
-#         return '<Goals %r>' % (self.goal)
 
-# class Strategies(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     strategy = db.Column(db.String(200))
-#     goal_id = db.Column(db.Integer, db.ForeignKey('goals.id'))
-#     tasks = db.relationship('Tasks', lazy='dynamic',order_by="Tasks.order",backref='strat',cascade="all, delete-orphan")
-#     order = db.Column(db.Integer)                            
-#     def __repr__(self):
-#         return '<Strategy %r>' % (self.strategy)
 
-# class Tasks(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     task = db.Column(db.String(200))
-#     note = db.Column(db.String(400))  
-#     complete = db.Column(db.Boolean())
-#     staff = db.Column(db.String(50))
-#     deadline = db.Column(db.Date)
-#     completeDate = db.Column(db.Date)
-#     created = db.Column(db.Date)
-#     strategy_id = db.Column(db.Integer, db.ForeignKey('strategies.id'))
-#     order = db.Column(db.Integer)
-#     def __repr__(self):
-#         return '<Tasks %r>' % (self.task)
 
-# class FileUpload(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     sender = db.Column(db.String(50))
-#     note = db.Column(db.String(400))  
-#     def __repr__(self):
-#         return '<sender %r>' % (self.strategy)
+
+
 
 class User(db.Model):
     """An admin user capable of viewing reports.
@@ -77,44 +43,6 @@ class User(db.Model):
         """False, as anonymous users aren't supported."""
         return False
 
-
-# class Request(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     username = db.Column(db.String(64), index=True)
-#     email = db.Column(db.String(120), index=True)
-#     emanio= db.Column(db.Integer)
-#     MHorSUD= db.Column(db.String(64), index=True)
-#     keyQuestions= db.Column(db.String(64), index=True)
-#     problem= db.Column(db.String(64), index=True)
-#     specialFacts= db.Column(db.String(64), index=True)
-#     requestDate= db.Column(db.DateTime, index=True)
-#     requestDeadlineLapse= db.Column(db.Integer)
-#     requestedBy= db.Column(db.String(64), index=True)
-#     deadlinedate= db.Column(db.Date)
-#     priority= db.Column(db.String(64), index=True)
-#     deliveryFormat= db.Column(db.String(64), index=True)
-#     timeframe= db.Column(db.String(64), index=True)
-#     timeBreakdown= db.Column(db.String(64), index=True)
-#     specialPop= db.Column(db.String(64), index=True)
-#     agency= db.Column(db.String(64), index=True)
-#     ru = db.Column(db.String(64), index=True)
-#     typeOfService= db.Column(db.String(64), index=True)
-#     jobTitle= db.Column(db.String(64), unique=True)
-#     longDescription= db.Column(db.String(64), index=True)
-#     specialInstructions= db.Column(db.String(64), index=True)
-#     audience= db.Column(db.String(64), index=True)
-#     columnsRequired= db.Column(db.String(64), index=True)
-#     assinged= db.Column(db.String(64), index=True)
-#     completeDate= db.Column(db.Date)
-#     reviewed= db.Column(db.String(64), index=True)
-#     userCategory= db.Column(db.String(64), index=True)
-#     deadlinetime =db.Column(db.Integer)
-#     deadlineWhy = db.Column(db.String(64), index=True)
-#     timeframestart =db.Column(db.Date)
-#     timeframeend= db.Column(db.Date)
-#     note= db.Column(db.String(120), index=True)
-#     Response= db.Column(db.String(120), index=True)
-
 class Request(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True)
@@ -133,7 +61,7 @@ class Request(db.Model):
     timeframe= db.Column(db.String(64), index=True)
     timeBreakdown= db.Column(db.String(64), index=True)
     specialPop= db.Column(db.String(64), index=True)
-    agency= db.Column(db.String(64), index=True)
+    agency= db.Column(db.String(400), index=True)
     ru = db.Column(db.String(64), index=True)
     typeOfService= db.Column(db.String(64), index=True)
     jobTitle= db.Column(db.String(64), unique=True)
@@ -141,9 +69,9 @@ class Request(db.Model):
     specialInstructions= db.Column(db.String(64), index=True)
     audience= db.Column(db.String(64), index=True)
     columnsRequired= db.Column(db.String(64), index=True)
-    assinged= db.Column(db.String(64), index=True)
+    assigned= db.Column(db.String(64), index=True)
     completeDate= db.Column(db.Date)
-    reviewed= db.Column(db.String(64), index=True)
+    reviewed= db.Column(db.Boolean())
     userCategory= db.Column(db.String(64), index=True)
     deadlinetime =db.Column(db.Integer)
     deadlineWhy =  db.Column(db.String(64), index=True)
@@ -153,32 +81,87 @@ class Request(db.Model):
     Response= db.Column(db.String(120), index=True)
     ourdeadline= db.Column(db.Date)
     supervisor= db.Column(db.String(120), index=True)
-    cc_sup=db.Column(db.Integer)
+    cc_sup=db.Column(db.Boolean())
     status= db.Column(db.String(120), index=True)
-    RejkeyQuestions= db.Column(db.Integer)
-    Rejproblem= db.Column(db.Integer)
-    RejspecialFacts= db.Column(db.Integer)
-    RejrequestDate= db.Column(db.Integer)
-    RejrequestedBy=  db.Column(db.Integer)
-    Rejdeadlinedate=  db.Column(db.Integer)
-    Rejpriority=  db.Column(db.Integer)
-    RejdeliveryFormat=  db.Column(db.Integer)
-    Rejtimeframe= db.Column(db.Integer)
-    RejtimeBreakdown=  db.Column(db.Integer)
-    RejspecialPop=  db.Column(db.Integer)
-    Rejagency=  db.Column(db.Integer)
-    Rejru =  db.Column(db.Integer)
-    RejtypeOfService=  db.Column(db.Integer)
-    RejjobTitle=  db.Column(db.Integer)
-    RejlongDescription=  db.Column(db.Integer)
-    RejspecialInstructions=  db.Column(db.Integer)
-    Rejaudience=  db.Column(db.Integer)
-    RejcolumnsRequired=  db.Column(db.Integer)
-    Rejdeadlinetime = db.Column(db.Integer)
-    RejdeadlineWhy =   db.Column(db.Integer)
-    Rejtimeframestart = db.Column(db.Integer)
-    Rejtimeframeend=  db.Column(db.Integer)
-    
-
+    RejBoolkeyQuestions= db.Column(db.Boolean())   
+    RejxkeyQuestions= db.Column(db.String(120), index=True)
+    RejBoolproblem= db.Column(db.Boolean())       
+    Rejxproblem= db.Column(db.String(120), index=True)
+    RejBoolspecialFacts= db.Column(db.Boolean())      
+    RejxspecialFacts= db.Column(db.String(120), index=True)
+    RejBoolrequestDate= db.Column(db.Boolean())       
+    RejxrequestDate= db.Column(db.String(120), index=True)
+    RejBoolrequestedBy=  db.Column(db.Boolean())      
+    RejxrequestedBy=  db.Column(db.String(120), index=True)
+    RejBooldeadlinedate=  db.Column(db.Boolean())     
+    Rejxdeadlinedate=  db.Column(db.String(120), index=True)
+    RejBoolpriority=  db.Column(db.Boolean())     
+    Rejxpriority=  db.Column(db.String(120), index=True)
+    RejBooldeliveryFormat=  db.Column(db.Boolean())       
+    RejxdeliveryFormat=  db.Column(db.String(120), index=True)
+    RejBooltimeframe= db.Column(db.Boolean())     
+    Rejxtimeframe= db.Column(db.String(120), index=True)
+    RejBooltimeBreakdown=  db.Column(db.Boolean())        
+    RejxtimeBreakdown=  db.Column(db.String(120), index=True)
+    RejBoolspecialPop=  db.Column(db.Boolean())       
+    RejxspecialPop=  db.Column(db.String(120), index=True)
+    RejBoolagency=  db.Column(db.Boolean())       
+    Rejxagency=  db.Column(db.String(120), index=True)
+    RejBoolru =  db.Column(db.Boolean())      
+    Rejxru =  db.Column(db.String(120), index=True)
+    RejBoolsupervisor =  db.Column(db.Boolean())      
+    Rejxsupervisor =  db.Column(db.String(120), index=True)
+    RejBooltypeOfService=  db.Column(db.Boolean())        
+    RejxtypeOfService=  db.Column(db.String(120), index=True)
+    RejBooljobTitle=  db.Column(db.Boolean())     
+    RejxjobTitle=  db.Column(db.String(120), index=True)
+    RejBoollongDescription=  db.Column(db.Boolean())      
+    RejxlongDescription=  db.Column(db.String(120), index=True)
+    RejBoolspecialInstructions=  db.Column(db.Boolean())      
+    RejxspecialInstructions=  db.Column(db.String(120), index=True)
+    RejBoolaudience=  db.Column(db.Boolean())     
+    Rejxaudience=  db.Column(db.String(120), index=True)
+    RejBoolcolumnsRequired=  db.Column(db.Boolean())      
+    RejxcolumnsRequired=  db.Column(db.String(120), index=True)
+    RejBooldeadlinetime = db.Column(db.Boolean())     
+    Rejxdeadlinetime = db.Column(db.String(120), index=True)
+    RejBooldeadlineWhy =   db.Column(db.Boolean())        
+    RejxdeadlineWhy =   db.Column(db.String(120), index=True)
+    RejBooltimeframestart = db.Column(db.Boolean())       
+    Rejxtimeframestart = db.Column(db.String(120), index=True)
+    RejBooltimeframeend=  db.Column(db.Boolean())     
+    Rejxtimeframeend=  db.Column(db.String(120), index=True)
+    staff_id = db.Column(db.Integer, db.ForeignKey('staff.id'))
+    status_id = db.Column(db.Integer, db.ForeignKey('status.id'))
+    Rejxemanio=  db.Column(db.String(120), index=True)
+    RejBoolemanio=  db.Column(db.Boolean()) 
+    RejxMHorSUD=  db.Column(db.String(120), index=True)
+    RejBoolMHorSUD=  db.Column(db.Boolean())   
+    UserAction=  db.Column(db.String(120), index=True)
     def __repr__(self):
-        return '<%r>' % (self.jobTitle)
+        return '%r' % (self.jobTitle)
+
+class Staff(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    staff = db.Column(db.String(60))
+    privelage = db.Column(db.String(30))
+    request = db.relationship('Request', lazy='dynamic', backref='staffback',cascade="all, delete-orphan")
+    def __repr__(self):
+        return (self.staff)
+
+class Status(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    status = db.Column(db.String(100))
+    request = db.relationship('Request', lazy='dynamic', backref='statusback',cascade="all, delete-orphan")
+    def __repr__(self):
+        return (self.status)
+
+from sqlalchemy import distinct
+
+def getStaff():
+    u = Staff.query
+    return u
+
+def getStatus():
+    u = Status.query
+    return u

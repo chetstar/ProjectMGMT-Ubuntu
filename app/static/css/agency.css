@@ -14,7 +14,7 @@ body {
 }
 
 .text-primary {
-    color: #fed136;
+    color: #4A4CC9;
 }
 
 p {
@@ -203,12 +203,12 @@ fieldset[disabled] .btn-xl.active {
 .navbar-default .navbar-toggle:focus {
     background-color: #fed136;
 }
-
 .navbar-default .nav li a {
     text-transform: uppercase;
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     font-weight: 400;
     letter-spacing: 1px;
+    color: rgb(255, 213, 0);
     color: white;
 }
 
@@ -263,7 +263,7 @@ fieldset[disabled] .btn-xl.active {
 
 header {
     text-align: center;
-    color: #fff;
+color: #4A4CC9;
     background-attachment: scroll;
     background-image: url(../img/dinner.jpg);
     background-position: center center;
