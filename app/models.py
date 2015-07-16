@@ -165,3 +165,18 @@ def getStaff():
 def getStatus():
     u = Status.query
     return u
+
+class Challenge(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    Category = db.Column(db.String(64), index=True)
+    Rank = db.Column(db.Integer)
+    Title = db.Column(db.String(64), index=True)
+    Description = db.Column(db.String(120), index=True)
+    SOC = db.Column(db.String(64), index=True)
+    Graph = db.Column(db.String(99), index=True)
+    Status = db.Column(db.String(64), index=True)
+    ProjectLead = db.Column(db.String(64), index=True)
+    InterventionSuggestion = db.Column(db.String(400), index=True)
+    Intervention = db.Column(db.String(400), index=True)
+    def __repr__(self):
+        return '%r' % (self.Title)
