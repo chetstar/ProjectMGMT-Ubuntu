@@ -168,15 +168,25 @@ def getStatus():
 
 class Challenge(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    Category = db.Column(db.String(64), index=True)
+    username = db.Column(db.String(64), index=True)
+    email = db.Column(db.String(120), index=True)
+    initTime = db.Column(db.Date)
+    Timeline = db.Column(db.String(800), index=True)
+    Category = db.Column(db.String(120), index=True)
+    Priority = db.Column(db.String(64), index=True)
     Rank = db.Column(db.Integer)
     Title = db.Column(db.String(64), index=True)
     Description = db.Column(db.String(120), index=True)
-    SOC = db.Column(db.String(64), index=True)
-    Graph = db.Column(db.String(99), index=True)
+    GraphLink = db.Column(db.String(99), index=True)
+    LinkEmanio = db.Column(db.String(99), index=True)
     Status = db.Column(db.String(64), index=True)
+    StatusChangeSTamp = db.Column(db.Date)
     ProjectLead = db.Column(db.String(64), index=True)
+    ProjectMangement = db.Column(db.String(64), index=True)
     InterventionSuggestion = db.Column(db.String(400), index=True)
     Intervention = db.Column(db.String(400), index=True)
     def __repr__(self):
         return '%r' % (self.Title)
+
+
+

@@ -228,6 +228,21 @@ agenList=[
 ('Youth Uprising','Youth Uprising'),
 ]
 
+class Challenges(Form):
+    Category = TextField('List relevant tags.',validators=[validators.Required(),validators.Length(min=2, max=64)])
+    Rank = IntegerField('Rank among other challenges')
+    Priority= RadioField('Priority', choices=[('1','1. Critical'),('2','2. Top Priority'),('3','3. Medium'),('4','4. Priority'),('5','5. Low Priority')],coerce=unicode,validators=[validators.Required()])
+    Title = TextField('This will be the name we use to communicate about the request.',validators=[validators.Required(),validators.Length(min=2, max=64)])
+    Description = TextField('Describe the challenge.',validators=[validators.Required(),validators.Length(min=2, max=120)])
+    GraphLink = TextField('location of picture.')
+    Status = SelectField(u"How is the challenge being addressed?",coerce=unicode, choices=[("Problem Identified",'Pre-Exploration'), ('Challenge Assgined', 'Challenge Assgined')]) 
+    ProjectLead = TextField('Who is assigned to work on this challenge?')
+    ProjectMangement = TextField('link to project mgmt web.')
+    InterventionSuggestion = TextField('Suggested intervention.')
+    Intervention = TextField('Planned intervention.')
+    submitChallenge=SubmitField('Submit')
+    submitSave=SubmitField('Save Add More')
+
 class MultiCheckboxField(SelectMultipleField):
     widget = widgets.ListWidget(prefix_label=False)
     option_widget = widgets.CheckboxInput() 

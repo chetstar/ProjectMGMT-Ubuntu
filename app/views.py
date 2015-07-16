@@ -1,6 +1,6 @@
 from app import app,models, db
 # from forms import goal_form, strategy_form, project_form, task_form,DeleteRow_form,ldapA,LoginForm, Request, Which,Staff
-from forms import LoginForm, RequestData, Which,ldapA, filterRequests, UserRequestData
+from forms import LoginForm, RequestData, Which,ldapA, filterRequests, UserRequestData, Challenges
 import datetime
 from sqlalchemy.orm.attributes import get_history
 from werkzeug import secure_filename
@@ -110,6 +110,34 @@ def logout():
     # import pdb;pdb.set_trace()
     return redirect(url_for("login"))
 
+@app.route("/challengesform",methods=["GET","POST"])
+@login_required
+def challengesform():
+    form = Challenges()
+    # form.staffback.data=models.Staff.query.filter_by(staff="Unassigned").first()
+    # import pdb;pdb.set_trace()
+    if form.validate_on_submit():
+        print 'submit'
+        # import pdb;pdb.set_trace()
+        # p=models.Request(email=g.user.email,username=g.user.name,
+        #  requestDate=datetime.datetime.utcnow(),assigned="Unassigned",status="Pending Review")
+        # form.agency.data=', '.join(form.agency.data)
+        # form.populate_obj(p)
+        p=models.Challenge(email=g.user.email,username=g.user.name,
+        Category= form.Category.data,Priority=form.Priority.data,Title=form.Title.data,Description=form.Description.data,
+        Status=form.Status.data,ProjectLead=form.ProjectLead.data,InterventionSuggestion=form.InterventionSuggestion.data,
+        initTime = datetime.datetime.utcnow(),StatusChangeSTamp=datetime.datetime.utcnow(),Timeline=str(datetime.datetime.utcnow())+", test")
+        db.session.add(p)
+        db.session.commit()
+        #send email to user and admin
+        flash("Changes saved")
+        if form.submitSave.data:        
+            return redirect(url_for('challengesform'))
+        else:
+            return redirect(url_for('allchallenges'))
+    else:
+        flash_errors(form)
+        return render_template("challengesform.html",email=g.user.email,name=g.user.name,form=form)
 
 @app.route("/pickaform",methods=["GET","POST"])
 @login_required
@@ -139,6 +167,12 @@ def allrequest():
     # import pdb;pdb.set_trace()
     return render_template("followup.html",email=g.user.email,name=g.user.name,requestlist=requestlist)
 
+@app.route("/challengelist",methods=["GET","POST"])
+@login_required
+def allchallenges():
+    challengelist= models.Challenge.query.all() 
+    # import pdb;pdb.set_trace()
+    return render_template("challengeview.html",email=g.user.email,name=g.user.name,challengelist=challengelist)
 
 @app.route("/myrequest",methods=["GET","POST"])
 @login_required
