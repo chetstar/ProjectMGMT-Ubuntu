@@ -24,10 +24,8 @@
     </ul>
   {% endif %}
 {% endwith %} -->
-<div class="alert alert-warning" role="alert">
-  <h1>Hi {{name}} </h1></div>
-</div></div>
-
+<!-- <div class="alert alert-warning" role="alert">
+   -->
 </div></div>
 
         
@@ -42,12 +40,14 @@
     
 
      {{ form.hidden_tag() }}
+     <p>{{ wtf.form_field(form.Title) }}</p> 
 <p>{{ wtf.form_field(form.Category) }}</p> 
 <p>{{ wtf.form_field(form.Priority) }}</p> 
-<p>{{ wtf.form_field(form.Title) }}</p> 
 <p>{{ wtf.form_field(form.Description) }}</p> 
 <p>{{ wtf.form_field(form.Status) }}</p> 
 <p>{{ wtf.form_field(form.ProjectLead) }}</p> 
+<p>{{ wtf.form_field(form.GraphLink) }}</p> 
+  <p>{{ wtf.form_field(form.LinkEmanio) }}</p> 
 <p>{{ wtf.form_field(form.InterventionSuggestion) }}</p> 
 
      

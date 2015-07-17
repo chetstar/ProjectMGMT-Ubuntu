@@ -235,6 +235,7 @@ class Challenges(Form):
     Title = TextField('This will be the name we use to communicate about the request.',validators=[validators.Required(),validators.Length(min=2, max=300)])
     Description = TextAreaField('Describe the challenge.',validators=[validators.Required(),validators.Length(min=2, max=800)])
     GraphLink = TextField('location of picture.')
+    LinkEmanio = TextField('location of picture.')
     Status = SelectField(u"How is the challenge being addressed?",coerce=unicode, choices=[("Problem Identified",'Pre-Exploration'), ('Challenge Assgined', 'Challenge Assgined')]) 
     ProjectLead = TextField('Who is assigned to work on this challenge?')
     ProjectMangement = TextField('link to project mgmt web.')
