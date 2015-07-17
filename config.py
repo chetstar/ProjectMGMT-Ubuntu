@@ -8,8 +8,8 @@ import os
 from flask import Flask, request, redirect, url_for
 from werkzeug import secure_filename
 
-UPLOAD_FOLDER = '/'
-ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+UPLOAD_FOLDER = 'app/static'
+ALLOWED_EXTENSIONS = set(['TXT', 'PDF', 'PNG', 'JPG', 'JPEG', 'GIF'])
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER

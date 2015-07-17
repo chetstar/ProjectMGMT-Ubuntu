@@ -119,11 +119,11 @@ def logout():
     return redirect(url_for("login"))
 
 
-ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+ALLOWED_EXTENSIONS = set(['TXT', 'PDF', 'PNG', 'JPG', 'JPEG', 'GIF'])
 
 def allowed_file(filename):
     return '.' in filename and \
-           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+           filename.rsplit('.', 1)[1].upper() in ALLOWED_EXTENSIONS
 
 
 
@@ -139,17 +139,22 @@ def challengesform():
         #  requestDate=datetime.datetime.utcnow(),assigned="Unassigned",status="Pending Review")
         # form.agency.data=', '.join(form.agency.data)
         # form.populate_obj(p)
-        import pdb;pdb.set_trace()
+        import pdb; pdb.set_trace()
         file = request.files['upload']
         if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
+            dateSec=str(datetime.datetime.now())
+            filename = dateSec+secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        filename = secure_filename(form.upload.data.filename)
-        form.upload.data.save('uploads/' + filename)
-        p=models.Challenge(email=g.user.email,username=g.user.name,
+            # filename = secure_filename(form.upload.data.filename)
+            form.upload.data.save('uploads/' + filename)
+        else:
+            filename='no file'
+        # import pdb; pdb.set_trace()
+        p=models.Challenge(email=g.user.email,username=g.user.name,GraphLink=filename,
         Category= form.Category.data,Priority=form.Priority.data,Title=form.Title.data,Description=form.Description.data,
         Status=form.Status.data,ProjectLead=form.ProjectLead.data,InterventionSuggestion=form.InterventionSuggestion.data,
-        initTime = datetime.datetime.utcnow(),StatusChangeSTamp=datetime.datetime.utcnow(),Timeline=str(datetime.datetime.utcnow())+", test")
+        initTime = datetime.datetime.utcnow(),StatusChangeSTamp=datetime.datetime.utcnow(),
+        Timeline=str(datetime.datetime.utcnow())+", "+str(form.Status.data)+", ")
         db.session.add(p)
         db.session.commit()
         #send email to user and admin
