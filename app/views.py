@@ -79,6 +79,14 @@ requestvars=['agency',
 #   # import pdb;pdb.set_trace()
 #   x=models.User.query.filter_by(id=(id)).first() 
 #   return x
+
+
+
+from werkzeug import secure_filename
+from flask_wtf.file import FileField
+
+
+
 @login_manager.unauthorized_handler
 def unauthorized():
     print 'unauthorized'
@@ -110,6 +118,15 @@ def logout():
     # import pdb;pdb.set_trace()
     return redirect(url_for("login"))
 
+
+ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
+
+
 @app.route("/challengesform",methods=["GET","POST"])
 @login_required
 def challengesform():
@@ -118,11 +135,17 @@ def challengesform():
     # import pdb;pdb.set_trace()
     if form.validate_on_submit():
         print 'submit'
-        # import pdb;pdb.set_trace()
         # p=models.Request(email=g.user.email,username=g.user.name,
         #  requestDate=datetime.datetime.utcnow(),assigned="Unassigned",status="Pending Review")
         # form.agency.data=', '.join(form.agency.data)
         # form.populate_obj(p)
+        import pdb;pdb.set_trace()
+        file = request.files['upload']
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        filename = secure_filename(form.upload.data.filename)
+        form.upload.data.save('uploads/' + filename)
         p=models.Challenge(email=g.user.email,username=g.user.name,
         Category= form.Category.data,Priority=form.Priority.data,Title=form.Title.data,Description=form.Description.data,
         Status=form.Status.data,ProjectLead=form.ProjectLead.data,InterventionSuggestion=form.InterventionSuggestion.data,

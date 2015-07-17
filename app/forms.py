@@ -6,6 +6,11 @@ from wtforms.ext.sqlalchemy.fields import QuerySelectField
 import datetime
 from wtforms.fields.html5 import DateField
 from app.models import getStaff, getStatus
+from flask.ext.uploads import UploadSet, IMAGES
+from flask_wtf import Form
+from flask_wtf.file import FileField, FileAllowed, FileRequired
+from wtforms.fields.html5 import URLField
+from wtforms.validators import url
 
 agenList=[
 ('A Better Way','A Better Way'),
@@ -228,19 +233,23 @@ agenList=[
 ('Youth Uprising','Youth Uprising'),
 ]
 
+images = UploadSet('images', IMAGES)
+
+
 class Challenges(Form):
     Category = TextField('List relevant tags.',validators=[validators.Required(),validators.Length(min=2, max=400)])
     Rank = IntegerField('Rank among other challenges')
-    Priority= RadioField('Priority', choices=[('1','1. Critical'),('2','2. Top Priority'),('3','3. Medium'),('4','4. Priority'),('5','5. Low Priority')],coerce=unicode,validators=[validators.Required()])
-    Title = TextField('This will be the name we use to communicate about the request.',validators=[validators.Required(),validators.Length(min=2, max=300)])
+    Priority= RadioField('Priority', choices=[('1','1. Critical'),('2','2. High Priority'),('3','3. Medium'),('4','4. Priority'),('5','5. Low Priority')],coerce=unicode,validators=[validators.Required()])
+    Title = TextField('This will be the name we use to communicate about the challenge.',validators=[validators.Required(),validators.Length(min=2, max=300)])
     Description = TextAreaField('Describe the challenge.',validators=[validators.Required(),validators.Length(min=2, max=800)])
     GraphLink = TextField('location of picture.')
-    LinkEmanio = TextField('location of picture.')
-    Status = SelectField(u"How is the challenge being addressed?",coerce=unicode, choices=[("Problem Identified",'Pre-Exploration'), ('Challenge Assgined', 'Challenge Assgined')]) 
+    LinkEmanio =  URLField(validators=[url()])
+    Status = SelectField(u"How is the challenge being addressed?",coerce=unicode, choices=[("Problem Identified",'Problem Identified'),("Pre-Exploration",'Pre-Exploration'), ('Challenge Assgined', 'Challenge Assgined')]) 
     ProjectLead = TextField('Who is assigned to work on this challenge?')
     ProjectMangement = TextField('link to project mgmt web.')
     InterventionSuggestion = TextField('Suggested intervention.')
     Intervention = TextField('Planned intervention.')
+    upload = FileField('image', )
     submitChallenge=SubmitField('Submit')
     submitSave=SubmitField('Save Add More')
 
