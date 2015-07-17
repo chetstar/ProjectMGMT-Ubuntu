@@ -229,11 +229,11 @@ agenList=[
 ]
 
 class Challenges(Form):
-    Category = TextField('List relevant tags.',validators=[validators.Required(),validators.Length(min=2, max=64)])
+    Category = TextField('List relevant tags.',validators=[validators.Required(),validators.Length(min=2, max=400)])
     Rank = IntegerField('Rank among other challenges')
     Priority= RadioField('Priority', choices=[('1','1. Critical'),('2','2. Top Priority'),('3','3. Medium'),('4','4. Priority'),('5','5. Low Priority')],coerce=unicode,validators=[validators.Required()])
-    Title = TextField('This will be the name we use to communicate about the request.',validators=[validators.Required(),validators.Length(min=2, max=64)])
-    Description = TextField('Describe the challenge.',validators=[validators.Required(),validators.Length(min=2, max=120)])
+    Title = TextField('This will be the name we use to communicate about the request.',validators=[validators.Required(),validators.Length(min=2, max=300)])
+    Description = TextAreaField('Describe the challenge.',validators=[validators.Required(),validators.Length(min=2, max=800)])
     GraphLink = TextField('location of picture.')
     Status = SelectField(u"How is the challenge being addressed?",coerce=unicode, choices=[("Problem Identified",'Pre-Exploration'), ('Challenge Assgined', 'Challenge Assgined')]) 
     ProjectLead = TextField('Who is assigned to work on this challenge?')
