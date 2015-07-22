@@ -146,7 +146,7 @@ def challengesform():
             filename = dateSec+secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             # filename = secure_filename(form.upload.data.filename)
-            form.upload.data.save('uploads/' + filename)
+            # form.upload.data.save('app/static/img/' + filename)
         else:
             filename='no file'
         if form.LinkEmanio.data=='http://EmanioLink.com':

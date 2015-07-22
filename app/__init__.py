@@ -15,7 +15,7 @@ class MyView(BaseView):
 
 app = Flask(__name__)
 
-# app.config['UPLOAD_FOLDER'] = 'uploads/'
+app.config['UPLOAD_FOLDER'] = 'app/static'
 # # These are the extension that we are accepting to be uploaded
 # app.config['ALLOWED_EXTENSIONS'] = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif','sps','sav','xlsx','doc', 'docx', 'xls','XLS','XLSX'])
 
