@@ -87,6 +87,22 @@ from flask_wtf.file import FileField
 
 
 
+# @login_manager.unauthorized_handler
+# def unauthorized():
+#     print 'unauthorized'
+#     flash("You must be logged in.")
+#     return redirect(url_for("login"))
+
+# @login_manager.user_loader
+# def user_loader(user_id):
+#     """Given *user_id*, return the associated User object.
+
+#     :param unicode user_id: user_id (email) user to retrieve
+#     """
+#     g.user=current_user
+#     return models.User.query.get(user_id)
+
+
 @login_manager.unauthorized_handler
 def unauthorized():
     print 'unauthorized'
@@ -96,16 +112,14 @@ def unauthorized():
 @login_manager.user_loader
 def user_loader(user_id):
     """Given *user_id*, return the associated User object.
-
     :param unicode user_id: user_id (email) user to retrieve
     """
     g.user=current_user
     return models.User.query.get(user_id)
 
 @app.route("/main")
-@login_required
 def main():
-    return render_template("main.html")
+    return render_template("index.html")
 
 
 
@@ -117,6 +131,48 @@ def logout():
     flash("Logged Out.")
     # import pdb;pdb.set_trace()
     return redirect(url_for("login"))
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        try:
+            l = ldap.initialize("ldap://10.129.18.101")
+            l.simple_bind_s("program\%s" % form.username.data,form.password.data)
+            print "Authentification Successful"
+            r=l.search_s('cn=Users,dc=BHCS,dc=Internal',ldap.SCOPE_SUBTREE,'(sAMAccountName=*%s*)' % form.username.data,['mail','objectGUID','displayName'])
+            email=r[0][1]['mail'][0]   
+            # print email
+            GUID=r[0][1]['objectGUID'][0]   
+            FullName=r[0][1]['displayName'][0] 
+            import uuid
+            guid = uuid.UUID(bytes=GUID)
+            # print form.remember_me.data
+            # g.user = current_user
+            if not models.User.query.filter_by(email=unicode(email)).first(): 
+              p=models.User(name=FullName,email=email)
+              db.session.add(p)
+              db.session.commit()            
+            login_user(user_loader(unicode(email)),remember=form.remember_me.data)
+            flash("Logged in successfully.")
+            g.email=email
+            session['logged_in'] = True
+            # import pdb;pdb.set_trace()
+            return redirect( url_for("pickaform"))
+        except Exception as e:
+            flash("Invalid Credentials.")
+            return render_template("login.html", form=form)
+    return render_template("login.html", form=form)
+
+# @app.route("/logout")
+# # @login_required
+# def logout():
+#     logout_user()
+#     session.pop('logged_in', None)
+#     flash("Logged Out.")
+#     # import pdb;pdb.set_trace()
+#     return redirect(url_for("login"))
 
 
 ALLOWED_EXTENSIONS = set(['TXT', 'PDF', 'PNG', 'JPG', 'JPEG', 'GIF'])
@@ -486,6 +542,10 @@ def requestform(WHICH):
       #  requestDate=datetime.datetime.utcnow(),assigned="Unassigned",status="Pending Review")
       # form.agency.data=', '.join(form.agency.data)
       # form.populate_obj(p)
+      if form.emanio.data==True:
+        form.emanio.data=1
+      else:
+        form.emanio.data=0
       p=models.Request(email=g.user.email,username=g.user.name,jobTitle=form.jobTitle.data,deadlinedate=form.deadlinedate.data,
         emanio=form.emanio.data,MHorSUD=form.MHorSUD.data,supervisor=form.supervisor.data,
         keyQuestions=form.keyQuestions.data, problem=form.problem.data,specialFacts=form.specialFacts.data,requestedBy=g.user.name, 
@@ -511,40 +571,40 @@ def requestform(WHICH):
         return render_template("long.html",email=g.user.email,name=g.user.name,form=form)
 
 
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        # next = flask.request.args.get('next')
-        try:
-            # l = ldap.initialize("ldap://10.129.18.101")
-            # l.simple_bind_s("program\%s" % form.username.data,form.password.data)
-            print "Authentification Successful"
-            # r=l.search_s('cn=Users,dc=BHCS,dc=Internal',ldap.SCOPE_SUBTREE,'(sAMAccountName=*%s*)' % form.username.data,['mail','objectGUID','displayName'])
-            # email=r[0][1]['mail'][0]   
-            # print email
-            # GUID=r[0][1]['objectGUID'][0]   
-            # FullName=r[0][1]['displayName'][0] 
-            # import uuid
-            # guid = uuid.UUID(bytes=GUID)
-            # print form.remember_me.data
-            # g.user = current_user
-            # if not models.User.query.filter_by(email=unicode(email)).first(): 
-            #   p=models.User(name=FullName,email=email)
-            #   db.session.add(p)
-            #   db.session.commit()   
-            namedb=models.User.query.filter_by(name=unicode(form.username.data)).first()
-            email=models.User.query.first().email         
-            login_user(user_loader(unicode(email)),remember=form.remember_me.data)
-            flash("Logged in successfully.")
-            g.email=email
-            session['logged_in'] = True
-            # import pdb;pdb.set_trace()
-            return redirect( url_for("main"))
-        except Exception as e:
-            flash("Invalid Credentials.")
-            return render_template("login.html", form=form)
-    return render_template("login.html", form=form)
+# @app.route("/login", methods=["GET", "POST"])
+# def login():
+#     form = LoginForm()
+#     if form.validate_on_submit():
+#         # next = flask.request.args.get('next')
+#         try:
+#             # l = ldap.initialize("ldap://10.129.18.101")
+#             # l.simple_bind_s("program\%s" % form.username.data,form.password.data)
+#             print "Authentification Successful"
+#             # r=l.search_s('cn=Users,dc=BHCS,dc=Internal',ldap.SCOPE_SUBTREE,'(sAMAccountName=*%s*)' % form.username.data,['mail','objectGUID','displayName'])
+#             # email=r[0][1]['mail'][0]   
+#             # print email
+#             # GUID=r[0][1]['objectGUID'][0]   
+#             # FullName=r[0][1]['displayName'][0] 
+#             # import uuid
+#             # guid = uuid.UUID(bytes=GUID)
+#             # print form.remember_me.data
+#             # g.user = current_user
+#             # if not models.User.query.filter_by(email=unicode(email)).first(): 
+#             #   p=models.User(name=FullName,email=email)
+#             #   db.session.add(p)
+#             #   db.session.commit()   
+#             namedb=models.User.query.filter_by(name=unicode(form.username.data)).first()
+#             email=models.User.query.first().email         
+#             login_user(user_loader(unicode(email)),remember=form.remember_me.data)
+#             flash("Logged in successfully.")
+#             g.email=email
+#             session['logged_in'] = True
+#             # import pdb;pdb.set_trace()
+#             return redirect( url_for("main"))
+#         except Exception as e:
+#             flash("Invalid Credentials.")
+#             return render_template("login.html", form=form)
+#     return render_template("login.html", form=form)
 
 # @app.route("/login", methods=["GET", "POST"])
 # def login():
@@ -863,3 +923,5 @@ def start():
 
 
 from app import db
+
+
