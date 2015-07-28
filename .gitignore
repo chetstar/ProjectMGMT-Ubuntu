@@ -9,7 +9,7 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
-
+psycopg2-2.6.1/
 # C extensions
 *.so
 config.py
