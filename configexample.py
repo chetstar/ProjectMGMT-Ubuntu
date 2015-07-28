@@ -21,7 +21,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # SQLALCHEMY_DATABASE_URI = create_engine("mssql+pyodbc://dashboarddatadev", encoding='windows-1255', convert_unicode=True)
 # SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
 
-SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:NBP@bhcsweb3/postgres'
+SQLALCHEMY_DATABASE_URI = 'postgresql://chet@localhost/chet'
 
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 # SQLALCHEMY_BINDS = {

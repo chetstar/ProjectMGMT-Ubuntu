@@ -48,37 +48,6 @@ requestvars=['agency',
 'MHorSUD',]
 
 
-# login_manager.session_protection = None
-#login_managerlogin_view = 'login'
-
-# class User(UserMixin):
-#   def __init__(self, name, id, active=True):
-#     self.name = name
-#     self.id = id
-#     self.active = active 
-
-#   def is_authenticated(self):
-#       return True
-
-#   def is_active(self):
-#     return self.active   
-
-# USERS = {
-# 1: User(u"Notch", 1),
-# u'92bce19df203964b9dbbe7911f074e86': User(u"Chet", u'92bce19df203964b9dbbe7911f074e86'),
-# 4: User(u"Stevex", 4),
-# 3: User(u"Creeper", 3, False),
-# u'seven': User(u'Bob',u'seven')
-# } 
-            # p=models.Projects(name=pform.project.data,projectleader=pform.projectleader.data)
-            # db.session.add(p)
-            # db.session.commit()
-
-# @login_manager.user_loader
-# def load_user(id):
-#   # import pdb;pdb.set_trace()
-#   x=models.User.query.filter_by(id=(id)).first() 
-#   return x
 
 
 
@@ -86,21 +55,6 @@ from werkzeug import secure_filename
 from flask_wtf.file import FileField
 
 
-
-# @login_manager.unauthorized_handler
-# def unauthorized():
-#     print 'unauthorized'
-#     flash("You must be logged in.")
-#     return redirect(url_for("login"))
-
-# @login_manager.user_loader
-# def user_loader(user_id):
-#     """Given *user_id*, return the associated User object.
-
-#     :param unicode user_id: user_id (email) user to retrieve
-#     """
-#     g.user=current_user
-#     return models.User.query.get(user_id)
 
 
 @login_manager.unauthorized_handler
@@ -133,46 +87,34 @@ def logout():
     return redirect(url_for("login"))
 
 
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        try:
-            l = ldap.initialize("ldap://10.129.18.101")
-            l.simple_bind_s("program\%s" % form.username.data,form.password.data)
-            print "Authentification Successful"
-            r=l.search_s('cn=Users,dc=BHCS,dc=Internal',ldap.SCOPE_SUBTREE,'(sAMAccountName=*%s*)' % form.username.data,['mail','objectGUID','displayName'])
-            email=r[0][1]['mail'][0]   
-            # print email
-            GUID=r[0][1]['objectGUID'][0]   
-            FullName=r[0][1]['displayName'][0] 
-            import uuid
-            guid = uuid.UUID(bytes=GUID)
-            # print form.remember_me.data
-            # g.user = current_user
-            if not models.User.query.filter_by(email=unicode(email)).first(): 
-              p=models.User(name=FullName,email=email)
-              db.session.add(p)
-              db.session.commit()            
-            login_user(user_loader(unicode(email)),remember=form.remember_me.data)
-            flash("Logged in successfully.")
-            g.email=email
-            session['logged_in'] = True
-            # import pdb;pdb.set_trace()
-            return redirect( url_for("pickaform"))
-        except Exception as e:
-            flash("Invalid Credentials.")
-            return render_template("login.html", form=form)
-    return render_template("login.html", form=form)
+# @app.route("/login", methods=["GET", "POST"])
+# def login():
+#     form = LoginForm()
+#     if form.validate_on_submit():
+#         try:
+#             l = ldap.initialize("ldap://10.129.18.101")
+#             l.simple_bind_s("program\%s" % form.username.data,form.password.data)
+#             print "Authentification Successful"
+#             r=l.search_s('cn=Users,dc=BHCS,dc=Internal',ldap.SCOPE_SUBTREE,'(sAMAccountName=*%s*)' % form.username.data,['mail','objectGUID','displayName'])
+#             email=r[0][1]['mail'][0]   
+#             GUID=r[0][1]['objectGUID'][0]   
+#             FullName=r[0][1]['displayName'][0] 
+#             import uuid
+#             guid = uuid.UUID(bytes=GUID)
+#             if not models.User.query.filter_by(email=unicode(email)).first(): 
+#               p=models.User(name=FullName,email=email)
+#               db.session.add(p)
+#               db.session.commit()            
+#             login_user(user_loader(unicode(email)),remember=form.remember_me.data)
+#             flash("Logged in successfully.")
+#             g.email=email
+#             session['logged_in'] = True
+#             return redirect( url_for("pickaform"))
+#         except Exception as e:
+#             flash("Invalid Credentials.")
+#             return render_template("login.html", form=form)
+#     return render_template("login.html", form=form)
 
-# @app.route("/logout")
-# # @login_required
-# def logout():
-#     logout_user()
-#     session.pop('logged_in', None)
-#     flash("Logged Out.")
-#     # import pdb;pdb.set_trace()
-#     return redirect(url_for("login"))
 
 
 ALLOWED_EXTENSIONS = set(['TXT', 'PDF', 'PNG', 'JPG', 'JPEG', 'GIF'])
@@ -570,41 +512,40 @@ def requestform(WHICH):
     else:
         return render_template("long.html",email=g.user.email,name=g.user.name,form=form)
 
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        try:
+            # l = ldap.initialize("ldap://10.129.18.101")
+            # l.simple_bind_s("program\%s" % form.username.data,form.password.data)
+            print "Authentification Successful"
+            # r=l.search_s('cn=Users,dc=BHCS,dc=Internal',ldap.SCOPE_SUBTREE,'(sAMAccountName=*%s*)' % form.username.data,['mail','objectGUID','displayName'])
+            # email=r[0][1]['mail'][0]   
+            # print email
+            # GUID=r[0][1]['objectGUID'][0]   
+            # FullName=r[0][1]['displayName'][0] 
+            # import uuid
+            # guid = uuid.UUID(bytes=GUID)
+            # print form.remember_me.data
+            # g.user = current_user
+            # if not models.User.query.filter_by(email=unicode(email)).first(): 
+            #   p=models.User(name=FullName,email=email)
+            #   db.session.add(p)
+            #   db.session.commit()   
+            namedb=models.User.query.filter_by(name=unicode(form.username.data)).first()
+            email=models.User.query.first().email         
+            login_user(user_loader(unicode(email)),remember=form.remember_me.data)
+            flash("Logged in successfully.")
+            g.email=email
+            session['logged_in'] = True
+            # import pdb;pdb.set_trace()
+            return redirect( url_for("pickaform"))
+        except Exception as e:
+            flash("Invalid Credentials.")
+            return render_template("login.html", form=form)
+    return render_template("login.html", form=form)
 
-# @app.route("/login", methods=["GET", "POST"])
-# def login():
-#     form = LoginForm()
-#     if form.validate_on_submit():
-#         # next = flask.request.args.get('next')
-#         try:
-#             # l = ldap.initialize("ldap://10.129.18.101")
-#             # l.simple_bind_s("program\%s" % form.username.data,form.password.data)
-#             print "Authentification Successful"
-#             # r=l.search_s('cn=Users,dc=BHCS,dc=Internal',ldap.SCOPE_SUBTREE,'(sAMAccountName=*%s*)' % form.username.data,['mail','objectGUID','displayName'])
-#             # email=r[0][1]['mail'][0]   
-#             # print email
-#             # GUID=r[0][1]['objectGUID'][0]   
-#             # FullName=r[0][1]['displayName'][0] 
-#             # import uuid
-#             # guid = uuid.UUID(bytes=GUID)
-#             # print form.remember_me.data
-#             # g.user = current_user
-#             # if not models.User.query.filter_by(email=unicode(email)).first(): 
-#             #   p=models.User(name=FullName,email=email)
-#             #   db.session.add(p)
-#             #   db.session.commit()   
-#             namedb=models.User.query.filter_by(name=unicode(form.username.data)).first()
-#             email=models.User.query.first().email         
-#             login_user(user_loader(unicode(email)),remember=form.remember_me.data)
-#             flash("Logged in successfully.")
-#             g.email=email
-#             session['logged_in'] = True
-#             # import pdb;pdb.set_trace()
-#             return redirect( url_for("main"))
-#         except Exception as e:
-#             flash("Invalid Credentials.")
-#             return render_template("login.html", form=form)
-#     return render_template("login.html", form=form)
 
 # @app.route("/login", methods=["GET", "POST"])
 # def login():
@@ -645,18 +586,6 @@ def requestform(WHICH):
 #                            title='Home',
 #                            user=user)
 
-# @app.route('/login', methods=['GET', 'POST'])
-# def login():
-#     form = LoginForm()
-#     if form.validate_on_submit():
-#         flash('Login requested for OpenID="%s", remember_me=%s' %
-#               (form.openid.data, str(form.remember_me.data)))
-#         return redirect('/index')
-#     return render_template('login.html', 
-#                            title='Sign In',
-#                            form=form)
-
-# from flask import request
 
 @app.route('/navstart', methods=['GET','POST'])
 def navstart():
@@ -733,192 +662,6 @@ def index():
 @app.route('/start', methods=['GET','POST'])
 def start():
     return redirect('http://hpmxl2221nxk:5000/start')
-
-# @app.route('/ProjectTree/<name>', methods=['GET','POST'])
-# def project_outline(name):
-#     # name=request.args.get('name')
-#     P=models.Projects.query.all()
-#     project=models.Projects.query.filter_by(id=name).first() 
-#     G=project.goals.all()
-#     gform=goal_form(request.values)
-#     delete_form=DeleteRow_form()
-#     q_sum = (db.session.query(
-#     Projects.id.label("project_id"),
-#     Goals.id.label("goal_id"),
-#     func.sum(case([(Tasks.complete == True, 1)], else_=0)).label("x"),
-#     func.sum(case([(and_(Tasks.deadline != None, Tasks.completeDate != None, Tasks.deadline > Tasks.completeDate), 1)], else_=0)).label("y"),
-#     func.count(Tasks.id).label("total"),
-#     ).join(Goals, Projects.goals).outerjoin(Strategies, Goals.strategies).outerjoin(Tasks, Strategies.tasks).group_by(Projects.id,Goals.id).filter(Projects.id == name) )
-#     if request.method == 'POST' and  gform.submit.data:
-#         if gform.validate() == False:
-#             flash('Failed Field validation.')
-#             flash_errors(gform)
-#             return redirect(url_for('project_outline', name=name))
-#         else:
-#             p=models.Goals(goal=gform.goal.data,proj=project)
-#             db.session.add(p)
-#             db.session.commit()
-#             return redirect(url_for('project_outline', name=name))
-#     if request.method == 'POST' and  delete_form.submitd.data:
-#         pstratrow = delete_form.row_id.data
-#         pstrat=models.Goals.query.filter_by(id=pstratrow).first()
-#         db.session.delete(pstrat)
-#         db.session.commit()
-#         return redirect(url_for('project_outline',name=name))            
-#     # if request.method == 'POST' and  delete_form.submit.data:
-#     #     delete_row=
-#     return render_template("index_for_goal.html",project=project,G=G,gform=gform,P=P,zipit=zip(G,q_sum),delete_form=delete_form)
-
-# @app.route('/ProjectTree/<name>/<goal>', methods=['GET','POST'])
-# def strategy_outline(name,goal):
-#     P=models.Projects.query.all()
-#     project=models.Projects.query.filter_by(id=name).first() 
-#     pgoal=models.Goals.query.filter_by(id=goal).first() 
-#     S=pgoal.strategies.all()
-#     sform=strategy_form(request.values)
-#     delete_form=DeleteRow_form()
-#     q_sum = (db.session.query(
-#     Projects.id.label("project_id"),
-#     func.sum(case([(Tasks.complete == True, 1)], else_=0)).label("x"),
-#     func.sum(case([(and_(Tasks.deadline != None, Tasks.completeDate != None, Tasks.deadline > Tasks.completeDate), 1)], else_=0)).label("y"),
-#     func.count(Tasks.id).label("total"),
-#     Strategies.id.label("strategy_id"),
-#     Goals.id.label("goal_id"),
-#     ).join(Goals, Projects.goals).outerjoin(Strategies, Goals.strategies).outerjoin(Tasks, Strategies.tasks).group_by(Projects.id,Goals.id,Strategies.id).filter(Goals.id == goal) )
-#     if request.method == 'POST' and sform.submit.data:
-#         print sform.validate()
-#         if sform.validate() == False:
-#             flash('Failed Field validation.')
-#             flash_errors(sform)
-#             return redirect(url_for('strategy_outline',name=name,goal=goal))
-#         else:
-#             p=models.Strategies(strategy=sform.strategy.data,goa=pgoal)
-#             db.session.add(p)
-#             db.session.commit()
-#             return redirect(url_for('strategy_outline',name=name,goal=goal))
-#     if request.method == 'POST' and  delete_form.submitd.data:
-#         pstratrow = delete_form.row_id.data
-#         pstrat=models.Strategies.query.filter_by(id=pstratrow).first()
-#         db.session.delete(pstrat)
-#         db.session.commit()
-#         return redirect(url_for('strategy_outline',name=name,goal=goal))
-#     return render_template("index_for_strategy.html",project=project,S=S,sform=sform,pgoal=pgoal,P=P,zipit=zip(S,q_sum),delete_form=delete_form)
-
-# @app.route('/strategysort/<goal>')
-# def strategy_sort(goal):
-#     P=models.Projects.query.all()
-#     pgoal=models.Goals.query.filter_by(id=goal).first() 
-#     S=pgoal.strategies.all()
-#     project=models.Projects.query.filter_by(id=pgoal.project_id).first()
-#     return render_template("sort_strategy.html",q_sum=S,project=project,goal=pgoal,P=P)
-
-# @app.route('/order/<table>')
-# def order(table):
-#     sortedItems = request.args.listvalues()[0]
-#     o=1
-#     table = getattr(models, table)
-#     for item in sortedItems:
-#         grab = table.query.filter_by(id=item).first() 
-#         grab.order=o
-#         o+=1
-#     db.session.commit()
-#     return jsonify(result="New Order Saved!")
-
-# @app.route('/tasksort/<strategy>')
-# def task_sort(strategy):
-#     P=models.Projects.query.all()
-#     pstrat=models.Strategies.query.filter_by(id=strategy).first() 
-#     T=pstrat.tasks.all()
-#     goal=models.Goals.query.filter_by(id=pstrat.goal_id).first()
-#     project=models.Projects.query.filter_by(id=goal.project_id).first()
-#     return render_template("sort_task.html",q_sum=T,project=project,goal=goal,strategy=strategy,P=P)
-
-# @app.route('/ProjectTree/<name>/<goal>/<strategy>', methods=['GET','POST'])
-# def task_outline(name,goal,strategy):
-#     P=models.Projects.query.all()
-#     project=models.Projects.query.filter_by(id=name).first() 
-#     pgoal=models.Goals.query.filter_by(id=goal).first() 
-#     pstrat=models.Strategies.query.filter_by(id=strategy).first() 
-#     # T=(pstrat.tasks.order_by(pstrat.tasks.Order)).all()
-#     T=pstrat.tasks.all()
-#     tform=task_form(request.values)
-#     if request.method == 'POST':
-#         if tform.validate() == False:
-#             flash('Failed Field validation.')
-#             flash_errors(tform)
-#             return redirect(url_for('task_outline',name=name,goal=goal,strategy=strategy))
-#         else:
-#             if tform.complete.data == True:
-#                 completeDate=datetime.datetime.utcnow()
-#                 print completeDate
-#                 p=models.Tasks(task=tform.task.data,strat=pstrat,note = tform.note.data,staff=tform.staff.data,deadline=tform.deadline.data,complete=tform.complete.data,created=datetime.datetime.utcnow(), completeDate=completeDate)
-#             else:
-#                 p=models.Tasks(task=tform.task.data,strat=pstrat,note = tform.note.data,staff=tform.staff.data,deadline=tform.deadline.data,complete=tform.complete.data,created=datetime.datetime.utcnow())
-#             db.session.add(p)
-#             db.session.commit()
-#             return redirect(url_for('task_outline',name=name,goal=goal,strategy=strategy))
-#     return render_template("index_for_task.html",project=project,T=T,tform=tform,pstrat=pstrat,pgoal=pgoal,P=P)
-
-# @app.route('/outlineindex')
-# def outline_index():
-#     P=models.Projects.query.all()
-#     return render_template("index_for_outline.html",P=P)
-
-# @app.route('/outline/<name>' )
-# def outline(name):
-#     P=models.Projects.query.all()
-#     project=models.Projects.query.filter_by(id=name).first() 
-#     return render_template("index_outline_all.html",P=P,project=project)
-
-# @app.route('/edit/<name>/<goal>/<strategy>/<task>', methods=['GET', 'POST'])
-# def edit_task(name,goal,strategy,task):
-#     P=models.Projects.query.all()
-#     project=models.Projects.query.filter_by(id=name).first() 
-#     pgoal=models.Goals.query.filter_by(id=goal).first() 
-#     pstrat=models.Strategies.query.filter_by(id=strategy).first() 
-#     ptask=models.Tasks.query.filter_by(id=task).first()
-#     delete_form=DeleteRow_form()
-#     form = task_form(obj=ptask)
-#     form.populate_obj(ptask)
-#     form.deadline.data = ptask.deadline.strftime("%m/%d/%Y")
-#     tform=task_form(request.values)
-#     if request.method == 'POST' and form.validate_on_submit():
-#         #if it changed from True to false, set complete date to None
-#         # import pdb;pdb.set_trace()
-#         if get_history(ptask, 'complete')[0]==[True] and get_history(ptask, 'complete')[2]==[False]:
-#             print 'changed from false to true'
-#             ptask.completeDate=datetime.datetime.utcnow()
-#         if get_history(ptask, 'complete')[0]==[False] and get_history(ptask, 'complete')[2]==[True]:
-#             print 'changed from true to false'
-#             ptask.completeDate=None
-#         else:
-#             if get_history(ptask, 'complete')[0]==[True] and get_history(ptask, 'complete')[2]==[None]:
-#                 ptask.complete=True
-#                 ptask.completeDate=None
-#         db.session.commit()
-#         return redirect(url_for('task_outline',name=name,goal=goal,strategy=strategy))
-#     if delete_form.validate_on_submit():
-#         db.session.delete(ptask)
-#         db.session.commit()
-#         return redirect(url_for('task_outline',name=name,goal=goal,strategy=strategy))
-#     return render_template('edit_task.html', tform=tform,form=form,project=project,pgoal=pgoal,pstrat=pstrat,ptask=ptask,delete_form=delete_form,P=P)
-
-
-# @app.route('/graphs')
-# def graphs():
-#     P=models.Projects.query.all()
-#     return render_template("index_for_graphs.html", P=P)
-
-# @app.route('/graphs/stats')
-# def graphs_stats():
-#     P=models.Projects.query.all()
-#     q_sum = (db.session.query(
-#     Projects.id.label("project_id"),
-#     func.sum(case([(Tasks.complete == True, 1)], else_=0)).label("x"),
-#     func.sum(case([(and_(Tasks.deadline != None, Tasks.completeDate != None, Tasks.deadline > Tasks.completeDate), 1)], else_=0)).label("y"),
-#     func.count(Tasks.id).label("total"),
-#     ).outerjoin(Goals, Projects.goals).outerjoin(Strategies, Goals.strategies).outerjoin(Tasks, Strategies.tasks).group_by(Projects.id))   
-#     return render_template("graph_stats.html", P=P,q_sum=q_sum,zipit=zip(P,q_sum))
 
 
 
