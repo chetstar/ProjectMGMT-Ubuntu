@@ -5,7 +5,8 @@
 *.[gG][iI][fF]
 
 
-
+*.pdf
+*.PDF
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
