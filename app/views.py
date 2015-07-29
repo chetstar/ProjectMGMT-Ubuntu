@@ -56,6 +56,41 @@ from flask_wtf.file import FileField
 
 
 
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        try:
+            # l = ldap.initialize("ldap://10.129.18.101")
+            # l.simple_bind_s("program\%s" % form.username.data,form.password.data)
+            print "Authentification Successful"
+            # r=l.search_s('cn=Users,dc=BHCS,dc=Internal',ldap.SCOPE_SUBTREE,'(sAMAccountName=*%s*)' % form.username.data,['mail','objectGUID','displayName'])
+            # email=r[0][1]['mail'][0]   
+            # print email
+            # GUID=r[0][1]['objectGUID'][0]   
+            # FullName=r[0][1]['displayName'][0] 
+            # import uuid
+            # guid = uuid.UUID(bytes=GUID)
+            # print form.remember_me.data
+            # g.user = current_user
+            # if not models.User.query.filter_by(email=unicode(email)).first(): 
+            #   p=models.User(name=FullName,email=email)
+            #   db.session.add(p)
+            #   db.session.commit()   
+            namedb=models.User.query.filter_by(name=unicode(form.username.data)).first()
+            email=models.User.query.first().email         
+            login_user(user_loader(unicode(email)),remember=form.remember_me.data)
+            flash("Logged in successfully.")
+            g.email=email
+            session['logged_in'] = True
+            # import pdb;pdb.set_trace()
+            return redirect( url_for("challengesform"))
+        except Exception as e:
+            flash("Invalid Credentials.")
+            return render_template("login.html", form=form)
+    return render_template("login.html", form=form)
+
+
 
 @login_manager.unauthorized_handler
 def unauthorized():
@@ -87,33 +122,33 @@ def logout():
     return redirect(url_for("login"))
 
 
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        try:
-            l = ldap.initialize("ldap://10.129.18.101")
-            l.simple_bind_s("program\%s" % form.username.data,form.password.data)
-            print "Authentification Successful"
-            r=l.search_s('cn=Users,dc=BHCS,dc=Internal',ldap.SCOPE_SUBTREE,'(sAMAccountName=*%s*)' % form.username.data,['mail','objectGUID','displayName'])
-            email=r[0][1]['mail'][0]   
-            GUID=r[0][1]['objectGUID'][0]   
-            FullName=r[0][1]['displayName'][0] 
-            import uuid
-            guid = uuid.UUID(bytes=GUID)
-            if not models.User.query.filter_by(email=unicode(email)).first(): 
-              p=models.User(name=FullName,email=email)
-              db.session.add(p)
-              db.session.commit()            
-            login_user(user_loader(unicode(email)),remember=form.remember_me.data)
-            flash("Logged in successfully.")
-            g.email=email
-            session['logged_in'] = True
-            return redirect( url_for("challengesform"))
-        except Exception as e:
-            flash("Invalid Credentials.")
-            return render_template("login.html", form=form)
-    return render_template("login.html", form=form)
+# @app.route("/login", methods=["GET", "POST"])
+# def login():
+#     form = LoginForm()
+#     if form.validate_on_submit():
+#         try:
+#             l = ldap.initialize("ldap://10.129.18.101")
+#             l.simple_bind_s("program\%s" % form.username.data,form.password.data)
+#             print "Authentification Successful"
+#             r=l.search_s('cn=Users,dc=BHCS,dc=Internal',ldap.SCOPE_SUBTREE,'(sAMAccountName=*%s*)' % form.username.data,['mail','objectGUID','displayName'])
+#             email=r[0][1]['mail'][0]   
+#             GUID=r[0][1]['objectGUID'][0]   
+#             FullName=r[0][1]['displayName'][0] 
+#             import uuid
+#             guid = uuid.UUID(bytes=GUID)
+#             if not models.User.query.filter_by(email=unicode(email)).first(): 
+#               p=models.User(name=FullName,email=email)
+#               db.session.add(p)
+#               db.session.commit()            
+#             login_user(user_loader(unicode(email)),remember=form.remember_me.data)
+#             flash("Logged in successfully.")
+#             g.email=email
+#             session['logged_in'] = True
+#             return redirect( url_for("challengesform"))
+#         except Exception as e:
+#             flash("Invalid Credentials.")
+#             return render_template("login.html", form=form)
+#     return render_template("login.html", form=form)
 
 
 
@@ -449,19 +484,6 @@ def Request_management():
     return render_template("request_management.html",email=g.user.email,name=g.user.name,requestlist=requestlist,form=form,formRequest=formRequest,
      s=form.status.data,a= form.assigned.data,r= form.requestedBy.data)
 
-# db.session.query(
-#     models.Staff.id,
-#     models.Request
-#     ).join(models.Request, models.Staff.request).all()
-# db.session.query(models.Request).join(models.Request, models.Staff.request).filter(models.Staff.id.any(1)).all()
-# models.
-# patients = Patient.query.filter(Patient.mother.has(phenoscore=10))
-# or join (usually faster):
-
-# patients = Patient.query.join(Patient.mother, aliased=True)\
-#                     .filter_by(phenoscore=10)
-# db.session.query(models.Request).filter(models.Request.staffback.has(staff='fake user')).all()
-    
 def flash_errors(form):
     for field, errors in form.errors.items():
         for error in errors:
@@ -512,79 +534,6 @@ def requestform(WHICH):
     else:
         return render_template("long.html",email=g.user.email,name=g.user.name,form=form)
 
-# @app.route("/login", methods=["GET", "POST"])
-# def login():
-#     form = LoginForm()
-#     if form.validate_on_submit():
-#         try:
-#             # l = ldap.initialize("ldap://10.129.18.101")
-#             # l.simple_bind_s("program\%s" % form.username.data,form.password.data)
-#             print "Authentification Successful"
-#             # r=l.search_s('cn=Users,dc=BHCS,dc=Internal',ldap.SCOPE_SUBTREE,'(sAMAccountName=*%s*)' % form.username.data,['mail','objectGUID','displayName'])
-#             # email=r[0][1]['mail'][0]   
-#             # print email
-#             # GUID=r[0][1]['objectGUID'][0]   
-#             # FullName=r[0][1]['displayName'][0] 
-#             # import uuid
-#             # guid = uuid.UUID(bytes=GUID)
-#             # print form.remember_me.data
-#             # g.user = current_user
-#             # if not models.User.query.filter_by(email=unicode(email)).first(): 
-#             #   p=models.User(name=FullName,email=email)
-#             #   db.session.add(p)
-#             #   db.session.commit()   
-#             namedb=models.User.query.filter_by(name=unicode(form.username.data)).first()
-#             email=models.User.query.first().email         
-#             login_user(user_loader(unicode(email)),remember=form.remember_me.data)
-#             flash("Logged in successfully.")
-#             g.email=email
-#             session['logged_in'] = True
-#             # import pdb;pdb.set_trace()
-#             return redirect( url_for("pickaform"))
-#         except Exception as e:
-#             flash("Invalid Credentials.")
-#             return render_template("login.html", form=form)
-#     return render_template("login.html", form=form)
-
-
-# @app.route("/login", methods=["GET", "POST"])
-# def login():
-#     form = LoginForm()
-#     if form.validate_on_submit():
-#         try:
-#             l = ldap.initialize("ldap://10.129.18.101")
-#             l.simple_bind_s("program\%s" % form.username.data,form.password.data)
-#             print "Authentification Successful"
-#             r=l.search_s('cn=Users,dc=BHCS,dc=Internal',ldap.SCOPE_SUBTREE,'(sAMAccountName=*%s*)' % form.username.data,['mail','objectGUID','displayName'])
-#             email=r[0][1]['mail'][0]   
-#             # print email
-#             GUID=r[0][1]['objectGUID'][0]   
-#             FullName=r[0][1]['displayName'][0] 
-#             import uuid
-#             guid = uuid.UUID(bytes=GUID)
-#             # print form.remember_me.data
-#             # g.user = current_user
-#             if not models.User.query.filter_by(email=unicode(email)).first(): 
-#               p=models.User(name=FullName,email=email)
-#               db.session.add(p)
-#               db.session.commit()            
-#             login_user(user_loader(unicode(email)),remember=form.remember_me.data)
-#             flash("Logged in successfully.")
-#             g.email=email
-#             session['logged_in'] = True
-#             # import pdb;pdb.set_trace()
-#             return redirect( url_for("pickaform"))
-#         except Exception as e:
-#             flash("Invalid Credentials.")
-#             return render_template("login.html", form=form)
-#     return render_template("login.html", form=form)
-# USERS.get('\x92\xbc\xe1\x9d\xf2\x03\x96K\x9d\xbb\xe7\x91\x1f\x07N\x86')
-# @app.route('/')
-# def index():
-#     user = {'nickname': 'Chet'}  # fake user
-#     return render_template('index.html',
-#                            title='Home',
-#                            user=user)
 
 
 @app.route('/navstart', methods=['GET','POST'])
@@ -638,26 +587,7 @@ def navstart():
 @app.route('/', methods=['GET', 'POST'])
 def index():
     return redirect('http://hpmxl2221nxk:5000/')
-#     pform=project_form()
-#     tform=task_form()
-#     sform=strategy_form()
-#     gform=goal_form()
-#     P=models.Projects.query.all()
-#     if gform.validate_on_submit():
-#         u=models.Projects.query.get(1)
-#         p=models.Goals(goal=gform.goal.data,proj=u)
-#         db.session.add(p)
-#         db.session.commit()
-#         return redirect(url_for('index'))
-#     return render_template("baseindex.html",pform=pform,gform=gform,tform=tform,sform=sform,P=P)
 
-# def flash_errors(form):
-#     for field, errors in form.errors.items():
-#         for error in errors:
-#             flash(u"Error in the %s field - %s" % (
-#                 getattr(form, field).label.text,
-#                 error
-#             ))
 
 @app.route('/start', methods=['GET','POST'])
 def start():

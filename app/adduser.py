@@ -3,13 +3,13 @@ python db_create.py
 
 python
 from app import db, models
-x=models.User(name='Chet Meinzer',email='meinzerc@acbhcs.org',authenticated=1)
+x=models.User(name='Chet Meinzer',email='meinzerc@acbhcs.org',authenticated=True)
 db.session.add(x)
 db.session.commit()
-x=models.User(name='Janet Biblin',email='jbiblin@acbhcs.org',authenticated=1)
+x=models.User(name='Janet Biblin',email='jbiblin@acbhcs.org',authenticated=True)
 db.session.add(x)
 db.session.commit()
-x=models.User(name='John Engstrom',email='jEngstrom@acbhcs.org',authenticated=1)
+x=models.User(name='John Engstrom',email='jEngstrom@acbhcs.org',authenticated=True)
 db.session.add(x)
 db.session.commit()
 g=models.Staff(staff='Unassigned',privelage='')
@@ -52,7 +52,7 @@ db.session.commit()
 import datetime
 
 p=models.Request(email='cmeinzer@acbhcs.org',username='chet',jobTitle='faketest',deadlinedate=datetime.datetime.utcnow(),
-        emanio=True,MHorSUD='MHS',agency='A Better Way',
+        emanio=1,MHorSUD='MHS',agency='A Better Way',
         keyQuestions='jjj', problem='jjjj',requestedBy='chet', 
         priority=1,staffback=models.Staff.query.filter_by(staff="Unassigned").first(),
         statusback=models.Status.query.filter_by(status="Pending Review").first(), timeframestart=datetime.datetime.utcnow(),
