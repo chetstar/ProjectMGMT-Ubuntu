@@ -75,7 +75,8 @@
 
 
       <div class="col-md-12 ">
-
+<p></span><a  href="{{ url_for('challengesform')}}"><span class="glyphicon glyphicon-signal" aria-hidden="true"> Challenge Form</a>  </p>
+  
 
      
       <div class="row">
@@ -157,6 +158,8 @@
 <td> 
 <a href="{{field.LinkEmanio}}">Emanio</a>
 </td>{%endif%}
+<td> <td><a href="{{ url_for('edit_challenge', id=field.id) }}" class="btn pull-right"><span class="glyphicon glyphicon-pencil"></span> edit </a> </td></tr></li>
+
        </tr>  </li>
           {% endfor %}</ol></tbody> </table> 
 </div>

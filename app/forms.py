@@ -451,3 +451,6 @@ class ldapA(Form):
     password = PasswordField('Password', [validators.Required()])
     submitd = SubmitField('Login')
 
+class DeleteRow_form(Form):
+    row_id = IntegerField('')
+    submitd = SubmitField('Delete')

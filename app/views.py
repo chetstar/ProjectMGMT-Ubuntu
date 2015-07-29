@@ -1,6 +1,6 @@
 from app import app,models, db
 # from forms import goal_form, strategy_form, project_form, task_form,DeleteRow_form,ldapA,LoginForm, Request, Which,Staff
-from forms import LoginForm, RequestData, Which,ldapA, filterRequests, UserRequestData, Challenges
+from forms import LoginForm, RequestData, Which,ldapA, filterRequests, UserRequestData, Challenges,DeleteRow_form
 import datetime
 from sqlalchemy.orm.attributes import get_history
 from werkzeug import secure_filename
@@ -158,6 +158,54 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].upper() in ALLOWED_EXTENSIONS
 
+
+# @app.route('/edit/<name>/<goal>/<strategy>/<task>', methods=['GET', 'POST'])
+# def edit_task(name,goal,strategy,task):
+#     P=models.Projects.query.all()
+#     project=models.Projects.query.filter_by(id=name).first() 
+#     pgoal=models.Goals.query.filter_by(id=goal).first() 
+#     pstrat=models.Strategies.query.filter_by(id=strategy).first() 
+#     ptask=models.Tasks.query.filter_by(id=task).first()
+#     delete_form=DeleteRow_form()
+#     form = task_form(obj=ptask)
+#     if request.method == 'POST' and form.validate_on_submit():
+#         if form.completeDate.data:
+#             form.complete.data=True
+#         else:
+#             form.complete.data=False    
+#         form.populate_obj(ptask)        
+#         db.session.commit()
+#         return redirect(url_for('task_outline',name=name,goal=goal,strategy=strategy))
+#     if ptask.completeDate:
+#         form.completeDate.data = ptask.completeDate.strftime("%m/%d/%Y")
+#     else:
+#         form.complete.data=False
+#     form.deadline.data = ptask.deadline.strftime("%m/%d/%Y")
+#     if delete_form.validate_on_submit():
+#         db.session.delete(ptask)
+#         db.session.commit()
+#         return redirect(url_for('task_outline',name=name,goal=goal,strategy=strategy))
+#     return render_template('edit_task.html',form=form,project=project,pgoal=pgoal,pstrat=pstrat,ptask=ptask,delete_form=delete_form,P=P)
+
+
+@app.route('/editchallenge/<id>', methods=['GET', 'POST'])
+def edit_challenge(id): 
+    challenge=models.Challenge.query.filter_by(id=id).first()
+    delete_form=DeleteRow_form()
+    form = Challenges(obj=challenge)
+    if request.method == 'POST' and form.validate_on_submit():
+        # if form.completeDate.data:
+        #     form.complete.data=True
+        # else:
+        #     form.complete.data=False    
+        form.populate_obj(challenge)        
+        db.session.commit()
+        return redirect(url_for('allchallenges'))
+    if delete_form.validate_on_submit():
+        db.session.delete(challenge)
+        db.session.commit()
+        return redirect(url_for('allchallenges'))
+    return render_template('edit_challenge.html',id=id,form=form)
 
 
 @app.route("/challengesform",methods=["GET","POST"])

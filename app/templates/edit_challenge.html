@@ -1,0 +1,51 @@
+<!-- extend base layout -->
+{% extends "baser.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+          
+
+      <div class="col-md-12 ">
+
+
+     
+      <div class="row">
+        <div class="col-md-1">
+        </div><div class="col-md-10">
+{% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+        {% for message in messages %}
+            <li>{{ message }} </li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+  
+        
+<p></span><a class="btn btn-default" role="button" href="{{ url_for('allchallenges')}}"><span class="glyphicon glyphicon-signal" aria-hidden="true"> Challenge List</a>  </p>
+         <div class="row ">
+
+     <div class="span2">  </div> 
+    <div class="span10">
+         <div class="well">
+<form method=post enctype="multipart/form-data" >   
+   <div class="row ">
+    <div class="span8">
+
+     {{ form.hidden_tag() }}
+     <p>{{ wtf.form_field(form.Title) }}</p> 
+<p>{{ wtf.form_field(form.Category) }}</p> 
+<p>{{ wtf.form_field(form.Priority) }}</p> 
+<p>{{ wtf.form_field(form.Description) }}</p> 
+<p>{{ wtf.form_field(form.Status) }}</p> 
+<p>{{ wtf.form_field(form.ProjectLead) }}</p> 
+<p>{{ wtf.form_field(form.upload) }}</p> 
+  <input class="form-control" id="LinkEmanio" name="LinkEmanio" type="url" placeholder="Emanio Link">
+<p>{{ wtf.form_field(form.InterventionSuggestion) }}</p> 
+
+<p>{{ wtf.form_field(form.submitChallenge) }}{{ wtf.form_field(form.submitSave) }}</p>
+
+    </form>
+</div></div></div>    
+{% endblock %}
