@@ -64,6 +64,8 @@
 
 {% block content %}
 {{ super()}}
+
+
         <div class="container" color=black>
             </div>
         </div>
@@ -140,7 +142,15 @@
 </td>
 
           <td>{{field.Title}}</td>
-      <td>{{field.Description}}</td>
+      <td><a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapse{{field.id}}" aria-expanded="false" aria-controls="collapseExample">
+  Full Description
+</a>
+
+<div class="collapse" id="collapse{{field.id}}">
+  <div class="well">
+    {{field.Description}}
+  </div>
+</div></td>
             <td><li>{{field.Category}}  </td>
           
 
