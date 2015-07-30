@@ -149,9 +149,9 @@
        <td>{{field.Status}}</td>
 <td>{{field.ProjectLead}}</td>
 <td>{{field.InterventionSuggestion}}</td>
-<td>     <a href='static/img/{{field.GraphLink}} '>
-  <img src='static/img/{{field.GraphLink}} ' alt="Preview Not available.   click for image." style='static/img/{{field.GraphLink}} ' width="150" height="85" >
-</a> </td> 
+<td>    {%if field.GraphLink != 'no file'%} <a href='static/img/{{field.GraphLink}} '>
+  <img src='static/img/{{field.GraphLink}} ' alt="Click for Image." style='static/img/{{field.GraphLink}} ' width="150" height="85" >
+</a> {%else%}No Image {%endif%}</td> 
 
 
 {% if field.LinkEmanio %}
