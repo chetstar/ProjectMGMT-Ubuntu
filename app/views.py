@@ -189,6 +189,26 @@ def allowed_file(filename):
 #     return render_template('edit_task.html',form=form,project=project,pgoal=pgoal,pstrat=pstrat,ptask=ptask,delete_form=delete_form,P=P)
 
 
+@app.route('/editphoto/<id>', methods=['GET', 'POST'])
+def edit_photo(id): 
+    form = Challenges()
+    challenge=models.Challenge.query.filter_by(id=id).first()
+    if request.method == 'POST':
+        print 'submit'
+        # p=models.Request(email=g.user.email,username=g.user.name,
+        #  requestDate=datetime.datetime.utcnow(),assigned="Unassigned",status="Pending Review")
+        # form.agency.data=', '.join(form.agency.data)
+        # form.populate_obj(p)
+        file = request.files['upload']
+        if file and allowed_file(file.filename):
+            dateSec=str(datetime.datetime.now())
+            filename = dateSec+secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))   
+        challenge.GraphLink=filename
+        db.session.commit()
+        return redirect(url_for('edit_challenge',id=id,form=form))
+    return render_template('edit_photo.html',id=id,form=form)
+
 @app.route('/editchallenge/<id>', methods=['GET', 'POST'])
 def edit_challenge(id): 
     challenge=models.Challenge.query.filter_by(id=id).first()
