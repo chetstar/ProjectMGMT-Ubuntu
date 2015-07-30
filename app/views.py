@@ -21,6 +21,7 @@ from flask import render_template, flash, redirect,Flask,Response,request,url_fo
 login_manager = LoginManager()
 login_manager.init_app(app) 
 
+# photos = UploadSet('photos', IMAGES)
 
 requestvars=['agency',
 'audience',
@@ -194,11 +195,14 @@ def edit_challenge(id):
     delete_form=DeleteRow_form()
     form = Challenges(obj=challenge)
     if request.method == 'POST' and form.validate_on_submit():
-        # if form.completeDate.data:
-        #     form.complete.data=True
-        # else:
-        #     form.complete.data=False    
-        form.populate_obj(challenge)        
+        challenge.LinkEmanio=form.LinkEmanio.data
+        challenge.Category= form.Category.data
+        challenge.Priority=form.Priority.data
+        challenge.Title=form.Title.data
+        challenge.Description=form.Description.data
+        Status=form.Status.data
+        challenge.ProjectLead=form.ProjectLead.data
+        challenge.InterventionSuggestion=form.InterventionSuggestion.data      
         db.session.commit()
         return redirect(url_for('allchallenges'))
     if delete_form.validate_on_submit():
@@ -220,7 +224,6 @@ def challengesform():
         #  requestDate=datetime.datetime.utcnow(),assigned="Unassigned",status="Pending Review")
         # form.agency.data=', '.join(form.agency.data)
         # form.populate_obj(p)
-        # import pdb; pdb.set_trace()
         file = request.files['upload']
         if file and allowed_file(file.filename):
             dateSec=str(datetime.datetime.now())
@@ -238,6 +241,7 @@ def challengesform():
         Status=form.Status.data,ProjectLead=form.ProjectLead.data,InterventionSuggestion=form.InterventionSuggestion.data,
         initTime = datetime.datetime.utcnow(),StatusChangeSTamp=datetime.datetime.utcnow(),
         Timeline=str(datetime.datetime.utcnow())+", "+str(form.Status.data)+", ")
+        # import pdb; pdb.set_trace()
         db.session.add(p)
         db.session.commit()
         #send email to user and admin
@@ -281,7 +285,8 @@ def allrequest():
 @app.route("/challengelist",methods=["GET","POST"])
 @login_required
 def allchallenges():
-    challengelist= models.Challenge.query.all() 
+    challengelist= models.Challenge.query.order_by(models.Challenge.Priority).all()
+    # sorted(q_sum, key=lambda tup: tup[7])
     # import pdb;pdb.set_trace()
     return render_template("challengeview.html",email=g.user.email,name=g.user.name,challengelist=challengelist)
 
@@ -419,7 +424,7 @@ def admin_edit(id,a,s,r):
         .filter(models.Request.staffback.has(staff=formfilter.assigned.data)).all()
     if form.submitRequest.data:
         if form.validate_on_submit():
-            import pdb;pdb.set_trace()                
+            # import pdb;pdb.set_trace()                
             form.agency.data=','.join(form.agency.data)
             # form.assigned.data=form.assigned.data.staff
             if form.statusback.data=="Complete":
