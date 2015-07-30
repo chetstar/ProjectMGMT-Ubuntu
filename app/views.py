@@ -109,7 +109,7 @@ def user_loader(user_id):
 
 @app.route("/main")
 def main():
-    return render_template("index.html")
+    return render_template("main.html")
 
 
 
