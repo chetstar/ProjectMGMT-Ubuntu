@@ -307,7 +307,7 @@ def allrequest():
 def allchallenges():
     challengelist= models.Challenge.query.order_by(models.Challenge.Priority).all()
     # sorted(q_sum, key=lambda tup: tup[7])
-    import pdb;pdb.set_trace()
+    # import pdb;pdb.set_trace()
     return render_template("challengeview.html",email=g.user.email,name=g.user.name,challengelist=challengelist)
 
 @app.route("/myrequest",methods=["GET","POST"])
