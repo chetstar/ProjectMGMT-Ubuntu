@@ -209,7 +209,7 @@ fieldset[disabled] .btn-xl.active {
     font-weight: 400;
     letter-spacing: 1px;
     color: rgb(255, 213, 0);
-    color: white;
+    color: #fed136;
 }
 
 .navbar-default .nav li a:hover,
@@ -265,7 +265,7 @@ header {
     text-align: center;
 color: #4A4CC9;
     background-attachment: scroll;
-    background-image: url(../img/dinner.jpg);
+    background-image: url(../img/family-eating-together.jpg);
     background-position: center center;
     background-repeat: none;
     -webkit-background-size: cover;
