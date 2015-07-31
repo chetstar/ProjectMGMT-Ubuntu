@@ -111,7 +111,10 @@ def user_loader(user_id):
 def main():
     return render_template("main.html")
 
-
+@app.route("/demo",methods=["GET","POST"])
+def demo():
+    challengelist= models.Challenge.query.order_by(models.Challenge.Priority).all()
+    return render_template("demo.html",challengelist=challengelist)
 
 @app.route("/logout")
 # @login_required
