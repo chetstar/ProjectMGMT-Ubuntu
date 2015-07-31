@@ -1,0 +1,119 @@
+{% extends "index.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+<!DOCTYPE html>  
+{% block content %}
+{{ super()}}
+<html lang="en">  
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tablecloth.js demo</title>
+   
+  </head>
+  
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="span12" style="padding:20px 0;">
+        
+          <table cellspacing="1" cellpadding="3" class="tablehead" style="background:#CCC;">
+          <caption>
+            <h3>Table Title</h3>
+            Description of mission 
+          </caption>
+          <thead>  
+
+            <tr class="colhead">
+              <th title="Completions" align="right">Priority</th>
+              <th title="Pass attempts" align="right"><span style="color:#FF0000;">Title</span></th>
+              <th title="Passing yards" align="right">Description</th>
+              <th title="Completion percentage" align="right">Category</th>
+              <th title="Longest pass play" align="right">Status</th>
+              <th title="Passing touchdowns" align="right">Project Lead</th>
+              <th title="Interceptions thrown" align="right">Suggested Intervention</th>
+             
+                 <th class="{sorter: false}" >Photo evidence</th> 
+              <th title="Interceptions thrown" align="right">Link Emanio</th>
+  <th title="Interceptions thrown" align="right"></th>
+
+
+            </tr>
+          </thead>
+          <tbody>
+            {% for field in challengelist %}
+
+          <tr class="evenrow">
+              <td align="right">{{field.Priority}}{% if field.Priority =='1'  %}
+
+<div class="progress">
+  <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="10" style="width: 100%">
+    <span class="sr-only"> (danger)</span>
+  </div>
+</div>{%endif%}{% if field.Priority =='2'  %}
+
+<div class="progress">
+  <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="10" style="width: 80%">
+    <span class="sr-only"> (danger)</span>
+  </div>
+</div>{%endif%}{% if field.Priority =='3'  %}
+
+<div class="progress">
+  <div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="10" style="width: 60%">
+    <span class="sr-only"> (warning)</span>
+  </div>
+</div>{%endif%}{% if field.Priority =='4'  %}
+
+<div class="progress">
+  <div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="10" style="width: 40%">
+    <span class="sr-only"> (warning)</span>
+  </div>
+</div>{%endif%}{% if field.Priority =='5'  %}
+
+<div class="progress">
+  <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="10" style="width: 20%">
+    <span class="sr-only"> (info)</span>
+  </div>
+</div>{%endif%}</td>
+                <td align="right">{{field.Title}}</td>
+                  <td align="right"><a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapse{{field.id}}" aria-expanded="false" aria-controls="collapseExample">
+  Full Description
+</a>
+
+<div class="collapse" id="collapse{{field.id}}">
+  <div class="well">
+    {{field.Description}}
+  </div>
+</div></td>
+                    <td align="right">{{field.Category}} </td>
+                      <td align="right">{{field.Status}}</td>
+
+                        <td align="right">{{field.ProjectLead}}</td>
+                        <td align="right">{{field.InterventionSuggestion}}</td>
+                          <td align="right"> {%if field.GraphLink != 'no file'%} <a href='static/img/{{field.GraphLink}} '>
+  <img src='static/img/{{field.GraphLink}} ' alt="Click for Image." style='static/img/{{field.GraphLink}} ' width="150" height="85" >
+</a> {%else%}No Image {%endif%}</td>
+                              <td align="right">{% if field.LinkEmanio %}
+<a href="{{field.LinkEmanio}}">Emanio</a>{%endif%} </td>
+  
+                                  <td align="right">
+<a href="{{ url_for('edit_challenge', id=field.id) }}" ><span class="glyphicon glyphicon-pencil"></span> edit </a> </td>
+          </tr>
+         
+  {% endfor %}
+
+          </tbody></table>
+          
+          
+        </div>
+      </div>
+    </div>
+  
+  </body>{%endblock%}
+
+</html>
+
+
+
+
+
