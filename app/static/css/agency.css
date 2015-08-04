@@ -82,9 +82,9 @@ h6 {
 .btn-primary:active,
 .btn-primary.active,
 .open .dropdown-toggle.btn-primary {
-    border-color: #f6bf01;
-    color: #fff;
-    background-color: #fec503;
+    border-color: #244381;
+    color: #EAB704;
+    background-color: #3B6BB4;
 }
 
 .btn-primary:active,
