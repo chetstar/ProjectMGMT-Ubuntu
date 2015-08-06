@@ -51,11 +51,10 @@ from app import views, models
 admin = Admin(app)
 
 admin.add_view(ModelView(models.User, db.session))
+admin.add_view(ModelView(models.rutable, db.session))
 admin.add_view(ModelView(models.Request, db.session))
 admin.add_view(ModelView(models.Staff, db.session))
 admin.add_view(ModelView(models.Status, db.session))
 admin.add_view(ModelView(models.Challenge, db.session))
-admin.add_view(ModelView(models.rutable, db.session))
-admin.add_view(ModelView(models.TOC, db.session))
 # admin.add_view(ModelView(models.Strategies, db.session))
 # admin.add_view(ModelView(models.Tasks, db.session))
