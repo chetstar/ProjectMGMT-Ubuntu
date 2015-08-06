@@ -10,10 +10,62 @@ from sqlalchemy.orm import relationship
 
 
 
+class rutable(db.Model):
+    oldRU    =db.Column(db.Integer)    
+    ru    =db.Column(db.String(6), index=True)    
+    agency    =db.Column(db.String(40), index=True)    
+    county    =db.Column(db.Integer)    
+    kidsru    =db.Column(db.Integer)    
+    school    =db.Column(db.Integer)    
+    Level3Classic    =db.Column(db.Integer)    
+    cds_Code    =db.Column(db.String(14), index=True)    
+    ab3632RU    =db.Column(db.Integer)    
+    DayTx    =db.Column(db.Integer)    
+    CESDC    =db.Column(db.Integer)    
+    EPSDTGroup    =db.Column(db.String(15), index=True)    
+    psmask2    =db.Column(db.Integer)    
+    svcType    =db.Column(db.String(25), index=True)    
+    RU2    =db.Column(db.String(6), index=True)    
+    TAYru    =db.Column(db.Integer)    
+    Level2    =db.Column(db.Integer)    
+    DBserviceModality    =db.Column(db.String(25), index=True)    
+    svcType3    =db.Column(db.String(25), index=True)    
+    OutCty    =db.Column(db.Integer)    
+    OurKids    =db.Column(db.Integer)    
+    SafePassages    =db.Column(db.Integer)    
+    MHSA    =db.Column(db.Integer)    
+    OAru    =db.Column(db.Integer)    
+    program    =db.Column(db.Integer)    
+    Residential    =db.Column(db.Integer)    
+    TBS    =db.Column(db.Integer)    
+    CalWorks    =db.Column(db.Integer)    
+    RUCITY    =db.Column(db.String(30), index=True)    
+    UMBRELLA    =db.Column(db.Integer)    
+    svcmode    =db.Column(db.String(2), index=True)    
+    provname    =db.Column(db.String(30), index=True)    
+    start_dt    =db.Column(db.Integer)    
+    end_dt    =db.Column(db.Integer)    
+    frc    =db.Column(db.Integer)    
+    id = db.Column(db.Integer, primary_key=True)
 
-
-
-
+class TOC(db.Model):
+    Agency=db.Column(db.String(300), index=True)
+    kill =db.Column(db.Integer)
+    DashboardQuestion = db.Column(db.Integer)
+    DashboardReportSort = db.Column(db.Integer)
+    DorR =db.Column(db.String(300), index=True)
+    DashboardReport =db.Column(db.String(300), index=True)
+    SystemofCare =db.Column(db.String(300), index=True)
+    ServiceArea =db.Column(db.String(300), index=True)
+    Description =db.Column(db.String(300), index=True)
+    Purpose =db.Column(db.String(300), index=True)
+    iddeid =db.Column(db.String(300), index=True)
+    TargetedAudience =db.Column(db.String(300), index=True)
+    Supportswhichmeeting = db.Column(db.Integer)
+    Ready = db.Column(db.Integer)
+    Link =db.Column(db.String(300), index=True)
+    KeyQuestions =db.Column(db.String(300), index=True)
+    id = db.Column(db.Integer, primary_key=True)
 
 class User(db.Model):
     """An admin user capable of viewing reports.
