@@ -65,6 +65,13 @@ class TOC(db.Model):
     Ready = db.Column(db.Integer)
     Link =db.Column(db.String(300), index=True)
     KeyQuestions =db.Column(db.String(300), index=True)
+    BornOnDate   = db.Column(db.Date)   
+    FinalCodeReviewDate    =db.Column(db.Integer)     
+    CodeAuthor     =db.Column(db.String(300), index=True)  
+    CodeReviewer     =db.Column(db.String(300), index=True) 
+    FinalReportReviewDate    =db.Column(db.Integer)     
+    ReportAuthor     =db.Column(db.String(300), index=True)  
+    ReportReviewer    =db.Column(db.Integer)     
     id = db.Column(db.Integer, primary_key=True)
 
 class User(db.Model):
