@@ -290,6 +290,13 @@ class TOC(Form):
     Ready = IntegerField('')
     Link =TextAreaField('')
     KeyQuestions =TextAreaField('')
+    BornOnDate   =  DateField( '',  format='%m/%d/%Y',) 
+    FinalCodeReviewDate    = IntegerField('')   
+    CodeAuthor     =TextAreaField('')
+    CodeReviewer   =TextAreaField('')
+    FinalReportReviewDate    = IntegerField('')   
+    ReportAuthor   =TextAreaField('')
+    ReportReviewer    = IntegerField('')   
 
 class Challenges(Form):
     Category = TextField('List relevant tags.',validators=[validators.Required(),validators.Length(min=2, max=400)])
