@@ -1,6 +1,6 @@
 from app import app,models, db
 # from forms import goal_form, strategy_form, project_form, task_form,DeleteRow_form,ldapA,LoginForm, Request, Which,Staff
-from forms import LoginForm, RequestData, Which,ldapA, filterRequests, UserRequestData, Challenges,DeleteRow_form, TOC
+from forms import LoginForm, RequestData, Which,ldapA, filterRequests, UserRequestData, Challenges,DeleteRow_form, TOC, rutable
 import datetime
 from sqlalchemy.orm.attributes import get_history
 from werkzeug import secure_filename
@@ -154,6 +154,44 @@ def logout():
 #             return render_template("login.html", form=form)
 #     return render_template("login.html", form=form)
 
+
+
+
+
+@app.route('/edittoc/<id>', methods=['GET', 'POST'])
+def edit_toc(id): 
+    toc=models.TOC.query.filter_by(id=id).first()
+    delete_form=DeleteRow_form()
+    form = TOC(obj=toc)
+    if request.method == 'POST' and form.validate_on_submit():
+        return redirect(url_for('alltoc'))
+    if delete_form.validate_on_submit():
+        db.session.delete(toc)
+        db.session.commit()
+        return redirect(url_for('alltoc'))
+    return render_template('edit_toc.html',id=id,form=form)
+
+
+@app.route("/tocform",methods=["GET","POST"])
+@login_required
+def tocform():
+    form = TOC()
+    # form.staffback.data=models.Staff.query.filter_by(staff="Unassigned").first()
+    if form.validate_on_submit():
+        print 'submit'
+    else:
+        flash_errors(form)
+        return render_template("tocform.html",email=g.user.email,name=g.user.name,form=form)
+
+
+@app.route("/toclist",methods=["GET","POST"])
+@login_required
+def alltoc():
+    # toclist= models.TOC.query.order_by(models.Challenge.Priority).all()
+    toclist= models.TOC.query.all()
+    # sorted(q_sum, key=lambda tup: tup[7])
+    # import pdb;pdb.set_trace()
+    return render_template("tocview.html",email=g.user.email,name=g.user.name,toclist=toclist)
 
 
 ALLOWED_EXTENSIONS = set(['TXT', 'PDF', 'PNG', 'JPG', 'JPEG', 'GIF'])
