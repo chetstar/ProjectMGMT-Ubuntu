@@ -272,6 +272,7 @@ class rutable(Form):
     start_dt    = IntegerField('')  
     end_dt    = IntegerField('')  
     frc    = IntegerField('')   
+    submitRU=SubmitField('Submit')
 
 class TOC(Form):
     Agency= TextField("What Agency is included in the report")
@@ -297,6 +298,7 @@ class TOC(Form):
     FinalReportReviewDate    = DateField("On what date was the dashboard or report approved?",  format="%m/%d/%Y",)  
     ReportAuthor   =TextAreaField("Who was/were the author(s) of the dashboard or report?")
     ReportReviewer    = IntegerField("Who was the final reviewer of the dashboard or report?")     
+    submitTOC=SubmitField('Submit')
 
 class Challenges(Form):
     Category = TextField('List relevant tags.',validators=[validators.Required(),validators.Length(min=2, max=400)])

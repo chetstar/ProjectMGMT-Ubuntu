@@ -28,6 +28,8 @@
      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <!-- <link rel="shortcut icon" href="{{ url_for('static', filename='ico/favicon.ico') }}"> -->
  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/agency.css') }}">
+ <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/datepicker.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/datepicker3.css') }}">
      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap-modal.css') }}">
 
     <!-- Custom Fonts -->
@@ -136,6 +138,10 @@
 <script type="text/javascript" src="/static/js/jquery.js"></script>
 
 
+           <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-datepicker.js') }}"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+      </script>
+
 
                 <script type="text/javascript" src="{{ url_for('static', filename='js/html5shiv.js') }}"></script>
   
@@ -154,5 +160,20 @@
           condensed: true
         });
       });
-    </script>
+
+
+
+
+
+  <div id="footer">
+        <div class="container">
+            <div class="row ">
+                &copy; 2014 AC Business Intelligence & Decision Support | All Right Reserved
+
+            </div>
+            
+        </div>
+       
+    </div> 
+
 {% endblock %}

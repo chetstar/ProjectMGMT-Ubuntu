@@ -158,18 +158,49 @@ def logout():
 
 
 
-@app.route('/edittoc/<id>', methods=['GET', 'POST'])
-def edit_toc(id): 
+@app.route('/edittoc/<id>/<core>', methods=['GET', 'POST'])
+def edit_toc(id,core): 
     toc=models.TOC.query.filter_by(id=id).first()
     delete_form=DeleteRow_form()
     form = TOC(obj=toc)
+    if core == 1:
+                flash("You are editing and existing entry")
     if request.method == 'POST' and form.validate_on_submit():
+        if core==1:
+            form.populate_obj(toc)    
+            db.session.commit()
+        else:
+            x=TOC(Agency=form.Agency.data,
+                kill=form.kill.data,
+                DashboardQuestion=form.DashboardQuestion.data,
+                DashboardReportSort=form.DashboardReportSort.data,
+                DorR=form.DorR.data,
+                DashboardReport=form.DashboardReport.data,
+                SystemofCare=form.SystemofCare.data,
+                ServiceArea=form.ServiceArea.data,
+                Description=form.Description.data,
+                Purpose=form.Purpose.data,
+                iddeid=form.iddeid.data,
+                TargetedAudience=form.TargetedAudience.data,
+                Supportswhichmeeting=form.Supportswhichmeeting.data,
+                Ready=form.Ready.data,
+                Link=form.Link.data,
+                KeyQuestions=form.KeyQuestions.data,
+                BornOnDate=form.BornOnDate.data,
+                FinalCodeReviewDate=form.FinalCodeReviewDate.data,
+                CodeAuthor=form.CodeAuthor.data,
+                CodeReviewer=form.CodeReviewer.data,
+                FinalReportReviewDate=form.FinalReportReviewDate.data,
+                ReportAuthor=form.ReportAuthor.data,
+                ReportReviewer=form.ReportReviewer.data)
+            db.session.add(x)
+            db.session.commit()
         return redirect(url_for('alltoc'))
     if delete_form.validate_on_submit():
         db.session.delete(toc)
         db.session.commit()
         return redirect(url_for('alltoc'))
-    return render_template('edit_toc.html',id=id,form=form)
+    return render_template('edit_toc.html',id=id,form=form,delete_form=delete_form)
 
 
 @app.route("/tocform",methods=["GET","POST"])
