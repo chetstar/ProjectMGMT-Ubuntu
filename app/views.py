@@ -54,8 +54,19 @@ requestvars=['agency',
 
 from werkzeug import secure_filename
 from flask_wtf.file import FileField
+from functools import wraps
 
-
+def logged_in(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if session.get('logged_in') is not None:
+            return f(*args, **kwargs)
+        else:
+            flash('Please log in first...', 'error')
+            next_url = request.url
+            login_url = '%s?next=%s' % (url_for('login'), next_url)
+            return redirect(login_url)
+    return decorated_function
 
 
 @login_manager.unauthorized_handler
@@ -73,6 +84,7 @@ def user_loader(user_id):
     return models.User.query.get(user_id)
 
 @app.route("/main")
+@logged_in
 def main():
     return render_template("main.html")
 
@@ -82,7 +94,7 @@ def demo():
     return render_template("demo.html",challengelist=challengelist)
 
 @app.route("/logout")
-# @login_required
+# @logged_in
 def logout():
     logout_user()
     session.pop('logged_in', None)
@@ -105,7 +117,7 @@ def login():
                 flash("Logged in successfully.")
                 g.email=email
                 session['logged_in'] = True
-                return redirect( url_for("challengesform"))
+                return redirect( request.values.get('next') or url_for("main"))
             except Exception as e:
                 flash("Invalid Credentials.")
                 return render_template("login.html", form=form)
@@ -187,7 +199,7 @@ def edit_toc(id,core):
 
 
 @app.route("/tocform",methods=["GET","POST"])
-@login_required
+@logged_in
 def tocform():
     form = TOC()
     # form.staffback.data=models.Staff.query.filter_by(staff="Unassigned").first()
@@ -199,7 +211,7 @@ def tocform():
 
 
 @app.route("/toclist",methods=["GET","POST"])
-@login_required
+@logged_in
 def alltoc():
     # toclist= models.TOC.query.order_by(models.Challenge.Priority).all()
     toclist= models.TOC.query.all()
@@ -288,7 +300,7 @@ def edit_challenge(id):
 
 
 @app.route("/challengesform",methods=["GET","POST"])
-@login_required
+@logged_in
 def challengesform():
     form = Challenges()
     # form.staffback.data=models.Staff.query.filter_by(staff="Unassigned").first()
@@ -330,7 +342,7 @@ def challengesform():
         return render_template("challengesform.html",email=g.user.email,name=g.user.name,form=form)
 
 @app.route("/pickaform",methods=["GET","POST"])
-@login_required
+@logged_in
 def pickaform():
     form = Which()
     if form.validate_on_submit():
@@ -345,20 +357,20 @@ def pickaform():
 
 
 # @app.route("/requests",methods=["GET","POST"])
-# @login_required
+# @logged_in
 # def requests():
 #     requestlist=models.Request.query.all()
 #     return render_template("requests.html",email=g.user.email,name=g.user.name,requestlist=requestlist)
 
 @app.route("/allrequest",methods=["GET","POST"])
-@login_required
+@logged_in
 def allrequest():
     requestlist= models.Request.query.all() 
     # import pdb;pdb.set_trace()
     return render_template("followup.html",email=g.user.email,name=g.user.name,requestlist=requestlist)
 
 @app.route("/challengelist",methods=["GET","POST"])
-@login_required
+@logged_in
 def allchallenges():
     challengelist= models.Challenge.query.order_by(models.Challenge.Priority).all()
     # sorted(q_sum, key=lambda tup: tup[7])
@@ -366,14 +378,14 @@ def allchallenges():
     return render_template("challengeview.html",email=g.user.email,name=g.user.name,challengelist=challengelist)
 
 @app.route("/myrequest",methods=["GET","POST"])
-@login_required
+@logged_in
 def myrequest():
     requestlist= models.Request.query.filter_by(email=g.user.email).all() 
     # import pdb;pdb.set_trace()
     return render_template("followup.html",email=g.user.email,name=g.user.name,requestlist=requestlist)
 
 @app.route('/viewrequest/<id>/', methods=['GET', 'POST'])
-@login_required
+@logged_in
 def view_request(id):
     test=models.Request.query.filter_by(id=int(id)).first() 
     form=RequestData(obj=test)
@@ -421,7 +433,7 @@ def view_request(id):
 
 
 @app.route('/adminedit/<id>/<a>/<s>/<r>', methods=['GET', 'POST'])
-@login_required
+@logged_in
 def admin_edit(id,a,s,r):
     request_to_edit=models.Request.query.filter_by(id=int(id)).first() 
     form=RequestData(obj=request_to_edit)
@@ -524,7 +536,7 @@ def admin_edit(id,a,s,r):
         name=g.user.name,form=form,requestlist=requestlist,formfilter=formfilter)
 
 @app.route('/edit_request/<id>/', methods=['GET', 'POST'])
-@login_required
+@logged_in
 def edit_request(id):
     request_to_edit=models.Request.query.filter_by(id=int(id)).first() 
     form=RequestData(obj=request_to_edit)
@@ -544,7 +556,7 @@ def edit_request(id):
 
 
 @app.route("/followup",methods=["GET","POST"])
-@login_required
+@logged_in
 def followup():
     print 'follow up'
     # import pdb;pdb.set_trace()
@@ -553,7 +565,7 @@ def followup():
 
 
 @app.route("/request_management",methods=["GET","POST"])
-@login_required
+@logged_in
 def Request_management():
     form=filterRequests()
     formRequest = RequestData( )
@@ -622,7 +634,7 @@ def flash_errors(form):
 # agency=','.join(form.agency.data)
 
 @app.route("/requestform/<WHICH>",methods=["GET","POST"])
-@login_required
+@logged_in
 def requestform(WHICH):
     form = UserRequestData()
     # form.staffback.data=models.Staff.query.filter_by(staff="Unassigned").first()
