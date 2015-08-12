@@ -94,6 +94,7 @@ def logout():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     form = LoginForm()
+    # import pdb;pdb.set_trace()
     if form.validate_on_submit():
         if app.config['ENVIRONMENT']=='dev':
             try:
@@ -110,6 +111,9 @@ def login():
                 return render_template("login.html", form=form)
         else:
             try:
+                if '@' in form.username.data:
+                    form.username.data=form.username.data.split("@")[0]
+                # import pdb;pdb.set_trace()
                 l = ldap.initialize("ldap://10.129.18.101")
                 l.simple_bind_s("program\%s" % form.username.data,form.password.data)
                 print "Authentification Successful"
