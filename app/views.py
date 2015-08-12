@@ -102,6 +102,9 @@ def logout():
     # import pdb;pdb.set_trace()
     return redirect(url_for("login"))
 
+@app.before_request
+def before_request():
+    g.user = current_user
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -143,7 +146,7 @@ def login():
                 flash("Logged in successfully.")
                 g.email=email
                 session['logged_in'] = True
-                return redirect( url_for("challengesform"))
+                return redirect( request.values.get('next') or url_for("main"))
             except Exception as e:
                 flash("Invalid Credentials.")
                 return render_template("login.html", form=form)
