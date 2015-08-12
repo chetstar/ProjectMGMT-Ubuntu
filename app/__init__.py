@@ -20,7 +20,7 @@ app.config['UPLOAD_FOLDER'] = 'app/static'
 # app.config['ALLOWED_EXTENSIONS'] = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif','sps','sav','xlsx','doc', 'docx', 'xls','XLS','XLSX'])
 
 app.config.from_object('config')
-
+# import pdb;pdb.set_trace()
 
 # class HackedSQLAlchemy(SQLAlchemy):
 #     def apply_driver_hacks(self, app, info, options):
