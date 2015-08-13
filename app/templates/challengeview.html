@@ -153,7 +153,7 @@
 <td> 
 <a href="{{field.LinkEmanio}}">Emanio</a>
 </td>{%else%}<td></td>{%endif%} 
-<td><a href="{{ url_for('edit_challenge', id=field.id) }}" class="btn pull-right"><span class="glyphicon glyphicon-pencil"></span> edit </a> 
+<td><a href="{{ url_for('edit_challenge', id=field.id,edit=1) }}" class="btn pull-right"><span class="glyphicon glyphicon-pencil"></span> edit </a> 
     </td>      {% endfor %}</tr></li></ol></tbody> </table> 
 </div>
  </div></div></div>

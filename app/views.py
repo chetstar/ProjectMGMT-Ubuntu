@@ -230,35 +230,6 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].upper() in ALLOWED_EXTENSIONS
 
 
-# @app.route('/edit/<name>/<goal>/<strategy>/<task>', methods=['GET', 'POST'])
-# def edit_task(name,goal,strategy,task):
-#     P=models.Projects.query.all()
-#     project=models.Projects.query.filter_by(id=name).first() 
-#     pgoal=models.Goals.query.filter_by(id=goal).first() 
-#     pstrat=models.Strategies.query.filter_by(id=strategy).first() 
-#     ptask=models.Tasks.query.filter_by(id=task).first()
-#     delete_form=DeleteRow_form()
-#     form = task_form(obj=ptask)
-#     if request.method == 'POST' and form.validate_on_submit():
-#         if form.completeDate.data:
-#             form.complete.data=True
-#         else:
-#             form.complete.data=False    
-#         form.populate_obj(ptask)        
-#         db.session.commit()
-#         return redirect(url_for('task_outline',name=name,goal=goal,strategy=strategy))
-#     if ptask.completeDate:
-#         form.completeDate.data = ptask.completeDate.strftime("%m/%d/%Y")
-#     else:
-#         form.complete.data=False
-#     form.deadline.data = ptask.deadline.strftime("%m/%d/%Y")
-#     if delete_form.validate_on_submit():
-#         db.session.delete(ptask)
-#         db.session.commit()
-#         return redirect(url_for('task_outline',name=name,goal=goal,strategy=strategy))
-#     return render_template('edit_task.html',form=form,project=project,pgoal=pgoal,pstrat=pstrat,ptask=ptask,delete_form=delete_form,P=P)
-
-
 @app.route('/editphoto/<id>', methods=['GET', 'POST'])
 def edit_photo(id): 
     form = Challenges()
@@ -279,20 +250,29 @@ def edit_photo(id):
         return redirect(url_for('edit_challenge',id=id,form=form))
     return render_template('edit_photo.html',id=id,form=form)
 
-@app.route('/editchallenge/<id>', methods=['GET', 'POST'])
-def edit_challenge(id): 
+@app.route('/editchallenge/<id>/<edit>', methods=['GET', 'POST'])
+def edit_challenge(id,edit): 
     challenge=models.Challenge.query.filter_by(id=id).first()
     delete_form=DeleteRow_form()
     form = Challenges(obj=challenge)
     if request.method == 'POST' and form.validate_on_submit():
-        challenge.LinkEmanio=form.LinkEmanio.data
-        challenge.Category= form.Category.data
-        challenge.Priority=form.Priority.data
-        challenge.Title=form.Title.data
-        challenge.Description=form.Description.data
-        Status=form.Status.data
-        challenge.ProjectLead=form.ProjectLead.data
-        challenge.InterventionSuggestion=form.InterventionSuggestion.data      
+        if edit == 1:
+            challenge.LinkEmanio=form.LinkEmanio.data
+            challenge.Category= form.Category.data
+            challenge.Priority=form.Priority.data
+            challenge.Title=form.Title.data
+            challenge.Description=form.Description.data
+            Status=form.Status.data
+            challenge.ProjectLead=form.ProjectLead.data
+            challenge.InterventionSuggestion=form.InterventionSuggestion.data     
+        else:
+            p=models.Challenge(email=g.user.email,username=g.user.name,LinkEmanio=form.LinkEmanio.data,
+            Category= form.Category.data,Priority=form.Priority.data,Title=form.Title.data,Description=form.Description.data,
+            Status=form.Status.data,ProjectLead=form.ProjectLead.data,InterventionSuggestion=form.InterventionSuggestion.data,
+            initTime = datetime.datetime.utcnow(),StatusChangeSTamp=datetime.datetime.utcnow(),
+            Timeline=str(datetime.datetime.utcnow())+", "+str(form.Status.data)+", ")
+            # import pdb; pdb.set_trace()
+            db.session.add(p)       
         db.session.commit()
         return redirect(url_for('allchallenges'))
     if delete_form.validate_on_submit():
