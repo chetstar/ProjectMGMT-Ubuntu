@@ -256,7 +256,8 @@ def edit_challenge(id,edit):
     delete_form=DeleteRow_form()
     form = Challenges(obj=challenge)
     if request.method == 'POST' and form.validate_on_submit():
-        if edit == 1:
+        import pdb;pdb.set_trace()
+        if edit == '1':
             challenge.LinkEmanio=form.LinkEmanio.data
             challenge.Category= form.Category.data
             challenge.Priority=form.Priority.data
@@ -266,7 +267,7 @@ def edit_challenge(id,edit):
             challenge.ProjectLead=form.ProjectLead.data
             challenge.InterventionSuggestion=form.InterventionSuggestion.data     
         else:
-            p=models.Challenge(email=g.user.email,username=g.user.name,LinkEmanio=form.LinkEmanio.data,
+            p=models.Challenge(email=g.user.email,username=g.user.name,LinkEmanio=form.LinkEmanio.data,GraphLink=form.GraphLink.data,
             Category= form.Category.data,Priority=form.Priority.data,Title=form.Title.data,Description=form.Description.data,
             Status=form.Status.data,ProjectLead=form.ProjectLead.data,InterventionSuggestion=form.InterventionSuggestion.data,
             initTime = datetime.datetime.utcnow(),StatusChangeSTamp=datetime.datetime.utcnow(),
@@ -279,7 +280,7 @@ def edit_challenge(id,edit):
         db.session.delete(challenge)
         db.session.commit()
         return redirect(url_for('allchallenges'))
-    return render_template('edit_challenge.html',id=id,form=form)
+    return render_template('edit_challenge.html',id=id,form=form,LinkEmanio=challenge.LinkEmanio)
 
 
 @app.route("/challengesform",methods=["GET","POST"])
