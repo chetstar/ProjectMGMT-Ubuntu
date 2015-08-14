@@ -247,14 +247,14 @@ def edit_photo(id):
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))   
         challenge.GraphLink=filename
         db.session.commit()
-        return redirect(url_for('edit_challenge',id=id,form=form))
+        return redirect(url_for('edit_challenge',id=id, edit=1,form=form))
     return render_template('edit_photo.html',id=id,form=form)
 
 @app.route('/editchallenge/<id>/<edit>', methods=['GET', 'POST'])
 def edit_challenge(id,edit): 
     challenge=models.Challenge.query.filter_by(id=id).first()
     form = Challenges(obj=challenge)
-    if edit == '0':
+    if edit == '0' and request.method != 'POST' :
         form.Title.data="Copy "+form.Title.data
     if request.method == 'POST' and form.validate_on_submit():
         # import pdb;pdb.set_trace()
