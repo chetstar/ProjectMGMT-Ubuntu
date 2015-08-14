@@ -255,9 +255,11 @@ def edit_challenge(id,edit):
     challenge=models.Challenge.query.filter_by(id=id).first()
     delete_form=DeleteRow_form()
     form = Challenges(obj=challenge)
+    if edit == '0':
+        form.Title.data="Copy "+form.Title.data
     if request.method == 'POST' and form.validate_on_submit():
-        import pdb;pdb.set_trace()
-        if edit == '1':
+        # import pdb;pdb.set_trace()
+        if edit == '1':#editing exisitng
             challenge.LinkEmanio=form.LinkEmanio.data
             challenge.Category= form.Category.data
             challenge.Priority=form.Priority.data
@@ -266,8 +268,8 @@ def edit_challenge(id,edit):
             Status=form.Status.data
             challenge.ProjectLead=form.ProjectLead.data
             challenge.InterventionSuggestion=form.InterventionSuggestion.data     
-        else:
-            p=models.Challenge(email=g.user.email,username=g.user.name,LinkEmanio=form.LinkEmanio.data,GraphLink=form.GraphLink.data,
+        else:#copy
+            p=models.Challenge(email=g.user.email,username=g.user.name,LinkEmanio=form.LinkEmanio.data,GraphLink=challenge.GraphLink,
             Category= form.Category.data,Priority=form.Priority.data,Title=form.Title.data,Description=form.Description.data,
             Status=form.Status.data,ProjectLead=form.ProjectLead.data,InterventionSuggestion=form.InterventionSuggestion.data,
             initTime = datetime.datetime.utcnow(),StatusChangeSTamp=datetime.datetime.utcnow(),
