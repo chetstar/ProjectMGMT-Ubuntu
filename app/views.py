@@ -253,7 +253,6 @@ def edit_photo(id):
 @app.route('/editchallenge/<id>/<edit>', methods=['GET', 'POST'])
 def edit_challenge(id,edit): 
     challenge=models.Challenge.query.filter_by(id=id).first()
-    delete_form=DeleteRow_form()
     form = Challenges(obj=challenge)
     if edit == '0':
         form.Title.data="Copy "+form.Title.data
@@ -276,10 +275,6 @@ def edit_challenge(id,edit):
             Timeline=str(datetime.datetime.utcnow())+", "+str(form.Status.data)+", ")
             # import pdb; pdb.set_trace()
             db.session.add(p)       
-        db.session.commit()
-        return redirect(url_for('allchallenges'))
-    if delete_form.validate_on_submit():
-        db.session.delete(challenge)
         db.session.commit()
         return redirect(url_for('allchallenges'))
     return render_template('edit_challenge.html',id=id,form=form,LinkEmanio=challenge.LinkEmanio)
@@ -359,9 +354,16 @@ def allrequest():
 @logged_in
 def allchallenges():
     challengelist= models.Challenge.query.order_by(models.Challenge.Priority).all()
+    delete_form=DeleteRow_form()
+    # import pdb;pdb.set_trace()
+    if delete_form.validate_on_submit():
+        db.session.delete(models.Challenge.query.filter_by(id=delete_form.row_id.data).first())
+        # import pdb;pdb.set_trace()
+        db.session.commit()
+        return redirect(url_for('allchallenges'))
     # sorted(q_sum, key=lambda tup: tup[7])
     # import pdb;pdb.set_trace()
-    return render_template("challengeview.html",email=g.user.email,name=g.user.name,challengelist=challengelist)
+    return render_template("challengeview.html",email=g.user.email,name=g.user.name,challengelist=challengelist,delete_form=delete_form)
 
 @app.route("/myrequest",methods=["GET","POST"])
 @logged_in

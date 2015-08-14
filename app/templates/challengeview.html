@@ -153,7 +153,22 @@
 <td> 
 <a href="{{field.LinkEmanio}}">Emanio</a>
 </td>{%else%}<td></td>{%endif%} 
-<td><a href="{{ url_for('edit_challenge', id=field.id,edit=1) }}" class="btn pull-right"><span class="glyphicon glyphicon-pencil"></span> edit </a> <a href="{{ url_for('edit_challenge', id=field.id,edit=0) }}" class="btn pull-right"><span class="glyphicon glyphicon-copy"></span> copy </a> 
+<td><a href="{{ url_for('edit_challenge', id=field.id,edit=1) }}" class="btn pull-right"><span class="glyphicon glyphicon-pencil"></span> </a> <a href="{{ url_for('edit_challenge', id=field.id,edit=0) }}" class="btn pull-right"><span class="glyphicon glyphicon-copy"></span> copy </a> 
+<a class="btn btn-danger " role="button" data-toggle="collapse" href="#collapsedelete" aria-expanded="false" aria-controls="collapseExample">
+  Delete
+</a>
+
+<div class="collapse" id="collapsedelete">
+  <div class="well">
+   <form class="horizontal" method="post" role="delete_form" id='delete_form'>
+             <div class="col-md-1 "> 
+             {{ delete_form.hidden_tag() }}
+             <input type="hidden"  type=text  id="row_id" name="row_id" value="{{field.id}}" >
+                      <input class="btn btn-danger" id="submitd" name="submitd" value="Delete" type="submit">
+                          </form>
+  </div>
+</div>
+
     </td>      {% endfor %}</tr></li></ol></tbody> </table> 
 </div>
  </div></div></div>
