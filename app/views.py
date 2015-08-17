@@ -279,6 +279,35 @@ def edit_challenge(id,edit):
         return redirect(url_for('allchallenges'))
     return render_template('edit_challenge.html',id=id,form=form,LinkEmanio=challenge.LinkEmanio)
 
+@app.route('/editru/<id>/<edit>', methods=['GET', 'POST'])
+def edit_ru(id,edit): 
+    ru=models.ru.query.filter_by(id=id).first()
+    form = rutable(obj=ru)
+    if edit == '0' and request.method != 'POST' :
+        form.Title.data="Copy "+form.Title.data
+    if request.method == 'POST' and form.validate_on_submit():
+        # import pdb;pdb.set_trace()
+        if edit == '1':#editing exisitng
+            ru.LinkEmanio=form.LinkEmanio.data
+            ru.Category= form.Category.data
+            ru.Priority=form.Priority.data
+            ru.Title=form.Title.data
+            ru.Description=form.Description.data
+            Status=form.Status.data
+            ru.ProjectLead=form.ProjectLead.data
+            ru.InterventionSuggestion=form.InterventionSuggestion.data     
+        else:#copy
+            p=models.rutable(email=g.user.email,username=g.user.name,LinkEmanio=form.LinkEmanio.data,GraphLink=challenge.GraphLink,
+            Category= form.Category.data,Priority=form.Priority.data,Title=form.Title.data,Description=form.Description.data,
+            Status=form.Status.data,ProjectLead=form.ProjectLead.data,InterventionSuggestion=form.InterventionSuggestion.data,
+            initTime = datetime.datetime.utcnow(),StatusChangeSTamp=datetime.datetime.utcnow(),
+            Timeline=str(datetime.datetime.utcnow())+", "+str(form.Status.data)+", ")
+            # import pdb; pdb.set_trace()
+            db.session.add(p)       
+        db.session.commit()
+        return redirect(url_for('allrus'))
+    return render_template('edit_ru.html',id=id,form=form,LinkEmanio=ru.LinkEmanio)
+
 
 @app.route("/challengesform",methods=["GET","POST"])
 @logged_in
@@ -322,6 +351,33 @@ def challengesform():
         flash_errors(form)
         return render_template("challengesform.html",email=g.user.email,name=g.user.name,form=form)
 
+@app.route("/rusform",methods=["GET","POST"])
+@logged_in
+def rusform():
+    form = rutable()
+    # form.staffback.data=models.Staff.query.filter_by(staff="Unassigned").first()
+    # import pdb;pdb.set_trace()
+    if form.validate_on_submit():
+        print 'submit'
+        # import pdb; pdb.set_trace()
+        # p=models.ru(email=g.user.email,username=g.user.name,GraphLink=filename,LinkEmanio=form.LinkEmanio.data,
+        # Category= form.Category.data,Priority=form.Priority.data,Title=form.Title.data,Description=form.Description.data,
+        # Status=form.Status.data,ProjectLead=form.ProjectLead.data,InterventionSuggestion=form.InterventionSuggestion.data,
+        # initTime = datetime.datetime.utcnow(),StatusChangeSTamp=datetime.datetime.utcnow(),
+        # Timeline=str(datetime.datetime.utcnow())+", "+str(form.Status.data)+", ")
+        # # import pdb; pdb.set_trace()
+        # db.session.add(p)
+        db.session.commit()
+        #send email to user and admin
+        flash("Changes saved")
+        if form.submitSave.data:        
+            return redirect(url_for('rusform'))
+        else:
+            return redirect(url_for('allrus'))
+    else:
+        flash_errors(form)
+        return render_template("rusform.html",email=g.user.email,name=g.user.name,form=form)
+
 @app.route("/pickaform",methods=["GET","POST"])
 @logged_in
 def pickaform():
@@ -364,6 +420,14 @@ def allchallenges():
     # sorted(q_sum, key=lambda tup: tup[7])
     # import pdb;pdb.set_trace()
     return render_template("challengeview.html",email=g.user.email,name=g.user.name,challengelist=challengelist,delete_form=delete_form)
+
+@app.route("/rulist",methods=["GET","POST"])
+@logged_in
+def allrus():
+    rulist= models.rutable.query.all()
+    # sorted(q_sum, key=lambda tup: tup[7])
+    # import pdb;pdb.set_trace()
+    return render_template("ruview.html",email=g.user.email,name=g.user.name,rulist=rulist)
 
 @app.route("/myrequest",methods=["GET","POST"])
 @logged_in

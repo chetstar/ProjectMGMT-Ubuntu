@@ -1,0 +1,111 @@
+<!-- extend base layout -->
+{% extends "index.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block navbar %}
+
+
+  <body id="page-top" class="index">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">AC Business Analytics</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="{{ url_for('allrus')}}"><span class="glyphicon glyphicon-th-list" aria-hidden="true"> ru List</a> 
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+  
+ <header>
+        <div class="container-fluid">
+          
+    </header>
+<br>
+<br>
+<br><br>
+<br>
+<br>
+{% endblock %}
+
+{% block content %}
+{{ super()}}
+        <div class="container" color=black>
+            </div>
+        </div>
+    </header>
+
+
+<br></p>
+</div>
+
+
+      <div class="col-md-12 ">
+
+
+     
+      <div class="row">
+        <div class="col-md-1">
+        </div><div class="col-md-10">
+{% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+        {% for message in messages %}
+            <li>{{ message }} </li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+  
+        
+<p> </p>
+         <div class="row ">
+
+     <div class="span2">  </div> 
+    <div class="span10">
+         <div class="well">
+<form method=post enctype="multipart/form-data" >   
+   <div class="row ">
+    <div class="span8">
+
+     {{ form.hidden_tag() }}
+
+
+<p>{{ wtf.form_field(form.submitRU) }}{{ wtf.form_field(form.submitSave) }}</p>
+
+    </form>
+
+
+</form>
+  <!-- {{ wtf.quick_form(form) }} -->
+ 
+      </span>
+  </div>
+</div>  </div>
+</div>  </div>
+</div> </div>
+</div>  </div>
+</div>
+{% endblock %}
+
