@@ -127,7 +127,7 @@ def login():
         else:
             try:
                 if '@' in form.username.data:
-                    form.username.data=form.username.data.split("@")[0]
+                    form.username.data=re.sub(' /d+','', (re.sub("\d+",'', form.username.data.split('@')[0]))[1:]+(re.sub("\d+",'', form.username.data.split('@')[0]))[0:1])
                 # import pdb;pdb.set_trace()
                 l = ldap.initialize("ldap://10.129.18.101")
                 l.simple_bind_s("program\%s" % form.username.data,form.password.data)
