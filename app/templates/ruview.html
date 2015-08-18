@@ -76,7 +76,7 @@
  <th>oldRU</th>
  <th>ru</th>
  <th>agency</th>
- <th>county</th>
+ <!-- <th>county</th>
  <th>kidsru</th>
  <th>school</th>
  <th>Level3Classic</th>
@@ -107,8 +107,8 @@
  <th>provname</th>
  <th>start_dt</th>
  <th>end_dt</th>
- <th>frc</th>
-        
+ <th>frc</th> -->
+        <th> </th>
        </tr></strong></h3>
          </thead> 
 <tbody> 
@@ -121,7 +121,7 @@
 <td>{{field.oldRU}}</td>
 <td>{{field.ru}}</td>
 <td>{{field.agency}}</td>
-<td>{{field.county}}</td>
+<!-- <td>{{field.county}}</td>
 <td>{{field.kidsru}}</td>
 <td>{{field.school}}</td>
 <td>{{field.Level3Classic}}</td>
@@ -152,7 +152,12 @@
 <td>{{field.provname}}</td>
 <td>{{field.start_dt}}</td>
 <td>{{field.end_dt}}</td>
-<td>{{field.frc}}</td>
+<td>{{field.frc}}</td> -->
+
+
+<td><a href="{{ url_for('edit_challenge', id=field.id,edit=1) }}" class="btn pull-right"><span class="glyphicon glyphicon-pencil"></span> </a> <a href="{{ url_for('edit_challenge', id=field.id,edit=0) }}" class="btn pull-right"><span class="glyphicon glyphicon-share"></span> copy </a> 
+</td>
+
 
        {% endfor %}</tr></ol></tbody> </table> 
 </div>

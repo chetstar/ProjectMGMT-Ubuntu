@@ -424,7 +424,7 @@ def allchallenges():
 @app.route("/rulist",methods=["GET","POST"])
 @logged_in
 def allrus():
-    rulist= models.rutable.query.all()
+    rulist= models.rutable.query.filter_by(agency='').all()
     # sorted(q_sum, key=lambda tup: tup[7])
     # import pdb;pdb.set_trace()
     return render_template("ruview.html",email=g.user.email,name=g.user.name,rulist=rulist)
