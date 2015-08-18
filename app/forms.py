@@ -236,6 +236,44 @@ agenList=[
 images = UploadSet('images', IMAGES)
 
 
+class rutablefilter(Form):
+    missing    = SelectField(u"Show missing by....",coerce=unicode, choices=[('oldRU','oldRU'),
+('ru','ru'),
+('agency','agency'),
+('county','county'),
+('kidsru','kidsru'),
+('school','school'),
+('Level3Classic','Level3Classic'),
+('cds_Code','cds_Code'),
+('ab3632RU','ab3632RU'),
+('DayTx','DayTx'),
+('CESDC','CESDC'),
+('EPSDTGroup','EPSDTGroup'),
+('psmask2','psmask2'),
+('svcType','svcType'),
+('RU2','RU2'),
+('TAYru','TAYru'),
+('Level2','Level2'),
+('DBserviceModality','DBserviceModality'),
+('svcType3','svcType3'),
+('OutCty','OutCty'),
+('OurKids','OurKids'),
+('SafePassages','SafePassages'),
+('MHSA','MHSA'),
+('OAru','OAru'),
+('program','program'),
+('Residential','Residential'),
+('TBS','TBS'),
+('CalWorks','CalWorks'),
+('RUCITY','RUCITY'),
+('UMBRELLA','UMBRELLA'),
+('svcmode','svcmode'),
+('provname','provname'),
+('start_dt','start_dt'),
+('end_dt','end_dt'),
+('frc','frc')]) 
+    submit=SubmitField('Submit')
+
 class rutable(Form):
     oldRU    = IntegerField('') 
     ru    =TextField('') 

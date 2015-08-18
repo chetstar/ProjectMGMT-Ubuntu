@@ -56,7 +56,7 @@
             </div>
         </div>
     </header>
-
+ {{ wtf.quick_form(formfilter) }}
 
 <br></p>
 </div>
@@ -74,9 +74,10 @@
          <h3><strong><tr>
 
  <th>oldRU</th>
+  <th>provname</th>
  <th>ru</th>
  <th>agency</th>
- <!-- <th>county</th>
+ <th>county</th>
  <th>kidsru</th>
  <th>school</th>
  <th>Level3Classic</th>
@@ -104,10 +105,10 @@
  <th>RUCITY</th>
  <th>UMBRELLA</th>
  <th>svcmode</th>
- <th>provname</th>
+
  <th>start_dt</th>
  <th>end_dt</th>
- <th>frc</th> -->
+ <th>frc</th>
         <th> </th>
        </tr></strong></h3>
          </thead> 
@@ -119,9 +120,10 @@
             <tr>
 
 <td>{{field.oldRU}}</td>
+<td>{{field.provname}}</td>
 <td>{{field.ru}}</td>
 <td>{{field.agency}}</td>
-<!-- <td>{{field.county}}</td>
+<td>{{field.county}}</td>
 <td>{{field.kidsru}}</td>
 <td>{{field.school}}</td>
 <td>{{field.Level3Classic}}</td>
@@ -149,10 +151,10 @@
 <td>{{field.RUCITY}}</td>
 <td>{{field.UMBRELLA}}</td>
 <td>{{field.svcmode}}</td>
-<td>{{field.provname}}</td>
+
 <td>{{field.start_dt}}</td>
 <td>{{field.end_dt}}</td>
-<td>{{field.frc}}</td> -->
+<td>{{field.frc}}</td>
 
 
 <td><a href="{{ url_for('edit_challenge', id=field.id,edit=1) }}" class="btn pull-right"><span class="glyphicon glyphicon-pencil"></span> </a> <a href="{{ url_for('edit_challenge', id=field.id,edit=0) }}" class="btn pull-right"><span class="glyphicon glyphicon-share"></span> copy </a> 

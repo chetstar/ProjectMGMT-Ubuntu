@@ -1,6 +1,6 @@
 from app import app,models, db
 # from forms import goal_form, strategy_form, project_form, task_form,DeleteRow_form,ldapA,LoginForm, Request, Which,Staff
-from forms import LoginForm, RequestData, Which,ldapA, filterRequests, UserRequestData, Challenges,DeleteRow_form, TOC, rutable
+from forms import LoginForm, RequestData, Which,ldapA, filterRequests, UserRequestData, Challenges,DeleteRow_form, TOC, rutable,rutablefilter
 import datetime
 from sqlalchemy.orm.attributes import get_history
 from werkzeug import secure_filename
@@ -424,10 +424,15 @@ def allchallenges():
 @app.route("/rulist",methods=["GET","POST"])
 @logged_in
 def allrus():
-    rulist= models.rutable.query.filter_by(agency='').all()
+    formfilter=rutablefilter()
+    # rulist= db.session.query(models.rutable.agency).distinct()
+    if formfilter.submit.data:
+        import pdb;pdb.set_trace()
+    rulist= models.rutable.query.filter( models.rutable.Level3Classic != 1).filter_by(agency='Asian Community').all()
+    # rulist= models.rutable.query.filter( models.rutable.Level3Classic != 1).all()
     # sorted(q_sum, key=lambda tup: tup[7])
     # import pdb;pdb.set_trace()
-    return render_template("ruview.html",email=g.user.email,name=g.user.name,rulist=rulist)
+    return render_template("ruview.html",email=g.user.email,name=g.user.name,rulist=rulist,formfilter=formfilter)
 
 @app.route("/myrequest",methods=["GET","POST"])
 @logged_in
