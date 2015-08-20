@@ -421,14 +421,33 @@ def allchallenges():
     # import pdb;pdb.set_trace()
     return render_template("challengeview.html",email=g.user.email,name=g.user.name,challengelist=challengelist,delete_form=delete_form)
 
+
 @app.route("/rulist",methods=["GET","POST"])
 @logged_in
 def allrus():
     formfilter=rutablefilter()
     # rulist= db.session.query(models.rutable.agency).distinct()
+    l3c=1
+    # rulist= models.rutable.query.filter_by( Level3Classic = l3c).all()
     if formfilter.submit.data:
-        import pdb;pdb.set_trace()
-    rulist= models.rutable.query.filter( models.rutable.Level3Classic != 1).filter_by(agency='Asian Community').all()
+        # import pdb;pdb.set_trace()
+        try:
+            if formfilter.Level3Classic.data==False:
+                if isinstance(getattr(models.rutable.query.first(),formfilter.missing.data),unicode):
+                # if type(getattr(models.rutable.query.first(),formfilter.missing.data))=="float":
+                    rulist=models.rutable.query.filter(getattr(models.rutable, formfilter.missing.data).like('')).filter((models.rutable.Level3Classic == None)|(models.rutable.Level3Classic == 0)).all()
+                else:
+                    rulist=models.rutable.query.filter(getattr(models.rutable, formfilter.missing.data) == None).filter((models.rutable.Level3Classic == None)|(models.rutable.Level3Classic == 0)).all()     
+            else:
+                if isinstance(getattr(models.rutable.query.first(),formfilter.missing.data),unicode):
+                # if type(getattr(models.rutable.query.first(),formfilter.missing.data))=="float":
+                    rulist=models.rutable.query.filter(getattr(models.rutable, formfilter.missing.data).like('')).filter((models.rutable.Level3Classic == 1)).all()
+                else:
+                    rulist=models.rutable.query.filter(getattr(models.rutable, formfilter.missing.data) == None).filter((models.rutable.Level3Classic == 1)).all()     
+        except Exception:
+                rulist=models.rutable.query.filter(getattr(models.rutable, formfilter.missing.data).like(None)).filter((models.rutable.Level3Classic == 1)).all()
+    else:
+        rulist= models.rutable.query.filter( models.rutable.Level3Classic != l3c).filter_by(agency='Asian Community').all()
     # rulist= models.rutable.query.filter( models.rutable.Level3Classic != 1).all()
     # sorted(q_sum, key=lambda tup: tup[7])
     # import pdb;pdb.set_trace()

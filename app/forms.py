@@ -237,7 +237,9 @@ images = UploadSet('images', IMAGES)
 
 
 class rutablefilter(Form):
-    missing    = SelectField(u"Show missing by....",coerce=unicode, choices=[('oldRU','oldRU'),
+    provsearch=TextField('search for a string in the Providor name')
+    Level3Classic=BooleanField('Include Level 3 (doctors)', default=False)
+    missing    = SelectField(u"Show missing by....",coerce=unicode, choices=[('None','None'),('oldRU','oldRU'),
 ('ru','ru'),
 ('agency','agency'),
 ('county','county'),
@@ -271,7 +273,7 @@ class rutablefilter(Form):
 ('provname','provname'),
 ('start_dt','start_dt'),
 ('end_dt','end_dt'),
-('frc','frc')]) 
+('frc','frc')],default="None") 
     submit=SubmitField('Submit')
 
 class rutable(Form):
