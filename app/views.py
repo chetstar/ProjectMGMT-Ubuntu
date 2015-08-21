@@ -431,7 +431,7 @@ def allrus():
     # rulist= models.rutable.query.filter_by( Level3Classic = l3c).all()
     if formfilter.submit.data:
         # import pdb;pdb.set_trace()
-        try:
+        # try:
             if formfilter.Level3Classic.data==False:
                 if isinstance(getattr(models.rutable.query.first(),formfilter.missing.data),unicode):
                 # if type(getattr(models.rutable.query.first(),formfilter.missing.data))=="float":
@@ -444,8 +444,8 @@ def allrus():
                     rulist=models.rutable.query.filter(getattr(models.rutable, formfilter.missing.data).like('')).filter((models.rutable.Level3Classic == 1)).all()
                 else:
                     rulist=models.rutable.query.filter(getattr(models.rutable, formfilter.missing.data) == None).filter((models.rutable.Level3Classic == 1)).all()     
-        except Exception:
-                rulist=models.rutable.query.filter(getattr(models.rutable, formfilter.missing.data).like(None)).filter((models.rutable.Level3Classic == 1)).all()
+        # except Exception:
+        #         rulist=models.rutable.query.filter(getattr(models.rutable, formfilter.missing.data).like(None)).filter((models.rutable.Level3Classic == 1)).all()
     else:
         rulist= models.rutable.query.filter( models.rutable.Level3Classic != l3c).filter_by(agency='Asian Community').all()
     # rulist= models.rutable.query.filter( models.rutable.Level3Classic != 1).all()
@@ -477,7 +477,7 @@ def view_request(id):
                 f_value=fform_value         
                 setattr(test, field, fform_value)   
         test.UserAction=form.UserAction.data        
-        import pdb;pdb.set_trace()
+        # import pdb;pdb.set_trace()
         db.session.commit()   
     # if form.validate_on_submit():
         # import pdb;pdb.set_trace()                
