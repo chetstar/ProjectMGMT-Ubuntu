@@ -443,7 +443,7 @@ def allrus():
         # import pdb;pdb.set_trace()
         if formfilter.provsearch.data == '':
             if formfilter.Level3Classic.data==False:
-                if isinstance(getattr(models.rutable.query.first(),formfilter.missing.data),unicode):
+                if getattr(models.rutable,formfilter.missing.data).property.columns[0].type.python_type==str:
                 # if type(getattr(models.rutable.query.first(),formfilter.missing.data))=="float":
                     rulist=models.rutable.query.filter(getattr(models.rutable, formfilter.missing.data).like('')).filter((models.rutable.Level3Classic == None)|(models.rutable.Level3Classic == 0)).all()
                 else:
