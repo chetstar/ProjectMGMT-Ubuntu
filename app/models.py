@@ -44,8 +44,11 @@ class rutable(db.Model):
     svcmode    =db.Column(db.String(2), index=True)    
     provname    =db.Column(db.String(30), index=True)    
     start_dt    =db.Column(db.Integer)    
-    end_dt    =db.Column(db.Integer)    
-    frc    =db.Column(db.Integer)    
+    end_dt    =db.Column(db.Integer)
+    start    = db.Column(db.Date)     
+    end    = db.Column(db.Date)     
+    frc    =db.Column(db.Integer)   
+    reviewEdit  = db.Column(db.Boolean())   
     id = db.Column(db.Integer, primary_key=True)
 
 class rustage(db.Model):

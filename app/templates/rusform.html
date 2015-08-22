@@ -88,11 +88,11 @@
 <form method=post enctype="multipart/form-data" >   
    <div class="row ">
     <div class="span8">
+ {{ wtf.quick_form(form) }} 
+   <!--   {{ form.hidden_tag() }}
 
-     {{ form.hidden_tag() }}
 
-
-<p>{{ wtf.form_field(form.submitRU) }}</p>
+<p>{{ wtf.form_field(form.submitRU) }}</p> -->
 
     </form>
 

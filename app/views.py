@@ -18,8 +18,15 @@ from threading import Thread
 from flask.ext.login import LoginManager, UserMixin, login_required, current_user, login_user, logout_user
 import ldap
 from flask import render_template, flash, redirect,Flask,Response,request,url_for, g,session,jsonify
+# from flask.ext.admin.contrib import sqla
+
 login_manager = LoginManager()
 login_manager.init_app(app) 
+
+# class MyModelView(sqla.ModelView):
+
+#     def is_accessible(self):
+#         return login.current_user.is_authenticated()
 
 # photos = UploadSet('photos', IMAGES)
 
@@ -281,32 +288,35 @@ def edit_challenge(id,edit):
 
 @app.route('/editru/<id>/<edit>', methods=['GET', 'POST'])
 def edit_ru(id,edit): 
-    ru=models.ru.query.filter_by(id=id).first()
+    ru=models.rutable.query.filter_by(id=id).first()
     form = rutable(obj=ru)
     if edit == '0' and request.method != 'POST' :
         form.Title.data="Copy "+form.Title.data
-    if request.method == 'POST' and form.validate_on_submit():
+    if request.method == 'POST' :
+        # and form.validate_on_submit()
         # import pdb;pdb.set_trace()
         if edit == '1':#editing exisitng
-            ru.LinkEmanio=form.LinkEmanio.data
-            ru.Category= form.Category.data
-            ru.Priority=form.Priority.data
-            ru.Title=form.Title.data
-            ru.Description=form.Description.data
-            Status=form.Status.data
-            ru.ProjectLead=form.ProjectLead.data
-            ru.InterventionSuggestion=form.InterventionSuggestion.data     
-        else:#copy
-            p=models.rutable(email=g.user.email,username=g.user.name,LinkEmanio=form.LinkEmanio.data,GraphLink=challenge.GraphLink,
-            Category= form.Category.data,Priority=form.Priority.data,Title=form.Title.data,Description=form.Description.data,
-            Status=form.Status.data,ProjectLead=form.ProjectLead.data,InterventionSuggestion=form.InterventionSuggestion.data,
-            initTime = datetime.datetime.utcnow(),StatusChangeSTamp=datetime.datetime.utcnow(),
-            Timeline=str(datetime.datetime.utcnow())+", "+str(form.Status.data)+", ")
-            # import pdb; pdb.set_trace()
-            db.session.add(p)       
-        db.session.commit()
+            form.populate_obj(ru)
+            ru.editChange=True
+            # ru.LinkEmanio=form.LinkEmanio.data
+            # ru.Category= form.Category.data
+            # ru.Priority=form.Priority.data
+            # ru.Title=form.Title.data
+            # ru.Description=form.Description.data
+            # Status=form.Status.data
+            # ru.ProjectLead=form.ProjectLead.data
+            # ru.InterventionSuggestion=form.InterventionSuggestion.data     
+        # else:#copy
+        #     p=models.rutable(email=g.user.email,username=g.user.name,LinkEmanio=form.LinkEmanio.data,GraphLink=challenge.GraphLink,
+        #     Category= form.Category.data,Priority=form.Priority.data,Title=form.Title.data,Description=form.Description.data,
+        #     Status=form.Status.data,ProjectLead=form.ProjectLead.data,InterventionSuggestion=form.InterventionSuggestion.data,
+        #     initTime = datetime.datetime.utcnow(),StatusChangeSTamp=datetime.datetime.utcnow(),
+        #     Timeline=str(datetime.datetime.utcnow())+", "+str(form.Status.data)+", ")
+            import pdb; pdb.set_trace()
+            # db.session.add(p)       
+            db.session.commit()
         return redirect(url_for('allrus'))
-    return render_template('edit_ru.html',id=id,form=form,LinkEmanio=ru.LinkEmanio)
+    return render_template('edit_ru.html',form=form,id=id)
 
 
 @app.route("/challengesform",methods=["GET","POST"])
@@ -431,7 +441,7 @@ def allrus():
     # rulist= models.rutable.query.filter_by( Level3Classic = l3c).all()
     if formfilter.submit.data:
         # import pdb;pdb.set_trace()
-        # try:
+        if formfilter.provsearch.data == '':
             if formfilter.Level3Classic.data==False:
                 if isinstance(getattr(models.rutable.query.first(),formfilter.missing.data),unicode):
                 # if type(getattr(models.rutable.query.first(),formfilter.missing.data))=="float":
@@ -444,6 +454,11 @@ def allrus():
                     rulist=models.rutable.query.filter(getattr(models.rutable, formfilter.missing.data).like('')).filter((models.rutable.Level3Classic == 1)).all()
                 else:
                     rulist=models.rutable.query.filter(getattr(models.rutable, formfilter.missing.data) == None).filter((models.rutable.Level3Classic == 1)).all()     
+        else:
+            if formfilter.Level3Classic.data==False:
+                rulist= models.rutable.query.filter(( models.rutable.Level3Classic == None)|( models.rutable.Level3Classic == 0)).filter(models.rutable.provname.ilike("%"+formfilter.provsearch.data+"%")).all()
+            else:            
+                rulist= models.rutable.query.filter(models.rutable.provname.ilike("%"+formfilter.provsearch.data+"%")).all()
         # except Exception:
         #         rulist=models.rutable.query.filter(getattr(models.rutable, formfilter.missing.data).like(None)).filter((models.rutable.Level3Classic == 1)).all()
     else:

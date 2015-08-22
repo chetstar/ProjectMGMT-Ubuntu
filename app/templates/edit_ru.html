@@ -81,28 +81,8 @@
    <div class="row ">
     <div class="span8">
 
-     {{ form.hidden_tag() }}
-<p></span><a class="btn btn-default" role="button" href="{{ url_for('edit_photo',id=id)}}"><span class="glyphicon glyphicon-picture" aria-hidden="true"> Change Photo </a>  </p>
-     
-     <p>{{ wtf.form_field(form.Title) }}</p> 
-<p>{{ wtf.form_field(form.Category) }}</p> 
-<p>{{ wtf.form_field(form.Priority) }}</p> 
-<p>{{ wtf.form_field(form.Description) }}</p> 
-<p>{{ wtf.form_field(form.Status) }}</p> 
-
-<p>{{ wtf.form_field(form.ProjectLead) }}</p> 
-
-
-  <input class="form-control" id="LinkEmanio" name="LinkEmanio" type="url" value= "{{LinkEmanio}}" placeholder="Emanio Link"></input>
-
-<p></p>
-
-<p>{{ wtf.form_field(form.InterventionSuggestion) }}</p> 
-
-
-
-
-<p>{{ wtf.form_field(form.submitSave) }}</p>
+     <!-- {{ form.hidden_tag() }} -->
+ {{ wtf.quick_form(form) }} 
 
     </form>
 </div></div></div>    

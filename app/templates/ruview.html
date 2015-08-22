@@ -62,6 +62,7 @@
      {{ formfilter.hidden_tag() }}
 
 
+<p>{{ wtf.form_field(formfilter.provsearch) }}
 <p>{{ wtf.form_field(formfilter.missing) }}{{ wtf.form_field(formfilter.Level3Classic) }}{{ wtf.form_field(formfilter.submit) }}</p>
 </div></div></form>
 </div></div></div></div></span>
@@ -132,7 +133,7 @@
             <tr>
 
 {% if '*' not in field.ru %}
-<td><a href="{{ url_for('edit_challenge', id=field.id,edit=1) }}" class="btn pull-right"><span class="glyphicon glyphicon-pencil"></span> </a> <!-- <a href="{{ url_for('edit_challenge', id=field.id,edit=0) }}" class="btn pull-right"><span class="glyphicon glyphicon-share"></span> copy </a>  -->
+<td><a href="{{ url_for('edit_ru', id=field.id,edit=1) }}" class="btn pull-right"><span class="glyphicon glyphicon-pencil"></span> </a> <!-- <a href="{{ url_for('edit_challenge', id=field.id,edit=0) }}" class="btn pull-right"><span class="glyphicon glyphicon-share"></span> copy </a>  -->
 </td>
 <td>{{field.provname}}</td>
 <td>{{field.ru}}</td>
