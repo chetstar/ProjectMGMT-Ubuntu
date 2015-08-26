@@ -38,7 +38,10 @@ def reverse_filter(s):
     else:
        return 1
 
-
+import re
+@app.template_filter('iterateover')
+def reverse_filter(s):
+       return [i+'chet' for i in re.split(',',s)]
 
 migrate = Migrate(app, db)
 manager = Manager(app)

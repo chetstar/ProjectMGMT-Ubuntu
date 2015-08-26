@@ -11,7 +11,7 @@ from sqlalchemy.orm import relationship
 
 
 class rutable(db.Model):
-    oldRU    =db.Column(db.Integer)    
+    oldRU =db.Column(db.Integer)
     ru    =db.Column(db.String(6), index=True)    
     agency    =db.Column(db.String(40), index=True)    
     county    =db.Column(db.Integer)    
@@ -266,6 +266,10 @@ def getStatus():
     u = Status.query
     return u
 
+
+from sqlalchemy.orm import relationship
+
+
 class Challenge(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True)
@@ -284,9 +288,14 @@ class Challenge(db.Model):
     ProjectLead = db.Column(db.String(120), index=True)
     ProjectMangement = db.Column(db.String(120), index=True)
     InterventionSuggestion = db.Column(db.String(800), index=True)
-    Intervention = db.Column(db.String(800), index=True)
-    def __repr__(self):
-        return '%r' % (self.Title)
+    Intervention = db.Column(db.String(800), index=True)  
+    Tags = db.relationship('Tags', lazy='dynamic', backref='tagback',cascade="all, delete-orphan")
 
+
+class Tags(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    tag = db.Column(db.String(200))
+    tag_id = db.Column(db.Integer, db.ForeignKey('challenge.id'))
+    order = db.Column(db.Integer)                                     
 
 

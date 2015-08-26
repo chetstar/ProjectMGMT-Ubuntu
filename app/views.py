@@ -19,9 +19,28 @@ from flask.ext.login import LoginManager, UserMixin, login_required, current_use
 import ldap
 from flask import render_template, flash, redirect,Flask,Response,request,url_for, g,session,jsonify
 # from flask.ext.admin.contrib import sqla
+from sqlalchemy.orm.attributes import get_history
+        # if get_history(ptask, 'complete')[0]==[True] and get_history(ptask, 'complete')[2]==[False]:
+        #     print 'changed from false to true'
+        #     ptask.completeDate=datetime.datetime.utcnow()
+        # if get_history(ptask, 'complete')[0]==[False] and get_history(ptask, 'complete')[2]==[True]:
+        #     print 'changed from true to false'
+        #     ptask.completeDate=None
+        # else:
+        #     if get_history(ptask, 'complete')[0]==[True] and get_history(ptask, 'complete')[2]==[None]:
+        #         ptask.complete=True
+        #         ptask.completeDate=None
 
 login_manager = LoginManager()
 login_manager.init_app(app) 
+
+#run this after migrate to fill up tags
+# for x in [re.split(',',item.Category) for item in [i for i in models.Challenge.query.all()]]:
+#   for item in x:
+#   for j in x:
+#     q=models.Tags(tag=j,tag_id=item.id)
+#     db.session.add(q)
+#     db.session.commit()
 
 # class MyModelView(sqla.ModelView):
 
@@ -29,6 +48,92 @@ login_manager.init_app(app)
 #         return login.current_user.is_authenticated()
 
 # photos = UploadSet('photos', IMAGES)
+
+
+def logged_in(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if session.get('logged_in') is not None:
+            return f(*args, **kwargs)
+        else:
+            flash('Please log in first...', 'error')
+            next_url = request.url
+            login_url = '%s?next=%s' % (url_for('login'), next_url)
+            return redirect(login_url)
+    return decorated_function
+
+
+@login_manager.unauthorized_handler
+def unauthorized():
+    print 'unauthorized'
+    flash("You must be logged in.")
+    return redirect(url_for("login"))
+
+@login_manager.user_loader
+def user_loader(user_id):
+    """Given *user_id*, return the associated User object.
+    :param unicode user_id: user_id (email) user to retrieve
+    """
+    g.user=current_user
+    return models.User.query.get(user_id)
+
+@app.route("/logout")
+# @logged_in
+def logout():
+    logout_user()
+    session.pop('logged_in', None)
+    flash("Logged Out.")
+    return redirect(url_for("login"))
+
+@app.before_request
+def before_request():
+    g.user = current_user
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        if app.config['ENVIRONMENT']=='dev':
+            try:
+                print "Authentification Successful" 
+                namedb=models.User.query.filter_by(name=unicode(form.username.data)).first()
+                email=models.User.query.first().email         
+                login_user(user_loader(unicode(email)),remember=form.remember_me.data)
+                flash("Logged in successfully.")
+                g.email=email
+                session['logged_in'] = True
+                return redirect( request.values.get('next') or url_for("main"))
+            except Exception as e:
+                flash("Invalid Credentials.")
+                return render_template("login.html", form=form)
+        else:
+            try:
+                if '@' in form.username.data:
+                    form.username.data=re.sub(' /d+','', (re.sub("\d+",'', form.username.data.split('@')[0]))[1:]+(re.sub("\d+",'', form.username.data.split('@')[0]))[0:1])
+                l = ldap.initialize("ldap://10.129.18.101")
+                l.simple_bind_s("program\%s" % form.username.data,form.password.data)
+                print "Authentification Successful"
+                r=l.search_s('cn=Users,dc=BHCS,dc=Internal',ldap.SCOPE_SUBTREE,'(sAMAccountName=*%s*)' % form.username.data,['mail','objectGUID','displayName'])
+                email=r[0][1]['mail'][0]   
+                GUID=r[0][1]['objectGUID'][0]   
+                FullName=r[0][1]['displayName'][0] 
+                import uuid
+                guid = uuid.UUID(bytes=GUID)
+                if not models.User.query.filter_by(email=unicode(email)).first(): 
+                  p=models.User(name=FullName,email=email)
+                  db.session.add(p)
+                  db.session.commit()            
+                login_user(user_loader(unicode(email)),remember=form.remember_me.data)
+                flash("Logged in successfully.")
+                g.email=email
+                session['logged_in'] = True
+                return redirect( request.values.get('next') or url_for("main"))
+            except Exception as e:
+                flash("Invalid Credentials.")
+                return render_template("login.html", form=form)
+    return render_template("login.html", form=form)
+
+
 
 requestvars=['agency',
 'audience',
@@ -63,171 +168,6 @@ from werkzeug import secure_filename
 from flask_wtf.file import FileField
 from functools import wraps
 
-def logged_in(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if session.get('logged_in') is not None:
-            return f(*args, **kwargs)
-        else:
-            flash('Please log in first...', 'error')
-            next_url = request.url
-            login_url = '%s?next=%s' % (url_for('login'), next_url)
-            return redirect(login_url)
-    return decorated_function
-
-
-@login_manager.unauthorized_handler
-def unauthorized():
-    print 'unauthorized'
-    flash("You must be logged in.")
-    return redirect(url_for("login"))
-
-@login_manager.user_loader
-def user_loader(user_id):
-    """Given *user_id*, return the associated User object.
-    :param unicode user_id: user_id (email) user to retrieve
-    """
-    g.user=current_user
-    return models.User.query.get(user_id)
-
-@app.route("/main")
-@logged_in
-def main():
-    return render_template("main.html")
-
-@app.route("/demo",methods=["GET","POST"])
-def demo():
-    challengelist= models.Challenge.query.order_by(models.Challenge.Priority).all()
-    return render_template("demo.html",challengelist=challengelist)
-
-@app.route("/logout")
-# @logged_in
-def logout():
-    logout_user()
-    session.pop('logged_in', None)
-    flash("Logged Out.")
-    # import pdb;pdb.set_trace()
-    return redirect(url_for("login"))
-
-@app.before_request
-def before_request():
-    g.user = current_user
-
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    form = LoginForm()
-    # import pdb;pdb.set_trace()
-    if form.validate_on_submit():
-        if app.config['ENVIRONMENT']=='dev':
-            try:
-                print "Authentification Successful" 
-                namedb=models.User.query.filter_by(name=unicode(form.username.data)).first()
-                email=models.User.query.first().email         
-                login_user(user_loader(unicode(email)),remember=form.remember_me.data)
-                flash("Logged in successfully.")
-                g.email=email
-                session['logged_in'] = True
-                return redirect( request.values.get('next') or url_for("main"))
-            except Exception as e:
-                flash("Invalid Credentials.")
-                return render_template("login.html", form=form)
-        else:
-            try:
-                if '@' in form.username.data:
-                    form.username.data=re.sub(' /d+','', (re.sub("\d+",'', form.username.data.split('@')[0]))[1:]+(re.sub("\d+",'', form.username.data.split('@')[0]))[0:1])
-                # import pdb;pdb.set_trace()
-                l = ldap.initialize("ldap://10.129.18.101")
-                l.simple_bind_s("program\%s" % form.username.data,form.password.data)
-                print "Authentification Successful"
-                r=l.search_s('cn=Users,dc=BHCS,dc=Internal',ldap.SCOPE_SUBTREE,'(sAMAccountName=*%s*)' % form.username.data,['mail','objectGUID','displayName'])
-                email=r[0][1]['mail'][0]   
-                GUID=r[0][1]['objectGUID'][0]   
-                FullName=r[0][1]['displayName'][0] 
-                import uuid
-                guid = uuid.UUID(bytes=GUID)
-                if not models.User.query.filter_by(email=unicode(email)).first(): 
-                  p=models.User(name=FullName,email=email)
-                  db.session.add(p)
-                  db.session.commit()            
-                login_user(user_loader(unicode(email)),remember=form.remember_me.data)
-                flash("Logged in successfully.")
-                g.email=email
-                session['logged_in'] = True
-                return redirect( request.values.get('next') or url_for("main"))
-            except Exception as e:
-                flash("Invalid Credentials.")
-                return render_template("login.html", form=form)
-    return render_template("login.html", form=form)
-
-
-
-
-
-@app.route('/edittoc/<id>/<core>', methods=['GET', 'POST'])
-def edit_toc(id,core): 
-    toc=models.TOC.query.filter_by(id=id).first()
-    delete_form=DeleteRow_form()
-    form = TOC(obj=toc)
-    if core == 1:
-                flash("You are editing and existing entry")
-    if request.method == 'POST' and form.validate_on_submit():
-        if core==1:
-            form.populate_obj(toc)    
-            db.session.commit()
-        else:
-            x=TOC(Agency=form.Agency.data,
-                kill=form.kill.data,
-                DashboardQuestion=form.DashboardQuestion.data,
-                DashboardReportSort=form.DashboardReportSort.data,
-                DorR=form.DorR.data,
-                DashboardReport=form.DashboardReport.data,
-                SystemofCare=form.SystemofCare.data,
-                ServiceArea=form.ServiceArea.data,
-                Description=form.Description.data,
-                Purpose=form.Purpose.data,
-                iddeid=form.iddeid.data,
-                TargetedAudience=form.TargetedAudience.data,
-                Supportswhichmeeting=form.Supportswhichmeeting.data,
-                Ready=form.Ready.data,
-                Link=form.Link.data,
-                KeyQuestions=form.KeyQuestions.data,
-                BornOnDate=form.BornOnDate.data,
-                FinalCodeReviewDate=form.FinalCodeReviewDate.data,
-                CodeAuthor=form.CodeAuthor.data,
-                CodeReviewer=form.CodeReviewer.data,
-                FinalReportReviewDate=form.FinalReportReviewDate.data,
-                ReportAuthor=form.ReportAuthor.data,
-                ReportReviewer=form.ReportReviewer.data)
-            db.session.add(x)
-            db.session.commit()
-        return redirect(url_for('alltoc'))
-    if delete_form.validate_on_submit():
-        db.session.delete(toc)
-        db.session.commit()
-        return redirect(url_for('alltoc'))
-    return render_template('edit_toc.html',id=id,form=form,delete_form=delete_form)
-
-
-@app.route("/tocform",methods=["GET","POST"])
-@logged_in
-def tocform():
-    form = TOC()
-    # form.staffback.data=models.Staff.query.filter_by(staff="Unassigned").first()
-    if form.validate_on_submit():
-        print 'submit'
-    else:
-        flash_errors(form)
-        return render_template("tocform.html",email=g.user.email,name=g.user.name,form=form)
-
-
-@app.route("/toclist",methods=["GET","POST"])
-@logged_in
-def alltoc():
-    # toclist= models.TOC.query.order_by(models.Challenge.Priority).all()
-    toclist= models.TOC.query.all()
-    # sorted(q_sum, key=lambda tup: tup[7])
-    # import pdb;pdb.set_trace()
-    return render_template("tocview.html",email=g.user.email,name=g.user.name,toclist=toclist)
 
 
 ALLOWED_EXTENSIONS = set(['TXT', 'PDF', 'PNG', 'JPG', 'JPEG', 'GIF'])
@@ -264,7 +204,6 @@ def edit_challenge(id,edit):
     if edit == '0' and request.method != 'POST' :
         form.Title.data="Copy "+form.Title.data
     if request.method == 'POST' and form.validate_on_submit():
-        # import pdb;pdb.set_trace()
         if edit == '1':#editing exisitng
             challenge.LinkEmanio=form.LinkEmanio.data
             challenge.Category= form.Category.data
@@ -280,43 +219,10 @@ def edit_challenge(id,edit):
             Status=form.Status.data,ProjectLead=form.ProjectLead.data,InterventionSuggestion=form.InterventionSuggestion.data,
             initTime = datetime.datetime.utcnow(),StatusChangeSTamp=datetime.datetime.utcnow(),
             Timeline=str(datetime.datetime.utcnow())+", "+str(form.Status.data)+", ")
-            # import pdb; pdb.set_trace()
             db.session.add(p)       
         db.session.commit()
         return redirect(url_for('allchallenges'))
     return render_template('edit_challenge.html',id=id,form=form,LinkEmanio=challenge.LinkEmanio)
-
-@app.route('/editru/<id>/<edit>', methods=['GET', 'POST'])
-def edit_ru(id,edit): 
-    ru=models.rutable.query.filter_by(id=id).first()
-    form = rutable(obj=ru)
-    if edit == '0' and request.method != 'POST' :
-        form.Title.data="Copy "+form.Title.data
-    if request.method == 'POST' :
-        # and form.validate_on_submit()
-        # import pdb;pdb.set_trace()
-        if edit == '1':#editing exisitng
-            form.populate_obj(ru)
-            ru.editChange=True
-            # ru.LinkEmanio=form.LinkEmanio.data
-            # ru.Category= form.Category.data
-            # ru.Priority=form.Priority.data
-            # ru.Title=form.Title.data
-            # ru.Description=form.Description.data
-            # Status=form.Status.data
-            # ru.ProjectLead=form.ProjectLead.data
-            # ru.InterventionSuggestion=form.InterventionSuggestion.data     
-        # else:#copy
-        #     p=models.rutable(email=g.user.email,username=g.user.name,LinkEmanio=form.LinkEmanio.data,GraphLink=challenge.GraphLink,
-        #     Category= form.Category.data,Priority=form.Priority.data,Title=form.Title.data,Description=form.Description.data,
-        #     Status=form.Status.data,ProjectLead=form.ProjectLead.data,InterventionSuggestion=form.InterventionSuggestion.data,
-        #     initTime = datetime.datetime.utcnow(),StatusChangeSTamp=datetime.datetime.utcnow(),
-        #     Timeline=str(datetime.datetime.utcnow())+", "+str(form.Status.data)+", ")
-            import pdb; pdb.set_trace()
-            # db.session.add(p)       
-            db.session.commit()
-        return redirect(url_for('allrus'))
-    return render_template('edit_ru.html',form=form,id=id)
 
 
 @app.route("/challengesform",methods=["GET","POST"])
@@ -324,7 +230,6 @@ def edit_ru(id,edit):
 def challengesform():
     form = Challenges()
     # form.staffback.data=models.Staff.query.filter_by(staff="Unassigned").first()
-    # import pdb;pdb.set_trace()
     if form.validate_on_submit():
         print 'submit'
         # p=models.Request(email=g.user.email,username=g.user.name,
@@ -342,13 +247,11 @@ def challengesform():
             filename='no file'
         if form.LinkEmanio.data=='http://EmanioLink.com':
             form.LinkEmanio.data=None
-        # import pdb; pdb.set_trace()
         p=models.Challenge(email=g.user.email,username=g.user.name,GraphLink=filename,LinkEmanio=form.LinkEmanio.data,
         Category= form.Category.data,Priority=form.Priority.data,Title=form.Title.data,Description=form.Description.data,
         Status=form.Status.data,ProjectLead=form.ProjectLead.data,InterventionSuggestion=form.InterventionSuggestion.data,
         initTime = datetime.datetime.utcnow(),StatusChangeSTamp=datetime.datetime.utcnow(),
         Timeline=str(datetime.datetime.utcnow())+", "+str(form.Status.data)+", ")
-        # import pdb; pdb.set_trace()
         db.session.add(p)
         db.session.commit()
         #send email to user and admin
@@ -361,21 +264,62 @@ def challengesform():
         flash_errors(form)
         return render_template("challengesform.html",email=g.user.email,name=g.user.name,form=form)
 
+@app.route("/challengelist",methods=["GET","POST"])
+@logged_in
+def allchallenges():
+    challengelist= models.Challenge.query.order_by(models.Challenge.Priority).all()
+    delete_form=DeleteRow_form()
+    # import pdb;pdb.set_trace()
+    if delete_form.validate_on_submit():
+        db.session.delete(models.Challenge.query.filter_by(id=delete_form.row_id.data).first())
+        db.session.commit()
+        return redirect(url_for('allchallenges'))
+    # sorted(q_sum, key=lambda tup: tup[7])
+    return render_template("challengeview.html",email=g.user.email,name=g.user.name,challengelist=challengelist,delete_form=delete_form)
+
+
+##############################c
+
+##############################c
+
+##############################c
+
+##############################c
+
+@app.route('/editru/<id>/<edit>', methods=['GET', 'POST'])
+def edit_ru(id,edit): 
+    ru=models.rutable.query.filter_by(id=id).first()
+    form = rutable()
+    form = rutable(obj=ru)
+    form.populate_obj(ru)
+    # import pdb;pdb.set_trace()
+    # if edit == '0' and request.method != 'POST' :
+    #     form.Title.data="Copy "+form.Title.data
+    if request.method == 'POST' :
+        # and form.validate_on_submit()
+        if edit == '1':#editing exisitng
+            form.reviewEdit.data=True
+            # db.session.add(p) 
+            # form.oldRU.data=ru.oldRU      
+            db.session.commit()
+        return redirect(url_for('allrus'))
+    return render_template('edit_ru.html',form=form,id=id)
+
 @app.route("/rusform",methods=["GET","POST"])
 @logged_in
 def rusform():
     form = rutable()
+    # RB= list(set([re.split(',',h.Category for h in models.rutable.query.all()]))
+    # RB.append('No Filter')
+    # form.Category.data=RB
     # form.staffback.data=models.Staff.query.filter_by(staff="Unassigned").first()
-    # import pdb;pdb.set_trace()
     if form.validate_on_submit():
         print 'submit'
-        # import pdb; pdb.set_trace()
         # p=models.ru(email=g.user.email,username=g.user.name,GraphLink=filename,LinkEmanio=form.LinkEmanio.data,
         # Category= form.Category.data,Priority=form.Priority.data,Title=form.Title.data,Description=form.Description.data,
         # Status=form.Status.data,ProjectLead=form.ProjectLead.data,InterventionSuggestion=form.InterventionSuggestion.data,
         # initTime = datetime.datetime.utcnow(),StatusChangeSTamp=datetime.datetime.utcnow(),
         # Timeline=str(datetime.datetime.utcnow())+", "+str(form.Status.data)+", ")
-        # # import pdb; pdb.set_trace()
         # db.session.add(p)
         db.session.commit()
         #send email to user and admin
@@ -388,48 +332,6 @@ def rusform():
         flash_errors(form)
         return render_template("rusform.html",email=g.user.email,name=g.user.name,form=form)
 
-@app.route("/pickaform",methods=["GET","POST"])
-@logged_in
-def pickaform():
-    form = Which()
-    if form.validate_on_submit():
-        # import pdb;pdb.set_trace()
-        print form.formtype.data
-        if form.formtype.data==u"Short":
-            WHICH=1
-        else:
-            WHICH=2
-        return redirect(url_for("requestform",WHICH=WHICH))
-    return render_template("start.html",email=g.user.email,name=g.user.name,form=form,)
-
-
-# @app.route("/requests",methods=["GET","POST"])
-# @logged_in
-# def requests():
-#     requestlist=models.Request.query.all()
-#     return render_template("requests.html",email=g.user.email,name=g.user.name,requestlist=requestlist)
-
-@app.route("/allrequest",methods=["GET","POST"])
-@logged_in
-def allrequest():
-    requestlist= models.Request.query.all() 
-    # import pdb;pdb.set_trace()
-    return render_template("followup.html",email=g.user.email,name=g.user.name,requestlist=requestlist)
-
-@app.route("/challengelist",methods=["GET","POST"])
-@logged_in
-def allchallenges():
-    challengelist= models.Challenge.query.order_by(models.Challenge.Priority).all()
-    delete_form=DeleteRow_form()
-    # import pdb;pdb.set_trace()
-    if delete_form.validate_on_submit():
-        db.session.delete(models.Challenge.query.filter_by(id=delete_form.row_id.data).first())
-        # import pdb;pdb.set_trace()
-        db.session.commit()
-        return redirect(url_for('allchallenges'))
-    # sorted(q_sum, key=lambda tup: tup[7])
-    # import pdb;pdb.set_trace()
-    return render_template("challengeview.html",email=g.user.email,name=g.user.name,challengelist=challengelist,delete_form=delete_form)
 
 
 @app.route("/rulist",methods=["GET","POST"])
@@ -440,7 +342,6 @@ def allrus():
     l3c=1
     # rulist= models.rutable.query.filter_by( Level3Classic = l3c).all()
     if formfilter.submit.data:
-        # import pdb;pdb.set_trace()
         if formfilter.provsearch.data == '':
             if formfilter.Level3Classic.data==False:
                 if getattr(models.rutable,formfilter.missing.data).property.columns[0].type.python_type==str:
@@ -465,14 +366,12 @@ def allrus():
         rulist= models.rutable.query.filter( models.rutable.Level3Classic != l3c).filter_by(agency='Asian Community').all()
     # rulist= models.rutable.query.filter( models.rutable.Level3Classic != 1).all()
     # sorted(q_sum, key=lambda tup: tup[7])
-    # import pdb;pdb.set_trace()
     return render_template("ruview.html",email=g.user.email,name=g.user.name,rulist=rulist,formfilter=formfilter)
 
 @app.route("/myrequest",methods=["GET","POST"])
 @logged_in
 def myrequest():
     requestlist= models.Request.query.filter_by(email=g.user.email).all() 
-    # import pdb;pdb.set_trace()
     return render_template("followup.html",email=g.user.email,name=g.user.name,requestlist=requestlist)
 
 @app.route('/viewrequest/<id>/', methods=['GET', 'POST'])
@@ -481,7 +380,6 @@ def view_request(id):
     test=models.Request.query.filter_by(id=int(id)).first() 
     form=RequestData(obj=test)
     test
-    # import pdb;pdb.set_trace()
     if form.submitRequest.data:
         form.agency.data=','.join(form.agency.data)
         for field in requestvars:
@@ -492,10 +390,8 @@ def view_request(id):
                 f_value=fform_value         
                 setattr(test, field, fform_value)   
         test.UserAction=form.UserAction.data        
-        # import pdb;pdb.set_trace()
         db.session.commit()   
     # if form.validate_on_submit():
-        # import pdb;pdb.set_trace()                
         # form.assigned.data=form.assigned.data.staff
         if form.status.data=="Complete":
             if ''.join(get_history(test,'status')[1])==(form.status.data) and test.completeDate != None:
@@ -513,7 +409,6 @@ def view_request(id):
     form.agency.data=''.join(form.agency.data).split(',')
     # else:
     #     flash_errors(form)
-    #     # import pdb;pdb.set_trace()
     #     test.note=form.note.data
     #     db.session.commit()
     # if delete_form.validate_on_submit():
@@ -528,7 +423,6 @@ def view_request(id):
 def admin_edit(id,a,s,r):
     request_to_edit=models.Request.query.filter_by(id=int(id)).first() 
     form=RequestData(obj=request_to_edit)
-    # import pdb;pdb.set_trace()
     formfilter=filterRequests()
     RB= list(set([h.requestedBy for h in models.Request.query.all()]))
     RB.append('No Filter')
@@ -541,10 +435,7 @@ def admin_edit(id,a,s,r):
     formfilter.status.choices=zip(ST,ST)
     # requestlist=rl
     # requestlist= models.Request.query.all() 
-    # import pdb;pdb.set_trace()
-
     # if request.method == 'POST' and  formFilter.submitrequest.data:
-    # import pdb;pdb.set_trace()
     if formfilter.submitFilter.data:
         # if formfilter.validate_on_submit():
             s=formfilter.status.data
@@ -602,7 +493,6 @@ def admin_edit(id,a,s,r):
         .filter(models.Request.staffback.has(staff=formfilter.assigned.data)).all()
     if form.submitRequest.data:
         if form.validate_on_submit():
-            # import pdb;pdb.set_trace()                
             form.agency.data=','.join(form.agency.data)
             # form.assigned.data=form.assigned.data.staff
             if form.statusback.data=="Complete":
@@ -621,8 +511,6 @@ def admin_edit(id,a,s,r):
     else:
         form.agency.data=''.join(form.agency.data).split(',')
         # print 'pdb inside save'
-        # import pdb;pdb.set_trace()
-    # import pdb;pdb.set_trace()
     return render_template('admin_edit.html',a=a,s=s,r=r,request_to_edit=request_to_edit,email=g.user.email,id=id,
         name=g.user.name,form=form,requestlist=requestlist,formfilter=formfilter)
 
@@ -632,9 +520,7 @@ def edit_request(id):
     request_to_edit=models.Request.query.filter_by(id=int(id)).first() 
     form=RequestData(obj=request_to_edit)
     # form.populate_obj(request_to_edit)
-    # import pdb;pdb.set_trace()
     if request.method == 'POST':
-        # import pdb;pdb.set_trace()
         request_to_edit.note=form.note.data
         db.session.commit()
         return redirect(url_for('myrequest'))
@@ -650,7 +536,6 @@ def edit_request(id):
 @logged_in
 def followup():
     print 'follow up'
-    # import pdb;pdb.set_trace()
     # requestlist= models.Request.query.filter_by(email=g.user.email).all() 
     return render_template("followup.html",email=g.user.email,name=g.user.name)
 
@@ -663,7 +548,6 @@ def Request_management():
       # db.session.query(models.Request).filter(models.Request.requestedBy.like('2'))\
       # .filter(models.Request.requestedBy.like('2'))\
       # .filter(models.Request.assigned.like('Unassigned')).all()
-      # import pdb;pdb.set_trace()
       # p=models.Request(email=g.user.email,username=g.user.name,jobTitle=form.jobTitle.data,deadlinedate=form.deadlinedate.data,emanio=form.emanio.data,MHorSUD=form.MHorSUD.data,
       #   keyQuestions=form.keyQuestions.data, problem=form.problem.data,specialFacts=form.specialFacts.data,requestedBy=form.requestedBy.data, priority=form.priority.data,
       #   timeframe=form.timeframe.data,timeBreakdown=form.timeBreakdown.data,specialPop=form.specialPop.data,agency=form.agency.data,ru=form.ru.data,
@@ -729,10 +613,8 @@ def flash_errors(form):
 def requestform(WHICH):
     form = UserRequestData()
     # form.staffback.data=models.Staff.query.filter_by(staff="Unassigned").first()
-    # import pdb;pdb.set_trace()
     if form.validate_on_submit():
       print 'submit'
-      # import pdb;pdb.set_trace()
       # p=models.Request(email=g.user.email,username=g.user.name,
       #  requestDate=datetime.datetime.utcnow(),assigned="Unassigned",status="Pending Review")
       # form.agency.data=', '.join(form.agency.data)
@@ -823,6 +705,105 @@ def index():
 @app.route('/start', methods=['GET','POST'])
 def start():
     return redirect('http://hpmxl2221nxk:5000/start')
+
+
+@app.route("/pickaform",methods=["GET","POST"])
+@logged_in
+def pickaform():
+    form = Which()
+    if form.validate_on_submit():
+        print form.formtype.data
+        if form.formtype.data==u"Short":
+            WHICH=1
+        else:
+            WHICH=2
+        return redirect(url_for("requestform",WHICH=WHICH))
+    return render_template("start.html",email=g.user.email,name=g.user.name,form=form,)
+
+
+@app.route("/allrequest",methods=["GET","POST"])
+@logged_in
+def allrequest():
+    requestlist= models.Request.query.all() 
+    return render_template("followup.html",email=g.user.email,name=g.user.name,requestlist=requestlist)
+
+
+@app.route("/main")
+@logged_in
+def main():
+    return render_template("main.html")
+
+@app.route("/demo",methods=["GET","POST"])
+def demo():
+    challengelist= models.Challenge.query.order_by(models.Challenge.Priority).all()
+    return render_template("demo.html",challengelist=challengelist)
+
+
+
+@app.route('/edittoc/<id>/<core>', methods=['GET', 'POST'])
+def edit_toc(id,core): 
+    toc=models.TOC.query.filter_by(id=id).first()
+    delete_form=DeleteRow_form()
+    form = TOC(obj=toc)
+    if core == 1:
+                flash("You are editing and existing entry")
+    if request.method == 'POST' and form.validate_on_submit():
+        if core==1:
+            form.populate_obj(toc)    
+            db.session.commit()
+        else:
+            x=TOC(Agency=form.Agency.data,
+                kill=form.kill.data,
+                DashboardQuestion=form.DashboardQuestion.data,
+                DashboardReportSort=form.DashboardReportSort.data,
+                DorR=form.DorR.data,
+                DashboardReport=form.DashboardReport.data,
+                SystemofCare=form.SystemofCare.data,
+                ServiceArea=form.ServiceArea.data,
+                Description=form.Description.data,
+                Purpose=form.Purpose.data,
+                iddeid=form.iddeid.data,
+                TargetedAudience=form.TargetedAudience.data,
+                Supportswhichmeeting=form.Supportswhichmeeting.data,
+                Ready=form.Ready.data,
+                Link=form.Link.data,
+                KeyQuestions=form.KeyQuestions.data,
+                BornOnDate=form.BornOnDate.data,
+                FinalCodeReviewDate=form.FinalCodeReviewDate.data,
+                CodeAuthor=form.CodeAuthor.data,
+                CodeReviewer=form.CodeReviewer.data,
+                FinalReportReviewDate=form.FinalReportReviewDate.data,
+                ReportAuthor=form.ReportAuthor.data,
+                ReportReviewer=form.ReportReviewer.data)
+            db.session.add(x)
+            db.session.commit()
+        return redirect(url_for('alltoc'))
+    if delete_form.validate_on_submit():
+        db.session.delete(toc)
+        db.session.commit()
+        return redirect(url_for('alltoc'))
+    return render_template('edit_toc.html',id=id,form=form,delete_form=delete_form)
+
+
+@app.route("/tocform",methods=["GET","POST"])
+@logged_in
+def tocform():
+    form = TOC()
+    # form.staffback.data=models.Staff.query.filter_by(staff="Unassigned").first()
+    if form.validate_on_submit():
+        print 'submit'
+    else:
+        flash_errors(form)
+        return render_template("tocform.html",email=g.user.email,name=g.user.name,form=form)
+
+
+@app.route("/toclist",methods=["GET","POST"])
+@logged_in
+def alltoc():
+    # toclist= models.TOC.query.order_by(models.Challenge.Priority).all()
+    toclist= models.TOC.query.all()
+    # sorted(q_sum, key=lambda tup: tup[7])
+    return render_template("tocview.html",email=g.user.email,name=g.user.name,toclist=toclist)
 
 
 

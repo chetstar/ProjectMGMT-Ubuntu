@@ -80,9 +80,46 @@
 <form method=post enctype="multipart/form-data" >   
    <div class="row ">
     <div class="span8">
-
+{{ form.hidden_tag() }}
+{{ wtf.form_errors(form) }}
      <!-- {{ form.hidden_tag() }} -->
- {{ wtf.quick_form(form) }} 
+{{ wtf.form_field(form.ru) }}
+{{ wtf.form_field(form.agency) }}
+{{ wtf.form_field(form.county) }}
+{{ wtf.form_field(form.oldRU) }}
+{{ wtf.form_field(form.kidsru) }}
+{{ wtf.form_field(form.school) }}
+{{ wtf.form_field(form.Level3Classic) }}
+{{ wtf.form_field(form.cds_Code) }}
+{{ wtf.form_field(form.ab3632RU) }}
+{{ wtf.form_field(form.DayTx) }}
+{{ wtf.form_field(form.CESDC) }}
+{{ wtf.form_field(form.EPSDTGroup) }}
+{{ wtf.form_field(form.psmask2) }}
+{{ wtf.form_field(form.svcType) }}
+{{ wtf.form_field(form.RU2) }}
+{{ wtf.form_field(form.TAYru) }}
+{{ wtf.form_field(form.Level2) }}
+{{ wtf.form_field(form.DBserviceModality) }}
+{{ wtf.form_field(form.svcType3) }}
+{{ wtf.form_field(form.OutCty) }}
+{{ wtf.form_field(form.OurKids) }}
+{{ wtf.form_field(form.SafePassages) }}
+{{ wtf.form_field(form.MHSA) }}
+{{ wtf.form_field(form.OAru) }}
+{{ wtf.form_field(form.program) }}
+{{ wtf.form_field(form.Residential) }}
+{{ wtf.form_field(form.TBS) }}
+{{ wtf.form_field(form.CalWorks) }}
+{{ wtf.form_field(form.RUCITY) }}
+{{ wtf.form_field(form.UMBRELLA) }}
+{{ wtf.form_field(form.svcmode) }}
+{{ wtf.form_field(form.provname) }}
+{{ wtf.form_field(form.start_dt) }}
+{{ wtf.form_field(form.end_dt) }}
+{{ wtf.form_field(form.frc) }}
+{{ wtf.form_field(form.submitRU) }}
+
 
     </form>
 </div></div></div>    
