@@ -11,8 +11,9 @@ from sqlalchemy.orm import relationship
 
 
 class rutable(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
     oldRU =db.Column(db.Integer)
-    ru    =db.Column(db.String(6), index=True)    
+    ru    =db.Column(db.String(6), db.ForeignKey('rustage.ru'),unique=True)      
     agency    =db.Column(db.String(40), index=True)    
     county    =db.Column(db.Integer)    
     kidsru    =db.Column(db.Integer)    
@@ -48,12 +49,12 @@ class rutable(db.Model):
     start    = db.Column(db.Date)     
     end    = db.Column(db.Date)     
     frc    =db.Column(db.Integer)   
-    reviewEdit  = db.Column(db.Boolean())   
-    id = db.Column(db.Integer, primary_key=True)
+    reviewEdit  = db.Column(db.Boolean())  
 
 class rustage(db.Model):
-    oldRU =db.Column(db.Integer)
-    ru    =db.Column(db.String(6), index=True)    
+    id = db.Column(db.Integer, primary_key=True)
+    ru    =db.Column(db.String(6), index=True, unique=True)
+    oldRU =db.Column(db.Integer)  
     agency    =db.Column(db.String(40), index=True)    
     county    =db.Column(db.Integer)    
     kidsru    =db.Column(db.Integer)    
@@ -90,7 +91,7 @@ class rustage(db.Model):
     end    = db.Column(db.Date)     
     frc    =db.Column(db.Integer)   
     reviewEdit  = db.Column(db.Boolean())   
-    id = db.Column(db.Integer, primary_key=True)
+    rutablelink = db.relationship('rutable', lazy='dynamic', backref='ruback')
 
 class TOC(db.Model):
     Agency=db.Column(db.String(300), index=True)

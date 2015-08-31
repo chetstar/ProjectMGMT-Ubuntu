@@ -369,8 +369,17 @@ def allrus():
                         rulist= models.rustage.query.filter(getattr(models.rustage, formfilter.missing.data).like('')).filter(( models.rustage.Level3Classic == None)|( models.rustage.Level3Classic == 0)).filter(models.rustage.provname.ilike("%"+formfilter.provsearch.data+"%")).all()        
                     else:
                         rulist= models.rustage.query.filter(getattr(models.rustage, formfilter.missing.data) == None).filter(( models.rustage.Level3Classic == None)|( models.rustage.Level3Classic == 0)).filter(models.rustage.provname.ilike("%"+formfilter.provsearch.data+"%")).all()        
-            else:            
-                rulist= models.rustage.query.filter(models.rustage.provname.ilike("%"+formfilter.provsearch.data+"%")).all()
+            else:     
+                # import pdb;pdb.set_trace()
+                if formfilter.missing.data=="None":
+                    rulist= models.rustage.query.filter(models.rustage.provname.ilike("%"+formfilter.provsearch.data+"%")).all()
+                else:
+                    if getattr(models.rustage,formfilter.missing.data).property.columns[0].type.python_type==str:
+                    #does not work yet need to add the ability to search by both
+                        rulist= models.rustage.query.filter(getattr(models.rustage, formfilter.missing.data).like('')).filter(models.rustage.provname.ilike("%"+formfilter.provsearch.data+"%")).all()        
+                    else:
+                        rulist= models.rustage.query.filter(getattr(models.rustage, formfilter.missing.data) == None).filter(models.rustage.provname.ilike("%"+formfilter.provsearch.data+"%")).all()        
+                # rulist= models.rustage.query.filter(models.rustage.provname.ilike("%"+formfilter.provsearch.data+"%")).all()
         # except Exception:
         #         rulist=models.rustage.query.filter(getattr(models.rustage, formfilter.missing.data).like(None)).filter((models.rustage.Level3Classic == 1)).all()
     else:
