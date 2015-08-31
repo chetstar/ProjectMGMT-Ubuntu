@@ -288,7 +288,7 @@ def allchallenges():
 
 @app.route('/editru/<id>/<edit>', methods=['GET', 'POST'])
 def edit_ru(id,edit): 
-    ru=models.rutable.query.filter_by(id=id).first()
+    ru=models.rustage.query.filter_by(id=id).first()
     form = rutable()
     form = rutable(obj=ru)
     form.populate_obj(ru)
@@ -309,7 +309,7 @@ def edit_ru(id,edit):
 @logged_in
 def rusform():
     form = rutable()
-    # RB= list(set([re.split(',',h.Category for h in models.rutable.query.all()]))
+    # RB= list(set([re.split(',',h.Category for h in models.rustage.query.all()]))
     # RB.append('No Filter')
     # form.Category.data=RB
     # form.staffback.data=models.Staff.query.filter_by(staff="Unassigned").first()
@@ -338,33 +338,44 @@ def rusform():
 @logged_in
 def allrus():
     formfilter=rutablefilter()
-    # rulist= db.session.query(models.rutable.agency).distinct()
+    # rulist= db.session.query(models.rustage.agency).distinct()
     l3c=1
-    # rulist= models.rutable.query.filter_by( Level3Classic = l3c).all()
+    # rulist= models.rustage.query.filter_by( Level3Classic = l3c).all()
     if formfilter.submit.data:
         if formfilter.provsearch.data == '':
-            if formfilter.Level3Classic.data==False:
-                if getattr(models.rutable,formfilter.missing.data).property.columns[0].type.python_type==str:
-                # if type(getattr(models.rutable.query.first(),formfilter.missing.data))=="float":
-                    rulist=models.rutable.query.filter(getattr(models.rutable, formfilter.missing.data).like('')).filter((models.rutable.Level3Classic == None)|(models.rutable.Level3Classic == 0)).all()
-                else:
-                    rulist=models.rutable.query.filter(getattr(models.rutable, formfilter.missing.data) == None).filter((models.rutable.Level3Classic == None)|(models.rutable.Level3Classic == 0)).all()     
+            if formfilter.missing.data=="None":
+                rulist= models.rustage.query.filter( models.rustage.Level3Classic != l3c).filter_by(agency='Asian Community').all()
             else:
-                if isinstance(getattr(models.rutable.query.first(),formfilter.missing.data),unicode):
-                # if type(getattr(models.rutable.query.first(),formfilter.missing.data))=="float":
-                    rulist=models.rutable.query.filter(getattr(models.rutable, formfilter.missing.data).like('')).filter((models.rutable.Level3Classic == 1)).all()
+                if formfilter.Level3Classic.data==False:
+                    if getattr(models.rustage,formfilter.missing.data).property.columns[0].type.python_type==str:
+                    # if type(getattr(models.rustage.query.first(),formfilter.missing.data))=="float":
+                        rulist=models.rustage.query.filter(getattr(models.rustage, formfilter.missing.data).like('')).filter((models.rustage.Level3Classic == None)|(models.rustage.Level3Classic == 0)).all()
+                    else:
+                        rulist=models.rustage.query.filter(getattr(models.rustage, formfilter.missing.data) == None).filter((models.rustage.Level3Classic == None)|(models.rustage.Level3Classic == 0)).all()     
                 else:
-                    rulist=models.rutable.query.filter(getattr(models.rutable, formfilter.missing.data) == None).filter((models.rutable.Level3Classic == 1)).all()     
-        else:
+                    if getattr(models.rustage,formfilter.missing.data).property.columns[0].type.python_type==str:
+                    # if type(getattr(models.rustage.query.first(),formfilter.missing.data))=="float":
+                        rulist=models.rustage.query.filter(getattr(models.rustage, formfilter.missing.data).like('')).filter((models.rustage.Level3Classic == 1)).all()
+                    else:
+                        rulist=models.rustage.query.filter(getattr(models.rustage, formfilter.missing.data) == None).filter((models.rustage.Level3Classic == 1)).all()     
+        else:#provsearch has something in it
             if formfilter.Level3Classic.data==False:
-                rulist= models.rutable.query.filter(( models.rutable.Level3Classic == None)|( models.rutable.Level3Classic == 0)).filter(models.rutable.provname.ilike("%"+formfilter.provsearch.data+"%")).all()
+                # import pdb;pdb.set_trace()
+                if formfilter.missing.data=="None":
+                    rulist= models.rustage.query.filter(( models.rustage.Level3Classic == None)|( models.rustage.Level3Classic == 0)).filter(models.rustage.provname.ilike("%"+formfilter.provsearch.data+"%")).all()
+                else:
+                    if getattr(models.rustage,formfilter.missing.data).property.columns[0].type.python_type==str:
+                    #does not work yet need to add the ability to search by both
+                        rulist= models.rustage.query.filter(getattr(models.rustage, formfilter.missing.data).like('')).filter(( models.rustage.Level3Classic == None)|( models.rustage.Level3Classic == 0)).filter(models.rustage.provname.ilike("%"+formfilter.provsearch.data+"%")).all()        
+                    else:
+                        rulist= models.rustage.query.filter(getattr(models.rustage, formfilter.missing.data) == None).filter(( models.rustage.Level3Classic == None)|( models.rustage.Level3Classic == 0)).filter(models.rustage.provname.ilike("%"+formfilter.provsearch.data+"%")).all()        
             else:            
-                rulist= models.rutable.query.filter(models.rutable.provname.ilike("%"+formfilter.provsearch.data+"%")).all()
+                rulist= models.rustage.query.filter(models.rustage.provname.ilike("%"+formfilter.provsearch.data+"%")).all()
         # except Exception:
-        #         rulist=models.rutable.query.filter(getattr(models.rutable, formfilter.missing.data).like(None)).filter((models.rutable.Level3Classic == 1)).all()
+        #         rulist=models.rustage.query.filter(getattr(models.rustage, formfilter.missing.data).like(None)).filter((models.rustage.Level3Classic == 1)).all()
     else:
-        rulist= models.rutable.query.filter( models.rutable.Level3Classic != l3c).filter_by(agency='Asian Community').all()
-    # rulist= models.rutable.query.filter( models.rutable.Level3Classic != 1).all()
+        rulist= models.rustage.query.filter( models.rustage.Level3Classic != l3c).filter_by(agency='Asian Community').all()
+    # rulist= models.rustage.query.filter( models.rustage.Level3Classic != 1).all()
     # sorted(q_sum, key=lambda tup: tup[7])
     return render_template("ruview.html",email=g.user.email,name=g.user.name,rulist=rulist,formfilter=formfilter)
 

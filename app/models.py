@@ -52,7 +52,7 @@ class rutable(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
 class rustage(db.Model):
-    oldRU    =db.Column(db.Integer)    
+    oldRU =db.Column(db.Integer)
     ru    =db.Column(db.String(6), index=True)    
     agency    =db.Column(db.String(40), index=True)    
     county    =db.Column(db.Integer)    
@@ -85,8 +85,11 @@ class rustage(db.Model):
     svcmode    =db.Column(db.String(2), index=True)    
     provname    =db.Column(db.String(30), index=True)    
     start_dt    =db.Column(db.Integer)    
-    end_dt    =db.Column(db.Integer)    
-    frc    =db.Column(db.Integer)    
+    end_dt    =db.Column(db.Integer)
+    start    = db.Column(db.Date)     
+    end    = db.Column(db.Date)     
+    frc    =db.Column(db.Integer)   
+    reviewEdit  = db.Column(db.Boolean())   
     id = db.Column(db.Integer, primary_key=True)
 
 class TOC(db.Model):
@@ -265,6 +268,7 @@ def getStaff():
 def getStatus():
     u = Status.query
     return u
+
 
 
 from sqlalchemy.orm import relationship
