@@ -298,7 +298,7 @@ def edit_ru(id,edit):
     if request.method == 'POST' :
         # and form.validate_on_submit()
         if edit == '1':#editing exisitng
-            form.reviewEdit.data=True
+            ru.reviewEdit=True
             # db.session.add(p) 
             # form.oldRU.data=ru.oldRU      
             db.session.commit()
@@ -388,6 +388,32 @@ def allrus():
     # sorted(q_sum, key=lambda tup: tup[7])
     return render_template("ruview.html",email=g.user.email,name=g.user.name,rulist=rulist,formfilter=formfilter)
 
+
+
+
+@app.route("/rureview",methods=["GET","POST"])
+@logged_in
+def rureview():
+    rulist= models.rustage.query.filter_by(reviewEdit=True).all()
+    # rulist= models.rustage.query.filter( models.rustage.Level3Classic != 1).all()
+    # sorted(q_sum, key=lambda tup: tup[7])
+    return render_template("rureview.html",email=g.user.email,name=g.user.name,rulist=rulist)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#########################
 @app.route("/myrequest",methods=["GET","POST"])
 @logged_in
 def myrequest():

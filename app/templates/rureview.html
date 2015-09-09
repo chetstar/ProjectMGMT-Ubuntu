@@ -1,0 +1,181 @@
+<!-- extend base layout -->
+{% extends "index.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block navbar %}
+
+  <body id="page-top" class="index">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">AC Business Analytics</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                       <a  href="{{ url_for('rusform')}}"><span class="glyphicon glyphicon-file" aria-hidden="true"> ru Form</a>
+                    </li>
+<li>
+                     <a class="page-scroll" href="{{ url_for('allrus')}}"><span class="glyphicon glyphicon-th-list" aria-hidden="true"> ru List</a> 
+    </span></a></li></span></a></li>            </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+  
+ <header>
+        
+            </div>
+        </div>
+    </header>
+<br>
+<br>
+<br><br>
+<br>
+<br>
+{% endblock %}
+
+{% block content %}
+{{ super()}}
+</span></a></li></ul></div></div></nav>
+        
+    </header>
+<!-- <form method=post  >    -->
+    <div class="row">
+       <div class="col-md-1"></div>
+       <div class="col-md-3">
+
+</div></div></div></div></span>
+
+        </div>
+    </header>
+
+
+<br></p>
+</div>
+
+
+    
+<div class='span12 table-scrollable'>
+     
+  
+    <table class="table table-striped table-responsive" >
+  <!--          <table id="myTable" class="tablesorter"> -->
+<thead> 
+         <h3><strong><tr>
+ <th> </th>
+
+  <th>provname</th>
+ <th>ru</th>
+ <th>agency</th>
+ <th>county</th>
+ <th>kidsru</th>
+ <th>school</th>
+ <th>Level3Classic</th>
+ <th>cds_Code</th>
+ <th>ab3632RU</th>
+ <th>DayTx</th>
+ <th>CESDC</th>
+ <th>EPSDTGroup</th>
+ <th>psmask2</th>
+ <th>svcType</th>
+ <th>RU2</th>
+ <th>TAYru</th>
+ <th>Level2</th>
+ <th>DBserviceModality</th>
+ <th>svcType3</th>
+ <th>OutCty</th>
+ <th>OurKids</th>
+ <th>SafePassages</th>
+ <th>MHSA</th>
+ <th>OAru</th>
+ <th>program</th>
+ <th>Residential</th>
+ <th>TBS</th>
+ <th>CalWorks</th>
+ <th>RUCITY</th>
+ <th>UMBRELLA</th>
+ <th>svcmode</th>
+
+ <th>start_dt</th>
+ <th>end_dt</th>
+ <th>frc</th>
+        <th>oldRU</th>
+       </tr></strong></h3>
+         </thead> 
+<tbody> 
+  <ol type="1">
+
+          {% for field in rulist %}
+
+            <tr>
+
+<td><a href="{{ url_for('edit_ru', id=field.id,edit=1) }}" class="btn pull-right"><span class="glyphicon glyphicon-pencil"></span> </a> <!-- <a href="{{ url_for('edit_challenge', id=field.id,edit=0) }}" class="btn pull-right"><span class="glyphicon glyphicon-share"></span> copy </a>  -->
+</td>
+<td>{{field.provname}}</td>
+<td>{{field.ru}}</td>
+<td>{{field.agency}}</td>
+<td>{{field.county}}</td>
+<td>{{field.kidsru}}</td>
+<td>{{field.school}}</td>
+<td>{{field.Level3Classic}}</td>
+<td>{{field.cds_Code}}</td>
+<td>{{field.ab3632RU}}</td>
+<td>{{field.DayTx}}</td>
+<td>{{field.CESDC}}</td>
+<td>{{field.EPSDTGroup}}</td>
+<td>{{field.psmask2}}</td>
+<td>{{field.svcType}}</td>
+<td>{{field.RU2}}</td>
+<td>{{field.TAYru}}</td>
+<td>{{field.Level2}}</td>
+<td>{{field.DBserviceModality}}</td>
+<td>{{field.svcType3}}</td>
+<td>{{field.OutCty}}</td>
+<td>{{field.OurKids}}</td>
+<td>{{field.SafePassages}}</td>
+<td>{{field.MHSA}}</td>
+<td>{{field.OAru}}</td>
+<td>{{field.program}}</td>
+<td>{{field.Residential}}</td>
+<td>{{field.TBS}}</td>
+<td>{{field.CalWorks}}</td>
+<td>{{field.RUCITY}}</td>
+<td>{{field.UMBRELLA}}</td>
+<td>{{field.svcmode}}</td>
+
+<td>{{field.start_dt}}</td>
+<td>{{field.end_dt}}</td>
+<td>{{field.frc}}</td>
+<td>{{field.oldRU}}</td>
+
+
+
+       {% endfor %}</tr></ol></tbody> </table> 
+</div>
+ </div></div></div>
+    </div></div>
+</div></div></body>
+  
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  </body>
+</html>{% endblock %}
