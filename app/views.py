@@ -275,7 +275,7 @@ def allchallenges():
         db.session.commit()
         return redirect(url_for('allchallenges'))
     # sorted(q_sum, key=lambda tup: tup[7])
-    return render_template("challengeview.html",email=g.user.email,name=g.user.name,challengelist=challengelist,delete_form=delete_form)
+    return render_template("challengeview.html",email=g.user.email,name=g.user.name,challengelist=challengelist,delete_form=delete_form,admin=g.user.admin)
 
 
 ##############################c
