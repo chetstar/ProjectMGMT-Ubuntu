@@ -30,6 +30,13 @@
                     <li>
                        <a  href="{{ url_for('challengesform')}}"><span class="glyphicon glyphicon-file" aria-hidden="true"> Challenge Form</a>
                     </li>
+                       <li>
+                      {% if not session.logged_in %}
+   <li><a href="{{ url_for('login') }}">Login</a></li>
+  {% else %}
+   <li><a href="{{ url_for('logout') }}">Logout</a></li>
+  {% endif %}
+                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

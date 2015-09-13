@@ -84,11 +84,20 @@
                     </li>
                     <li>
                         <a class="page-scroll" href="#contact">Contact</a>
+                    </li>   <li>
+                      {% if not session.logged_in %}
+   <li><a href="{{ url_for('login') }}">Login</a></li>
+  {% else %}
+   <li><a href="{{ url_for('logout') }}">Logout</a></li>
+  {% endif %}
                     </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
-        </div>
+        </div>  
+<!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
         <!-- /.container-fluid -->
     </nav>
 
@@ -102,6 +111,7 @@
                 <a href="#services" class="page-scroll btn btn-xl">Tell Me More</a>
             </div>
         </div>
+
     </header>
 {% endblock %}
 
