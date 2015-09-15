@@ -81,10 +81,12 @@
          <h3><strong><tr>
  <th> </th>
 
-  <th>provname</th>
- <th>ru</th>
  <th>agency</th>
+ <th>provname</th>
+ <th>ru</th>
+ <th>psmask2</th>
  <th>county</th>
+ <th>oldRU</th>
  <th>kidsru</th>
  <th>school</th>
  <th>Level3Classic</th>
@@ -93,7 +95,6 @@
  <th>DayTx</th>
  <th>CESDC</th>
  <th>EPSDTGroup</th>
- <th>psmask2</th>
  <th>svcType</th>
  <th>RU2</th>
  <th>TAYru</th>
@@ -112,59 +113,53 @@
  <th>RUCITY</th>
  <th>UMBRELLA</th>
  <th>svcmode</th>
-
  <th>start_dt</th>
  <th>end_dt</th>
  <th>frc</th>
-        <th>oldRU</th>
        </tr></strong></h3>
          </thead> 
 <tbody> 
-  <ol type="1">
-
-          {% for field in rulist %}
+  <ol type="1">          {% for field in x %}
 
             <tr>
 
-<td><a href="{{ url_for('edit_ru', id=field.id,edit=1) }}" class="btn pull-right"><span class="glyphicon glyphicon-pencil"></span> </a> <!-- <a href="{{ url_for('edit_challenge', id=field.id,edit=0) }}" class="btn pull-right"><span class="glyphicon glyphicon-share"></span> copy </a>  -->
+<td><a href="{{ url_for('edit_ru', id=field[0].id,edit=1) }}" class="btn pull-right"><span class="glyphicon glyphicon-pencil"></span> </a> <!-- <a href="{{ url_for('edit_challenge', id=field.id,edit=0) }}" class="btn pull-right"><span class="glyphicon glyphicon-share"></span> copy </a>  -->
 </td>
-<td>{{field.provname}}</td>
-<td>{{field.ru}}</td>
-<td>{{field.agency}}</td>
-<td>{{field.county}}</td>
-<td>{{field.kidsru}}</td>
-<td>{{field.school}}</td>
-<td>{{field.Level3Classic}}</td>
-<td>{{field.cds_Code}}</td>
-<td>{{field.ab3632RU}}</td>
-<td>{{field.DayTx}}</td>
-<td>{{field.CESDC}}</td>
-<td>{{field.EPSDTGroup}}</td>
-<td>{{field.psmask2}}</td>
-<td>{{field.svcType}}</td>
-<td>{{field.RU2}}</td>
-<td>{{field.TAYru}}</td>
-<td>{{field.Level2}}</td>
-<td>{{field.DBserviceModality}}</td>
-<td>{{field.svcType3}}</td>
-<td>{{field.OutCty}}</td>
-<td>{{field.OurKids}}</td>
-<td>{{field.SafePassages}}</td>
-<td>{{field.MHSA}}</td>
-<td>{{field.OAru}}</td>
-<td>{{field.program}}</td>
-<td>{{field.Residential}}</td>
-<td>{{field.TBS}}</td>
-<td>{{field.CalWorks}}</td>
-<td>{{field.RUCITY}}</td>
-<td>{{field.UMBRELLA}}</td>
-<td>{{field.svcmode}}</td>
-
-<td>{{field.start_dt}}</td>
-<td>{{field.end_dt}}</td>
-<td>{{field.frc}}</td>
-<td>{{field.oldRU}}</td>
-
+<td> {% if field[0].agency==field[1].agency %} {{field[0].agency}}{%else%} <FONT COLOR='red'>{{field[0].agency}}</font>{% endif %}</td>
+<td> {% if field[0].provname==field[1].provname %} {{field[0].provname}}{%else%} <FONT COLOR='red'>{{field[0].provname}}</font>{% endif %}</td>
+<td> {% if field[0].ru==field[1].ru %} {{field[0].ru}}{%else%} <FONT COLOR='red'>{{field[0].ru}}</font>{% endif %}</td>
+<td> {% if field[0].psmask2==field[1].psmask2 %} {{field[0].psmask2}}{%else%} <FONT COLOR='red'>{{field[0].psmask2}}</font>{% endif %}</td>
+<td> {% if field[0].county==field[1].county %} {{field[0].county}}{%else%} <FONT COLOR='red'>{{field[0].county}}</font>{% endif %}</td>
+<td> {% if field[0].oldRU==field[1].oldRU %} {{field[0].oldRU}}{%else%} <FONT COLOR='red'>{{field[0].oldRU}}</font>{% endif %}</td>
+<td> {% if field[0].kidsru==field[1].kidsru %} {{field[0].kidsru}}{%else%} <FONT COLOR='red'>{{field[0].kidsru}}</font>{% endif %}</td>
+<td> {% if field[0].school==field[1].school %} {{field[0].school}}{%else%} <FONT COLOR='red'>{{field[0].school}}</font>{% endif %}</td>
+<td> {% if field[0].Level3Classic==field[1].Level3Classic %} {{field[0].Level3Classic}}{%else%} <FONT COLOR='red'>{{field[0].Level3Classic}}</font>{% endif %}</td>
+<td> {% if field[0].cds_Code==field[1].cds_Code %} {{field[0].cds_Code}}{%else%} <FONT COLOR='red'>{{field[0].cds_Code}}</font>{% endif %}</td>
+<td> {% if field[0].ab3632RU==field[1].ab3632RU %} {{field[0].ab3632RU}}{%else%} <FONT COLOR='red'>{{field[0].ab3632RU}}</font>{% endif %}</td>
+<td> {% if field[0].DayTx==field[1].DayTx %} {{field[0].DayTx}}{%else%} <FONT COLOR='red'>{{field[0].DayTx}}</font>{% endif %}</td>
+<td> {% if field[0].CESDC==field[1].CESDC %} {{field[0].CESDC}}{%else%} <FONT COLOR='red'>{{field[0].CESDC}}</font>{% endif %}</td>
+<td> {% if field[0].EPSDTGroup==field[1].EPSDTGroup %} {{field[0].EPSDTGroup}}{%else%} <FONT COLOR='red'>{{field[0].EPSDTGroup}}</font>{% endif %}</td>
+<td> {% if field[0].svcType==field[1].svcType %} {{field[0].svcType}}{%else%} <FONT COLOR='red'>{{field[0].svcType}}</font>{% endif %}</td>
+<td> {% if field[0].RU2==field[1].RU2 %} {{field[0].RU2}}{%else%} <FONT COLOR='red'>{{field[0].RU2}}</font>{% endif %}</td>
+<td> {% if field[0].TAYru==field[1].TAYru %} {{field[0].TAYru}}{%else%} <FONT COLOR='red'>{{field[0].TAYru}}</font>{% endif %}</td>
+<td> {% if field[0].Level2==field[1].Level2 %} {{field[0].Level2}}{%else%} <FONT COLOR='red'>{{field[0].Level2}}</font>{% endif %}</td>
+<td> {% if field[0].DBserviceModality==field[1].DBserviceModality %} {{field[0].DBserviceModality}}{%else%} <FONT COLOR='red'>{{field[0].DBserviceModality}}</font>{% endif %}</td>
+<td> {% if field[0].svcType3==field[1].svcType3 %} {{field[0].svcType3}}{%else%} <FONT COLOR='red'>{{field[0].svcType3}}</font>{% endif %}</td>
+<td> {% if field[0].OutCty==field[1].OutCty %} {{field[0].OutCty}}{%else%} <FONT COLOR='red'>{{field[0].OutCty}}</font>{% endif %}</td>
+<td> {% if field[0].OurKids==field[1].OurKids %} {{field[0].OurKids}}{%else%} <FONT COLOR='red'>{{field[0].OurKids}}</font>{% endif %}</td>
+<td> {% if field[0].SafePassages==field[1].SafePassages %} {{field[0].SafePassages}}{%else%} <FONT COLOR='red'>{{field[0].SafePassages}}</font>{% endif %}</td>
+<td> {% if field[0].MHSA==field[1].MHSA %} {{field[0].MHSA}}{%else%} <FONT COLOR='red'>{{field[0].MHSA}}</font>{% endif %}</td>
+<td> {% if field[0].OAru==field[1].OAru %} {{field[0].OAru}}{%else%} <FONT COLOR='red'>{{field[0].OAru}}</font>{% endif %}</td>
+<td> {% if field[0].program==field[1].program %} {{field[0].program}}{%else%} <FONT COLOR='red'>{{field[0].program}}</font>{% endif %}</td>
+<td> {% if field[0].Residential==field[1].Residential %} {{field[0].Residential}}{%else%} <FONT COLOR='red'>{{field[0].Residential}}</font>{% endif %}</td>
+<td> {% if field[0].TBS==field[1].TBS %} {{field[0].TBS}}{%else%} <FONT COLOR='red'>{{field[0].TBS}}</font>{% endif %}</td>
+<td> {% if field[0].CalWorks==field[1].CalWorks %} {{field[0].CalWorks}}{%else%} <FONT COLOR='red'>{{field[0].CalWorks}}</font>{% endif %}</td>
+<td> {% if field[0].RUCITY==field[1].RUCITY %} {{field[0].RUCITY}}{%else%} <FONT COLOR='red'>{{field[0].RUCITY}}</font>{% endif %}</td>
+<td> {% if field[0].UMBRELLA==field[1].UMBRELLA %} {{field[0].UMBRELLA}}{%else%} <FONT COLOR='red'>{{field[0].UMBRELLA}}</font>{% endif %}</td>
+<td> {% if field[0].svcmode==field[1].svcmode %} {{field[0].svcmode}}{%else%} <FONT COLOR='red'>{{field[0].svcmode}}</font>{% endif %}</td>
+<td> {% if field[0].start_dt==field[1].start_dt %} {{field[0].start_dt}}{%else%} <FONT COLOR='red'>{{field[0].start_dt}}</font>{% endif %}</td>
+<td> {% if field[0].end_dt==field[1].end_dt %} {{field[0].end_dt}}{%else%} <FONT COLOR='red'>{{field[0].end_dt}}</font>{% endif %}</td>
+<td> {% if field[0].frc==field[1].frc %} {{field[0].frc}}{%else%} <FONT COLOR='red'>{{field[0].frc}}</font>{% endif %}</td>
 
 
        {% endfor %}</tr></ol></tbody> </table> 

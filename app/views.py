@@ -395,14 +395,23 @@ def allrus():
 @logged_in
 def rureview():
     rulist= models.rustage.query.filter_by(reviewEdit=True).all()
+    x=db.session.query(models.rustage,models.rutable).outerjoin(models.rutable).filter(models.rustage.reviewEdit==True)
+    # import pdb;pdb.set_trace()
+    # query = db.session.query(models.rustage, models.rutable).join(Document).join(DocumentsPermissions)
+    # results = db.session.query(rustage).join(rutable.ru)
     # rulist= models.rustage.query.filter( models.rustage.Level3Classic != 1).all()
     # sorted(q_sum, key=lambda tup: tup[7])
-    return render_template("rureview.html",email=g.user.email,name=g.user.name,rulist=rulist)
+    return render_template("rureview.html",email=g.user.email,name=g.user.name,rulist=rulist,x=x)
 
 
 
-
-
+# q_sum = (db.session.query(
+#     Projects.id.label("project_id"),
+#     func.sum(case([(Tasks.complete == True, 1)], else_=0)).label("x"),
+#     func.sum(case([(and_(Tasks.deadline != None, Tasks.completeDate != None, Tasks.deadline > Tasks.completeDate), 1)], else_=0)).label("y"),
+#     func.count(Tasks.id).label("total"),
+#     ).outerjoin(Goals, Projects.goals).outerjoin(Strategies, Goals.strategies).outerjoin(Tasks, Strategies.tasks).group_by(Projects.id)) 
+    # import pdb;pdb.set_trace() 
 
 
 
