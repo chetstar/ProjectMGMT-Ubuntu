@@ -388,20 +388,31 @@ def allrus():
     # sorted(q_sum, key=lambda tup: tup[7])
     return render_template("ruview.html",email=g.user.email,name=g.user.name,rulist=rulist,formfilter=formfilter)
 
-
-
-
 @app.route("/rureview",methods=["GET","POST"])
 @logged_in
 def rureview():
-    rulist= models.rustage.query.filter_by(reviewEdit=True).all()
     x=db.session.query(models.rustage,models.rutable).outerjoin(models.rutable).filter(models.rustage.reviewEdit==True)
     # import pdb;pdb.set_trace()
     # query = db.session.query(models.rustage, models.rutable).join(Document).join(DocumentsPermissions)
     # results = db.session.query(rustage).join(rutable.ru)
     # rulist= models.rustage.query.filter( models.rustage.Level3Classic != 1).all()
     # sorted(q_sum, key=lambda tup: tup[7])
-    return render_template("rureview.html",email=g.user.email,name=g.user.name,rulist=rulist,x=x)
+    return render_template("rureview.html",email=g.user.email,name=g.user.name,x=x)
+
+@app.route("/stageupdate/<rurow>",methods=["GET","POST"])
+@logged_in
+def stageupdate(rurow):
+    rustage=models.rustage.query.filter_by(id=id).first()
+    rutable=models.rutable.query.filter_by(id=id).first()
+    #     db.session.delete(ru)
+    #     db.session.commit()
+    x=db.session.query(models.rustage,models.rutable).outerjoin(models.rutable).filter(models.rustage.reviewEdit==True)
+    # import pdb;pdb.set_trace()
+    # query = db.session.query(models.rustage, models.rutable).join(Document).join(DocumentsPermissions)
+    # results = db.session.query(rustage).join(rutable.ru)
+    # rulist= models.rustage.query.filter( models.rustage.Level3Classic != 1).all()
+    # sorted(q_sum, key=lambda tup: tup[7])
+    return render_template("rureview.html",email=g.user.email,name=g.user.name,x=x)
 
 
 

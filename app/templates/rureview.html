@@ -123,7 +123,10 @@
 
             <tr>
 
-<td><a href="{{ url_for('edit_ru', id=field[0].id,edit=1) }}" class="btn pull-right"><span class="glyphicon glyphicon-pencil"></span> </a> <!-- <a href="{{ url_for('edit_challenge', id=field.id,edit=0) }}" class="btn pull-right"><span class="glyphicon glyphicon-share"></span> copy </a>  -->
+<td><a href="{{ url_for('edit_ru', id=field[0].id,edit=1) }}" class="btn pull-right"><span class="glyphicon glyphicon-pencil"></span> </a> 
+
+  <p><a href="{{ url_for('stageupdate', rurow = field[0].id) }}" class="btn btn-default" role="button">Accept</a></p> 
+<!-- <a href="{{ url_for('edit_challenge', id=field.id,edit=0) }}" class="btn pull-right"><span class="glyphicon glyphicon-share"></span> copy </a>  -->
 </td>
 <td> {% if field[0].agency==field[1].agency %} {{field[0].agency}}{%else%} <FONT COLOR='red'>{{field[0].agency}}</font>{% endif %}</td>
 <td> {% if field[0].provname==field[1].provname %} {{field[0].provname}}{%else%} <FONT COLOR='red'>{{field[0].provname}}</font>{% endif %}</td>
