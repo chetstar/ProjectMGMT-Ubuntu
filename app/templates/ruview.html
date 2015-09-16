@@ -29,6 +29,10 @@
                     <li>
                        <a  href="{{ url_for('rusform')}}"><span class="glyphicon glyphicon-file" aria-hidden="true"> ru Form</a>
                     </li>
+                    {% if g.user.admin ==1 %} 
+                      <li>
+                       <a  href="{{ url_for('rureview')}}"><span class="glyphicon glyphicon-file" aria-hidden="true"> Review</a>
+                    </li> {% endif %}
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
