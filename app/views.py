@@ -399,22 +399,53 @@ def rureview():
     # sorted(q_sum, key=lambda tup: tup[7])
     return render_template("rureview.html",email=g.user.email,name=g.user.name,x=x)
 
+from sqlalchemy.sql import exists
+
 @app.route("/stageupdate/<rurow>",methods=["GET","POST"])
 @logged_in
 def stageupdate(rurow):
-    rustage=models.rustage.query.filter_by(id=id).first()
-    rutable=models.rutable.query.filter_by(id=id).first()
-    #     db.session.delete(ru)
-    #     db.session.commit()
-    x=db.session.query(models.rustage,models.rutable).outerjoin(models.rutable).filter(models.rustage.reviewEdit==True)
+    # if edit == '0' and request.method != 'POST' :
+    #     form.Title.data="Copy "+form.Title.data
+    # if request.method == 'POST' :
+    #     # and form.validate_on_submit()
+    #     if edit == '1':#editing exisitng
+    #         ru.reviewEdit=True
+    #         # db.session.add(p) 
+    #         # form.oldRU.data=ru.oldRU      
+    #         db.session.commit()
+    #check if row id exists in db
+    #update or add row
+    #reset changedCol update
+    # p=models.Strategies(strategy=sform.strategy.data,goa=pgoal)
+    # db.session.add(p)
+    # db.session.commit()
     # import pdb;pdb.set_trace()
+    rustage=models.rustage.query.filter_by(id=rurow).first()
+    if db.session.query(exists().where(models.rutable.id == rurow)).scalar():
+        ruprod=models.rutable.query.filter_by(id=rurow).first()
+        form = rutable(obj=rustage)
+        # import pdb;pdb.set_trace()
+        form.populate_obj(ruprod)
+        # rustage=models.rustage.query.filter_by(id=rurow).first()
+        # ru=models.rutable.query.filter_by(id=rurow).first()
+        # ru=rustage
+    else:
+        ruprod=rutable(ru=rustage.ru)
+        form = rutable(obj=rustage)
+        # import pdb;pdb.set_trace()
+        form.populate_obj(ruprod)
+        # rustage=models.rustage.query.filter_by(id=rurow).first()
+    rustage.reviewEdit=False
+    ruprod.reviewEdit=False
+    db.session.commit()
     # query = db.session.query(models.rustage, models.rutable).join(Document).join(DocumentsPermissions)
     # results = db.session.query(rustage).join(rutable.ru)
     # rulist= models.rustage.query.filter( models.rustage.Level3Classic != 1).all()
     # sorted(q_sum, key=lambda tup: tup[7])
+    x=db.session.query(models.rustage,models.rutable).outerjoin(models.rutable).filter(models.rustage.reviewEdit==True)
     return render_template("rureview.html",email=g.user.email,name=g.user.name,x=x)
 
-
+   # stmt = models.rutable.update().values(models.rutable.id = models.rustage.id).where(models.rutable.id == rurow)
 
 # q_sum = (db.session.query(
 #     Projects.id.label("project_id"),
