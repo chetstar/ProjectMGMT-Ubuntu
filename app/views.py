@@ -705,6 +705,10 @@ def requestform(WHICH):
         return render_template("long.html",email=g.user.email,name=g.user.name,form=form)
 
 
+@app.route('/public', methods=['GET','POST'])
+def public():
+    return render_template("public.html")
+
 
 @app.route('/navstart', methods=['GET','POST'])
 def navstart():
