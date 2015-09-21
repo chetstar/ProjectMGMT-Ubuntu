@@ -57,8 +57,6 @@ class MyView(BaseView):
         return login.current_user.is_authenticated()
 
 
-
-
 def logged_in(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
