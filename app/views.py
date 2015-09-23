@@ -50,13 +50,6 @@ login_manager.init_app(app)
 # photos = UploadSet('photos', IMAGES)
 
 
-from flask.ext.admin import BaseView
-
-class MyView(BaseView):
-    def is_accessible(self):
-        return login.current_user.is_authenticated()
-
-
 
 
 def logged_in(f):

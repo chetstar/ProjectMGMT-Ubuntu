@@ -7,11 +7,20 @@ from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 from flask.ext.login import LoginManager, UserMixin, login_required
 
-import datetime
+# import datetime
+# class MyView(BaseView):
+#     @expose('/')
+#     def index(self):
+#         return self.render('index.html')
+from flask.ext.admin import BaseView
+
 class MyView(BaseView):
-    @expose('/')
-    def index(self):
-        return self.render('index.html')
+    def is_accessible(self):
+        return login.current_user.is_authenticated()
+
+    def _handle_view(self, name, **kwargs):
+        if not self.is_accessible():
+            return redirect(url_for('login', next=request.url))
 
 app = Flask(__name__)
 
