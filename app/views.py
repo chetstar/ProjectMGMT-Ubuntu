@@ -31,19 +31,9 @@ from sqlalchemy.orm.attributes import get_history
         #         ptask.complete=True
         #         ptask.completeDate=None
 
-# login_manager = LoginManager()
-# login_manager.init_app(app) 
+login_manager = LoginManager()
+login_manager.init_app(app) 
 
-# from flask.ext.admin import BaseView
-
-# class MyView(BaseView):
-#     def is_accessible(self):
-#         # import pdb;pdb.set_trace()
-#         return login.current_user.is_authenticated()
-
-#     def _handle_view(self, name, **kwargs):
-#         if not self.is_accessible():
-#             return redirect(url_for('login', next=request.url))
 #run this after migrate to fill up tags
 # for x in [re.split(',',item.Category) for item in [i for i in models.Challenge.query.all()]]:
 #   for item in x:
@@ -712,10 +702,6 @@ def requestform(WHICH):
     else:
         return render_template("long.html",email=g.user.email,name=g.user.name,form=form)
 
-
-@app.route('/public', methods=['GET','POST'])
-def public():
-    return render_template("public.html")
 
 
 @app.route('/navstart', methods=['GET','POST'])
