@@ -12,15 +12,7 @@ from flask.ext.login import LoginManager, UserMixin, login_required
 #     @expose('/')
 #     def index(self):
 #         return self.render('index.html')
-from flask.ext.admin import BaseView
 
-class MyView(BaseView):
-    def is_accessible(self):
-        return login.current_user.is_authenticated()
-
-    def _handle_view(self, name, **kwargs):
-        if not self.is_accessible():
-            return redirect(url_for('login', next=request.url))
 
 app = Flask(__name__)
 
@@ -64,9 +56,9 @@ admin = Admin(app)
 
 
 admin.add_view(ModelView(models.User, db.session))
-admin.add_view(ModelView(models.rutable, db.session))
-admin.add_view(ModelView(models.rustage, db.session))
-admin.add_view(ModelView(models.TOC, db.session))
+# admin.add_view(ModelView(models.rutable, db.session))
+# admin.add_view(ModelView(models.rustage, db.session))
+# admin.add_view(ModelView(models.TOC, db.session))
 admin.add_view(ModelView(models.Request, db.session))
 admin.add_view(ModelView(models.Staff, db.session))
 admin.add_view(ModelView(models.Status, db.session))
