@@ -1,16 +1,38 @@
 from app import db
-from sqlalchemy.orm import relationship
-# class Projects(db.Model):
+from sqlalchemy.orm import relationship, backref
+
+db.Model.metadata.reflect(db.engine)
+
+
+# class test1(db.Model):
+#     __bind_key__ = 'test'
+#     __tablename__ =  'test1'
 #     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(50))
-#     projectleader = db.Column(db.String(35))    
+#     test = db.Column(db.String(80), unique=True)
 
-#     def __repr__(self):
-#         return '<Project %r>' % (self.name)
+class staging_providers(db.Model):
+    __table__ =  db.Model.metadata.tables['staging_providers']
+    # id = db.Column(db.Integer, primary_key=True)
+    # test = db.Column(db.String(80), unique=True)
+    def __repr__(self):
+        return '<Provider %r>' % (self.provider_name)
 
+class providers(db.Model):
+    __table__ =  db.Model.metadata.tables['providers']
+    # id = db.Column(db.Integer, primary_key=True)
+    # test = db.Column(db.String(80), unique=True)
+    def __repr__(self):
+        return '<Provider %r>' % (self.provider_name)
 
+# class test(db.Model):
+#     __bind_key__ = 'test'
+#     # __tablename__ = 'test'
+#     id = db.Column(db.Integer, primary_key=True)
+#     test = db.Column(db.String(80), unique=True)
 
 class rutable(db.Model):
+    __tablename__ = 'rutable'
+    __bind_key__ = 'ubuntuweb'
     id = db.Column(db.Integer, primary_key=True)
     oldRU =db.Column(db.Integer)
     ru    =db.Column(db.String(6), db.ForeignKey('rustage.ru'),unique=True)      
@@ -51,7 +73,180 @@ class rutable(db.Model):
     frc    =db.Column(db.Integer)   
     reviewEdit  = db.Column(db.Boolean())  
 
+# class test(db.Model):
+#     __tablename__ = db.Model.metadata.tables['test']
+#     __bind_key__ = 'ubuntuweb'
+
+# class staging_providers(db.Model):
+#     __bind_key__ = 'ubuntuweb'
+#     __table__ =db.Model.metadata.tables['staging_providers']
+
+# class providers(db.Model):
+#     __bind_key__ = 'ubuntuweb'
+#     __table__ =db.Model.metadata.tables['providers']
+
+# class Projects(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     name = db.Column(db.String(50))
+#     projectleader = db.Column(db.String(35))    
+
+#     def __repr__(self):
+#         return '<Project %r>' % (self.name)
+
+
+# class staging_providers(db.Model):
+#     __tablename__ = 'staging_providers'
+#     __bind_key__ = 'test'
+#     old_ru =db.Column(db.String(40))
+#     in_school =db.Column(db.Boolean())
+#     cesdc =db.Column(db.Boolean())
+#     psmask2  =db.Column(db.Integer)
+#     kidsru =db.Column(db.Boolean())
+#     ab3632 =db.Column(db.Boolean())
+#     dbservicemodality =db.Column(db.String(40))
+#     agency =db.Column(db.String(40))
+#     county_run =db.Column(db.Boolean())
+#     level_3_classic =db.Column(db.Boolean())
+#     school_cds_id =db.Column(db.String(40))
+#     day_treatment =db.Column(db.Boolean())
+#     epsdtgroup =db.Column(db.String(40))
+#     predesessor =db.Column(db.String(40))
+#     svctype =db.Column(db.String(40))
+#     tay =db.Column(db.Boolean())
+#     level_2 =db.Column(db.Boolean())
+#     svctype3 =db.Column(db.String(40))
+#     out_of_county =db.Column(db.Boolean())
+#     our_kids =db.Column(db.Boolean())
+#     safe_passages =db.Column(db.Boolean())
+#     mhsa =db.Column(db.Boolean())
+#     older_adult =db.Column(db.Boolean())
+#     program =db.Column(db.Boolean())
+#     residential =db.Column(db.Boolean())
+#     tbs =db.Column(db.Boolean())
+#     calworks =db.Column(db.Boolean())
+#     psmask=text =db.Column(db.String(40))
+#     access =db.Column(db.Boolean())
+#     adult =db.Column(db.Boolean())
+#     child =db.Column(db.Boolean())
+#     childrens_specialized_services =db.Column(db.Boolean())
+#     clc =db.Column(db.Boolean())
+#     community_support_services =db.Column(db.Boolean())
+#     crisis_services =db.Column(db.Boolean())
+#     crisis_stabilization =db.Column(db.Boolean())
+#     ctf =db.Column(db.Boolean())
+#     day_treament_day_unit=db.Column(db.Integer)
+#     day_treatment_hour_unit=db.Column(db.Integer)
+#     destiny =db.Column(db.Boolean())
+#     dual_dx =db.Column(db.Boolean())
+#     exception_ru =db.Column(db.Boolean())
+#     forensic =db.Column(db.Boolean())
+#     foster =db.Column(db.Boolean())
+#     hospital =db.Column(db.Boolean())
+#     hospital_local =db.Column(db.Boolean())
+#     indigent_script =db.Column(db.Boolean())
+#     intensive =db.Column(db.Boolean())
+#     involuntary_holds =db.Column(db.Boolean())
+#     jail_or_juvie =db.Column(db.Boolean())
+#     level_3_doc =db.Column(db.Boolean())
+#     level_3_org =db.Column(db.Boolean())
+#     medication_clinic =db.Column(db.Boolean())
+#     mhsa_full_service_partnership =db.Column(db.Boolean())
+#     neurobehavioral =db.Column(db.Boolean())
+#     outpatient_services =db.Column(db.Boolean())
+#     pei =db.Column(db.Boolean())
+#     phf =db.Column(db.Boolean())
+#     residential_treatment =db.Column(db.Boolean())
+#     school =db.Column(db.Boolean())
+#     school_based_outpatient_services =db.Column(db.Boolean())
+#     service_team =db.Column(db.Boolean())
+#     subacute =db.Column(db.Boolean())
+#     support_services =db.Column(db.Boolean())
+#     wellness_center =db.Column(db.Boolean())
+#     contract_model =db.Column(db.String(40))
+#     blended_funding =db.Column(db.String(40))
+#     budget_category =db.Column(db.String(40))
+#     budget_grouping =db.Column(db.String(40))
+#     level =db.Column(db.String(40))
+#     modality =db.Column(db.String(40))
+#     referral_code =db.Column(db.String(40))
+#     provider_name =db.Column(db.String(40))
+#     short_provider_name =db.Column(db.String(40))
+#     provider_type =db.Column(db.String(40))
+#     medicare_license_number =db.Column(db.String(40))
+#     dx_group =db.Column(db.String(40))
+#     provider_attribute_mask=db.Column(db.Integer)
+#     default_procedure_code=db.Column(db.Integer)
+#     mode_of_service =db.Column(db.String(40))
+#     medical_mode_of_service =db.Column(db.String(40))
+#     cds_provider_code =db.Column(db.String(40))
+#     provider_data_entry_form=db.Column(db.Integer)
+#     financial_responsibility=db.Column(db.Integer)
+#     program_physician  =db.Column(db.Integer)
+#     umbrella_organization=db.Column(db.Integer)
+#     sub_bureau =db.Column(db.String(40))
+#     region =db.Column(db.String(40))
+#     street_address =db.Column(db.String(40))
+#     city =db.Column(db.String(40))
+#     state =db.Column(db.String(40))
+#     zip_code =db.Column(db.String(40))
+#     zip_plus_four =db.Column(db.String(40))
+#     phone_number =db.Column(db.String(40))
+#     start_date=db.Column(db.Date)
+#     end_date=db.Column(db.Date)
+#     day_of_operation_string =db.Column(db.String(40))
+#     provider_master_stamp = db.Column(db.DateTime, index=True)
+#     last_change_stamp = db.Column(db.DateTime, index=True)
+#     blue_cross_license_number =db.Column(db.String(40))
+#     subset_mask=db.Column(db.Integer)
+#     provider_subset_mask  =db.Column(db.Integer)
+#     provider_attribute_mask2  =db.Column(db.Integer)
+#     provider_capacity=db.Column(db.Integer)
+#     hospital_license_number =db.Column(db.String(40))
+#     referral_source_ub82_box18 =db.Column(db.String(40))
+#     referral_dest_ub82_box21 =db.Column(db.String(40))
+#     gl_account_code =db.Column(db.String(40))
+#     cds_provider_name =db.Column(db.String(40))
+#     oshpd_disposition_of_patient =db.Column(db.String(40))
+#     oshpd_admission_source=db.Column(db.Integer)
+#     medicaid_license =db.Column(db.String(40))
+#     medicaid_type  =db.Column(db.Integer)
+#     ur_type  =db.Column(db.Integer)
+#     reporting_unit =db.Column(db.String(40))
+#     medicaid_eligibility_pin =db.Column(db.String(40))
+#     caladds_provider_code =db.Column(db.String(40))
+#     caladds_service_type=db.Column(db.Integer)
+#     collect_caladds =db.Column(db.String(40))
+#     default_detox_procedure=db.Column(db.Integer)
+#     default_dosing_procedure=db.Column(db.Integer)
+#     default_pharm_urine_procedure=db.Column(db.Integer)
+#     dose_type_mask  =db.Column(db.Integer)
+#     label_location =db.Column(db.String(40))
+#     medical_program_code =db.Column(db.String(40))
+#     recommended_maximum_stay=db.Column(db.Integer)
+#     csc_license_number =db.Column(db.String(40))
+#     provider_class =db.Column(db.String(40))
+#     medicaid_eligibility_provider =db.Column(db.String(40))
+#     legal_entity =db.Column(db.String(40))
+#     taxonomy_code =db.Column(db.String(40))
+#     facility_npi =db.Column(db.String(40))
+#     financial_responsibility_county =db.Column(db.Boolean())
+#     financial_responsibility_medicaid =db.Column(db.Boolean())
+#     financial_responsibility_medicare =db.Column(db.Boolean())
+#     financial_responsibility_insurance =db.Column(db.Boolean())
+#     financial_responsibility_patient =db.Column(db.Boolean())
+
+
+
+# class what(db.Model):
+#     __table__ = db.Model.metadata.tables['test']
+#     __bind_key__ = 'warehouse'
+#     id = db.Column(db.Integer, primary_key=True) 
+#     test=db.Column(db.String(40))
+
+
 class rustage(db.Model):
+    __tablename__ = 'rustage'
+    __bind_key__ = 'ubuntuweb'
     id = db.Column(db.Integer, primary_key=True)
     ru    =db.Column(db.String(6), index=True, unique=True)
     oldRU =db.Column(db.Integer)  
@@ -93,40 +288,43 @@ class rustage(db.Model):
     reviewEdit  = db.Column(db.Boolean())   
     rutablelink = db.relationship('rutable', lazy='dynamic', backref='ruback')
 
-class TOC(db.Model):
-    Agency=db.Column(db.String(300), index=True)
-    kill =db.Column(db.Integer)
-    DashboardQuestion = db.Column(db.Integer)
-    DashboardReportSort = db.Column(db.Integer)
-    DorR =db.Column(db.String(300), index=True)
-    DashboardReport =db.Column(db.String(300), index=True)
-    SystemofCare =db.Column(db.String(300), index=True)
-    ServiceArea =db.Column(db.String(300), index=True)
-    Description =db.Column(db.String(300), index=True)
-    Purpose =db.Column(db.String(300), index=True)
-    iddeid =db.Column(db.String(300), index=True)
-    TargetedAudience =db.Column(db.String(300), index=True)
-    Supportswhichmeeting = db.Column(db.Integer)
-    Ready = db.Column(db.Integer)
-    Link =db.Column(db.String(300), index=True)
-    KeyQuestions =db.Column(db.String(300), index=True)
-    BornOnDate   = db.Column(db.Date)   
-    FinalCodeReviewDate   = db.Column(db.Date)    
-    CodeAuthor     =db.Column(db.String(300), index=True)  
-    CodeReviewer     =db.Column(db.String(300), index=True) 
-    FinalReportReviewDate    =db.Column(db.Date)     
-    ReportAuthor     =db.Column(db.String(300), index=True)  
-    ReportReviewer    =db.Column(db.Integer)     
-    id = db.Column(db.Integer, primary_key=True)
+# class TOC(db.Model):
+#     __bind_key__ = 'ubuntuweb'
+    # Agency=db.Column(db.String(300), index=True)
+    # kill =db.Column(db.Integer)
+    # DashboardQuestion = db.Column(db.Integer)
+    # DashboardReportSort = db.Column(db.Integer)
+    # DorR =db.Column(db.String(300), index=True)
+    # DashboardReport =db.Column(db.String(300), index=True)
+    # SystemofCare =db.Column(db.String(300), index=True)
+    # ServiceArea =db.Column(db.String(300), index=True)
+    # Description =db.Column(db.String(300), index=True)
+    # Purpose =db.Column(db.String(300), index=True)
+    # iddeid =db.Column(db.String(300), index=True)
+    # TargetedAudience =db.Column(db.String(300), index=True)
+    # Supportswhichmeeting = db.Column(db.Integer)
+    # Ready = db.Column(db.Integer)
+    # Link =db.Column(db.String(300), index=True)
+    # KeyQuestions =db.Column(db.String(300), index=True)
+    # BornOnDate   = db.Column(db.Date)   
+    # FinalCodeReviewDate   = db.Column(db.Date)    
+    # CodeAuthor     =db.Column(db.String(300), index=True)  
+    # CodeReviewer     =db.Column(db.String(300), index=True) 
+    # FinalReportReviewDate    =db.Column(db.Date)     
+    # ReportAuthor     =db.Column(db.String(300), index=True)  
+    # ReportReviewer    =db.Column(db.Integer)     
+    # id = db.Column(db.Integer, primary_key=True)
 
 class User(db.Model):
+    __tablename__ = 'user'
+    __bind_key__ = 'ubuntuweb'
     """An admin user capable of viewing reports.
 
     :param str email: email address of user
     :param str password: encrypted password for the user
 
     """
-    __tablename__ = 'user'
+    # __tablename__ = 'user'
     name=db.Column(db.String)
     email = db.Column(db.String, primary_key=True)
     authenticated = db.Column(db.Boolean, default=True)
@@ -149,6 +347,8 @@ class User(db.Model):
         return False
 
 class Request(db.Model):
+    __tablename__ = 'request'
+    __bind_key__ = 'ubuntuweb'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True)
     email = db.Column(db.String(120), index=True)
@@ -247,6 +447,8 @@ class Request(db.Model):
         return '%r' % (self.jobTitle)
 
 class Staff(db.Model):
+    __bind_key__ = 'ubuntuweb'
+    __tablename__ = 'staff'
     id = db.Column(db.Integer, primary_key=True)
     staff = db.Column(db.String(60))
     privelage = db.Column(db.String(30))
@@ -255,13 +457,15 @@ class Staff(db.Model):
         return (self.staff)
 
 class Status(db.Model):
+    __bind_key__ = 'ubuntuweb'
+    __tablename__ = 'status'
     id = db.Column(db.Integer, primary_key=True)
     status = db.Column(db.String(100))
     request = db.relationship('Request', lazy='dynamic', backref='statusback',cascade="all, delete-orphan")
     def __repr__(self):
         return (self.status)
 
-from sqlalchemy import distinct
+# from sqlalchemy import distinct
 
 def getStaff():
     u = Staff.query
@@ -277,6 +481,8 @@ from sqlalchemy.orm import relationship
 
 
 class Challenge(db.Model):
+    __tablename__ = 'challenge'
+    __bind_key__ = 'ubuntuweb'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True)
     email = db.Column(db.String(120), index=True)
@@ -299,6 +505,8 @@ class Challenge(db.Model):
 
 
 class Tags(db.Model):
+    __bind_key__ = 'ubuntuweb'
+    __tablename__ = 'tags'
     id = db.Column(db.Integer, primary_key=True)
     tag = db.Column(db.String(200))
     tag_id = db.Column(db.Integer, db.ForeignKey('challenge.id'))

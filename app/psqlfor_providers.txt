@@ -1,0 +1,42 @@
+
+
+ ALTER TABLE staging_providers ADD COLUMN id SERIAL;
+   UPDATE staging_providers SET id = DEFAULT;
+     ALTER TABLE staging_providers ADD PRIMARY KEY (id);
+
+  ALTER TABLE staging_providers
+  ADD COLUMN "cans" BOOLEAN DEFAULT FALSE;
+
+
+ALTER TABLE providers
+  ADD CONSTRAINT rutable_stagekey FOREIGN KEY (id)
+      REFERENCES staging_providers (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+
+
+  ALTER TABLE distributors ADD CONSTRAINT distfk FOREIGN KEY (address) REFERENCES addresses (address) MATCH FULL;
+
+
+  CREATE OR REPLACE FUNCTION update_changetimestamp_column()
+RETURNS TRIGGER AS $$
+BEGIN
+   NEW.last_change_stamp = now(); 
+   RETURN NEW;
+END;
+$$ language 'plpgsql';
+
+    CREATE TRIGGER update_stageing_providers_changetimestamp BEFORE UPDATE
+    ON staging_providers FOR EACH ROW EXECUTE PROCEDURE 
+    update_changetimestamp_column();
+
+alter table providers add column last_change_stamp timestamp;
+
+    CREATE TRIGGER update_providers_changetimestamp BEFORE UPDATE
+    ON staging_providers FOR EACH ROW EXECUTE PROCEDURE 
+    update_changetimestamp_column();
+
+alter table providers add column last_change_stamp timestamp;
+
+update staging_providers set last_change_stamp =  (now()); 
+update providers set last_change_stamp =  (now()); 

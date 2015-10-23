@@ -12,7 +12,7 @@ from flask.ext.login import LoginManager, UserMixin, login_required
 #     @expose('/')
 #     def index(self):
 #         return self.render('index.html')
-from flask.ext.admin import BaseView
+# from flask.ext.admin import BaseView
 
 # class MyView(BaseView):
 #     def is_accessible(self):
@@ -40,6 +40,18 @@ app.config.from_object('config')
 db = SQLAlchemy(app)
 
 
+# db.Model.metadata.reflect(db.engine)
+
+# class what(db.Model):
+#     __table__ = db.Model.metadata.tables['test']
+#     __bind_key__ = 'warehouse'
+#     id = db.Column(db.Integer, primary_key=True) 
+#     test=db.Column(db.String(40))
+
+# engine = create_engine('sqlite:///webmgmt.db', convert_unicode=True, echo=False)
+# Base = declarative_base()
+# Base.metadata.reflect(engine)
+
 @app.template_filter('reverse')
 def reverse_filter(s):
     if s > datetime.date.today():
@@ -56,6 +68,8 @@ migrate = Migrate(app, db)
 manager = Manager(app)
 manager.add_command('db', MigrateCommand)
 
+
+
 Bootstrap(app)
 # from flask.ext.mail import Mail
 # mail = Mail(app)
@@ -66,7 +80,8 @@ admin = Admin(app)
 admin.add_view(ModelView(models.User, db.session))
 admin.add_view(ModelView(models.rutable, db.session))
 admin.add_view(ModelView(models.rustage, db.session))
-admin.add_view(ModelView(models.TOC, db.session))
+admin.add_view(ModelView(models.staging_providers, db.session))
+# admin.add_view(ModelView(models.test, db.session))
 admin.add_view(ModelView(models.Request, db.session))
 admin.add_view(ModelView(models.Staff, db.session))
 admin.add_view(ModelView(models.Status, db.session))

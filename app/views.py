@@ -162,10 +162,6 @@ requestvars=['agency',
 'emanio',
 'MHorSUD',]
 
-
-
-
-
 from werkzeug import secure_filename
 from flask_wtf.file import FileField
 from functools import wraps
@@ -301,7 +297,7 @@ def edit_ru(id,edit):
     if request.method == 'POST' :
         # and form.validate_on_submit()
         if edit == '1':#editing exisitng
-            ru.reviewEdit=True
+            # ru.reviewEdit=True
             # db.session.add(p) 
             # form.oldRU.data=ru.oldRU      
             db.session.commit()
@@ -341,81 +337,80 @@ def rusform():
 @logged_in
 def allrus():
     formfilter=rutablefilter()
-    # rulist= db.session.query(models.rustage.agency).distinct()
-    l3c=1
-    # rulist= models.rustage.query.filter_by( Level3Classic = l3c).all()
+    # rulist= db.session.query(models.staging_providers.agency).distinct()
+    l3c=True
+    # rulist= models.staging_providers.query.filter_by( level_3_classic = l3c).all()
     if formfilter.submit.data:
         if formfilter.provsearch.data == '':
             if formfilter.missing.data=="None":
-                rulist= models.rustage.query.filter( models.rustage.Level3Classic != l3c).filter_by(agency='Asian Community').all()
+                rulist= models.staging_providers.query.filter( models.staging_providers.level_3_classic != l3c).filter_by(agency='Asian Community').all()
             else:
-                if formfilter.Level3Classic.data==False:
-                    if getattr(models.rustage,formfilter.missing.data).property.columns[0].type.python_type==str:
-                    # if type(getattr(models.rustage.query.first(),formfilter.missing.data))=="float":
-                        rulist=models.rustage.query.filter(getattr(models.rustage, formfilter.missing.data).like('')).filter((models.rustage.Level3Classic == None)|(models.rustage.Level3Classic == 0)).all()
+                if formfilter.level_3_classic.data==False:
+                    if getattr(models.staging_providers,formfilter.missing.data).property.columns[0].type.python_type==str:
+                    # if type(getattr(models.staging_providers.query.first(),formfilter.missing.data))=="float":
+                        rulist=models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data).like('')).filter((models.staging_providers.level_3_classic == None)|(models.staging_providers.level_3_classic == False)).all()
                     else:
-                        rulist=models.rustage.query.filter(getattr(models.rustage, formfilter.missing.data) == None).filter((models.rustage.Level3Classic == None)|(models.rustage.Level3Classic == 0)).all()     
+                        rulist=models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data) == None).filter((models.staging_providers.level_3_classic == None)|(models.staging_providers.level_3_classic == False)).all()     
                 else:
-                    if getattr(models.rustage,formfilter.missing.data).property.columns[0].type.python_type==str:
-                    # if type(getattr(models.rustage.query.first(),formfilter.missing.data))=="float":
-                        rulist=models.rustage.query.filter(getattr(models.rustage, formfilter.missing.data).like('')).filter((models.rustage.Level3Classic == 1)).all()
+                    if getattr(models.staging_providers,formfilter.missing.data).property.columns[0].type.python_type==str:
+                    # if type(getattr(models.staging_providers.query.first(),formfilter.missing.data))=="float":
+                        rulist=models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data).like('')).filter((models.staging_providers.level_3_classic == 1)).all()
                     else:
-                        rulist=models.rustage.query.filter(getattr(models.rustage, formfilter.missing.data) == None).filter((models.rustage.Level3Classic == 1)).all()     
+                        rulist=models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data) == None).filter((models.staging_providers.level_3_classic == 1)).all()     
         else:#provsearch has something in it
-            if formfilter.Level3Classic.data==False:
+            if formfilter.level_3_classic.data==False:
                 # import pdb;pdb.set_trace()
                 if formfilter.missing.data=="None":
-                    rulist= models.rustage.query.filter(( models.rustage.Level3Classic == None)|( models.rustage.Level3Classic == 0)).filter(models.rustage.provname.ilike("%"+formfilter.provsearch.data+"%")).all()
+                    rulist= models.staging_providers.query.filter(( models.staging_providers.level_3_classic == None)|( models.staging_providers.level_3_classic == False)).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")).all()
                 else:
-                    if getattr(models.rustage,formfilter.missing.data).property.columns[0].type.python_type==str:
+                    if getattr(models.staging_providers,formfilter.missing.data).property.columns[0].type.python_type==str:
                     #does not work yet need to add the ability to search by both
-                        rulist= models.rustage.query.filter(getattr(models.rustage, formfilter.missing.data).like('')).filter(( models.rustage.Level3Classic == None)|( models.rustage.Level3Classic == 0)).filter(models.rustage.provname.ilike("%"+formfilter.provsearch.data+"%")).all()        
+                        rulist= models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data).like('')).filter(( models.staging_providers.level_3_classic == None)|( models.staging_providers.level_3_classic == False)).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")).all()        
                     else:
-                        rulist= models.rustage.query.filter(getattr(models.rustage, formfilter.missing.data) == None).filter(( models.rustage.Level3Classic == None)|( models.rustage.Level3Classic == 0)).filter(models.rustage.provname.ilike("%"+formfilter.provsearch.data+"%")).all()        
+                        rulist= models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data) == None).filter(( models.staging_providers.level_3_classic == None)|( models.staging_providers.level_3_classic == False)).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")).all()        
             else:     
                 # import pdb;pdb.set_trace()
                 if formfilter.missing.data=="None":
-                    rulist= models.rustage.query.filter(models.rustage.provname.ilike("%"+formfilter.provsearch.data+"%")).all()
+                    rulist= models.staging_providers.query.filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")).all()
                 else:
-                    if getattr(models.rustage,formfilter.missing.data).property.columns[0].type.python_type==str:
+                    if getattr(models.staging_providers,formfilter.missing.data).property.columns[0].type.python_type==str:
                     #does not work yet need to add the ability to search by both
-                        rulist= models.rustage.query.filter(getattr(models.rustage, formfilter.missing.data).like('')).filter(models.rustage.provname.ilike("%"+formfilter.provsearch.data+"%")).all()        
+                        rulist= models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data).like('')).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")).all()        
                     else:
-                        rulist= models.rustage.query.filter(getattr(models.rustage, formfilter.missing.data) == None).filter(models.rustage.provname.ilike("%"+formfilter.provsearch.data+"%")).all()        
-                # rulist= models.rustage.query.filter(models.rustage.provname.ilike("%"+formfilter.provsearch.data+"%")).all()
+                        rulist= models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data) == None).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")).all()        
+                # rulist= models.staging_providers.query.filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")).all()
         # except Exception:
-        #         rulist=models.rustage.query.filter(getattr(models.rustage, formfilter.missing.data).like(None)).filter((models.rustage.Level3Classic == 1)).all()
+        #         rulist=models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data).like(None)).filter((models.staging_providers.level_3_classic == 1)).all()
     else:
-        rulist= models.rustage.query.filter( models.rustage.Level3Classic != l3c).filter_by(agency='Asian Community').all()
-    # rulist= models.rustage.query.filter( models.rustage.Level3Classic != 1).all()
+        rulist= models.staging_providers.query.filter( models.staging_providers.level_3_classic != l3c).filter_by(agency='Asian Community').all()
+    # rulist= models.staging_providers.query.filter( models.staging_providers.level_3_classic != 1).all()
     # sorted(q_sum, key=lambda tup: tup[7])
     return render_template("ruview.html",email=g.user.email,name=g.user.name,rulist=rulist,formfilter=formfilter)
 
 @app.route("/rureview",methods=["GET","POST"])
 @logged_in
 def rureview():
-    # import pdb;pdb.set_trace()
     x=db.session.query(models.rustage,models.rutable).outerjoin(models.rutable).filter(models.rustage.reviewEdit==True)
     return render_template("rureview.html",email=g.user.email,name=g.user.name,x=x)
 
 from sqlalchemy.sql import exists
 
-@app.route("/stageupdate/<rurow>",methods=["GET","POST"])
-@logged_in
-def stageupdate(rurow):
-    rustage=models.rustage.query.filter_by(id=rurow).first()
-    if db.session.query(exists().where(models.rutable.id == rurow)).scalar():
-        ruprod=models.rutable.query.filter_by(id=rurow).first()
-        form = rutable(obj=rustage)
-        form.populate_obj(ruprod)
-    else:
-        ruprod=rutable(ru=rustage.ru)
-        form = rutable(obj=rustage)
-        form.populate_obj(ruprod)
-    rustage.reviewEdit=False
-    ruprod.reviewEdit=False
-    db.session.commit()
-    return redirect(url_for('rureview'))
+# @app.route("/stageupdate/<rurow>",methods=["GET","POST"])
+# @logged_in
+# def stageupdate(rurow):
+#     rustage=models.rustage.query.filter_by(id=rurow).first()
+#     if db.session.query(exists().where(models.rutable.id == rurow)).scalar():
+#         ruprod=models.rutable.query.filter_by(id=rurow).first()
+#         form = rutable(obj=rustage)
+#         form.populate_obj(ruprod)
+#     else:
+#         ruprod=rutable(ru=rustage.ru)
+#         form = rutable(obj=rustage)
+#         form.populate_obj(ruprod)
+#     rustage.reviewEdit=False
+#     ruprod.reviewEdit=False
+#     db.session.commit()
+#     return redirect(url_for('rureview'))
 
 
 
@@ -729,27 +724,6 @@ def navstart():
     return render_template("navStart.html",aform=aform,email=email,AS=AS)
 
 
-# @app.route('/sendemail', methods=['GET', 'POST'])
-# def sendEmailV4():
-#     # subject = ''
-#     recipient=', '.join(['cmeinzer@acbhcs.org'])
-#     body='html text'
-#     subject = 'subjectline'
-#     headers = ["From: " + 'chet@acbhcs.org',
-#                "Subject: " + 'subject',
-#                "To: " + 'cmeinzer@acbhcs.org',
-#                "MIME-Version: 1.0",
-#                "Content-Type: text/html"]
-#     headers = "\r\n".join(headers)
-#     session = smtplib.SMTP("allsmtp.acgov.org",25)
-#     session.ehlo()
-#     session.starttls()
-#     session.ehlo
-#     session.sendmail('chet@acbhcs.org', ['cmeinzer@acbhcs.org'], headers + "\r\n\r\n" + body)
-#     session.quit()
-#     return "it worked"
-
-# app.config.from_object('config')
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -862,6 +836,27 @@ def alltoc():
 
 
 
-from app import db
+# from app import db
 
 
+# @app.route('/sendemail', methods=['GET', 'POST'])
+# def sendEmailV4():
+#     # subject = ''
+#     recipient=', '.join(['cmeinzer@acbhcs.org'])
+#     body='html text'
+#     subject = 'subjectline'
+#     headers = ["From: " + 'chet@acbhcs.org',
+#                "Subject: " + 'subject',
+#                "To: " + 'cmeinzer@acbhcs.org',
+#                "MIME-Version: 1.0",
+#                "Content-Type: text/html"]
+#     headers = "\r\n".join(headers)
+#     session = smtplib.SMTP("allsmtp.acgov.org",25)
+#     session.ehlo()
+#     session.starttls()
+#     session.ehlo
+#     session.sendmail('chet@acbhcs.org', ['cmeinzer@acbhcs.org'], headers + "\r\n\r\n" + body)
+#     session.quit()
+#     return "it worked"
+
+# app.config.from_object('config')

@@ -238,84 +238,82 @@ images = UploadSet('images', IMAGES)
 
 class rutablefilter(Form):
     provsearch=TextField('Search Providor name')
-    Level3Classic=BooleanField('Include Level 3 (doctors)', default=False)
-    missing    = SelectField(u"Show missing by....",coerce=unicode, choices=[('None','None'),('oldRU','oldRU'),
-('ru','ru'),
+    level_3_classic=BooleanField('Include Level 3 (doctors)', default=False)
+    missing    = SelectField(u"Show missing by....",coerce=unicode, choices=[('None','None'),
+('ab3632','ab3632'),
 ('agency','agency'),
-('county','county'),
+('calworks','calworks'),
+('cesdc','cesdc'),
+('county_run','county_run'),
+('day_treatment','day_treatment'),
+('dbservicemodality','dbservicemodality'),
+('end_date','end_date'),
+('epsdtgroup','epsdtgroup'),
+('financial_responsibility','financial_responsibility'),
 ('kidsru','kidsru'),
-('school','school'),
-('Level3Classic','Level3Classic'),
-('cds_Code','cds_Code'),
-('ab3632RU','ab3632RU'),
-('DayTx','DayTx'),
-('CESDC','CESDC'),
-('EPSDTGroup','EPSDTGroup'),
-('psmask2','psmask2'),
-('svcType','svcType'),
-('RU2','RU2'),
-('TAYru','TAYru'),
-('Level2','Level2'),
-('DBserviceModality','DBserviceModality'),
-('svcType3','svcType3'),
-('OutCty','OutCty'),
-('OurKids','OurKids'),
-('SafePassages','SafePassages'),
-('MHSA','MHSA'),
-('OAru','OAru'),
+('level_2','level_2'),
+('level_3_classic','level_3_classic'),
+('mhsa','mhsa'),
+('older_adult','older_adult'),
+('old_ru','old_ru'),
+('our_kids','our_kids'),
+('out_of_county','out_of_county'),
 ('program','program'),
-('Residential','Residential'),
-('TBS','TBS'),
-('CalWorks','CalWorks'),
-('RUCITY','RUCITY'),
-('UMBRELLA','UMBRELLA'),
-('svcmode','svcmode'),
-('provname','provname'),
-('start_dt','start_dt'),
-('end_dt','end_dt'),
-('frc','frc')],default="None") 
+('provider_name','provider_name'),
+('psmask2','psmask2'),
+('residential','residential'),
+('reporting_unit','reporting_unit'),
+('predesessor','predesessor'),
+('city','city'),
+('safe_passages','safe_passages'),
+('school','school'),
+('school_cds_id','school_cds_id'),
+('start_date','start_date'),
+('mode_of_service','mode_of_service'),
+('svctype','svctype'),
+('svctype3','svctype3'),
+('tay','tay'),
+('tbs','tbs'),
+('umbrella_organization','umbrella_organization')],default="None") 
     submit=SubmitField('Submit')
-
+   
 class rutable(Form):
     # Tags = QuerySelectField(u'Category', query_factory=getTags, get_label='Category',default="Unassigned")
-    ru    =TextField('ru') 
-    county    = IntegerField('county')   
-    kidsru    = IntegerField('kidsru')  
-    school    = IntegerField('school')   
-    oldRU = IntegerField('old RU') 
-    agency    =TextField('agency')  
-    Level3Classic    = IntegerField('Level3Classic')  
-    cds_Code    =TextField('')  
-    ab3632RU    = IntegerField('')  
-    DayTx    = IntegerField('')  
-    CESDC    = IntegerField('')  
-    EPSDTGroup    =TextField('')   
-    psmask2    = IntegerField('')  
-    svcType    =TextField('')  
-    RU2    =TextField('')   
-    TAYru    = IntegerField('')   
-    Level2    = IntegerField('') 
-    DBserviceModality    =TextField('DBserviceModality')   
-    svcType3    =TextField('')   
-    OutCty    = IntegerField('')   
-    OurKids    = IntegerField('')  
-    SafePassages    = IntegerField('')
-    MHSA    = IntegerField('')  
-    OAru    = IntegerField('')  
-    program    = IntegerField('program')  
-    Residential    = IntegerField('')  
-    TBS    = IntegerField('')  
-    CalWorks    = IntegerField('')  
-    RUCITY    =TextField('')  
-    UMBRELLA    = IntegerField('')  
-    svcmode    =TextField('')   
-    provname    =TextField('provname')  
-    start_dt    = IntegerField('')  
-    end_dt    = IntegerField('')  
-    start   =  DateField( "start",  format="%m/%d/%Y",)
-    end   =  DateField( "end",  format="%m/%d/%Y",)
-    frc    = IntegerField('')   
-    reviewEdit = BooleanField("Was this RU edited?")
+    ab3632        = IntegerField('')  
+    agency        =TextField('agency')  
+    calworks        = IntegerField('')  
+    cesdc        = IntegerField('')  
+    county_run        = IntegerField('county')   
+    day_treatment        = IntegerField('')  
+    dbservicemodality        =TextField('DBserviceModality')   
+    end_date        = DateField( "") 
+    epsdtgroup        =TextField('')   
+    financial_responsibility    = IntegerField('')   
+    kidsru        = IntegerField('kidsru')  
+    level_2        = IntegerField('') 
+    level_3_classic        = IntegerField('Level3Classic')  
+    mhsa        = IntegerField('')  
+    older_adult        = IntegerField('')  
+    old_ru     = IntegerField('old RU') 
+    our_kids        = IntegerField('')  
+    out_of_county        = IntegerField('')   
+    program        = IntegerField('program')  
+    provider_name        =TextField('provname')  
+    psmask2        = IntegerField('')  
+    residential        = IntegerField('')  
+    reporting_unit        =TextField('ru') 
+    predesessor        =TextField('')   
+    city        =TextField('')  
+    safe_passages        = IntegerField('')
+    school        = IntegerField('school') 
+    school_cds_id       =TextField('')     
+    start_date        = DateField( "")  
+    mode_of_service        =TextField('')   
+    svctype        =TextField('')  
+    svctype3        =TextField('')   
+    tay        = IntegerField('')   
+    tbs        = IntegerField('')  
+    umbrella_organization        = IntegerField('')  
     submitRU=SubmitField('Submit')
 
 class TOC(Form):
