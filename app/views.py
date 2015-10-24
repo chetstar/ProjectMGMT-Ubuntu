@@ -434,7 +434,7 @@ def stagereject(rurow):
     # staging_providers.reviewEdit=False
     # ruprod.reviewEdit=False
         db.session.commit()
-        production=models.staging_providers.query.filter_by(id=rurow).first()
+        # production=models.staging_providers.query.filter_by(id=rurow).first()
         print production.last_change_stamp
         production.last_change_stamp=datetime.datetime.utcnow()
         print production.last_change_stamp
