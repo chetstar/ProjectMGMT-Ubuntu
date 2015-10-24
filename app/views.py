@@ -287,7 +287,7 @@ def allchallenges():
 
 @app.route('/editru/<id>/<edit>', methods=['GET', 'POST'])
 def edit_ru(id,edit): 
-    ru=models.rustage.query.filter_by(id=id).first()
+    ru=models.staging_providers.query.filter_by(id=id).first()
     form = rutable()
     form = rutable(obj=ru)
     form.populate_obj(ru)
@@ -308,7 +308,7 @@ def edit_ru(id,edit):
 @logged_in
 def rusform():
     form = rutable()
-    # RB= list(set([re.split(',',h.Category for h in models.rustage.query.all()]))
+    # RB= list(set([re.split(',',h.Category for h in models.staging_providers.query.all()]))
     # RB.append('No Filter')
     # form.Category.data=RB
     # form.staffback.data=models.Staff.query.filter_by(staff="Unassigned").first()
@@ -390,27 +390,56 @@ def allrus():
 @app.route("/rureview",methods=["GET","POST"])
 @logged_in
 def rureview():
-    x=db.session.query(models.rustage,models.rutable).outerjoin(models.rutable).filter(models.rustage.reviewEdit==True)
+    x=db.session.query(models.staging_providers,models.providers).outerjoin(models.providers).filter(models.staging_providers.last_change_stamp > models.providers.last_change_stamp)
     return render_template("rureview.html",email=g.user.email,name=g.user.name,x=x)
 
 from sqlalchemy.sql import exists
 
-# @app.route("/stageupdate/<rurow>",methods=["GET","POST"])
-# @logged_in
-# def stageupdate(rurow):
-#     rustage=models.rustage.query.filter_by(id=rurow).first()
-#     if db.session.query(exists().where(models.rutable.id == rurow)).scalar():
-#         ruprod=models.rutable.query.filter_by(id=rurow).first()
-#         form = rutable(obj=rustage)
-#         form.populate_obj(ruprod)
-#     else:
-#         ruprod=rutable(ru=rustage.ru)
-#         form = rutable(obj=rustage)
-#         form.populate_obj(ruprod)
-#     rustage.reviewEdit=False
-#     ruprod.reviewEdit=False
-#     db.session.commit()
-#     return redirect(url_for('rureview'))
+@app.route("/stageupdate/<rurow>",methods=["GET","POST"])
+@logged_in
+def stageupdate(rurow):
+    # import pdb; pdb.set_trace()
+    staging_providers=models.staging_providers.query.filter_by(id=rurow).first()
+    if db.session.query(exists().where(models.providers.id == rurow)).scalar():
+        ruprod=models.providers.query.filter_by(id=rurow).first()
+        form = rutable(obj=staging_providers)
+        form.populate_obj(ruprod)
+    # else:
+    #     ruprod=rutable(ru=staging_providers.reporting_unit)
+    #     form = rutable(obj=staging_providers)
+    #     form.populate_obj(ruprod)
+    # staging_providers.reviewEdit=False
+    # ruprod.reviewEdit=False
+        ruprod.last_change_stamp=datetime.datetime.utcnow()
+        db.session.commit()
+        # production=models.staging_providers.query.filter_by(id=rurow).first()
+        # print production.last_change_stamp
+        # production.last_change_stamp=datetime.datetime.utcnow()
+        # print production.last_change_stamp
+        # db.session.commit()
+    return redirect(url_for('rureview'))
+
+@app.route("/stagereject/<rurow>",methods=["GET","POST"])
+@logged_in
+def stagereject(rurow):
+    production=models.providers.query.filter_by(id=rurow).first()
+    if db.session.query(exists().where(models.providers.id == rurow)).scalar():
+        staging=models.staging_providers.query.filter_by(id=rurow).first()
+        form = rutable(obj=production)
+        form.populate_obj(staging)
+    # else:
+    #     ruprod=rutable(ru=staging_providers.reporting_unit)
+    #     form = rutable(obj=staging_providers)
+    #     form.populate_obj(ruprod)
+    # staging_providers.reviewEdit=False
+    # ruprod.reviewEdit=False
+        db.session.commit()
+        production=models.staging_providers.query.filter_by(id=rurow).first()
+        print production.last_change_stamp
+        production.last_change_stamp=datetime.datetime.utcnow()
+        print production.last_change_stamp
+        db.session.commit()
+    return redirect(url_for('rureview'))
 
 
 
