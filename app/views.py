@@ -288,6 +288,7 @@ def allchallenges():
 @app.route('/editru/<id>/<edit>', methods=['GET', 'POST'])
 def edit_ru(id,edit): 
     ru=models.staging_providers.query.filter_by(id=id).first()
+    # ru.last_change_stamp=datetime.datetime.utcnow()
     form = rutable()
     form = rutable(obj=ru)
     form.populate_obj(ru)
@@ -298,8 +299,9 @@ def edit_ru(id,edit):
         # and form.validate_on_submit()
         if edit == '1':#editing exisitng
             # ru.reviewEdit=True
+            ru.last_change_stamp=datetime.datetime.utcnow()
             # db.session.add(p) 
-            # form.oldRU.data=ru.oldRU      
+            # form.oldRU.data=ru.oldRU    
             db.session.commit()
         return redirect(url_for('allrus'))
     return render_template('edit_ru.html',form=form,id=id)

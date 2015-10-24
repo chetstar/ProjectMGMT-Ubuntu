@@ -89,6 +89,7 @@
          <h3><strong><tr>
  <th> </th>
 
+<th>  modified </th>
 <th>  ab3632 </th>
 <th>  agency </th>
 <th>  provider_name </th>
@@ -137,6 +138,7 @@
 {% if '*' not in field.reporting_unit %}
 <td><a href="{{ url_for('edit_ru', id=field.id,edit=1) }}" class="btn pull-right"><span class="glyphicon glyphicon-pencil"></span> </a> <!-- <a href="{{ url_for('edit_challenge', id=field.id,edit=0) }}" class="btn pull-right"><span class="glyphicon glyphicon-share"></span> copy </a>  -->
 </td>
+<td>{{field.last_change_stamp }}</td>
 <td>{{field.ab3632 }}</td>
 <td>{{field.agency }}</td>
 
