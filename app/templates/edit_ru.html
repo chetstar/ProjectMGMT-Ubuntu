@@ -102,44 +102,104 @@
  <div class="row">
     <div class="col-md-3">{{ wtf.form_field(form.agency) }}</div>
     <div class="col-md-3">{{ wtf.form_field(form.dbservicemodality) }}</div>
-    <div class="col-md-3"></div>
+    <div class="col-md-3">{{ wtf.form_field(form.svctype) }}</div>
+    <div class="col-md-3">{{ wtf.form_field(form.svctype3) }}</div>
   </div>
  <div class="row">
  <div class="col-md-3">
-{{ wtf.form_field(form.svctype) }}
-{{ wtf.form_field(form.svctype3) }}
+{{ wtf.form_field(form.psmasktext) }}</div>
+ <div class="col-md-3">
+{{ wtf.form_field(form.epsdtgroup) }}</div>
+ <div class="col-md-3">
+{{ wtf.form_field(form.school_cds_id) }}</div></div>
 
-{{ wtf.form_field(form.psmask2) }}
-{{ wtf.form_field(form.epsdtgroup) }}
+ <div class="row">
+ <div class="col-md-2">
+   {{ wtf.form_field(form.ab3632) }}
+ </div>
+ <div class="col-md-2">
+   {{ wtf.form_field(form.cesdc) }}
+ </div>
+ <div class="col-md-2">
 
-
-
-{{ wtf.form_field(form.school_cds_id) }}
-     <!-- {{ form.hidden_tag() }} -->
-{{ wtf.form_field(form.ab3632) }}
-
-{{ wtf.form_field(form.calworks) }}
-
-{{ wtf.form_field(form.cesdc) }}
 {{ wtf.form_field(form.county_run) }}
-{{ wtf.form_field(form.day_treatment) }}
+ </div>
+  <div class="col-md-2">
+{{ wtf.form_field(form.calworks) }}
+ </div></div>
+  <div class="row">
+ <div class="col-md-2">
+   {{ wtf.form_field(form.day_treatment) }}
+ </div>
+ <div class="col-md-2">
 {{ wtf.form_field(form.kidsru) }}
+ </div>
+ <div class="col-md-2">
 {{ wtf.form_field(form.level_2) }}
+ </div>
+  <div class="col-md-2">
 {{ wtf.form_field(form.level_3_classic) }}
-{{ wtf.form_field(form.mhsa) }}
-{{ wtf.form_field(form.older_adult) }}
-{{ wtf.form_field(form.old_ru) }}
-{{ wtf.form_field(form.our_kids) }}
-{{ wtf.form_field(form.out_of_county) }}
-{{ wtf.form_field(form.program) }}
-{{ wtf.form_field(form.residential) }}
-
-
-{{ wtf.form_field(form.safe_passages) }}
-{{ wtf.form_field(form.school) }}
-
+ </div></div>
+  <div class="row">
+ <div class="col-md-2">
+   {{ wtf.form_field(form.school) }}
+ </div>
+ <div class="col-md-2">
+   
 {{ wtf.form_field(form.tay) }}
+ </div>
+ <div class="col-md-2">
+
 {{ wtf.form_field(form.tbs) }}
+ </div>
+  <div class="col-md-2">
+
+{{ wtf.form_field(form.mhsa) }}
+ </div></div>
+  
+    <div class="row">
+ <div class="col-md-2">
+   
+{{ wtf.form_field(form.safe_passages) }}
+ </div>
+ <div class="col-md-2">
+   {{ wtf.form_field(form.residential) }}
+ </div>
+ <div class="col-md-2">
+
+{{ wtf.form_field(form.program) }}
+ </div>
+  <div class="col-md-2">
+
+{{ wtf.form_field(form.out_of_county) }}
+ </div></div>
+   <div class="row">
+ <div class="col-md-2">
+   {{ wtf.form_field(form.our_kids) }}
+ </div>
+ <div class="col-md-2">
+   {{ wtf.form_field(form.older_adult) }}
+ </div>
+ <div class="col-md-2">
+ </div>
+  <div class="col-md-2">
+
+ </div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 {{ wtf.form_field(form.submitRU) }}
 

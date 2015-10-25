@@ -260,7 +260,7 @@ class rutablefilter(Form):
 ('out_of_county','out_of_county'),
 ('program','program'),
 ('provider_name','provider_name'),
-('psmask2','psmask2'),
+('psmasktext','psmasktext'),
 ('residential','residential'),
 ('reporting_unit','reporting_unit'),
 ('predesessor','predesessor'),
@@ -306,12 +306,35 @@ class rutable(Form):
     level_3_classic        = BooleanField('Level3Classic')  
     mhsa        = BooleanField('mhsa')  
     older_adult        = BooleanField('older_adult')  
-    old_ru     = IntegerField('old RU') 
+    # old_ru     = IntegerField('old RU') 
     our_kids        = BooleanField('our_kids')  
     out_of_county        = BooleanField('out_of_county')   
     program        = BooleanField('program')  
     # provider_name        =TextField('provname')  
-    psmask2        = IntegerField('psmask2')  
+    psmasktext        = SelectField(u"PSmask Text",coerce=unicode, choices=[
+        ('',"None"),
+("Children's Crisis Services","Children's Crisis Services"),
+('MHRC/Subacute',' MHRC/Subacute'),
+('Adult Residential Treament',' Adult Residential Treament'),
+('Adult  Crisis Services',' Adult  Crisis Services'),
+('Adult Day Treatment',' Adult Day Treatment'),
+('Adult Medication Clinics',' Adult Medication Clinics'),
+('MHSA Full Service Partnerships',' MHSA Full Service Partnerships'),
+('Other MHS Adult',' Other MHS Adult'),
+( 'Child Day Treament Day Unit',' Child Day Treament Day Unit'),
+('Child Community Support Services',' Child Community Support Services'),
+('School-Based Outpatient Services',' School-Based Outpatient Services'),
+("Children's Medication Clinics","Children's Medication Clinics"),
+('Child Day Treatment Hour Unit',' Child Day Treatment Hour Unit'),
+('Adult Community Support Services',' Adult Community Support Services'),
+('Children in Out-of-County Placeme',' Children in Out-of-County Placeme'),
+('Support Services',' Support Services'),
+('Forensic',' Forensic'),
+('NeuroBehavioral/OBS',' NeuroBehavioral/OBS'),
+('Local Hospital',' Local Hospital'),
+("Other Children's Service"," Other Children's Service"),
+        ]     
+        )
     residential        = BooleanField('residential')  
     # reporting_unit        =TextField('ru') 
     # predesessor        =TextField('predesessor')   
