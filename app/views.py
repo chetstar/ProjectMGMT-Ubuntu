@@ -299,12 +299,12 @@ def edit_ru(id,edit):
         # and form.validate_on_submit()
         if edit == '1':#editing exisitng
             # ru.reviewEdit=True
-            ru.last_change_stamp=datetime.datetime.utcnow()
+            # ru.last_change_stamp=datetime.datetime.utcnow()
             # db.session.add(p) 
             # form.oldRU.data=ru.oldRU    
             db.session.commit()
         return redirect(url_for('allrus'))
-    return render_template('edit_ru.html',form=form,id=id)
+    return render_template('edit_ru.html',form=form,id=id,ru=ru)
 
 @app.route("/rusform",methods=["GET","POST"])
 @logged_in
@@ -350,26 +350,26 @@ def allrus():
                 if formfilter.level_3_classic.data==False:
                     if getattr(models.staging_providers,formfilter.missing.data).property.columns[0].type.python_type==str:
                     # if type(getattr(models.staging_providers.query.first(),formfilter.missing.data))=="float":
-                        rulist=models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data).like('')).filter((models.staging_providers.level_3_classic == None)|(models.staging_providers.level_3_classic == False)).all()
+                        rulist=models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data).like('')).filter((models.staging_providers.level_3_classic == False)|(models.staging_providers.level_3_classic == False)).all()
                     else:
-                        rulist=models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data) == None).filter((models.staging_providers.level_3_classic == None)|(models.staging_providers.level_3_classic == False)).all()     
+                        rulist=models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data) == False).filter((models.staging_providers.level_3_classic == False)|(models.staging_providers.level_3_classic == False)).all()     
                 else:
                     if getattr(models.staging_providers,formfilter.missing.data).property.columns[0].type.python_type==str:
                     # if type(getattr(models.staging_providers.query.first(),formfilter.missing.data))=="float":
                         rulist=models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data).like('')).filter((models.staging_providers.level_3_classic == 1)).all()
                     else:
-                        rulist=models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data) == None).filter((models.staging_providers.level_3_classic == 1)).all()     
+                        rulist=models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data) == False).filter((models.staging_providers.level_3_classic == 1)).all()     
         else:#provsearch has something in it
             if formfilter.level_3_classic.data==False:
                 # import pdb;pdb.set_trace()
                 if formfilter.missing.data=="None":
-                    rulist= models.staging_providers.query.filter(( models.staging_providers.level_3_classic == None)|( models.staging_providers.level_3_classic == False)).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")).all()
+                    rulist= models.staging_providers.query.filter(( models.staging_providers.level_3_classic == False)|( models.staging_providers.level_3_classic == False)).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")).all()
                 else:
                     if getattr(models.staging_providers,formfilter.missing.data).property.columns[0].type.python_type==str:
                     #does not work yet need to add the ability to search by both
-                        rulist= models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data).like('')).filter(( models.staging_providers.level_3_classic == None)|( models.staging_providers.level_3_classic == False)).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")).all()        
+                        rulist= models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data).like('')).filter(( models.staging_providers.level_3_classic == False)|( models.staging_providers.level_3_classic == False)).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")).all()        
                     else:
-                        rulist= models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data) == None).filter(( models.staging_providers.level_3_classic == None)|( models.staging_providers.level_3_classic == False)).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")).all()        
+                        rulist= models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data) == False).filter(( models.staging_providers.level_3_classic == False)|( models.staging_providers.level_3_classic == False)).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")).all()        
             else:     
                 # import pdb;pdb.set_trace()
                 if formfilter.missing.data=="None":
@@ -379,7 +379,7 @@ def allrus():
                     #does not work yet need to add the ability to search by both
                         rulist= models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data).like('')).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")).all()        
                     else:
-                        rulist= models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data) == None).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")).all()        
+                        rulist= models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data) == False).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")).all()        
                 # rulist= models.staging_providers.query.filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")).all()
         # except Exception:
         #         rulist=models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data).like(None)).filter((models.staging_providers.level_3_classic == 1)).all()
@@ -412,8 +412,9 @@ def stageupdate(rurow):
     #     form.populate_obj(ruprod)
     # staging_providers.reviewEdit=False
     # ruprod.reviewEdit=False
-        ruprod.last_change_stamp=datetime.datetime.utcnow()
+        # ruprod.last_change_stamp=datetime.datetime.utcnow()
         db.session.commit()
+        # ruprod.last_change_stamp=datetime.datetime.now()
         # production=models.staging_providers.query.filter_by(id=rurow).first()
         # print production.last_change_stamp
         # production.last_change_stamp=datetime.datetime.utcnow()
@@ -438,7 +439,7 @@ def stagereject(rurow):
         db.session.commit()
         # production=models.staging_providers.query.filter_by(id=rurow).first()
         print production.last_change_stamp
-        production.last_change_stamp=datetime.datetime.utcnow()
+        production.last_change_stamp=datetime.datetime.now()
         print production.last_change_stamp
         db.session.commit()
     return redirect(url_for('rureview'))

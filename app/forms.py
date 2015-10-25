@@ -286,10 +286,21 @@ class rutable(Form):
     cesdc        = BooleanField('cesdc')  
     county_run        = BooleanField('county')   
     day_treatment        = BooleanField('day_treatment')  
-    dbservicemodality        =TextField('DBserviceModality')   
-    end_date        = DateTimeField('end_date')  
+    dbservicemodality      =  SelectField(u"Service Modality",coerce=unicode, choices=[
+        ('',"None"),
+    ('SubAcute','SubAcute'),
+    ('Residential Treatment','Residential Treatment'),
+    ('Outpatient Services','Outpatient Services'),
+    ('JailOrJuvJusticeCenter','JailOrJuvJusticeCenter'),
+    ('CrisisStabilization','CrisisStabilization'),
+    ('Day Treatment','Day Treatment'),
+    ('SvcTeamFSP','SvcTeamFSP'),  
+        ('Hospital','Hospital')
+        ]     
+        )
+    # end_date        = DateTimeField('end_date')  
     epsdtgroup        =TextField('epsdtgroup')   
-    financial_responsibility    = IntegerField('financial_responsibility')   
+    # financial_responsibility    = IntegerField('financial_responsibility')   
     kidsru        = BooleanField('kidsru')  
     level_2        = BooleanField('level_2') 
     level_3_classic        = BooleanField('Level3Classic')  
@@ -299,21 +310,21 @@ class rutable(Form):
     our_kids        = BooleanField('our_kids')  
     out_of_county        = BooleanField('out_of_county')   
     program        = BooleanField('program')  
-    provider_name        =TextField('provname')  
+    # provider_name        =TextField('provname')  
     psmask2        = IntegerField('psmask2')  
     residential        = BooleanField('residential')  
-    reporting_unit        =TextField('ru') 
-    predesessor        =TextField('predesessor')   
-    city        =TextField('city')  
+    # reporting_unit        =TextField('ru') 
+    # predesessor        =TextField('predesessor')   
+    # city        =TextField('city')  
     safe_passages        = BooleanField('safe_passages')
     school        = BooleanField('school')   
-    start_date        = DateTimeField('start_date')  
-    mode_of_service        =TextField('mode_of_service')   
+    # start_date        = DateTimeField('start_date')  
+    # mode_of_service        =TextField('mode_of_service')   
     svctype        =TextField('svctype')  
     svctype3        =TextField('svctype3')   
     tay        = BooleanField('tay')   
     tbs        = BooleanField('tbs')  
-    umbrella_organization        = IntegerField('umbrella_organization')  
+    # umbrella_organization        = IntegerField('umbrella_organization')  
     submitRU=SubmitField('Submit')
 
 class TOC(Form):

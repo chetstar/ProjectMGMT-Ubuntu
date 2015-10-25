@@ -89,10 +89,12 @@
          <h3><strong><tr>
  <th> </th>
 
-<th>  modified </th>
-<th>  ab3632 </th>
+
 <th>  agency </th>
 <th>  provider_name </th>
+
+<th>  reporting_unit </th>
+<th>  ab3632 </th>
 <th>  calworks </th>
 <th>  cesdc </th>
 <th>  county_run </th>
@@ -113,7 +115,6 @@
 
 <th>  psmask2 </th>
 <th>  residential </th>
-<th>  reporting_unit </th>
 <th>  predesessor </th>
 <th>  city </th>
 <th>  safe_passages </th>
@@ -138,11 +139,14 @@
 {% if '*' not in field.reporting_unit %}
 <td><a href="{{ url_for('edit_ru', id=field.id,edit=1) }}" class="btn pull-right"><span class="glyphicon glyphicon-pencil"></span> </a> <!-- <a href="{{ url_for('edit_challenge', id=field.id,edit=0) }}" class="btn pull-right"><span class="glyphicon glyphicon-share"></span> copy </a>  -->
 </td>
-<td>{{field.last_change_stamp }}</td>
-<td>{{field.ab3632 }}</td>
+
+
 <td>{{field.agency }}</td>
 
 <td>{{field.provider_name }}</td>
+
+<td>{{field.reporting_unit }}</td>
+<td>{{field.ab3632 }}</td>
 <td>{{field.calworks }}</td>
 <td>{{field.cesdc }}</td>
 <td>{{field.county_run }}</td>
@@ -162,7 +166,6 @@
 <td>{{field.program }}</td>
 <td>{{field.psmask2 }}</td>
 <td>{{field.residential }}</td>
-<td>{{field.reporting_unit }}</td>
 <td>{{field.predesessor }}</td>
 <td>{{field.city }}</td>
 <td>{{field.safe_passages }}</td>

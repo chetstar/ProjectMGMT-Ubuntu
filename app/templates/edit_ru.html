@@ -72,28 +72,57 @@
         
 <p></span><a class="btn btn-default" role="button" href="{{ url_for('allrus')}}"><span class="glyphicon glyphicon-signal" aria-hidden="true"> ru List</a>  </p>
 
-         <div class="row ">
+<div class="container">
+<div class='well'>
+<div class="alert alert-warning" role="alert">
+  <div class="row">
+    <div class="col-md-4">Provider Name: {{ ru.provider_name}}</div>
+    <div class="col-md-3">Reporting Unit: {{ ru.reporting_unit}}</div>
+    <div class="col-md-3"></div>
+  </div>
+    <div class="row">
+    <div class="col-md-2">Start: {{  ru.start_date }}</div>
+  <div class="col-md-2">End: {{  ru.end_date }}</div>
+<div class="col-md-2">FRC: {{  ru.financial_responsibility }}</div>
+{% if ru.predesessor != '' %}
+<div class="col-md-2">New RU: {{  ru.predesessor }}</div>{% endif %}
+  </div>
+    <div class="row">
 
-     <div class="span2">  </div> 
-    <div class="span10">
-         <div class="well">
+<div class="col-md-2">Mode of Service: {{  ru.mode_of_service }}</div>
+<div class="col-md-2">Umbrella Org: {{  ru.umbrella_organization}}</div>
+
+<div class="col-md-2">City: {{  ru.city }}   </div>
+
+</div></div>
 <form method=post enctype="multipart/form-data" >   
-   <div class="row ">
-    <div class="span8">
+
 {{ form.hidden_tag() }}
 {{ wtf.form_errors(form) }}
+ <div class="row">
+    <div class="col-md-3">{{ wtf.form_field(form.agency) }}</div>
+    <div class="col-md-3">{{ wtf.form_field(form.dbservicemodality) }}</div>
+    <div class="col-md-3"></div>
+  </div>
+ <div class="row">
+ <div class="col-md-3">
+{{ wtf.form_field(form.svctype) }}
+{{ wtf.form_field(form.svctype3) }}
+
+{{ wtf.form_field(form.psmask2) }}
+{{ wtf.form_field(form.epsdtgroup) }}
+
+
+
+{{ wtf.form_field(form.school_cds_id) }}
      <!-- {{ form.hidden_tag() }} -->
 {{ wtf.form_field(form.ab3632) }}
-{{ wtf.form_field(form.agency) }}
+
 {{ wtf.form_field(form.calworks) }}
-{{ wtf.form_field(form.school_cds_id) }}
+
 {{ wtf.form_field(form.cesdc) }}
 {{ wtf.form_field(form.county_run) }}
 {{ wtf.form_field(form.day_treatment) }}
-{{ wtf.form_field(form.dbservicemodality) }}
-{{ wtf.form_field(form.end_date) }}
-{{ wtf.form_field(form.epsdtgroup) }}
-{{ wtf.form_field(form.financial_responsibility) }}
 {{ wtf.form_field(form.kidsru) }}
 {{ wtf.form_field(form.level_2) }}
 {{ wtf.form_field(form.level_3_classic) }}
@@ -103,21 +132,15 @@
 {{ wtf.form_field(form.our_kids) }}
 {{ wtf.form_field(form.out_of_county) }}
 {{ wtf.form_field(form.program) }}
-{{ wtf.form_field(form.provider_name) }}
-{{ wtf.form_field(form.psmask2) }}
 {{ wtf.form_field(form.residential) }}
-{{ wtf.form_field(form.reporting_unit) }}
-{{ wtf.form_field(form.predesessor) }}
-{{ wtf.form_field(form.city) }}
+
+
 {{ wtf.form_field(form.safe_passages) }}
 {{ wtf.form_field(form.school) }}
-{{ wtf.form_field(form.start_date) }}
-{{ wtf.form_field(form.mode_of_service) }}
-{{ wtf.form_field(form.svctype) }}
-{{ wtf.form_field(form.svctype3) }}
+
 {{ wtf.form_field(form.tay) }}
 {{ wtf.form_field(form.tbs) }}
-{{ wtf.form_field(form.umbrella_organization) }}
+
 {{ wtf.form_field(form.submitRU) }}
 
 
