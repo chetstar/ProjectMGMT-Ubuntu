@@ -393,6 +393,7 @@ def allrus():
 @logged_in
 def rureview():
     x=db.session.query(models.staging_providers,models.providers).outerjoin(models.providers).filter(models.staging_providers.last_change_stamp > models.providers.last_change_stamp)
+    # import pdb;pdb.set_trace()
     return render_template("rureview.html",email=g.user.email,name=g.user.name,x=x)
 
 from sqlalchemy.sql import exists

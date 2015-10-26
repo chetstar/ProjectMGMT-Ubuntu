@@ -67,7 +67,13 @@
 
 
 
-    
+    {% if x.all() == [] %}
+     <div class="row">
+       <div class="col-md-1"></div>
+       <div class="col-md-6">
+    <div class="well">
+<div class="col-md-3">Nothing to review   </div></div></div>
+{% else %} 
 
     
 <div class='span12 table-scrollable'>
@@ -175,7 +181,7 @@
 </div></div></body>
   
 
-
+ {% endif %}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   </body>
