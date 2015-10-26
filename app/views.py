@@ -1,11 +1,11 @@
 from app import app,models, db
 # from forms import goal_form, strategy_form, project_form, task_form,DeleteRow_form,ldapA,LoginForm, Request, Which,Staff
-from forms import LoginForm, RequestData, Which,ldapA, filterRequests, UserRequestData, Challenges,DeleteRow_form, TOC, rutable,rutablefilter
+from forms import LoginForm, RequestData, Which,ldapA, filterRequests, UserRequestData, Challenges,DeleteRow_form, TOC, rutable,rutablefilter,cans
 import datetime
 from sqlalchemy.orm.attributes import get_history
 from werkzeug import secure_filename
 import re, shutil, os, sys
-from sqlalchemy.sql import func
+from sqlalchemy.sql import  desc,func,distinct
 from sqlalchemy import case
 from sqlalchemy import and_
 # from app.models import Tasks, Projects, Goals, Strategies
@@ -99,7 +99,7 @@ def login():
             try:
                 print "Authentification Successful" 
                 namedb=models.User.query.filter_by(name=unicode(form.username.data)).first()
-                email=models.User.query.first().email         
+                email=models.User.query.filter_by(name=unicode(form.username.data)).first().email         
                 login_user(user_loader(unicode(email)),remember=form.remember_me.data)
                 flash("Logged in successfully.")
                 g.email=email
@@ -135,32 +135,36 @@ def login():
                 return render_template("login.html", form=form)
     return render_template("login.html", form=form)
 
+                # l = ldap.initialize("ldap://10.129.18.101")
+                # l.simple_bind_s("program\%s" % form.username.data,form.password.data)
+                # print "Authentification Successful"
+                # r=l.search_s('cn=Users,dc=BHCS,dc=Internal',ldap.SCOPE_SUBTREE,'(sAMAccountName=*%s*)' % form.username.data,['mail','objectGUID','displayName'])
+                # email=r[0][1]['mail'][0]   
+                # GUID=r[0][1]['objectGUID'][0]   
+                # FullName=r[0][1]['displayName'][0] 
+                # import uuid
+                # guid = uuid.UUID(bytes=GUID)
+                # if not models.User.query.filter_by(email=unicode(email)).first(): 
+                #   p=models.User(name=FullName,email=email)
+                #   db.session.add(p)
+                #   db.session.commit() 
 
 
-requestvars=['agency',
-'audience',
-'columnsRequired',
-'deadlinedate',
-'deadlinetime',
-'deadlineWhy',
-'jobTitle',
-'keyQuestions',
-'longDescription',
-'priority',
-'problem',
-'requestDate',
-'requestedBy',
-'ru',
-'specialFacts',
-'specialInstructions',
-'specialPop',
-'timeBreakdown',
-'timeframe',
-'timeframeend',
-'timeframestart',
-'typeOfService',
-'emanio',
-'MHorSUD',]
+# @app.route("/adduser", methods=["GET", "POST"])
+# def adduser():
+                # l = ldap.initialize("ldap://10.129.18.101")
+                # l.simple_bind_s("program\%s" % form.username.data,form.password.data)
+                # print "Authentification Successful"
+                # r=l.search_s('cn=Users,dc=BHCS,dc=Internal',ldap.SCOPE_SUBTREE,'(sAMAccountName=*%s*)' % form.username.data,['mail','objectGUID','displayName'])
+                # email=r[0][1]['mail'][0]   
+                # GUID=r[0][1]['objectGUID'][0]   
+                # FullName=r[0][1]['displayName'][0] 
+                # import uuid
+                # guid = uuid.UUID(bytes=GUID)
+                # if not models.User.query.filter_by(email=unicode(email)).first(): 
+                #   p=models.User(name=FullName,email=email)
+                #   db.session.add(p)
+                #   db.session.commit() 
 
 from werkzeug import secure_filename
 from flask_wtf.file import FileField
@@ -288,10 +292,19 @@ def allchallenges():
 @app.route('/editru/<id>/<edit>', methods=['GET', 'POST'])
 def edit_ru(id,edit): 
     ru=models.staging_providers.query.filter_by(id=id).first()
-    # ru.last_change_stamp=datetime.datetime.utcnow()
-    form = rutable()
-    form = rutable(obj=ru)
-    form.populate_obj(ru)
+    # ru.modified_on=datetime.datetime.utcnow()
+    # import pdb;pdb.set_trace()
+    if g.user.form_access=='all':
+        form = rutable()
+        form = rutable(obj=ru)
+        form.populate_obj(ru)        
+    elif g.user.form_access=='cans':
+        form = cans()
+        form = cans(obj=ru)
+        form.populate_obj(ru)
+        # ru.modified_by=g.user
+    else:
+        form=cans()
     # import pdb;pdb.set_trace()
     # if edit == '0' and request.method != 'POST' :
     #     form.Title.data="Copy "+form.Title.data
@@ -299,12 +312,13 @@ def edit_ru(id,edit):
         # and form.validate_on_submit()
         if edit == '1':#editing exisitng
             # ru.reviewEdit=True
-            # ru.last_change_stamp=datetime.datetime.utcnow()
+            # ru.modified_on=datetime.datetime.utcnow()
             # db.session.add(p) 
-            # form.oldRU.data=ru.oldRU    
+            # form.oldRU.data=ru.oldRU   
+            ru.modified_by=g.user.name 
             db.session.commit()
         return redirect(url_for('allrus'))
-    return render_template('edit_ru.html',form=form,id=id,ru=ru)
+    return render_template('edit_ru.html',form=form,id=id,ru=ru,form_access=g.user.form_access)
 
 @app.route("/rusform",methods=["GET","POST"])
 @logged_in
@@ -345,31 +359,32 @@ def allrus():
     if formfilter.submit.data:
         if formfilter.provsearch.data == '':
             if formfilter.missing.data=="None":
-                rulist= models.staging_providers.query.filter( models.staging_providers.level_3_classic != l3c).filter_by(agency='Asian Community').all()
+                rulist= models.staging_providers.query.filter(models.staging_providers.level_3_classic.
+                    op("IS NOT")(True)).order_by(desc(models.staging_providers.last_change_stamp)).limit(100).all()
             else:
                 if formfilter.level_3_classic.data==False:
                     if getattr(models.staging_providers,formfilter.missing.data).property.columns[0].type.python_type==str:
                     # if type(getattr(models.staging_providers.query.first(),formfilter.missing.data))=="float":
-                        rulist=models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data).like('')).filter((models.staging_providers.level_3_classic == False)|(models.staging_providers.level_3_classic == False)).all()
+                        rulist=models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data).like('')).filter((models.staging_providers.level_3_classic == None)|(models.staging_providers.level_3_classic == False)).all()
                     else:
-                        rulist=models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data) == False).filter((models.staging_providers.level_3_classic == False)|(models.staging_providers.level_3_classic == False)).all()     
+                        rulist=models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data) == None).filter((models.staging_providers.level_3_classic == None)|(models.staging_providers.level_3_classic == False)).all()     
                 else:
                     if getattr(models.staging_providers,formfilter.missing.data).property.columns[0].type.python_type==str:
                     # if type(getattr(models.staging_providers.query.first(),formfilter.missing.data))=="float":
                         rulist=models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data).like('')).filter((models.staging_providers.level_3_classic == 1)).all()
                     else:
-                        rulist=models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data) == False).filter((models.staging_providers.level_3_classic == 1)).all()     
+                        rulist=models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data) == None).filter((models.staging_providers.level_3_classic == 1)).all()     
         else:#provsearch has something in it
             if formfilter.level_3_classic.data==False:
                 # import pdb;pdb.set_trace()
                 if formfilter.missing.data=="None":
-                    rulist= models.staging_providers.query.filter(( models.staging_providers.level_3_classic == False)|( models.staging_providers.level_3_classic == False)).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")).all()
+                    rulist= models.staging_providers.query.filter(( models.staging_providers.level_3_classic == None)|( models.staging_providers.level_3_classic == False)).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")).all()
                 else:
                     if getattr(models.staging_providers,formfilter.missing.data).property.columns[0].type.python_type==str:
                     #does not work yet need to add the ability to search by both
-                        rulist= models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data).like('')).filter(( models.staging_providers.level_3_classic == False)|( models.staging_providers.level_3_classic == False)).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")).all()        
+                        rulist= models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data).like('')).filter(( models.staging_providers.level_3_classic == None)|( models.staging_providers.level_3_classic == False)).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")).all()        
                     else:
-                        rulist= models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data) == False).filter(( models.staging_providers.level_3_classic == False)|( models.staging_providers.level_3_classic == False)).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")).all()        
+                        rulist= models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data) == None).filter(( models.staging_providers.level_3_classic == None)|( models.staging_providers.level_3_classic == False)).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")).all()        
             else:     
                 # import pdb;pdb.set_trace()
                 if formfilter.missing.data=="None":
@@ -379,12 +394,13 @@ def allrus():
                     #does not work yet need to add the ability to search by both
                         rulist= models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data).like('')).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")).all()        
                     else:
-                        rulist= models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data) == False).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")).all()        
+                        rulist= models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data) == None).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")).all()        
                 # rulist= models.staging_providers.query.filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")).all()
         # except Exception:
         #         rulist=models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data).like(None)).filter((models.staging_providers.level_3_classic == 1)).all()
     else:
-        rulist= models.staging_providers.query.filter( models.staging_providers.level_3_classic != l3c).filter_by(agency='Asian Community').all()
+        rulist= models.staging_providers.query.filter(models.staging_providers.level_3_classic.
+                    op("IS NOT")(True)).order_by(desc(models.staging_providers.last_change_stamp)).limit(100).all()
     # rulist= models.staging_providers.query.filter( models.staging_providers.level_3_classic != 1).all()
     # sorted(q_sum, key=lambda tup: tup[7])
     return render_template("ruview.html",email=g.user.email,name=g.user.name,rulist=rulist,formfilter=formfilter)
@@ -392,7 +408,7 @@ def allrus():
 @app.route("/rureview",methods=["GET","POST"])
 @logged_in
 def rureview():
-    x=db.session.query(models.staging_providers,models.providers).outerjoin(models.providers).filter(models.staging_providers.last_change_stamp > models.providers.last_change_stamp)
+    x=db.session.query(models.staging_providers,models.providers).outerjoin(models.providers).filter(models.staging_providers.modified_on > models.providers.modified_on)
     # import pdb;pdb.set_trace()
     return render_template("rureview.html",email=g.user.email,name=g.user.name,x=x)
 
@@ -413,13 +429,13 @@ def stageupdate(rurow):
     #     form.populate_obj(ruprod)
     # staging_providers.reviewEdit=False
     # ruprod.reviewEdit=False
-        # ruprod.last_change_stamp=datetime.datetime.utcnow()
+        # ruprod.modified_on=datetime.datetime.utcnow()
         db.session.commit()
-        # ruprod.last_change_stamp=datetime.datetime.now()
+        # ruprod.modified_on=datetime.datetime.now()
         # production=models.staging_providers.query.filter_by(id=rurow).first()
-        # print production.last_change_stamp
-        # production.last_change_stamp=datetime.datetime.utcnow()
-        # print production.last_change_stamp
+        # print production.modified_on
+        # production.modified_on=datetime.datetime.utcnow()
+        # print production.modified_on
         # db.session.commit()
     return redirect(url_for('rureview'))
 
@@ -439,9 +455,9 @@ def stagereject(rurow):
     # ruprod.reviewEdit=False
         db.session.commit()
         # production=models.staging_providers.query.filter_by(id=rurow).first()
-        print production.last_change_stamp
-        production.last_change_stamp=datetime.datetime.now()
-        print production.last_change_stamp
+        print production.modified_on
+        production.modified_on=datetime.datetime.now()
+        print production.modified_on
         db.session.commit()
     return redirect(url_for('rureview'))
 

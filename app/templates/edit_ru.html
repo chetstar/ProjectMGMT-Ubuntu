@@ -84,7 +84,7 @@
     <div class="col-md-2">Start: {{  ru.start_date }}</div>
   <div class="col-md-2">End: {{  ru.end_date }}</div>
 <div class="col-md-2">FRC: {{  ru.financial_responsibility }}</div>
-{% if ru.predesessor != '' %}
+{% if ru.predesessor != None %}
 <div class="col-md-2">New RU: {{  ru.predesessor }}</div>{% endif %}
   </div>
     <div class="row">
@@ -99,6 +99,8 @@
 
 {{ form.hidden_tag() }}
 {{ wtf.form_errors(form) }}
+
+{% if form_access == 'all' %}
  <div class="row">
     <div class="col-md-3">{{ wtf.form_field(form.agency) }}</div>
     <div class="col-md-3">{{ wtf.form_field(form.dbservicemodality) }}</div>
@@ -183,7 +185,39 @@
  <div class="col-md-2">
  </div>
   <div class="col-md-2">
+</div></div>
 
+{{ wtf.form_field(form.submitRU) }}
+
+{% elif form_access == 'cans' %}
+   <div class="row">
+ <div class="col-md-2">
+   {{ wtf.form_field(form.cans) }}
+ </div>
+ <div class="col-md-2">
+
+ </div>
+ <div class="col-md-2">
+ </div>
+  <div class="col-md-2">
+
+</div></div>
+
+{{ wtf.form_field(form.submitRU) }}
+{% else %}
+
+   <div class="row">
+ <div class="col-md-2">
+<div class="alert alert-danger" role="alert"> You do not have permissions.  Contact the admin.
+ </div>
+ <div class="col-md-2">
+
+ </div>
+ <div class="col-md-2">
+ </div>
+  <div class="col-md-2">
+
+{% endif %}
  </div></div>
 
 
@@ -200,8 +234,6 @@
 
 
 
-
-{{ wtf.form_field(form.submitRU) }}
 
 
     </form>

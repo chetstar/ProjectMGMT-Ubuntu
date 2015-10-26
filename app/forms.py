@@ -350,6 +350,10 @@ class rutable(Form):
     # umbrella_organization        = IntegerField('umbrella_organization')  
     submitRU=SubmitField('Submit')
 
+class cans(Form):
+    cans = BooleanField('cans') 
+    submitRU=SubmitField('Submit')
+
 class TOC(Form):
     Agency= TextField("What Agency is included in the report")
     kill = IntegerField("Record a 1 if the dashboard or report is not to be show in the Context! Table of Contents; record 0 otherwise")
@@ -408,6 +412,10 @@ class LoginForm(Form):
     password = PasswordField('Password', [validators.Required()])
     remember_me = BooleanField('remember_me', default=False)
     submit=SubmitField('Submit')
+
+# class AddUser(Form):
+#     username = StringField('ACBHCS login', validators=[validators.DataRequired()])
+#     submit=SubmitField('Submit')
 
 # [validators.Required(),validators.Length(min=2, max=50)]
 class RequestData(Form):

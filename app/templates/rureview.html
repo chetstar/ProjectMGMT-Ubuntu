@@ -85,6 +85,7 @@
          <h3><strong><tr>
  <th> </th>
 
+<th>  modified by </th>
 <th>  ab3632 </th>
 <th>  agency </th>
 <th>  provider_name </th>
@@ -137,6 +138,7 @@
 
 <!-- <a href="{{ url_for('edit_challenge', id=field.id,edit=0) }}" class="btn pull-right"><span class="glyphicon glyphicon-share"></span> copy </a>  -->
 </td>
+<td> {{field[0].modified_by}}</td>
 <td> {% if field[0].ab3632==field[1].ab3632 %} {{field[0].ab3632}}{%else%} <FONT COLOR='red'>{{field[0].ab3632}}</font>{% endif %}</td>
 <td> {% if field[0].agency==field[1].agency %} {{field[0].agency}}{%else%} <FONT COLOR='red'>{{field[0].agency}}</font>{% endif %}</td>
 <td> {% if field[0].provider_name==field[1].provider_name %} {{field[0].provider_name}}{%else%} <FONT COLOR='red'>{{field[0].provider_name}}</font>{% endif %}</td>
