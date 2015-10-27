@@ -1,6 +1,6 @@
 from app import app,models, db
 # from forms import goal_form, strategy_form, project_form, task_form,DeleteRow_form,ldapA,LoginForm, Request, Which,Staff
-from forms import LoginForm, RequestData, Which,ldapA, filterRequests, UserRequestData, Challenges,DeleteRow_form, TOC, rutable,rutablefilter,cans
+from forms import LoginForm, RequestData, Which,ldapA, filterRequests, UserRequestData, Challenges,DeleteRow_form, TOC, rutable,rutablefilter,cans,AddUser
 import datetime
 from sqlalchemy.orm.attributes import get_history
 from werkzeug import secure_filename
@@ -110,8 +110,8 @@ def login():
                 return render_template("login.html", form=form)
         else:
             try:
-                if '@' in form.username.data:
-                    form.username.data=re.sub(' /d+','', (re.sub("\d+",'', form.username.data.split('@')[0]))[1:]+(re.sub("\d+",'', form.username.data.split('@')[0]))[0:1])
+                # if '@' in form.username.data:
+                #     form.username.data=re.sub(' /d+','', (re.sub("\d+",'', form.username.data.split('@')[0]))[1:]+(re.sub("\d+",'', form.username.data.split('@')[0]))[0:1])
                 l = ldap.initialize("ldap://10.129.18.101")
                 l.simple_bind_s("program\%s" % form.username.data,form.password.data)
                 print "Authentification Successful"
@@ -150,21 +150,7 @@ def login():
                 #   db.session.commit() 
 
 
-# @app.route("/adduser", methods=["GET", "POST"])
-# def adduser():
-                # l = ldap.initialize("ldap://10.129.18.101")
-                # l.simple_bind_s("program\%s" % form.username.data,form.password.data)
-                # print "Authentification Successful"
-                # r=l.search_s('cn=Users,dc=BHCS,dc=Internal',ldap.SCOPE_SUBTREE,'(sAMAccountName=*%s*)' % form.username.data,['mail','objectGUID','displayName'])
-                # email=r[0][1]['mail'][0]   
-                # GUID=r[0][1]['objectGUID'][0]   
-                # FullName=r[0][1]['displayName'][0] 
-                # import uuid
-                # guid = uuid.UUID(bytes=GUID)
-                # if not models.User.query.filter_by(email=unicode(email)).first(): 
-                #   p=models.User(name=FullName,email=email)
-                #   db.session.add(p)
-                #   db.session.commit() 
+
 
 from werkzeug import secure_filename
 from flask_wtf.file import FileField
@@ -290,6 +276,7 @@ def allchallenges():
 ##############################c
 
 @app.route('/editru/<id>/<edit>', methods=['GET', 'POST'])
+@logged_in
 def edit_ru(id,edit): 
     ru=models.staging_providers.query.filter_by(id=id).first()
     # ru.modified_on=datetime.datetime.utcnow()
@@ -350,7 +337,6 @@ def rusform():
 
 
 @app.route("/rulist",methods=["GET","POST"])
-@logged_in
 def allrus():
     formfilter=rutablefilter()
     # rulist= db.session.query(models.staging_providers.agency).distinct()
@@ -403,7 +389,7 @@ def allrus():
                     op("IS NOT")(True)).order_by(desc(models.staging_providers.last_change_stamp)).limit(100).all()
     # rulist= models.staging_providers.query.filter( models.staging_providers.level_3_classic != 1).all()
     # sorted(q_sum, key=lambda tup: tup[7])
-    return render_template("ruview.html",email=g.user.email,name=g.user.name,rulist=rulist,formfilter=formfilter)
+    return render_template("ruview.html",rulist=rulist,formfilter=formfilter)
 
 @app.route("/rureview",methods=["GET","POST"])
 @logged_in
@@ -462,7 +448,48 @@ def stagereject(rurow):
     return redirect(url_for('rureview'))
 
 
+@app.route("/searchuser", methods=["GET", "POST"])
+@logged_in
+def searchuser():
+    form = AddUser()
+    r={}
+    if request.method == 'POST':
+        l = ldap.initialize("ldap://10.129.18.101")
+        l.simple_bind_s("program\%s" % form.username.data,form.password.data)
+        # print "Authentification Successful"
+        ldaplist=l.search_s('cn=Users,dc=BHCS,dc=Internal',ldap.SCOPE_SUBTREE,'(displayName=*%s*)' % form.search.data,['mail','objectGUID','displayName'])
+        # import pdb;pdb.set_trace()
+        for i in ldaplist:
+            if 'mail' in i[1]:
+                if 'displayName' in i[1]:
+                    r[i[1]['displayName'][0] ]= i[1]['mail'][0] 
+                else:
+                    r['unknown' ]= i[1]['mail'][0] 
+            else:
+                if 'displayName' in i[1]:
+                    r[i[1]['displayName'][0] ]= 'Noemail@aol.com' 
+                else:
+                    r['unknown'  ]= 'Noemail@aol.com'              
+        # email=r[0][1]['mail'][0]   
+        # GUID=r[0][1]['objectGUID'][0]   
+        # FullName=r[0][1]['displayName'][0] 
 
+        # import uuid
+        # guid = uuid.UUID(bytes=GUID)
+    return render_template("loginsearch.html", form=form,r=r)
+
+@app.route("/adduser/<name>/<emailx>/<r>", methods=["GET", "POST"])
+def adduser(name,emailx,r):
+    if not models.User.query.filter_by(email=unicode(emailx)).first(): 
+        p=models.User(name=name,email=emailx)
+        db.session.add(p)
+        db.session.commit()  
+        flash("User Added!")
+    else:
+        flash("User already exists.")
+    form = AddUser()
+    r={}
+    return render_template("loginsearch.html", form=form,r=r)
 
 
 

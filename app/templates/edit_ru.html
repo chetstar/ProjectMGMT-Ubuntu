@@ -27,7 +27,13 @@
                         <a href="#page-top"></a>
                     </li>
                     <li>
-                       <a  href="{{ url_for('rusform')}}"><span class="glyphicon glyphicon-file" aria-hidden="true"> ru Form</a>
+                        <ul class="nav navbar-nav navbar-right">
+      {% if not session.logged_in %}
+   <li><a href="{{ url_for('login') }}">Login</a></li>
+  {% else %}
+   <li><a href="{{ url_for('logout') }}">Logout</a></li>
+  {% endif %}
+  </div>
                     </li>
                 </ul>
             </div>
@@ -162,7 +168,7 @@
     <div class="row">
  <div class="col-md-2">
    
-{{ wtf.form_field(form.safe_passages) }}
+{{ wtf.form_field(form.cans) }}
  </div>
  <div class="col-md-2">
    {{ wtf.form_field(form.residential) }}
@@ -177,7 +183,6 @@
  </div></div>
    <div class="row">
  <div class="col-md-2">
-   {{ wtf.form_field(form.our_kids) }}
  </div>
  <div class="col-md-2">
    {{ wtf.form_field(form.older_adult) }}

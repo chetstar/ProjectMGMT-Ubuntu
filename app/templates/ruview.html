@@ -33,6 +33,19 @@
                       <li>
                        <a  href="{{ url_for('rureview')}}"><span class="glyphicon glyphicon-file" aria-hidden="true"> Review</a>
                     </li> {% endif %}
+
+      <ul class="nav navbar-nav navbar-right">
+      {% if not session.logged_in %}
+   <li><a href="{{ url_for('login') }}">Login</a></li>
+  {% else %}
+   <li><a href="{{ url_for('logout') }}">Logout</a></li>
+   <li> <a href="{{ url_for('searchuser')}}">Add User </a> </li>
+  {% endif %}
+
+  </div>
+  </div> </div> </div>   </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -109,7 +122,7 @@
 <th>  mhsa </th>
 <th>  older_adult </th>
 <th>  old_ru </th>
-<th>  our_kids </th>
+<th>  cans </th>
 <th>  out_of_county </th>
 <th>  program </th>
 
@@ -117,7 +130,6 @@
 <th>  residential </th>
 <th>  predesessor </th>
 <th>  city </th>
-<th>  safe_passages </th>
 <th>  school </th>
 <th>school_cds_id</th>
 <th>  start_date </th>
@@ -161,14 +173,13 @@
 <td>{{field.mhsa }}</td>
 <td>{{field.older_adult }}</td>
 <td>{{field.old_ru }}</td>
-<td>{{field.our_kids }}</td>
+<td>{{field.cans }}</td>
 <td>{{field.out_of_county }}</td>
 <td>{{field.program }}</td>
 <td>{{field.psmasktext }}</td>
 <td>{{field.residential }}</td>
 <td>{{field.predesessor }}</td>
 <td>{{field.city }}</td>
-<td>{{field.safe_passages }}</td>
 <td>{{field.school }}</td>
 <td>{{field.school_cds_id}}</td>     
 <td>{{field.start_date }}</td>

@@ -256,7 +256,7 @@ class rutablefilter(Form):
 ('mhsa','mhsa'),
 ('older_adult','older_adult'),
 ('old_ru','old_ru'),
-('our_kids','our_kids'),
+('cans','cans'),
 ('out_of_county','out_of_county'),
 ('program','program'),
 ('provider_name','provider_name'),
@@ -265,7 +265,6 @@ class rutablefilter(Form):
 ('reporting_unit','reporting_unit'),
 ('predesessor','predesessor'),
 ('city','city'),
-('safe_passages','safe_passages'),
 ('school','school'),
 ('school_cds_id','school_cds_id'),
 ('start_date','start_date'),
@@ -307,7 +306,7 @@ class rutable(Form):
     mhsa        = BooleanField('mhsa')  
     older_adult        = BooleanField('older_adult')  
     # old_ru     = IntegerField('old RU') 
-    our_kids        = BooleanField('our_kids')  
+    cans        = BooleanField('cans')  
     out_of_county        = BooleanField('out_of_county')   
     program        = BooleanField('program')  
     # provider_name        =TextField('provname')  
@@ -339,7 +338,7 @@ class rutable(Form):
     # reporting_unit        =TextField('ru') 
     # predesessor        =TextField('predesessor')   
     # city        =TextField('city')  
-    safe_passages        = BooleanField('safe_passages')
+    # safe_passages        = BooleanField('safe_passages')
     school        = BooleanField('school')   
     # start_date        = DateTimeField('start_date')  
     # mode_of_service        =TextField('mode_of_service')   
@@ -408,14 +407,20 @@ class Which(Form):
     submit=SubmitField('Submit')
 
 class LoginForm(Form):
-    username = StringField('ACBHCS login', validators=[validators.DataRequired()])
+    username = StringField('ACBHCS login ', validators=[validators.DataRequired()])
     password = PasswordField('Password', [validators.Required()])
     remember_me = BooleanField('remember_me', default=False)
     submit=SubmitField('Submit')
 
-# class AddUser(Form):
-#     username = StringField('ACBHCS login', validators=[validators.DataRequired()])
-#     submit=SubmitField('Submit')
+class AddUser(Form):
+    username = StringField('ACBHCS login ')
+    password = PasswordField('Password')
+    search = StringField('search for a name')
+    name = StringField('search for a name')
+    admin = BooleanField('Yes, I have looked at Context.', default=False)
+    form_access = StringField('search for a name')
+    submit=SubmitField('Submit')
+
 
 # [validators.Required(),validators.Length(min=2, max=50)]
 class RequestData(Form):
