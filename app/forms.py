@@ -265,7 +265,7 @@ class rutablefilter(Form):
 ('reporting_unit','reporting_unit'),
 ('predesessor','predesessor'),
 ('city','city'),
-('school','school'),
+('in_school','in_school'),
 ('school_cds_id','school_cds_id'),
 ('start_date','start_date'),
 ('mode_of_service','mode_of_service'),
@@ -308,7 +308,7 @@ class rutable(Form):
     # old_ru     = IntegerField('old RU') 
     cans        = BooleanField('cans')  
     out_of_county        = BooleanField('out_of_county')   
-    # program        = BooleanField('program')  
+    program        = BooleanField('program')  
     # provider_name        =TextField('provname')  
     psmasktext        = SelectField(u"PSmask Text",coerce=unicode, choices=[
         ('',"None"),
