@@ -308,7 +308,7 @@ class rutable(Form):
     # old_ru     = IntegerField('old RU') 
     cans        = BooleanField('cans')  
     out_of_county        = BooleanField('out_of_county')   
-    program        = BooleanField('program')  
+    # program        = BooleanField('program')  
     # provider_name        =TextField('provname')  
     psmasktext        = SelectField(u"PSmask Text",coerce=unicode, choices=[
         ('',"None"),

@@ -93,7 +93,7 @@
 
 
     
-<div class='span12 table-scrollable'>
+<div class='span12 table-scrollable '>
      
   
     <table class="table table-striped table-responsive" >
@@ -101,44 +101,31 @@
 <thead> 
          <h3><strong><tr>
  <th> </th>
-
-
 <th>  agency </th>
-<th>  provider_name </th>
-
-<th>  reporting_unit </th>
+<th>  RU  </th>
+<th>  psmasktext </th>
+<th>  dbservicemodality </th>
+<th>  start </th>
+<th>  end </th>
 <th>  ab3632 </th>
 <th>  calworks </th>
 <th>  cesdc </th>
-<th>  county_run </th>
-<th>  day_treatment </th>
-<th>  dbservicemodality </th>
-<th>  end_date </th>
-<th>  epsdtgroup </th>
-<th>  financial_responsibility </th>
+<th>  county </th>
+<th>  day_tx </th>
+<th>  cans </th>
 <th>  kidsru </th>
 <th>  level_2 </th>
 <th>  level_3_classic </th>
 <th>  mhsa </th>
 <th>  older_adult </th>
-<th>  old_ru </th>
-<th>  cans </th>
 <th>  out_of_county </th>
-<th>  program </th>
-
-<th>  psmasktext </th>
-<th>  residential </th>
-<th>  predesessor </th>
-<th>  city </th>
-<th>  school </th>
-<th>school_cds_id</th>
-<th>  start_date </th>
-<th>  mode_of_service </th>
-<th>  svctype </th>
-<th>  svctype3 </th>
 <th>  tay </th>
 <th>  tbs </th>
-<th>  umbrella_organization </th>
+<th>  residential </th>
+<th>  school </th>
+<th>  predesessor </th>
+<th> Insyst </th>
+
        </tr></strong></h3>
          </thead> 
 <tbody> 
@@ -151,45 +138,30 @@
 {% if '*' not in field.reporting_unit %}
 <td><a href="{{ url_for('edit_ru', id=field.id,edit=1) }}" class="btn pull-right"><span class="glyphicon glyphicon-pencil"></span> </a> <!-- <a href="{{ url_for('edit_challenge', id=field.id,edit=0) }}" class="btn pull-right"><span class="glyphicon glyphicon-share"></span> copy </a>  -->
 </td>
-
-
 <td>{{field.agency }}</td>
-
-<td>{{field.provider_name }}</td>
-
-<td>{{field.reporting_unit }}</td>
-<td>{{field.ab3632 }}</td>
+<td>{{field.provider_name }} {{field.reporting_unit }}</td>
+<td>{{field.psmasktext }}</td>
+<td>{{field.dbservicemodality }}</td>
+<td>{{field.start_date }}</td>
+<td>{{field.end_date }}</td>
+<td>{{field.ab3632 }}</td>   
 <td>{{field.calworks }}</td>
 <td>{{field.cesdc }}</td>
 <td>{{field.county_run }}</td>
 <td>{{field.day_treatment }}</td>
-<td>{{field.dbservicemodality }}</td>
-<td>{{field.end_date }}</td>
-<td>{{field.epsdtgroup }}</td>
-<td>{{field.financial_responsibility }}</td>
+<td>{{field.cans }}</td>
 <td>{{field.kidsru }}</td>
 <td>{{field.level_2 }}</td>
 <td>{{field.level_3_classic }}</td>
 <td>{{field.mhsa }}</td>
 <td>{{field.older_adult }}</td>
-<td>{{field.old_ru }}</td>
-<td>{{field.cans }}</td>
 <td>{{field.out_of_county }}</td>
-<td>{{field.program }}</td>
-<td>{{field.psmasktext }}</td>
-<td>{{field.residential }}</td>
-<td>{{field.predesessor }}</td>
-<td>{{field.city }}</td>
-<td>{{field.school }}</td>
-<td>{{field.school_cds_id}}</td>     
-<td>{{field.start_date }}</td>
-<td>{{field.mode_of_service }}</td>
-<td>{{field.svctype }}</td>
-<td>{{field.svctype3 }}</td>
 <td>{{field.tay }}</td>
 <td>{{field.tbs }}</td>
-<td>{{field.umbrella_organization }}</td>
-
+<td>{{field.residential }}</td>
+<td>{{field.school }} {{field.school_cds_id}}</td>
+<td>{{field.predesessor }}</td>
+<td>Umbrella: {{field.umbrella_organization }}<br>Program:{{field.program }}<br>svcMode:{{field.mode_of_service }} {{field.end_date }}<br>FRC:{{field.financial_responsibility }}<br>City:{{field.city }}</td>
 {% endif %}
 
        {% endfor %}</tr></ol></tbody> </table> 
