@@ -78,8 +78,8 @@ admin = Admin(app)
 
 
 admin.add_view(ModelView(models.User, db.session))
-admin.add_view(ModelView(models.rutable, db.session))
-admin.add_view(ModelView(models.rustage, db.session))
+# admin.add_view(ModelView(models.rutable, db.session))
+# admin.add_view(ModelView(models.rustage, db.session))
 admin.add_view(ModelView(models.staging_providers, db.session))
 # admin.add_view(ModelView(models.test, db.session))
 admin.add_view(ModelView(models.Request, db.session))
