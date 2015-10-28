@@ -19,19 +19,28 @@ class staging_providers(db.Model):
 
 class dashboards(db.Model):
     __table__ =  db.Model.metadata.tables['dashboards']
+    questions = db.relationship('dashboards_questions', lazy='dynamic', backref='questionback',cascade="all, delete-orphan")
+    systems = db.relationship('dashboards_systems', lazy='dynamic', backref='systemback',cascade="all, delete-orphan")
+    reviews = db.relationship('dashboards_reviews', lazy='dynamic', backref='reviewback',cascade="all, delete-orphan")
     # id = db.Column(db.Integer, primary_key=True)
     # test = db.Column(db.String(80), unique=True)
-    # def __repr__(self):
-    #     return '<Provider %r>' % (self.provider_name)
+    def __repr__(self):
+        return '%r' % (self.title)
 
 class dashboards_questions(db.Model):
     __table__ =  db.Model.metadata.tables['dashboards_questions']
+    def __repr__(self):
+        return ' %r' % (self.question)
 
 class dashboards_systems(db.Model):
     __table__ =  db.Model.metadata.tables['dashboards_systems']
+    def __repr__(self):
+        return '%r' % (self.system_of_care)
 
 class dashboards_reviews(db.Model):
     __table__ =  db.Model.metadata.tables['dashboards_reviews']
+    def __repr__(self):
+        return '%' % (self.category)
 
 class providers(db.Model):
     __table__ =  db.Model.metadata.tables['providers']
@@ -528,5 +537,6 @@ class Tags(db.Model):
     tag = db.Column(db.String(200))
     tag_id = db.Column(db.Integer, db.ForeignKey('challenge.id'))
     order = db.Column(db.Integer)                                     
-
+    def __repr__(self):
+        return (self.tag)
 
