@@ -33,16 +33,15 @@
 
 
       {% for key, value in r.iteritems() %}
-         <div class="row"> <div class="col-md-3">
-          <div class="alert alert-danger" role="alert"> 
+         <div class="row"> <div class="col-md-6">
+          <div class="alert alert-danger" role="warning"> 
    
             {{ key }}            {{ value }}
-            <a href="{{ url_for('adduser', name=key,emailx=value ,r=r) }}"><span class="glyphicon glyphicon-pencil"></span> </a> 
+            <a href="{{ url_for('adduser', name=key,emailx=value ,r=r) }}"><span class="glyphicon glyphicon-plus"></span> </a> 
   </div></div></div>
       {% endfor %}
-
-</div>
- <a href="http://argonaut/admin/userview/">Change Permissions on a User </a> 
+<br>
+</div><p> After you add a user <a href="http://argonaut/admin/userview/">add Permissions</a> </p>
   
  </div>    
   
