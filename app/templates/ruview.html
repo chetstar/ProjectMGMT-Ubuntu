@@ -36,9 +36,9 @@
 
       <ul class="nav navbar-nav navbar-right">
       {% if not session.logged_in %}
-   <li><a href="{{ url_for('login') }}">Login</a></li>
+   <li><a href="{{ url_for('login') }}?next=http://argonaut{{ url_for('allrus') }}">Login</a></li>
   {% else %}
-   <li><a href="{{ url_for('logout') }}">Logout</a></li>
+   <li><a href="{{ url_for('logout') }}?next=http://argonaut{{ url_for('allrus') }}">Logout</a></li>
    <li> <a href="{{ url_for('searchuser')}}">Add User </a> </li>
   {% endif %}
 
