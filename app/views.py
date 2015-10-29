@@ -480,6 +480,25 @@ def searchuser():
 
 @app.route("/adduser/<name>/<emailx>/<r>", methods=["GET", "POST"])
 def adduser(name,emailx,r):
+    form = AddUser()
+    if request.method == 'POST':
+        l = ldap.initialize("ldap://10.129.18.101")
+        l.simple_bind_s("program\%s" % form.username.data,form.password.data)
+        # print "Authentification Successful"
+        ldaplist=l.search_s('cn=Users,dc=BHCS,dc=Internal',ldap.SCOPE_SUBTREE,'(displayName=*%s*)' % form.search.data,['mail','objectGUID','displayName'])
+        # import pdb;pdb.set_trace()
+        for i in ldaplist:
+            if 'mail' in i[1]:
+                if 'displayName' in i[1]:
+                    r[i[1]['displayName'][0] ]= i[1]['mail'][0] 
+                else:
+                    r['unknown' ]= i[1]['mail'][0] 
+            else:
+                if 'displayName' in i[1]:
+                    r[i[1]['displayName'][0] ]= 'Noemail@aol.com' 
+                else:
+                    r['unknown'  ]= 'Noemail@aol.com'   
+        return render_template("loginsearch.html", form=form,r=r) 
     if not models.User.query.filter_by(email=unicode(emailx)).first(): 
         p=models.User(name=name,email=emailx)
         db.session.add(p)
@@ -487,10 +506,9 @@ def adduser(name,emailx,r):
         flash("User Added!")
     else:
         flash("User already exists.")
-    form = AddUser()
-    r={}
+    import ast
+    r=ast.literal_eval(r)
     return render_template("loginsearch.html", form=form,r=r)
-
 
 
 #########################
