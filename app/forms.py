@@ -255,7 +255,6 @@ class rutablefilter(Form):
 ('level_3_classic','level_3_classic'),
 ('mhsa','mhsa'),
 ('older_adult','older_adult'),
-('old_ru','old_ru'),
 ('cans','cans'),
 ('out_of_county','out_of_county'),
 ('program','program'),
