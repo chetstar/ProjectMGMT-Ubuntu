@@ -92,8 +92,23 @@
 {% endfor %}</p>
     </div>
     <div id="menu1" class="tab-pane fade">
-      <h3>Menu 1</h3>
-      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+       <h3>{{toc_row.description}}</h3>
+      <p>{{ wtf.quick_form(form_review) }}
+
+   {{ form_review.hidden_tag() }}
+{{ wtf.form_errors(form_review) }}
+
+
+
+
+{% for item in toc_row.reviews %}
+         <div class="well">
+   <div class="row ">
+    <div class="span8">
+
+{{item.reviewer}} <p></span><a class="btn btn-danger" role="button" href="{{ url_for('tocquestion',id=toc_row.id,action='delete',sub=item.id)}}"><span class="glyphicon glyphicon-delete" aria-hidden="true"> Delete</a>  </p>
+</div></div></div>
+{% endfor %}</p>
     </div>
     <div id="menu2" class="tab-pane fade">
       <h3>Menu 2</h3>

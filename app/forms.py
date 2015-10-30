@@ -393,18 +393,14 @@ class TOC(Form):
 
 class TOCquestions(Form):
     question = TextField("Question answered by report/dashboard")
-    # agency= RadioField('What Agency is included in the report', choices=[('BHCS','BHCS'),('Public Health','Public Health'),('HCSA','HCSA')],coerce=unicode)
-    # description= TextAreaField("Describe the dashboard or report.")
-    # category=RadioField('Record "Dashboard" or "Report', choices=[('Dashboard','Dashboard or'),('Report','Report')],coerce=unicode)
-    # link=TextAreaField("Copy and paste the dashboard or report link from Context!")
-    # identified =RadioField('Is the dashboard or report identified or de-identified?', choices=[('Identified','Identified'),('De-Identified','De-Identified')],coerce=unicode)
-    # purpose=TextAreaField("Describe the purpose of the dashboard or report.")
-    # # audience=TextAreaField("Who is the target audience for the dashboard or report?")
-    # status= RadioField('Is the dashboard or report ready for deployment?', choices=[('1','This Dashboard is ready for Deployment'),('','Nope')],coerce=unicode)
-    # went_live_on = DateField( "Record the date on which a dashboard or report was born",validators=(validators.Optional(),))
-    # code_author =TextAreaField("Who was/were the author(s) of the code?")
-    # report_author =TextAreaField("Who was/were the author(s) of the dashboard or report?")
-    submitTOC=SubmitField('Submit')
+    submitTOCquestion=SubmitField('Submit')
+
+class TOCreview(Form):
+    category = RadioField('Type of Review', choices=[('Code','Code'),('Dashboard','Dashboard'),('Drills','Drills')],coerce=unicode)
+    reviewer = TextField("Reviewer")
+    review_date = DateField( "Reviewed on..",validators=(validators.Optional(),))
+    submitTOCreview=SubmitField('Submit')
+
 
 class Challenges(Form):
     Category = TextField('List relevant tags.',validators=[validators.Required(),validators.Length(min=2, max=400)])

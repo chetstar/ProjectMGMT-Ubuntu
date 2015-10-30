@@ -1,6 +1,6 @@
 from app import app,models, db
 # from forms import goal_form, strategy_form, project_form, task_form,DeleteRow_form,ldapA,LoginForm, Request, Which,Staff
-from forms import LoginForm, RequestData, Which,ldapA, filterRequests, UserRequestData, Challenges,DeleteRow_form, TOC, rutable,rutablefilter,cans,AddUser,TOCquestions
+from forms import LoginForm, RequestData, Which,ldapA, filterRequests, UserRequestData, Challenges,DeleteRow_form, TOC, rutable,rutablefilter,cans,AddUser,TOCquestions,TOCreview
 import datetime
 from sqlalchemy.orm.attributes import get_history
 from werkzeug import secure_filename
@@ -898,7 +898,8 @@ report_author=form.report_author.data)
         toc_row=models.dashboards.query.filter_by(title=form.title.data).first()
         # toc_row=db.session.query(models.dashboards_questions.question,models.dashboards.title,models.dashboards_questions.id).join(models.dashboards).filter_by(id=new_toc.id).all()
         form=TOCquestions()
-        return redirect(url_for('tocquestion',form=form,id=toc_row.id,sub='test',action='test'))
+        form_review=TOCreview()
+        return redirect(url_for('tocquestion',form=form,id=toc_row.id,sub='test',action='test',form_review=form_review))
         # return render_template("tocquestions.html",toc_row=toc_row,form=form,id=id)
         # return render_template("tocquestions.html",form=form,id=new_toc.id)
     else:
@@ -911,8 +912,10 @@ def tocquestion(id,action,sub):
     toc_row=models.dashboards.query.filter_by(id=id).first()
     # toc_row=db.session.query(models.dashboards_questions.question,models.dashboards.title,models.dashboards_questions.id).join(models.dashboards).filter_by(id=id).all()
     form=TOCquestions()
+    form_review=TOCreview()
     # import pdb;pdb.set_trace()
     if form.validate_on_submit():
+        if form.submitTOCquestion:
             new_q=models.dashboards_questions(question=form.question.data,dashboard_id=id)
             db.session.add(new_q)
             db.session.commit()
@@ -921,7 +924,7 @@ def tocquestion(id,action,sub):
             db.session.delete(models.dashboards_questions.query.filter_by(id=sub).first())
             db.session.commit()
             toc_row=models.dashboards.query.filter_by(id=id).first()
-    return render_template("tocquestions.html",toc_row=toc_row,form=form,id=id)
+    return render_template("tocquestions.html",toc_row=toc_row,form=form,id=id,form_review=form_review)
 
 @app.route("/toclist",methods=["GET","POST"])
 @logged_in
