@@ -1,6 +1,6 @@
 from app import app,models, db
 # from forms import goal_form, strategy_form, project_form, task_form,DeleteRow_form,ldapA,LoginForm, Request, Which,Staff
-from forms import LoginForm, RequestData, Which,ldapA, filterRequests, UserRequestData, Challenges,DeleteRow_form, TOC, rutable,rutablefilter,cans,AddUser
+from forms import LoginForm, RequestData, Which,ldapA, filterRequests, UserRequestData, Challenges,DeleteRow_form, TOC, rutable,rutablefilter,cans,AddUser,TOCquestions
 import datetime
 from sqlalchemy.orm.attributes import get_history
 from werkzeug import secure_filename
@@ -856,56 +856,21 @@ def allrequest():
 def main():
     return render_template("main.html")
 
-@app.route("/demo",methods=["GET","POST"])
-def demo():
-    challengelist= models.Challenge.query.order_by(models.Challenge.Priority).all()
-    return render_template("demo.html",challengelist=challengelist)
 
-
-
-@app.route('/edittoc/<id>/<core>', methods=['GET', 'POST'])
-def edit_toc(id,core): 
-    toc=models.TOC.query.filter_by(id=id).first()
-    delete_form=DeleteRow_form()
+@app.route('/edittoc/<id>/', methods=['GET', 'POST'])
+def edit_toc(id): 
+    toc=models.dashboards.query.filter_by(id=id).first()
+    # delete_form=DeleteRow_form()
     form = TOC(obj=toc)
-    if core == 1:
-                flash("You are editing and existing entry")
-    if request.method == 'POST' and form.validate_on_submit():
-        if core==1:
-            form.populate_obj(toc)    
-            db.session.commit()
-        else:
-            x=TOC(Agency=form.Agency.data,
-                kill=form.kill.data,
-                DashboardQuestion=form.DashboardQuestion.data,
-                DashboardReportSort=form.DashboardReportSort.data,
-                DorR=form.DorR.data,
-                DashboardReport=form.DashboardReport.data,
-                SystemofCare=form.SystemofCare.data,
-                ServiceArea=form.ServiceArea.data,
-                Description=form.Description.data,
-                Purpose=form.Purpose.data,
-                iddeid=form.iddeid.data,
-                TargetedAudience=form.TargetedAudience.data,
-                Supportswhichmeeting=form.Supportswhichmeeting.data,
-                Ready=form.Ready.data,
-                Link=form.Link.data,
-                KeyQuestions=form.KeyQuestions.data,
-                BornOnDate=form.BornOnDate.data,
-                FinalCodeReviewDate=form.FinalCodeReviewDate.data,
-                CodeAuthor=form.CodeAuthor.data,
-                CodeReviewer=form.CodeReviewer.data,
-                FinalReportReviewDate=form.FinalReportReviewDate.data,
-                ReportAuthor=form.ReportAuthor.data,
-                ReportReviewer=form.ReportReviewer.data)
-            db.session.add(x)
-            db.session.commit()
-        return redirect(url_for('alltoc'))
-    if delete_form.validate_on_submit():
-        db.session.delete(toc)
+    if request.method == 'POST':
+        form.populate_obj(toc)    
         db.session.commit()
         return redirect(url_for('alltoc'))
-    return render_template('edit_toc.html',id=id,form=form,delete_form=delete_form)
+    # if delete_form.validate_on_submit():
+    #     db.session.delete(toc)
+    #     db.session.commit()
+    #     return redirect(url_for('alltoc'))
+    return render_template('edit_toc.html',id=id,form=form)
 
 
 @app.route("/tocform",methods=["GET","POST"])
@@ -914,17 +879,54 @@ def tocform():
     form = TOC()
     # form.staffback.data=models.Staff.query.filter_by(staff="Unassigned").first()
     if form.validate_on_submit():
-        print 'submit'
+        new_toc=models.dashboards(title=form.title.data,
+agency=form.agency.data,
+category=form.category.data,
+description=form.description.data,
+link=form.link.data,
+purpose=form.purpose.data,identified=form.identified.data,
+status=form.status.data,
+went_live_on=form.went_live_on.data,
+code_author=form.code_author.data,
+report_author=form.report_author.data)
+        import pdb;pdb.set_trace()
+        db.session.add(new_toc)
+        db.session.commit()
+        #send email to user and admin
+        flash("Dashboard Added!")
+        new_toc=models.dashboards.query.filter_by(title=form.title.data).first() 
+        toc_row=models.dashboards.query.filter_by(id=109).first()
+        # toc_row=db.session.query(models.dashboards_questions.question,models.dashboards.title,models.dashboards_questions.id).join(models.dashboards).filter_by(id=new_toc.id).all()
+        form=TOCquestions()
+        return render_template("tocquestions.html",toc_row=toc_row,form=form,id=id)
+        # return render_template("tocquestions.html",form=form,id=new_toc.id)
     else:
         flash_errors(form)
-        return render_template("tocform.html",email=g.user.email,name=g.user.name,form=form)
+    return render_template("tocform.html",email=g.user.email,name=g.user.name,form=form)
 
+@app.route("/tocquestion/<id>/<action>/<sub>",methods=["GET","POST"])
+@logged_in
+def tocquestion(id,action,sub):
+    toc_row=models.dashboards.query.filter_by(id=id).first()
+    # toc_row=db.session.query(models.dashboards_questions.question,models.dashboards.title,models.dashboards_questions.id).join(models.dashboards).filter_by(id=id).all()
+    form=TOCquestions()
+    # import pdb;pdb.set_trace()
+    if form.validate_on_submit():
+            new_q=models.dashboards_questions(question=form.question.data,dashboard_id=id)
+            db.session.add(new_q)
+            db.session.commit()
+            toc_row=db.session.query(models.dashboards_questions.question,models.dashboards.title).join(models.dashboards).filter_by(id=id).all()
+    if action == 'delete':
+            db.session.delete(models.dashboards_questions.query.filter_by(id=sub).first())
+            db.session.commit()
+            toc_row=db.session.query(models.dashboards_questions.question,models.dashboards.title,models.dashboards_questions.id).join(models.dashboards).filter_by(id=id).all()
+    return render_template("tocquestions.html",toc_row=toc_row,form=form,id=id)
 
 @app.route("/toclist",methods=["GET","POST"])
 @logged_in
 def alltoc():
     # toclist= models.TOC.query.order_by(models.Challenge.Priority).all()
-    toclist= models.TOC.query.all()
+    toclist= models.dashboards.query.all()
     # sorted(q_sum, key=lambda tup: tup[7])
     return render_template("tocview.html",email=g.user.email,name=g.user.name,toclist=toclist)
 

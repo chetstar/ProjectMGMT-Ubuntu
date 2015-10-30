@@ -66,44 +66,75 @@
 
 
 
-<div class="well">
-          {% for field in toclist %}
-   <div class="row">
-       <div class="col-md-11">
+    
+<div class='span12 table-scrollable '>
+     
+  
+    <table class="table table-striped table-responsive" >
+  <!--          <table id="myTable" class="tablesorter"> -->
+<thead> 
+         <h3><strong><tr>
+ <th> </th>
+ <th>title</th>
+ <th>agency</th>
+ <th>category</th>
+ <th>description</th>
+ <th>purpose</th>
+ <th>identified</th>
+ <th>status</th>
+ <th>went_live_on</th>
+ <th>code_author</th>
+ <th>report_author</th>
+ <th>link</th>
+       </tr></strong></h3>
+         </thead> 
+<tbody> 
+  <ol type="1">
 
-    {{field.Agency}}
-    {{field.kill}}
-    {{field.DashboardQuestion}}
-    {{field.DashboardReportSort}}
-    {{field.DorR}}
-    {{field.DashboardReport }}
-    {{field.SystemofCare }}
-    {{field.ServiceArea }}
-    {{field.Description }}
-    {{field.Purpose }}
-    {{field.iddeid }}
-    {{field.TargetedAudience }}
-    {{field.Supportswhichmeeting }}
-    {{field.Ready }}
-    {{field.Link }}
-    {{field.KeyQuestions }}
-    {{field.BornOnDate  }}
-    {{field.FinalCodeReviewDate   }}
-    {{field.CodeAuthor  }}
-    {{field.CodeReviewer   }}
-    {{field.FinalReportReviewDate }}
-    {{field.ReportAuthor }}
-    {{field.ReportReviewer}} 
-    <a href="{{ url_for('edit_toc', id=field.id) }}" class="btn pull-right"><span class="glyphicon glyphicon-pencil"></span> edit </a> 
-</div></div>
-            {% endfor %}
+          {% for field in toclist %}
+
+            <tr>
+
+
+<td><a href="{{ url_for('edit_toc', id=field.id) }}" class="btn pull-right"><span class="glyphicon glyphicon-pencil"></span> </a> <!-- <a href="{{ url_for('edit_challenge', id=field.id,edit=0) }}" class="btn pull-right"><span class="glyphicon glyphicon-share"></span> copy </a>  -->
+</td>
+<td>{{field.title}}</td>
+<td>{{field.agency}}</td>
+<td>{{field.category}}</td>
+<td><a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapse{{field.id}}" aria-expanded="false" aria-controls="collapseExample">
+  Description
+</a>
+
+<div class="collapse" id="collapse{{field.id}}">
+  <div class="well">
+    {{field.description}}
+  </div>
+</div></td>
+
+<td>{{field.purpose}}</td>
+<td>{{field.identified}}</td>   
+<td>{{field.status}}</td>
+<td>{{field.went_live_on}}</td>
+<td>{{field.code_author}}</td>
+<td>{{field.report_author}}</td>
+<td><a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapse{{field.id}}" aria-expanded="false" aria-controls="collapseExample">
+  Link
+</a>
+
+<div class="collapse" id="collapse{{field.id}}">
+  <div class="well">
+    {{field.link}}
+  </div>
+</div></td>
+       {% endfor %}</tr></ol></tbody> </table> 
+</div>
  </div></div></div>
     </div></div>
 </div></div></body>
-  
+
 
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
   </body>
 </html>{% endblock %}

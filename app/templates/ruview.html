@@ -32,6 +32,7 @@
                     {% if g.user.admin ==1 %} 
                       <li>
                        <a  href="{{ url_for('rureview')}}"><span class="glyphicon glyphicon-file" aria-hidden="true"> Review</a>
+                        <li> <a href="{{ url_for('searchuser')}}">Add User </a> </li>
                     </li> {% endif %}
 
       <ul class="nav navbar-nav navbar-right">
@@ -39,7 +40,7 @@
    <li><a href="{{ url_for('login') }}?next=http://argonaut{{ url_for('allrus') }}">Login</a></li>
   {% else %}
    <li><a href="{{ url_for('logout') }}?next=http://argonaut{{ url_for('allrus') }}">Logout</a></li>
-   <li> <a href="{{ url_for('searchuser')}}">Add User </a> </li>
+  
   {% endif %}
 
   </div>
