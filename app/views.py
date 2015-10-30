@@ -889,17 +889,17 @@ status=form.status.data,
 went_live_on=form.went_live_on.data,
 code_author=form.code_author.data,
 report_author=form.report_author.data)
-        import pdb;pdb.set_trace()
+        # import pdb;pdb.set_trace()
         db.session.add(new_toc)
         db.session.commit()
         #send email to user and admin
         flash("Dashboard Added!")
-        new_toc=models.dashboards.query.filter_by(title=form.title.data).first() 
-        toc_row=models.dashboards.query.filter_by(id=109).first()
+        # new_toc=models.dashboards.query.filter_by().first() 
+        toc_row=models.dashboards.query.filter_by(title=form.title.data).first()
         # toc_row=db.session.query(models.dashboards_questions.question,models.dashboards.title,models.dashboards_questions.id).join(models.dashboards).filter_by(id=new_toc.id).all()
         form=TOCquestions()
-        # return redirect(url_for('tocquestion',form=form,id=id,sub='test',action='test'))
-        return render_template("tocquestions.html",toc_row=toc_row,form=form,id=id)
+        return redirect(url_for('tocquestion',form=form,id=toc_row.id,sub='test',action='test'))
+        # return render_template("tocquestions.html",toc_row=toc_row,form=form,id=id)
         # return render_template("tocquestions.html",form=form,id=new_toc.id)
     else:
         flash_errors(form)
