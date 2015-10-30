@@ -898,6 +898,7 @@ report_author=form.report_author.data)
         toc_row=models.dashboards.query.filter_by(id=109).first()
         # toc_row=db.session.query(models.dashboards_questions.question,models.dashboards.title,models.dashboards_questions.id).join(models.dashboards).filter_by(id=new_toc.id).all()
         form=TOCquestions()
+        # return redirect(url_for('tocquestion',form=form,id=id,sub='test',action='test'))
         return render_template("tocquestions.html",toc_row=toc_row,form=form,id=id)
         # return render_template("tocquestions.html",form=form,id=new_toc.id)
     else:
@@ -915,11 +916,11 @@ def tocquestion(id,action,sub):
             new_q=models.dashboards_questions(question=form.question.data,dashboard_id=id)
             db.session.add(new_q)
             db.session.commit()
-            toc_row=db.session.query(models.dashboards_questions.question,models.dashboards.title).join(models.dashboards).filter_by(id=id).all()
-    if action == 'delete':
+            toc_row=models.dashboards.query.filter_by(id=id).first()
+    elif action == 'delete':
             db.session.delete(models.dashboards_questions.query.filter_by(id=sub).first())
             db.session.commit()
-            toc_row=db.session.query(models.dashboards_questions.question,models.dashboards.title,models.dashboards_questions.id).join(models.dashboards).filter_by(id=id).all()
+            toc_row=models.dashboards.query.filter_by(id=id).first()
     return render_template("tocquestions.html",toc_row=toc_row,form=form,id=id)
 
 @app.route("/toclist",methods=["GET","POST"])

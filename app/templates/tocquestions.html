@@ -110,17 +110,16 @@
 </div></div></div>    
 
 <br></p></div>{{toc_row.title}}
-{% if toc_row.questions.all() != [] %}
 
 {% for item in toc_row.questions %}
          <div class="well">
    <div class="row ">
     <div class="span8">
 
-{{item.question}} <p></span><a class="btn btn-danger" role="button" href="{{ url_for('tocquestion',id=item.id,action='delete',sub=item.id)}}"><span class="glyphicon glyphicon-delete" aria-hidden="true"> Delete</a>  </p>
+{{item.question}} <p></span><a class="btn btn-danger" role="button" href="{{ url_for('tocquestion',id=toc_row.id,action='delete',sub=item.id)}}"><span class="glyphicon glyphicon-delete" aria-hidden="true"> Delete</a>  </p>
 </div></div></div>
 {% endfor %}
-{% endif %}
+
  </div></div></div>
     </div></div>
 </div></div></body>
