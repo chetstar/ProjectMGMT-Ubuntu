@@ -395,8 +395,12 @@ class TOCquestions(Form):
     question = TextField("Question answered by report/dashboard")
     submitTOCquestion=SubmitField('Submit')
 
+class TOCsystems(Form):
+    system_of_care = TextField("system of care")
+    submitTOCsystem=SubmitField('Submit')
+
 class TOCreview(Form):
-    category = RadioField('Type of Review', choices=[('Code','Code'),('Dashboard','Dashboard'),('Drills','Drills')],coerce=unicode)
+    category = RadioField('Type of Review', choices=[('Code','Code'),('Report','Report')],coerce=unicode)
     reviewer = TextField("Reviewer")
     review_date = DateField( "Reviewed on..",validators=(validators.Optional(),))
     submitTOCreview=SubmitField('Submit')

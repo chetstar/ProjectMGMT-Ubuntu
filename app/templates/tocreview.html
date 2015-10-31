@@ -65,9 +65,9 @@
 <div class="container">
   <h2>{{toc_row.title}}</h2>
   <ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#home">Questions</a></li>
+    <li ><a data-toggle="tab" href="#home">Questions</a></li>
     <li><a data-toggle="tab" href="#menu1">Systems</a></li>
-    <li><a data-toggle="tab" href="#menu2">Reviews</a></li>
+    <liclass="active"><a data-toggle="tab" href="#menu2">Reviews</a></li>
 
   </ul>
 
@@ -87,28 +87,12 @@
    <div class="row ">
     <div class="span8">
 
-{{item.question}} <p></span><a class="btn btn-danger" role="button" href="{{ url_for('tocquestion',id=toc_row.id,action='delete_q',sub=item.id)}}"><span class="glyphicon glyphicon-delete" aria-hidden="true"> Delete</a>  </p>
+{{item.question}} <p></span><a class="btn btn-danger" role="button" href="{{ url_for('tocquestion',id=toc_row.id,action='delete',sub=item.id)}}"><span class="glyphicon glyphicon-delete" aria-hidden="true"> Delete</a>  </p>
 </div></div></div>
 {% endfor %}</p>
     </div>
     <div id="menu1" class="tab-pane fade">
-       <h3>{{toc_row.system_of_care}}</h3>
-      <p>{{ wtf.quick_form(form_systems) }}
-
-   {{ form_systems.hidden_tag() }}
-{{ wtf.form_errors(form_systems) }}
-
-
-
-
-{% for item in toc_row.systems %}
-         <div class="well">
-   <div class="row ">
-    <div class="span8">
-
-{{item.system_of_care}} <p></span><a class="btn btn-danger" role="button" href="{{ url_for('tocquestion',id=toc_row.id,action='delete_s',sub=item.id)}}"><span class="glyphicon glyphicon-delete" aria-hidden="true"> Delete</a>  </p>
-</div></div></div>
-{% endfor %}</p>
+       xxxx
     </div>
     <div id="menu2" class="tab-pane fade">
       <h3>Reviews</h3>
@@ -126,7 +110,7 @@
    <div class="row ">
     <div class="span8">
 
-{{item.reviewer}} <p></span><a class="btn btn-danger" role="button" href="{{ url_for('tocquestion',id=toc_row.id,action='delete_r',sub=item.id)}}"><span class="glyphicon glyphicon-delete" aria-hidden="true"> Delete</a>  </p>
+{{item.reviewer}} <p></span><a class="btn btn-danger" role="button" href="{{ url_for('tocquestion',id=toc_row.id,action='delete',sub=item.id)}}"><span class="glyphicon glyphicon-delete" aria-hidden="true"> Delete</a>  </p>
 </div></div></div>
 {% endfor %}</p>
     </div>
