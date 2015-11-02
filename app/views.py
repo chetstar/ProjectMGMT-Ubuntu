@@ -98,6 +98,7 @@ def login():
         if app.config['ENVIRONMENT']=='dev':
             try:
                 print "Authentification Successful" 
+                # import pdb;pdb.set_trace()
                 namedb=models.User.query.filter_by(name=unicode(form.username.data)).first()
                 email=models.User.query.filter_by(name=unicode(form.username.data)).first().email         
                 login_user(user_loader(unicode(email)),remember=form.remember_me.data)
@@ -115,7 +116,7 @@ def login():
                 l = ldap.initialize("ldap://10.129.18.101")
                 l.simple_bind_s("program\%s" % form.username.data,form.password.data)
                 print "Authentification Successful"
-                r=l.search_s('cn=Users,dc=BHCS,dc=Internal',ldap.SCOPE_SUBTREE,'(sAMAccountName=*%s*)' % form.username.data,['mail','objectGUID','displayName'])
+                r=l.search_s('cn=Users,dc=BHCS,dc=Internal',ldap.SCOPE_SUBTREE,'(sAMAccountName=%s)' % form.username.data,['mail','objectGUID','displayName'])
                 email=r[0][1]['mail'][0]   
                 GUID=r[0][1]['objectGUID'][0]   
                 FullName=r[0][1]['displayName'][0] 
