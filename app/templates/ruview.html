@@ -137,6 +137,8 @@ No results
 
             <tr>
 
+{% if field.reporting_unit != None %}
+
 {% if '*' not in field.reporting_unit %}
 <td><a href="{{ url_for('edit_ru', id=field.id,edit=1) }}" class="btn pull-right"><span class="glyphicon glyphicon-pencil"></span> </a> <!-- <a href="{{ url_for('edit_challenge', id=field.id,edit=0) }}" class="btn pull-right"><span class="glyphicon glyphicon-share"></span> copy </a>  -->
 </td>
@@ -163,7 +165,7 @@ No results
 <td>{{field.residential }}</td>
 <td>{{field.in_school }} {{field.school_cds_id}}</td>
 <td>Umbrella: {{field.umbrella_organization }}<br>svcMode:{{field.mode_of_service }} <br>FRC:{{field.financial_responsibility }}<br>City:{{field.city }}<br>Program:{{field.program }}<br> ru2:{{field.predesessor }}</td>
-{% endif %}
+{% endif %}{% endif %}
 
        {% endfor %}</tr></ol></tbody> </table> {% endif %}
 </div>
