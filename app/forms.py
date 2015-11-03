@@ -396,7 +396,25 @@ class TOCquestions(Form):
     submitTOCquestion=SubmitField('Submit')
 
 class TOCsystems(Form):
-    system_of_care = TextField("system of care")
+    system_of_care = RadioField("system of care", choices=[ ('MTU','MTU'),
+                                                        ('MediCal','MediCal'),
+                                                        ('Network Office','Network Office'),
+                                                        ('ASOC','ASOC'),
+                                                        ('Productivity','Productivity'),
+                                                        ('System Wide','System Wide'),
+                                                        ('Pharmacy','Pharmacy'),
+                                                        ('SSI Advocacy','SSI Advocacy'),
+                                                        ('Level 2','Level 2'),
+                                                        ('AOD','AOD'),
+                                                        ('sdafasd','sdafasd'),
+                                                        ('Level 1','Level 1'),
+                                                        ('TB','TB'),
+                                                        ('CSOC','CSOC'),
+                                                        ('ASOC','ASOC'),
+                                                        ('OASOC','OASOC'),
+                                                        ('SUD','SUD'),
+                                                        ('TAYSOC','TAYSOC'),])
+   
     submitTOCsystem=SubmitField('Submit')
 
 class TOCreview(Form):
