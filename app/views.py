@@ -385,12 +385,14 @@ def allrus():
                             rulist= models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data) == None).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")).all()        
         except:
             rulist=['no results']
-            # import pdb;pdb.set_trace()
     else:
         rulist= models.staging_providers.query.filter(models.staging_providers.level_3_classic.
                     op("IS NOT")(True)).order_by(desc(models.staging_providers.last_change_stamp)).limit(100).all()
     # rulist= models.staging_providers.query.filter( models.staging_providers.level_3_classic != 1).all()
     # sorted(q_sum, key=lambda tup: tup[7])
+    # import pdb;pdb.set_trace()
+    if rulist==[]:
+        rulist=['no results']
     return render_template("ruview.html",rulist=rulist,formfilter=formfilter)
 
 @app.route("/rureview",methods=["GET","POST"])
