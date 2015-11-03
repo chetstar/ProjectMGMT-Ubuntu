@@ -96,7 +96,8 @@
             <tr>
 
 
-<td><a href="{{ url_for('edit_toc', id=field.id) }}" class="btn pull-right"><span class="glyphicon glyphicon-pencil"></span> </a> <!-- <a href="{{ url_for('edit_challenge', id=field.id,edit=0) }}" class="btn pull-right"><span class="glyphicon glyphicon-share"></span> copy </a>  -->
+<td>
+ {% if g.user.admin ==1 %} <a href="{{ url_for('edit_toc', id=field.id) }}" class="btn pull-right"><span class="glyphicon glyphicon-pencil"></span> </a> <!-- <a href="{{ url_for('edit_challenge', id=field.id,edit=0) }}" class="btn pull-right"><span class="glyphicon glyphicon-share"></span> copy </a>  -->{% endif %}
 </td>
 <td>{{field.title}}</td>
 <td>{{field.agency}}</td>

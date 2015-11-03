@@ -57,8 +57,9 @@
 {{ super()}}
 
    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  
 </head>
 <body>
 
@@ -67,6 +68,7 @@
 <div class="container">
   <h2>{{toc_row.title}}</h2>
   <ul class="nav nav-tabs">
+  
   {% if action ==  'delete_s' or form_systems.submitTOCsystem.data %}
     <li><a data-toggle="tab" href="#home">Questions</a></li>
     <li  class="active"><a data-toggle="tab" href="#menu1">Systems</a></li>
@@ -75,7 +77,8 @@
 
   <div class="tab-content">
     <div id="home" class="tab-pane fade">
-      <h3>{{toc_row.description}}</h3>
+    
+      <p>{{toc_row.description}}</p>
       <p>{{ wtf.quick_form(form) }}
 
    {{ form.hidden_tag() }}
@@ -94,6 +97,7 @@
 {% endfor %}</p>
     </div>
     <div id="menu1" class="tab-pane  fade in active">
+ <p>{{toc_row.description}}</p>
        <h3>{{toc_row.system_of_care}}</h3>
       <p>{{ wtf.quick_form(form_systems) }}
 
@@ -113,8 +117,8 @@
 {% endfor %}</p>
     </div>
     <div id="menu2" class="tab-pane fade">
-      <h3>Reviews</h3>
-     <h3>{{toc_row.description}}</h3>
+     
+     <p>{{toc_row.description}}</p>
       <p>{{ wtf.quick_form(form_review) }}
 
    {{ form_review.hidden_tag() }}
@@ -164,7 +168,8 @@
 
   <div class="tab-content">
     <div id="home" class="tab-pane fade">
-      <h3>{{toc_row.description}}</h3>
+    
+      <p>{{toc_row.description}}</p>
       <p>{{ wtf.quick_form(form) }}
 
    {{ form.hidden_tag() }}
@@ -183,7 +188,7 @@
 {% endfor %}</p>
     </div>
     <div id="menu1" class="tab-pane fade">
-       <h3>{{toc_row.system_of_care}}</h3>
+      <p>{{toc_row.description}}</p>
       <p>{{ wtf.quick_form(form_systems) }}
 
    {{ form_systems.hidden_tag() }}
@@ -202,14 +207,11 @@
 {% endfor %}</p>
     </div>
     <div id="menu2" class="tab-pane fade in active">
-      <h3>Reviews</h3>
-     <h3>{{toc_row.description}}</h3>
+      
+     <p>{{toc_row.description}}</p>
       <p>{{ wtf.quick_form(form_review) }}
 
    {{ form_review.hidden_tag() }}
-{{ wtf.form_errors(form_review) }}
-
-
 
 
 {% for item in toc_row.reviews %}
@@ -253,7 +255,8 @@
 
   <div class="tab-content">
     <div id="home" class="tab-pane fade in active">
-      <h3>{{toc_row.description}}</h3>
+      
+      <p>{{toc_row.description}}</p>
       <p>{{ wtf.quick_form(form) }}
 
    {{ form.hidden_tag() }}
@@ -272,7 +275,7 @@
 {% endfor %}</p>
     </div>
     <div id="menu1" class="tab-pane fade">
-       <h3>{{toc_row.system_of_care}}</h3>
+       <p>{{toc_row.description}}</p>
       <p>{{ wtf.quick_form(form_systems) }}
 
    {{ form_systems.hidden_tag() }}
@@ -291,8 +294,8 @@
 {% endfor %}</p>
     </div>
     <div id="menu2" class="tab-pane fade">
-      <h3>Reviews</h3>
-     <h3>{{toc_row.description}}</h3>
+      
+     <p>{{toc_row.description}}</p>
       <p>{{ wtf.quick_form(form_review) }}
 
    {{ form_review.hidden_tag() }}

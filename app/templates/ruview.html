@@ -130,7 +130,9 @@
          </thead> 
 <tbody> 
   <ol type="1">
-
+{% if rulist==['no results'] %}
+No results
+{% else %}
           {% for field in rulist %}
 
             <tr>
@@ -163,7 +165,7 @@
 <td>Umbrella: {{field.umbrella_organization }}<br>svcMode:{{field.mode_of_service }} <br>FRC:{{field.financial_responsibility }}<br>City:{{field.city }}<br>Program:{{field.program }}<br> ru2:{{field.predesessor }}</td>
 {% endif %}
 
-       {% endfor %}</tr></ol></tbody> </table> 
+       {% endfor %}</tr></ol></tbody> </table> {% endif %}
 </div>
  </div></div></div>
     </div></div>
