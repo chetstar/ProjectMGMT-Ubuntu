@@ -87,7 +87,8 @@
          <div class="well"> 
    <div class="row ">
     <div class="span8">
-
+   {{ form.hidden_tag() }}
+{{ wtf.form_errors(form) }}
 {{ wtf.quick_form(form) }}
 
     </form>

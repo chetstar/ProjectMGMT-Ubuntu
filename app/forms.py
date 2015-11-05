@@ -274,10 +274,10 @@ class rutablefilter(Form):
 ('tbs','tbs'),
 ('umbrella_organization','umbrella_organization')],default="None") 
     submit=SubmitField('Submit')
-   
+
 class rutable(Form):
     # Tags = QuerySelectField(u'Category', query_factory=getTags, get_label='Category',default="Unassigned")
-    ab3632        = BooleanField('ab3632')  
+    ab3632        = BooleanField('ab3632') 
     agency        =TextField('agency')  
     calworks        = BooleanField('calworks')  
     school_cds_id       =TextField('school_cds_id')  
@@ -338,11 +338,11 @@ class rutable(Form):
     # predesessor        =TextField('predesessor')   
     # city        =TextField('city')  
     # safe_passages        = BooleanField('safe_passages')
-    school        = BooleanField('school')   
+    school        = BooleanField('school')    
     # start_date        = DateTimeField('start_date')  
     # mode_of_service        =TextField('mode_of_service')   
-    svctype        =TextField('svctype')  
-    svctype3        =TextField('svctype3')   
+    svctype        =TextField('svctype',)   
+    svctype3        =TextField('svctype3')    
     tay        = BooleanField('tay')   
     tbs        = BooleanField('tbs')  
     # umbrella_organization        = IntegerField('umbrella_organization')  
