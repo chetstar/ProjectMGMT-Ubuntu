@@ -119,10 +119,17 @@
     <div id="menu2" class="tab-pane fade">
      
      <p>{{toc_row.description}}</p>
-      <p>{{ wtf.quick_form(form_review) }}
-
+<form method="post" class="form" role="form">
    {{ form_review.hidden_tag() }}
 {{ wtf.form_errors(form_review) }}
+Reviewed by: {{name}}
+{{ wtf.form_field(form_review.category) }} 
+{{ wtf.form_field(form_review.review_date) }} 
+{{ wtf.form_field(form_review.submitTOCreview) }}  
+</form>
+    
+
+
 
 
 
@@ -132,7 +139,7 @@
    <div class="row ">
     <div class="span8">
 
-{{item.reviewer}} <p></span><a class="btn btn-danger" role="button" href="{{ url_for('tocquestion',id=toc_row.id,action='delete_r',sub=item.id)}}"><span class="glyphicon glyphicon-delete" aria-hidden="true"> Delete</a>  </p>
+{{item.reviewer}} : {{item.category}} reviewed on {{item.review_date}} <p></span><a class="btn btn-danger" role="button" href="{{ url_for('tocquestion',id=toc_row.id,action='delete_r',sub=item.id)}}"><span class="glyphicon glyphicon-delete" aria-hidden="true"> Delete</a>  </p>
 </div></div></div>
 {% endfor %}</p>
     </div>
@@ -207,19 +214,23 @@
 {% endfor %}</p>
     </div>
     <div id="menu2" class="tab-pane fade in active">
-      
+      <form method="post" class="form" role="form">
      <p>{{toc_row.description}}</p>
-      <p>{{ wtf.quick_form(form_review) }}
+      Reviewed by: {{name}}
+{{ wtf.form_field(form_review.category) }} 
+{{ wtf.form_field(form_review.review_date) }} 
+{{ wtf.form_field(form_review.submitTOCreview) }}
 
    {{ form_review.hidden_tag() }}
 
 
 {% for item in toc_row.reviews %}
+</form>
          <div class="well">
    <div class="row ">
     <div class="span8">
 
-{{item.reviewer}} <p></span><a class="btn btn-danger" role="button" href="{{ url_for('tocquestion',id=toc_row.id,action='delete_r',sub=item.id)}}"><span class="glyphicon glyphicon-delete" aria-hidden="true"> Delete</a>  </p>
+{{item.reviewer}} : {{item.category}} reviewed on {{item.review_date}}  <p></span><a class="btn btn-danger" role="button" href="{{ url_for('tocquestion',id=toc_row.id,action='delete_r',sub=item.id)}}"><span class="glyphicon glyphicon-delete" aria-hidden="true"> Delete</a>  </p>
 </div></div></div>
 {% endfor %}</p>
     </div>
@@ -294,13 +305,16 @@
 {% endfor %}</p>
     </div>
     <div id="menu2" class="tab-pane fade">
-      
+      <form method="post" class="form" role="form">
      <p>{{toc_row.description}}</p>
-      <p>{{ wtf.quick_form(form_review) }}
+      <p>Reviewed by: {{name}}
+{{ wtf.form_field(form_review.category) }} 
+{{ wtf.form_field(form_review.review_date) }} 
+{{ wtf.form_field(form_review.submitTOCreview) }}
 
    {{ form_review.hidden_tag() }}
 {{ wtf.form_errors(form_review) }}
-
+</p></form>
 
 
 
@@ -309,7 +323,7 @@
    <div class="row ">
     <div class="span8">
 
-{{item.reviewer}} <p></span><a class="btn btn-danger" role="button" href="{{ url_for('tocquestion',id=toc_row.id,action='delete_r',sub=item.id)}}"><span class="glyphicon glyphicon-delete" aria-hidden="true"> Delete</a>  </p>
+{{item.reviewer}} : {{item.category}} reviewed on {{item.review_date}}  <p></span><a class="btn btn-danger" role="button" href="{{ url_for('tocquestion',id=toc_row.id,action='delete_r',sub=item.id)}}"><span class="glyphicon glyphicon-delete" aria-hidden="true"> Delete</a>  </p>
 </div></div></div>
 {% endfor %}</p>
     </div>

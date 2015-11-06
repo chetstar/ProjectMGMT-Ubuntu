@@ -928,8 +928,9 @@ def tocquestion(id,action,sub):
             db.session.commit()
             toc_row=models.dashboards.query.filter_by(id=id).first()
         if form_review.submitTOCreview.data:
+            # import pdb;pdb.set_trace()
             new_q=models.dashboards_reviews(category=form_review.category.data,
-                                            reviewer=form_review.reviewer.data,
+                                            reviewer=g.user.name,
                                             review_date=form_review.review_date.data,
                                             dashboard_id=id)
             db.session.add(new_q)
@@ -953,7 +954,7 @@ def tocquestion(id,action,sub):
             db.session.delete(models.dashboards_systems.query.filter_by(id=sub).first())
             db.session.commit()
             toc_row=models.dashboards.query.filter_by(id=id).first()
-    return render_template("tocquestions.html",toc_row=toc_row,form=form,id=id,form_review=form_review,form_systems=form_systems,action=action)
+    return render_template("tocquestions.html",toc_row=toc_row,form=form,id=id,form_review=form_review,form_systems=form_systems,action=action,name=g.user.name)
 
 @app.route("/toclist",methods=["GET","POST"])
 @logged_in
