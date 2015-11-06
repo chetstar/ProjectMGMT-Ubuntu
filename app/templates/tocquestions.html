@@ -68,7 +68,7 @@
 <div class="container">
   <h2>{{toc_row.title}}</h2>
   <ul class="nav nav-tabs">
-  
+
   {% if action ==  'delete_s' or form_systems.submitTOCsystem.data %}
     <li><a data-toggle="tab" href="#home">Questions</a></li>
     <li  class="active"><a data-toggle="tab" href="#menu1">Systems</a></li>
@@ -340,56 +340,6 @@
 {% endif %}
 
 
-
-       <!--   <div class="row ">
-
-     <div class="span2">  </div> 
-    <div class="span10">
-
-         <div class="well">
-   <div class="row ">
-    <div class="span8"> -->
-
-  <!-- <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
-    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
-    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
-    <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
-  </ul>
-
-
-  <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="home">.d..</div>
-    <div role="tabpanel" class="tab-pane" id="profile">.ss..</div>
-    <div role="tabpanel" class="tab-pane" id="messages">.ff..</div>
-    <div role="tabpanel" class="tab-pane" id="settings">..vv.</div>
-  </div> -->
-
-<!-- </div>
- <div class="col-md-11 ">
-  <div class="col-md-1 "></div>
-  <div class="col-md-10 ">
-
-{{ wtf.quick_form(form) }}
-
-   {{ form.hidden_tag() }}
-{{ wtf.form_errors(form) }}
-</div></div></div>    
-
-<br></p></div>{{toc_row.title}}
-
-{% for item in toc_row.questions %}
-         <div class="well">
-   <div class="row ">
-    <div class="span8">
-
-{{item.question}} <p></span><a class="btn btn-danger" role="button" href="{{ url_for('tocquestion',id=toc_row.id,action='delete',sub=item.id)}}"><span class="glyphicon glyphicon-delete" aria-hidden="true"> Delete</a>  </p>
-</div></div></div>
-{% endfor %}
-
- </div></div></div>
-    </div></div>
-</div></div></body> -->
 
 
 

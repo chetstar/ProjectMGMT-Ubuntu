@@ -2,6 +2,25 @@
 {% extends "index.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
+  {% block head %}
+  {{ super()}}
+
+    <!--  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">-->
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/datepicker.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/datepicker3.css') }}">
+<script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<!-- <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+ -->  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <!-- <link rel="shortcut icon" href="{{ url_for('static', filename='ico/favicon.ico') }}"> -->
+
+
+    {% endblock %}
 {% block navbar %}
 
 
@@ -87,9 +106,157 @@
          <div class="well"> 
    <div class="row ">
     <div class="span8">
-   {{ form.hidden_tag() }}
+
 {{ wtf.form_errors(form) }}
-{{ wtf.quick_form(form) }}
+<form method="post" class="form" role="form">
+   {{ form.hidden_tag() }}
+    
+    
+<div class="form-group "><label class="control-label" for="title">Record the name of the dashboard or report</label>
+        <input class="form-control" id="title" name="title" type="text" value="">
+  </div>
+
+
+    
+
+  
+
+
+    <div class="radio">
+        <label>
+          <input id="agency-0" name="agency" type="radio" value="BHCS"> BHCS
+        </label>
+      </div>
+    <div class="radio">
+        <label>
+          <input id="agency-1" name="agency" type="radio" value="Public Health"> Public Health
+        </label>
+      </div>
+    <div class="radio">
+        <label>
+          <input id="agency-2" name="agency" type="radio" value="HCSA"> HCSA
+        </label>
+      </div>
+    
+  
+
+
+
+
+    
+<div class="form-group "><label class="control-label" for="description">Describe the dashboard or report.</label>
+        <textarea class="form-control" id="description" name="description"></textarea>
+  </div>
+
+
+    
+
+  
+
+
+    <div class="radio">
+        <label>
+          <input id="category-0" name="category" type="radio" value="Dashboard"> Dashboard or
+        </label>
+      </div>
+    <div class="radio">
+        <label>
+          <input id="category-1" name="category" type="radio" value="Report"> Report
+        </label>
+      </div>
+    
+  
+
+
+
+
+    
+<div class="form-group "><label class="control-label" for="link">Copy and paste the dashboard or report link from Context!</label>
+        <textarea class="form-control" id="link" name="link"></textarea>
+  </div>
+
+
+    
+
+  
+
+
+    <div class="radio">
+        <label>
+          <input id="identified-0" name="identified" type="radio" value="Identified"> Identified
+        </label>
+      </div>
+    <div class="radio">
+        <label>
+          <input id="identified-1" name="identified" type="radio" value="De-Identified"> De-Identified
+        </label>
+      </div>
+    
+  
+
+
+
+
+    
+<div class="form-group "><label class="control-label" for="purpose">Describe the purpose of the dashboard or report.</label>
+        <textarea class="form-control" id="purpose" name="purpose"></textarea>
+  </div>
+
+
+    
+
+  
+
+
+    <div class="radio">
+        <label>
+          <input id="status-0" name="status" type="radio" value="1"> This Dashboard is ready for Deployment
+        </label>
+      </div>
+    <div class="radio">
+        <label>
+          <input id="status-1" name="status" type="radio" value=""> Nope
+        </label>
+      </div>
+
+
+</div>   <div class="row ">
+
+     <div class="span2">  </div> 
+    <div class="span10">
+    
+
+
+<label class="control-label" for="went_live_on">Record the date on which a dashboard or report was born  </label>
+     <input   data-provide="datepicker" data-date-format="mm/dd/yyyy"  id="went_live_on" name="went_live_on" type="text" >
+  </div>
+</div></div>
+
+    
+<div class="form-group "><label class="control-label" for="code_author">Who was/were the author(s) of the code?</label>
+        <textarea class="form-control" id="code_author" name="code_author"></textarea>
+  </div>
+
+
+    
+<div class="form-group "><label class="control-label" for="report_author">Who was/were the author(s) of the dashboard or report?</label>
+        <textarea class="form-control" id="report_author" name="report_author"></textarea>
+  </div>
+
+
+    
+
+  
+
+
+    <input class="btn btn-default" id="submitTOC" name="submitTOC" type="submit" value="Submit">
+  
+
+
+
+
+
+</form>
 
     </form>
 
@@ -104,3 +271,20 @@
 </div>
 {% endblock %}
 
+ {% block scripts %}
+
+  <div id="footer">
+        <div class="container">
+            <div class="row ">
+                &copy; 2014 AC Business Intelligence & Decision Support | All Right Reserved
+
+            </div>
+            
+        </div>
+       
+    </div> 
+{{ super() }}
+
+           <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-datepicker.js') }}"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+{% endblock %}

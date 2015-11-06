@@ -92,10 +92,44 @@
   <div class="col-md-1 "></div>
   <div class="col-md-10 ">
 
-{{ wtf.quick_form(form) }}
+<form method="post" class="form" role="form">
+
+    
+
+
 
    {{ form.hidden_tag() }}
 {{ wtf.form_errors(form) }}
+    
+
+  
+{{ wtf.form_field(form.title) }}{{ wtf.form_field(form.category) }}
+{{ wtf.form_field(form.description) }}
+{{ wtf.form_field(form.agency) }}
+
+
+
+{{ wtf.form_field(form.link) }}
+{{ wtf.form_field(form.identified) }}
+{{ wtf.form_field(form.purpose) }}
+
+{{ wtf.form_field(form.status) }}
+<!-- {{ wtf.form_field(form.went_live_on) }} -->
+{{ wtf.form_field(form.code_author) }}
+{{ wtf.form_field(form.report_author) }}
+
+    
+<div class="form-group "><label class="control-label" for="went_live_on">Record the date on which a dashboard or report was born  </label>
+   <input data-provide="datepicker" data-date-format="mm/dd/yyyy" id="went_live_on" name="went_live_on" type="text" value="{{ form.went_live_on.data }}">
+  </div>
+
+{{ wtf.form_field(form.submitTOC) }}
+
+
+
+
+</form>
+
 </div></div></div>    
 {% endblock %}
 {% block scripts %}

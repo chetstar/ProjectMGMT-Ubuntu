@@ -883,6 +883,7 @@ def tocform():
     form = TOC()
     # form.staffback.data=models.Staff.query.filter_by(staff="Unassigned").first()
     if form.validate_on_submit():
+        import pdb;pdb.set_trace()
         new_toc=models.dashboards(title=form.title.data,
 agency=form.agency.data,
 category=form.category.data,

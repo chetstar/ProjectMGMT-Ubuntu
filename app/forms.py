@@ -376,6 +376,9 @@ class cans(Form):
 #     FinalReportReviewDate    = DateField("On what date was the dashboard or report approved?",  format="%m/%d/%Y",)  
 #     ReportAuthor   =TextAreaField("Who was/were the author(s) of the dashboard or report?")
 #     ReportReviewer    = IntegerField("Who was the final reviewer of the dashboard or report?")     
+
+
+
 class TOC(Form):
     title= TextField("Record the name of the dashboard or report")
     agency= RadioField('What Agency is included in the report', choices=[('BHCS','BHCS'),('Public Health','Public Health'),('HCSA','HCSA')],coerce=unicode)
@@ -386,7 +389,7 @@ class TOC(Form):
     purpose=TextAreaField("Describe the purpose of the dashboard or report.")
     # audience=TextAreaField("Who is the target audience for the dashboard or report?")
     status= RadioField('Is the dashboard or report ready for deployment?', choices=[('1','This Dashboard is ready for Deployment'),('','Nope')],coerce=unicode)
-    went_live_on = DateField( "Record the date on which a dashboard or report was born",validators=(validators.Optional(),))
+    went_live_on = DateField( "Record the date on which a dashboard or report was born  ",format='%m/%d/%Y',validators=(validators.Optional(),))
     code_author =TextAreaField("Who was/were the author(s) of the code?")
     report_author =TextAreaField("Who was/were the author(s) of the dashboard or report?")
     submitTOC=SubmitField('Submit')
