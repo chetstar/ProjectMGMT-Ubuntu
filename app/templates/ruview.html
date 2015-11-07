@@ -104,10 +104,11 @@
  <th> </th>
 <th>  agency </th>
 <th>  RU  </th>
-<th>  psmasktext </th>
-<th>  dbservicemodality </th>
+<th>  psmask </th>
+<th>  modality </th>
 <th>  start </th>
 <th>  end </th>
+<th> Stamp</th>
 <th>  ab3632 </th>
 <th>  calworks </th>
 <th>  cesdc </th>
@@ -115,16 +116,16 @@
 <th>  day_tx </th>
 <th>  cans </th>
 <th>  kidsru </th>
-<th>  level_2 </th>
-<th>  level_3_classic </th>
+<th>  level2 </th>
+<th>  level3_c </th>
 <th>  mhsa </th>
-<th>  older_adult </th>
-<th>  out_of_county </th>
+<th>  oldA </th>
+<th>  outcty </th>
 <th>  tay </th>
 <th>  tbs </th>
-<th>  residential </th>
+<th>  res </th>
 <th>  school </th>
-<th> Insyst </th>
+<!-- <th> Insyst </th> -->
 
        </tr></strong></h3>
          </thead> 
@@ -148,6 +149,18 @@ No results
 <td>{{field.dbservicemodality }}</td>
 <td>{{field.start_date }}</td>
 <td>{{field.end_date }}</td>
+
+<!-- <td><a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapsex{{field.id}}" aria-expanded="false" aria-controls="collapseExample">
+  
+</a>
+
+<div class="collapse" id="collapsex{{field.id}}">
+  <div class="well">
+   {{field.last_change_stamp}}
+  </div>
+</div></td> -->
+<td>{{field.provider_master_stamp.strftime('%Y.%m.%d')}}</td>
+</div></td>
 <td>{{field.ab3632 }}</td>   
 <td>{{field.calworks }}</td>
 <td>{{field.cesdc }}</td>
@@ -164,7 +177,7 @@ No results
 <td>{{field.tbs }}</td>
 <td>{{field.residential }}</td>
 <td>{{field.school }} {{field.school_cds_id}}</td>
-<td>Umbrella: {{field.umbrella_organization }}<br>svcMode:{{field.mode_of_service }} <br>FRC:{{field.financial_responsibility }}<br>City:{{field.city }}<br>Program:{{field.program }}<br> ru2:{{field.predesessor }}</td>
+<!-- <td>Umbrella: {{field.umbrella_organization }}<br>svcMode:{{field.mode_of_service }} <br>FRC:{{field.financial_responsibility }}<br>City:{{field.city }}<br>Program:{{field.program }}<br> ru2:{{field.predesessor }}</td> -->
 {% endif %}{% endif %}
 
        {% endfor %}</tr></ol></tbody> </table> {% endif %}

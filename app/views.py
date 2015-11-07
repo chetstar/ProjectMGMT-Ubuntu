@@ -387,7 +387,7 @@ def allrus():
             rulist=['no results']
     else:
         rulist= models.staging_providers.query.filter(models.staging_providers.level_3_classic.
-                    op("IS NOT")(True)).order_by(desc(models.staging_providers.last_change_stamp)).limit(150).all()
+                    op("IS NOT")(True)).order_by(desc(models.staging_providers.last_change_stamp)).limit(200).all()
     # rulist= models.staging_providers.query.filter( models.staging_providers.level_3_classic != 1).all()
     # sorted(q_sum, key=lambda tup: tup[7])
     # import pdb;pdb.set_trace()
