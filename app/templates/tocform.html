@@ -2,25 +2,7 @@
 {% extends "index.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-  {% block head %}
-  {{ super()}}
 
-    <!--  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">-->
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/datepicker.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/datepicker3.css') }}">
-<script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
-
-
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-<!-- <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
- -->  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-    <!-- <link rel="shortcut icon" href="{{ url_for('static', filename='ico/favicon.ico') }}"> -->
-
-
-    {% endblock %}
 {% block navbar %}
 
 
@@ -227,8 +209,8 @@
     
 
 
-<label class="control-label" for="went_live_on">Record the date on which a dashboard or report was born  </label>
-     <input   data-provide="datepicker" data-date-format="mm/dd/yyyy"  id="went_live_on" name="went_live_on" type="text" >
+<div class="form-group "><label class="control-label" for="went_live_on">Record the date on which a dashboard or report was born. Needs double click-bug</label>
+     <input   data-provide="datepicker" data-date-format="mm/dd/yyyy"  id="went_live_on" name="went_live_on" type="text" >double click date
   </div>
 </div></div>
 
@@ -246,17 +228,9 @@
 
     
 
-  
-
-
     <input class="btn btn-default" id="submitTOC" name="submitTOC" type="submit" value="Submit">
   
 
-
-
-
-
-</form>
 
     </form>
 
@@ -273,18 +247,9 @@
 
  {% block scripts %}
 
-  <div id="footer">
-        <div class="container">
-            <div class="row ">
-                &copy; 2014 AC Business Intelligence & Decision Support | All Right Reserved
-
-            </div>
-            
-        </div>
-       
-    </div> 
 {{ super() }}
 
            <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-datepicker.js') }}"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-{% endblock %}
+               
+                <script type="text/javascript" src="{{ url_for('static', filename='js/html5shiv.js') }}"></script>
+  {% endblock %}
