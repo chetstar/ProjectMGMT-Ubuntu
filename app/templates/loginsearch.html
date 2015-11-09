@@ -40,9 +40,9 @@
             <a href="{{ url_for('adduser', name=key,emailx=value ,r=r) }}"><span class="glyphicon glyphicon-plus"></span> </a> 
   </div></div></div>
       {% endfor %}
-<br>
+<br>{% if user %}
 </div><p> After you add a user <a href="http://argonaut/admin/userview/">add Permissions</a> </p>
-  
+  {% endif %}
  </div>    
   
 

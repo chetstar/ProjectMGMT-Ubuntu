@@ -5,7 +5,7 @@ from wtforms import TextField, BooleanField, SubmitField, DateField,TextAreaFiel
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 import datetime
 from wtforms.fields.html5 import DateField
-from app.models import getStaff, getStatus
+from app.models import getStaff, getStatus,getAgency
 from flask.ext.uploads import UploadSet, IMAGES
 from flask_wtf import Form
 from flask_wtf.file import FileField, FileAllowed, FileRequired
@@ -278,7 +278,9 @@ class rutablefilter(Form):
 class rutable(Form):
     # Tags = QuerySelectField(u'Category', query_factory=getTags, get_label='Category',default="Unassigned")
     ab3632        = BooleanField('ab3632') 
-    agency        =TextField('agency')  
+    # agency        =TextField('agency')
+    agency = SelectField(u"Agency",coerce=unicode, )
+    #QuerySelectField(u'agency', query_factory=getAgency, get_label='agency',default="Unassigned")  
     calworks        = BooleanField('calworks')  
     school_cds_id       =TextField('school_cds_id')  
     cesdc        = BooleanField('cesdc')  

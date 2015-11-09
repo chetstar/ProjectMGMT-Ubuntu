@@ -313,32 +313,6 @@ class providers(db.Model):
 #     reviewEdit  = db.Column(db.Boolean())   
 #     rutablelink = db.relationship('rutable', lazy='dynamic', backref='ruback')
 
-# class TOC(db.Model):
-#     __bind_key__ = 'ubuntuweb'
-    # Agency=db.Column(db.String(300), index=True)
-    # kill =db.Column(db.Integer)
-    # DashboardQuestion = db.Column(db.Integer)
-    # DashboardReportSort = db.Column(db.Integer)
-    # DorR =db.Column(db.String(300), index=True)
-    # DashboardReport =db.Column(db.String(300), index=True)
-    # SystemofCare =db.Column(db.String(300), index=True)
-    # ServiceArea =db.Column(db.String(300), index=True)
-    # Description =db.Column(db.String(300), index=True)
-    # Purpose =db.Column(db.String(300), index=True)
-    # iddeid =db.Column(db.String(300), index=True)
-    # TargetedAudience =db.Column(db.String(300), index=True)
-    # Supportswhichmeeting = db.Column(db.Integer)
-    # Ready = db.Column(db.Integer)
-    # Link =db.Column(db.String(300), index=True)
-    # KeyQuestions =db.Column(db.String(300), index=True)
-    # BornOnDate   = db.Column(db.Date)   
-    # FinalCodeReviewDate   = db.Column(db.Date)    
-    # CodeAuthor     =db.Column(db.String(300), index=True)  
-    # CodeReviewer     =db.Column(db.String(300), index=True) 
-    # FinalReportReviewDate    =db.Column(db.Date)     
-    # ReportAuthor     =db.Column(db.String(300), index=True)  
-    # ReportReviewer    =db.Column(db.Integer)     
-    # id = db.Column(db.Integer, primary_key=True)
 
 class User(db.Model):
     __tablename__ = 'user'
@@ -499,6 +473,10 @@ def getStaff():
 
 def getStatus():
     u = Status.query
+    return u
+
+def getAgency():
+    u = staging_providers.query
     return u
 
 

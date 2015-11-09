@@ -285,7 +285,10 @@ def edit_ru(id,edit):
     if g.user.form_access=='all':
         form = rutable()
         form = rutable(obj=ru)
-        form.populate_obj(ru)        
+        form.populate_obj(ru) 
+        AT= list(set([h.agency for h in models.staging_providers.query.all()]))
+        AT.append('')
+        form.agency.choices=zip(sorted(AT),sorted(AT))       
     elif g.user.form_access=='cans':
         form = cans()
         form = cans(obj=ru)
@@ -312,10 +315,14 @@ def edit_ru(id,edit):
 @logged_in
 def rusform():
     form = rutable()
+    AT= list(set([h.agency for h in models.staging_providers.query.all()]))
+    AT.append('')
+    form.agency.choices=zip(sorted(AT),sorted(AT))
     # RB= list(set([re.split(',',h.Category for h in models.staging_providers.query.all()]))
     # RB.append('No Filter')
     # form.Category.data=RB
     # form.staffback.data=models.Staff.query.filter_by(staff="Unassigned").first()
+    # import pdb;pdb.set_trace()
     if form.validate_on_submit():
         print 'submit'
         # p=models.ru(email=g.user.email,username=g.user.name,GraphLink=filename,LinkEmanio=form.LinkEmanio.data,
@@ -327,10 +334,10 @@ def rusform():
         db.session.commit()
         #send email to user and admin
         flash("Changes saved")
-        if form.submitSave.data:        
-            return redirect(url_for('rusform'))
-        else:
-            return redirect(url_for('allrus'))
+        # if form.submitSave.data:        
+        #     return redirect(url_for('rusform'))
+        # else:
+        return redirect(url_for('allrus'))
     else:
         flash_errors(form)
         return render_template("rusform.html",email=g.user.email,name=g.user.name,form=form)
@@ -480,7 +487,7 @@ def searchuser():
 
         # import uuid
         # guid = uuid.UUID(bytes=GUID)
-    return render_template("loginsearch.html", form=form,r=r)
+    return render_template("loginsearch.html", form=form,r=r,user=g.user.admin)
 
 @app.route("/adduser/<name>/<emailx>/<r>", methods=["GET", "POST"])
 def adduser(name,emailx,r):
@@ -512,7 +519,7 @@ def adduser(name,emailx,r):
         flash("User already exists.")
     import ast
     r=ast.literal_eval(r)
-    return render_template("loginsearch.html", form=form,r=r)
+    return render_template("loginsearch.html", form=form,r=r,user=g.user.admin)
 
 
 #########################
@@ -527,7 +534,7 @@ def myrequest():
 def view_request(id):
     test=models.Request.query.filter_by(id=int(id)).first() 
     form=RequestData(obj=test)
-    test
+    # test
     if form.submitRequest.data:
         form.agency.data=','.join(form.agency.data)
         for field in requestvars:
