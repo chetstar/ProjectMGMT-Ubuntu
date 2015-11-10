@@ -420,9 +420,9 @@ class TOCsystems(Form):
     submitTOCsystem=SubmitField('Submit')
 
 class TOCreview(Form):
-    category = RadioField('Type of Review', choices=[('Code','Code'),('Report','Report')],coerce=unicode)
+    category = RadioField('Type of Review', choices=[('Code','Code'),('Report','Report')],coerce=unicode,validators=[validators.Required()])
     reviewer = TextField("Reviewer")
-    review_date = DateField( "Reviewed on..",validators=(validators.Optional(),))
+    review_date = DateField( "Reviewed on..",validators=[validators.Required()])
     submitTOCreview=SubmitField('Submit')
 
 
