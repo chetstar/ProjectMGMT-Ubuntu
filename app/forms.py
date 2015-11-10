@@ -335,7 +335,7 @@ class rutable(Form):
 ("Other Children's Service"," Other Children's Service"),
         ]     
         )
-    residential        = BooleanField('residential')  
+    residential= BooleanField('residential')  
     # reporting_unit        =TextField('ru') 
     # predesessor        =TextField('predesessor')   
     # city        =TextField('city')  
