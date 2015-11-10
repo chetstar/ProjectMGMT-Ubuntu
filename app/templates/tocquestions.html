@@ -79,7 +79,7 @@
     <div id="home" class="tab-pane fade">
     
       <p>{{toc_row.description}}</p>
-      <p>{{ wtf.quick_form(form) }}
+      <p>{{ wtf.quick_form(form) }}<br>
 
    {{ form.hidden_tag() }}
 {{ wtf.form_errors(form) }}
@@ -99,7 +99,7 @@
     <div id="menu1" class="tab-pane  fade in active">
  <p>{{toc_row.description}}</p>
        <h3>{{toc_row.system_of_care}}</h3>
-      <p>{{ wtf.quick_form(form_systems) }}
+      <p>{{ wtf.quick_form(form_systems) }}<br>
 
    {{ form_systems.hidden_tag() }}
 {{ wtf.form_errors(form_systems) }}
@@ -177,7 +177,7 @@ Reviewed by: {{name}}
     <div id="home" class="tab-pane fade">
     
       <p>{{toc_row.description}}</p>
-      <p>{{ wtf.quick_form(form) }}
+      <p>{{ wtf.quick_form(form) }}<br>
 
    {{ form.hidden_tag() }}
 {{ wtf.form_errors(form) }}
@@ -196,7 +196,7 @@ Reviewed by: {{name}}
     </div>
     <div id="menu1" class="tab-pane fade">
       <p>{{toc_row.description}}</p>
-      <p>{{ wtf.quick_form(form_systems) }}
+      <p>{{ wtf.quick_form(form_systems) }}<br>
 
    {{ form_systems.hidden_tag() }}
 {{ wtf.form_errors(form_systems) }}
@@ -268,7 +268,7 @@ Reviewed by: {{name}}
     <div id="home" class="tab-pane fade in active">
       
       <p>{{toc_row.description}}</p>
-      <p>{{ wtf.quick_form(form) }}
+      <p>{{ wtf.quick_form(form) }}<br>
 
    {{ form.hidden_tag() }}
 {{ wtf.form_errors(form) }}
@@ -287,7 +287,7 @@ Reviewed by: {{name}}
     </div>
     <div id="menu1" class="tab-pane fade">
        <p>{{toc_row.description}}</p>
-      <p>{{ wtf.quick_form(form_systems) }}
+      <p>{{ wtf.quick_form(form_systems) }}<br>
 
    {{ form_systems.hidden_tag() }}
 {{ wtf.form_errors(form_systems) }}
@@ -298,10 +298,9 @@ Reviewed by: {{name}}
 {% for item in toc_row.systems %}
          <div class="well">
    <div class="row ">
-    <div class="span8">
-
+    <div class="span1">
 {{item.system_of_care}} <p></span><a class="btn btn-danger" role="button" href="{{ url_for('tocquestion',id=toc_row.id,action='delete_s',sub=item.id)}}"><span class="glyphicon glyphicon-delete" aria-hidden="true"> Delete</a>  </p>
-</div></div></div>
+</div></div></div></span></a></p>
 {% endfor %}</p>
     </div>
     <div id="menu2" class="tab-pane fade">
@@ -319,9 +318,10 @@ Reviewed by: {{name}}
 
 
 {% for item in toc_row.reviews %}
-         <div class="well">
+       
    <div class="row ">
-    <div class="span8">
+    <div class="span1"></div><div class="span4"><div class="well">
+
 
 {{item.reviewer}} : {{item.category}} reviewed on {{item.review_date}}  <p></span><a class="btn btn-danger" role="button" href="{{ url_for('tocquestion',id=toc_row.id,action='delete_r',sub=item.id)}}"><span class="glyphicon glyphicon-delete" aria-hidden="true"> Delete</a>  </p>
 </div></div></div>
