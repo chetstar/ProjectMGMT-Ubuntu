@@ -340,7 +340,7 @@ class rutable(Form):
     # predesessor        =TextField('predesessor')   
     # city        =TextField('city')  
     # safe_passages        = BooleanField('safe_passages')
-    school        = BooleanField('school')    
+    in_school        = BooleanField('school')    
     # start_date        = DateTimeField('start_date')  
     # mode_of_service        =TextField('mode_of_service')   
     svctype        =TextField('svctype',)   
