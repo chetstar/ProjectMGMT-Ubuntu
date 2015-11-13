@@ -337,13 +337,40 @@ class rutable(Form):
         )
     residential= BooleanField('residential')  
     # reporting_unit        =TextField('ru') 
-    # predesessor        =TextField('predesessor')   
+    predesessor        =TextField('RU2')   
     # city        =TextField('city')  
     # safe_passages        = BooleanField('safe_passages')
     in_school        = BooleanField('school')    
     # start_date        = DateTimeField('start_date')  
     # mode_of_service        =TextField('mode_of_service')   
-    svctype        =TextField('svctype',)   
+    svctype = SelectField(u"svctype",coerce=unicode, choices=[
+                        ('School','School'),
+                        ('CLC','CLC'),
+                        ('Level 3','Level 3'),
+                        ('Wellness Center','Wellness Center'),
+                        ('Foster','Foster'),
+                        ('Intensive','Intensive'),
+                        ('DayTx','DayTx'),
+                        ('Level 3 Org','Level 3 Org'),
+                        ('TAY','TAY'),
+                        ('DayTxMHS','DayTxMHS'),
+                        ('CSS','CSS'),
+                        ('Crisis','Crisis'),
+                        ('CJ','CJ'),
+                        ('Unknown','Unknown'),
+                        ('Hospital','Hospital'),
+                        ('JuvJustice','JuvJustice'),
+                        ('Level 3 Doc','Level 3 Doc'),
+                        ('Residential','Residential'),
+                        ('SubAcute','SubAcute'),
+                        ('PEI','PEI'),
+                        ('TBS','TBS'),
+                        ('Access','Access'),
+                        ('Destiny','Destiny'),
+                        ('PHF','PHF'),
+                        ('OutPt','OutPt'),
+                        ('0 to 5','0 to 5'),
+                        ('CTF','CTF'),  ])                    
     svctype3        =TextField('svctype3')    
     tay        = BooleanField('tay')   
     tbs        = BooleanField('tbs')  
