@@ -111,7 +111,6 @@
     <div class="col-md-3">{{ wtf.form_field(form.agency) }}</div>
     <div class="col-md-3">{{ wtf.form_field(form.dbservicemodality) }}</div>
     <div class="col-md-3">{{ wtf.form_field(form.svctype) }}</div>
-    <div class="col-md-3">{{ wtf.form_field(form.predesessor) }}</div>
   </div>
  <div class="row">
  <div class="col-md-3">
@@ -119,8 +118,9 @@
 <!--  <div class="col-md-3">
 {{ wtf.form_field(form.epsdtgroup) }}</div> -->
  <div class="col-md-3">
-{{ wtf.form_field(form.school_cds_id) }}</div></div>
-
+{{ wtf.form_field(form.school_cds_id) }}</div>
+    <div class="col-md-3">
+    {{ wtf.form_field(form.predesessor) }}</div></div>
  <div class="row">
  <div class="col-md-2">
    {{ wtf.form_field(form.ab3632) }}
@@ -182,14 +182,9 @@
 {{ wtf.form_field(form.out_of_county) }}
  </div></div>
    <div class="row">
- <div class="col-md-2">
- </div>
- <div class="col-md-2">
-   {{ wtf.form_field(form.older_adult) }}
- </div>
- <div class="col-md-2">
- </div>
-  <div class="col-md-2">
+ <div class="col-md-2"> {{ wtf.form_field(form.older_adult) }}
+</div></div>
+<div class="row"><div class="col-md-2"> {{ wtf.form_field(form.cooked) }}
 </div></div>
 
 {{ wtf.form_field(form.submitRU) }}
@@ -202,7 +197,7 @@
  <div class="col-md-2">
 
  </div>
- <div class="col-md-2">
+ <div class="col-md-2">  
  </div>
   <div class="col-md-2">
 

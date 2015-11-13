@@ -373,7 +373,8 @@ class rutable(Form):
                         ('CTF','CTF'),  ])                    
     svctype3        =TextField('svctype3')    
     tay        = BooleanField('tay')   
-    tbs        = BooleanField('tbs')  
+    tbs        = BooleanField('tbs') 
+    cooked        = BooleanField('cooked')  
     # umbrella_organization        = IntegerField('umbrella_organization')  
     submitRU=SubmitField('Submit')
 
