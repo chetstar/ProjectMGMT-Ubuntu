@@ -827,7 +827,7 @@ def navstart():
             AS=0
         print email
         # return render_template("navStart.html",aform=aform,email=email,AS=AS)
-    return render_template("navStart.html",aform=aform,email=email,AS=AS)
+    return render_template("navStart.html",aform=aform,email=email,AS=AS,user=user.admin)
 
 
 
