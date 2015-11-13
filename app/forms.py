@@ -237,7 +237,7 @@ images = UploadSet('images', IMAGES)
 
 
 class rutablefilter(Form):
-    provsearch=TextField('Search Providor name')
+    provsearch=TextField('Search provider name')
     level_3_classic=BooleanField('Include Level 3 (doctors)', default=False)
     missing    = SelectField(u"Show missing by....",coerce=unicode, choices=[('None','None'),
 ('ab3632','ab3632'),
