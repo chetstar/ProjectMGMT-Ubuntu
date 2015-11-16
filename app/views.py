@@ -55,9 +55,15 @@ class MyAdminIndexView(admin.AdminIndexView):
     @expose('/')
     def index(self):
         if not g.user.is_authenticated():
-            return redirect(url_for('login'))
-        return super(MyAdminIndexView,self).index()
-
+            flash('Please log in first...', 'error')
+            next_url = request.url
+            login_url = '%s?next=%s' % (url_for('login'), next_url)
+            return redirect(login_url)
+        # import pdb;pdb.set_trace()
+        if g.user.admin == True:
+            return super(MyAdminIndexView,self).index()
+        else:
+            return redirect(url_for("main"))
 
 def logged_in(f):
     @wraps(f)
