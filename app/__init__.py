@@ -73,8 +73,9 @@ manager.add_command('db', MigrateCommand)
 Bootstrap(app)
 # from flask.ext.mail import Mail
 # mail = Mail(app)
+
 from app import views, models
-admin = Admin(app)
+admin = Admin(app, 'example',index_view=views.MyAdminIndexView())
 
 
 admin.add_view(ModelView(models.User, db.session))

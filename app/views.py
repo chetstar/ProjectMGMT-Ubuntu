@@ -9,6 +9,8 @@ from sqlalchemy.sql import  desc,func,distinct
 from sqlalchemy import case
 from sqlalchemy import and_
 # from app.models import Tasks, Projects, Goals, Strategies
+from flask.ext.admin import expose
+
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -18,7 +20,8 @@ from threading import Thread
 from flask.ext.login import LoginManager, UserMixin, login_required, current_user, login_user, logout_user
 import ldap
 from flask import render_template, flash, redirect,Flask,Response,request,url_for, g,session,jsonify
-# from flask.ext.admin.contrib import sqla
+from flask.ext.admin.contrib import sqla
+from flask.ext import admin, login
 from sqlalchemy.orm.attributes import get_history
         # if get_history(ptask, 'complete')[0]==[True] and get_history(ptask, 'complete')[2]==[False]:
         #     print 'changed from false to true'
@@ -42,14 +45,18 @@ login_manager.init_app(app)
 #     db.session.add(q)
 #     db.session.commit()
 
-# class MyModelView(sqla.ModelView):
+class MyModelView(sqla.ModelView):
 
-#     def is_accessible(self):
-#         return login.current_user.is_authenticated()
+    def is_accessible(self):
+        return g.user.is_authenticated()
 
 # photos = UploadSet('photos', IMAGES)
-
-
+class MyAdminIndexView(admin.AdminIndexView):
+    @expose('/')
+    def index(self):
+        if not g.user.is_authenticated():
+            return redirect(url_for('login'))
+        return super(MyAdminIndexView,self).index()
 
 
 def logged_in(f):
