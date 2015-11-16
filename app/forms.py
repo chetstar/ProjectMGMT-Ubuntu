@@ -244,6 +244,7 @@ class rutablefilter(Form):
 ('agency','agency'),
 ('calworks','calworks'),
 ('cesdc','cesdc'),
+('cooked','cooked'),
 ('county_run','county_run'),
 ('day_treatment','day_treatment'),
 ('dbservicemodality','dbservicemodality'),
