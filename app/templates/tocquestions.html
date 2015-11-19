@@ -124,7 +124,9 @@
 {{ wtf.form_errors(form_review) }}
 Reviewed by: {{name}}
 {{ wtf.form_field(form_review.category) }} 
-{{ wtf.form_field(form_review.review_date) }} 
+<div class="form-group "><label class="control-label" for="review_date">Record the date on which a dashboard or report was reviewed  </label>
+   <input data-provide="datepicker" data-date-format="mm/dd/yyyy"   id="review_date" name="review_date" type="text" value="{{ form_review.review_date.data}}">
+  </div> 
 {{ wtf.form_field(form_review.submitTOCreview) }}  
 </form>
     
@@ -218,7 +220,9 @@ Reviewed by: {{name}}
      <p>{{toc_row.description}}</p>
       Reviewed by: {{name}}
 {{ wtf.form_field(form_review.category) }} 
-{{ wtf.form_field(form_review.review_date) }} 
+<div class="form-group "><label class="control-label" for="review_date">Record the date on which a dashboard or report was reviewed  </label>
+   <input data-provide="datepicker" data-date-format="mm/dd/yyyy"   id="review_date" name="review_date" type="text" value="{{ form_review.review_date.data}}">
+  </div> 
 {{ wtf.form_field(form_review.submitTOCreview) }}
 
    {{ form_review.hidden_tag() }}
@@ -308,7 +312,9 @@ Reviewed by: {{name}}
      <p>{{toc_row.description}}</p>
       <p>Reviewed by: {{name}}
 {{ wtf.form_field(form_review.category) }} 
-{{ wtf.form_field(form_review.review_date) }} 
+<div class="form-group "><label class="control-label" for="review_date">Record the date on which a dashboard or report was reviewed  </label>
+   <input data-provide="datepicker" data-date-format="mm/dd/yyyy"   id="review_date" name="review_date" type="text" value="{{ form_review.review_date.data}}">
+  </div> 
 {{ wtf.form_field(form_review.submitTOCreview) }}
 
    {{ form_review.hidden_tag() }}
