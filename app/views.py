@@ -887,8 +887,13 @@ def edit_toc(id):
     toc=models.dashboards.query.filter_by(id=id).first()
     # delete_form=DeleteRow_form()
     form = TOC(obj=toc)
+    # import pdb;pdb.set_trace()
+    if toc.went_live_on:
+        form.went_live_on.data = form.went_live_on.data.strftime("%m/%d/%Y")
+    # form.went_live_on.data = toc.went_live_on.strftime("%Y/%m/%d")
     if request.method == 'POST':
-        form.populate_obj(toc)    
+        form.populate_obj(toc)   
+        # toc.went_live_on = form.went_live_on 
         db.session.commit()
         return redirect(url_for('alltoc'))
     # if delete_form.validate_on_submit():
