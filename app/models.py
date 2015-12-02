@@ -17,6 +17,13 @@ class staging_providers(db.Model):
     def __repr__(self):
         return '<Provider %r>' % (self.provider_name)
 
+class procedures(db.Model):
+    __table__ =  db.Model.metadata.tables['procedures']
+    # id = db.Column(db.Integer, primary_key=True)
+    # test = db.Column(db.String(80), unique=True)
+    def __repr__(self):
+        return '<procedures %r>' % (self.provider_name)
+
 class dashboards(db.Model):
     __table__ =  db.Model.metadata.tables['dashboards']
     questions = db.relationship('dashboards_questions', lazy='dynamic', backref='questionback',cascade="all, delete-orphan")

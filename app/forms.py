@@ -235,6 +235,90 @@ agenList=[
 
 images = UploadSet('images', IMAGES)
 
+ 
+
+
+class rutablefilter(Form):
+    service_category =  SelectField(u"Unit",coerce=unicode, choices=[
+     ('',''),
+('assessment','assessment'),
+('court eval','court eval'),
+('Medical Ward Consultation','Medical Ward Consultation'),
+('hospital inpatient','hospital inpatient'),
+('trans residential','trans residential'),
+('day tx rehab full','day tx rehab full'),
+('ind therapy','ind therapy'),
+('PHARMACY','PHARMACY'),
+('RADIOLOGY','RADIOLOGY'),
+('CCRP Mobile Team Outreach','CCRP Mobile Team Outreach'),
+('MHRC-PHF','MHRC-PHF'),
+('EEG','EEG'),
+('day tx rehab 1/2','day tx rehab 1/2'),
+('unknown','unknown'),
+('grp therapy','grp therapy'),
+('evaluation','evaluation'),
+('collateral','collateral'),
+('crisis stabilization','crisis stabilization'),
+('tbs','tbs'),
+('Professional Component','Professional Component'),
+('hospital admin day','hospital admin day'),
+('family therapy','family therapy'),
+('SNF','SNF'),
+('planning','planning'),
+('vocational','vocational'),
+('res day','res day'),
+('meds','meds'),
+('IMD','IMD'),
+('CalWorks reporting','CalWorks reporting'),
+('SNF AUG','SNF AUG'),
+('brokerage','brokerage'),
+('MEDICAL/SURGICAL SUPPLIES','MEDICAL/SURGICAL SUPPLIES'),
+('CT Scan','CT Scan'),
+('daytx Vocational','daytx Vocational'),
+('CFS Reporting','CFS Reporting'),
+('day tx int 1/2','day tx int 1/2'),
+('day tx int full','day tx int full'),
+('LABORATORY','LABORATORY'),
+('crisis res day','crisis res day'),
+('crisis intervention','crisis intervention'),
+('EKG/ECG','EKG/ECG'),
+        ]     
+        )
+    medi_cal_service_category =  SelectField(u"Unit",coerce=unicode, choices=[
+        ('hour',"hour"),
+    ('day','day'),
+    ('minute','minute')
+        ]     
+        )
+    unit  =  SelectField(u"Unit",coerce=unicode, choices=[
+        ('N. Client Support Education','N. Client Support Education'),
+('A. Case Management Services','A. Case Management Services'),
+('V. OTHER','V. OTHER'),
+('G. Residential','G. Residential'),
+('I. PHF','I. PHF'),
+('Q. MHSA Program Support Education','Q. MHSA Program Support Education'),
+('I. IMD','I. IMD'),
+('L. Vocational','L. Vocational'),
+('T. Other Reimbursable Services','T. Other Reimbursable Services'),
+('F. Crisis Stabilization','F. Crisis Stabilization'),
+('O. Client Support Housing','O. Client Support Housing'),
+('C. Medication Support','C. Medication Support'),
+('R. MHSA Program Support Housing','R. MHSA Program Support Housing'),
+('U. Non-Reimbursable Services','U. Non-Reimbursable Services'),
+('E. Day Tx','E. Day Tx'),
+('H. Crisis Residential','H. Crisis Residential'),
+('S. MHSA Program Support Vocational','S. MHSA Program Support Vocational'),
+('J. SNF','J. SNF'),
+('D. Crisis Intervention','D. Crisis Intervention'),
+('M. MAA Services','M. MAA Services'),
+('K. Inpatient','K. Inpatient'),
+('P. Client Support Vocational','P. Client Support Vocational'),
+('B. Mental Health Services','B. Mental Health Services'),
+        ]     
+        )
+    ab3632_procedure =BooleanField('3632', default=False)
+    medi_cal_billable =BooleanField('MC billable', default=False)
+    no_show =BooleanField('No Shows', default=False)
 
 class rutablefilter(Form):
     provsearch=TextField('Search provider name')
