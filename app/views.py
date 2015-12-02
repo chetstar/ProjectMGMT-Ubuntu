@@ -1,6 +1,6 @@
 from app import app,models, db
 # from forms import goal_form, strategy_form, project_form, task_form,DeleteRow_form,ldapA,LoginForm, Request, Which,Staff
-from forms import LoginForm, TOCsystems,RequestData, Which,ldapA, filterRequests, UserRequestData, Challenges,DeleteRow_form, TOC, rutable,rutablefilter,cans,AddUser,TOCquestions,TOCreview
+from forms import LoginForm, TOCsystems,RequestData, Which,ldapA, filterRequests, UserRequestData, Challenges,DeleteRow_form, TOC,proced, rutable,rutablefilter,cans,AddUser,TOCquestions,TOCreview
 import datetime
 from sqlalchemy.orm.attributes import get_history
 from werkzeug import secure_filename
@@ -286,6 +286,32 @@ def allchallenges():
 ##############################c
 
 ##############################c
+
+
+@app.route("/procedlist",methods=["GET","POST"])
+def allproced():
+    procedlist= models.procedures.query.all()
+    # rulist= models.staging_providers.query.filter( models.staging_providers.level_3_classic != 1).all()
+    # sorted(q_sum, key=lambda tup: tup[7])
+    # import pdb;pdb.set_trace()
+    if procedlist==[]:
+        procedlist=['no results']
+    return render_template("procedview.html",procedlist=procedlist)
+
+
+@app.route('/editproced/<id>/<edit>', methods=['GET', 'POST'])
+@logged_in
+def edit_proced(id,edit): 
+    p=models.procedures.query.filter_by(procedure_code=id).first()
+    form = proced()
+    form = proced(obj=p)
+    form.populate_obj(p) 
+    if request.method == 'POST' :
+        # and form.validate_on_submit()
+        if edit == '1':#editing exisitng
+            db.session.commit()
+        return redirect(url_for('allproced'))
+    return render_template('edit_proced.html',form=form,id=id,p=p,)
 
 ##############################c
 

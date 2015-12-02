@@ -1,0 +1,141 @@
+<!-- extend base layout -->
+{% extends "index.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block navbar %}
+
+  <body id="page-top" class="index">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">AC Business Analytics</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                       <a  href="{{ url_for('rusform')}}"><span class="glyphicon glyphicon-file" aria-hidden="true"> ru Form</a>
+                    </li>
+                    {% if g.user.admin ==1 %} 
+                      <li>
+                       <a  href="{{ url_for('rureview')}}"><span class="glyphicon glyphicon-file" aria-hidden="true"> Review</a>
+                        <li> <a href="{{ url_for('searchuser')}}">Add User </a> </li>
+                    </li> {% endif %}
+
+      <ul class="nav navbar-nav navbar-right">
+      {% if not session.logged_in %}
+   <li><a href="{{ url_for('login') }}?next=http://argonaut{{ url_for('allrus') }}">Login</a></li>
+  {% else %}
+   <li><a href="{{ url_for('logout') }}?next=http://argonaut{{ url_for('allrus') }}">Logout</a></li>
+  
+  {% endif %}
+
+  </div>
+  </div> </div> </div>   </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+  
+ <header>
+        
+            </div>
+        </div>
+    </header>
+<br>
+<br>
+<br><br>
+<br>
+<br>
+{% endblock %}
+
+{% block content %}
+{{ super()}}
+</span></a></li></ul></div></div></nav>
+        
+    </header>
+
+</div></div></div></div></span>
+
+        </div>
+    </header>
+
+
+<br></p>
+</div>
+
+
+    
+<div class='span12 table-scrollable '>
+     
+  
+    <table class="table table-striped table-responsive" >
+  <!--          <table id="myTable" class="tablesorter"> -->
+<thead> 
+         <h3><strong><tr>
+        <th></th>
+ <th>procedure_code</th>
+ <th>short_procedure_name</th>
+ <th>procedure_name</th>
+ <th>service_category</th>
+ <th>medi_cal_service_category</th>
+ <th>unit</th>
+ <th>ab3632_procedure</th>
+ <th>medi_cal_billable</th>
+ <th>no_show</th>
+<!-- <th> Insyst </th> -->
+
+       </tr></strong></h3>
+         </thead> 
+<tbody> 
+  <ol type="1">
+{% if rulist==['no results'] %}
+No results
+{% else %}
+          {% for field in procedlist %}
+
+            <tr>
+ <td><a href="{{ url_for('edit_proced', id=field.procedure_code,edit=1) }}" class="btn pull-right"><span class="glyphicon glyphicon-pencil"></span> </a> 
+<td>{{field.procedure_code}}</td>
+<td>{{field.short_procedure_name}}</td>
+<td>{{field.procedure_name}}</td>
+<td>{{field.service_category}}</td>
+<td>{{field.medi_cal_service_category}}</td>
+<td>{{field.unit}}</td>
+<td>{{field.ab3632_procedure}}</td>
+<td>{{field.medi_cal_billable}}</td>
+<td>{{field.no_show}}</td>
+
+
+       {% endfor %}</tr></ol></tbody> </table> {% endif %}
+</div>
+ </div></div></div>
+    </div></div>
+</div></div></body>
+
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  </body>
+</html>{% endblock %}
+
+

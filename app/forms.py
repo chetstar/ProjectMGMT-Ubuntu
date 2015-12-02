@@ -238,7 +238,7 @@ images = UploadSet('images', IMAGES)
  
 
 
-class rutablefilter(Form):
+class proced(Form):
     service_category =  SelectField(u"Unit",coerce=unicode, choices=[
      ('',''),
 ('assessment','assessment'),
@@ -285,9 +285,9 @@ class rutablefilter(Form):
         ]     
         )
     medi_cal_service_category =  SelectField(u"Unit",coerce=unicode, choices=[
-        ('hour',"hour"),
+        ('hours',"hours"),
     ('day','day'),
-    ('minute','minute')
+    ('minutes','minutes')
         ]     
         )
     unit  =  SelectField(u"Unit",coerce=unicode, choices=[
@@ -319,6 +319,7 @@ class rutablefilter(Form):
     ab3632_procedure =BooleanField('3632', default=False)
     medi_cal_billable =BooleanField('MC billable', default=False)
     no_show =BooleanField('No Shows', default=False)
+    submit=SubmitField('Submit')
 
 class rutablefilter(Form):
     provsearch=TextField('Search provider name')
