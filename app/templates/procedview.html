@@ -27,19 +27,18 @@
                         <a href="#page-top"></a>
                     </li>
                     <li>
-                       <a  href="{{ url_for('rusform')}}"><span class="glyphicon glyphicon-file" aria-hidden="true"> ru Form</a>
+                      
                     </li>
                     {% if g.user.admin ==1 %} 
                       <li>
-                       <a  href="{{ url_for('rureview')}}"><span class="glyphicon glyphicon-file" aria-hidden="true"> Review</a>
-                        <li> <a href="{{ url_for('searchuser')}}">Add User </a> </li>
+                      <a  href="http://winspssv4:5000/argonautwho/procedsma.sps"><span class="glyphicon glyphicon-file" aria-hidden="true">Update SPSS ProcedSMA Table</a>
                     </li> {% endif %}
 
       <ul class="nav navbar-nav navbar-right">
       {% if not session.logged_in %}
-   <li><a href="{{ url_for('login') }}?next=http://argonaut{{ url_for('allrus') }}">Login</a></li>
+   <li><a href="{{ url_for('login') }}?next=http://argonaut{{ url_for('allproced') }}">Login</a></li>
   {% else %}
-   <li><a href="{{ url_for('logout') }}?next=http://argonaut{{ url_for('allrus') }}">Logout</a></li>
+   <li><a href="{{ url_for('logout') }}?next=http://argonaut{{ url_for('allproced') }}">Logout</a></li>
   
   {% endif %}
 
