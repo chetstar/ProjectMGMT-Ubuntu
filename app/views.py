@@ -345,6 +345,13 @@ def edit_ru(id,edit):
             # ru.modified_on=datetime.datetime.utcnow()
             # db.session.add(p) 
             # form.oldRU.data=ru.oldRU   
+            # import pdb;pdb.set_trace()
+            if form.dbservicemodality == '':
+                ru.dbservicemodality=None
+            if form.svctype == '':
+                ru.svctype=None
+            if form.psmasktext == '':
+                ru.psmasktext=None
             ru.modified_by=g.user.name 
             db.session.commit()
         return redirect(url_for('allrus'))
