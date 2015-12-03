@@ -404,15 +404,15 @@ def allrus():
                         op("IS NOT")(True)).order_by(desc(models.staging_providers.last_change_stamp)).limit(100).all()
                 else:
                     if formfilter.level_3_classic.data==False:
-                        if getattr(models.staging_providers,formfilter.missing.data).property.columns[0].type.python_type==str:
+                        # if getattr(models.staging_providers,formfilter.missing.data).property.columns[0].type.python_type==str:
                         # if type(getattr(models.staging_providers.query.first(),formfilter.missing.data))=="float":
-                            rulist=models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data).like('')).filter((models.staging_providers.level_3_classic == None)|(models.staging_providers.level_3_classic == False)).all()
-                        else:
+                        #     rulist=models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data).like('')).filter((models.staging_providers.level_3_classic == None)|(models.staging_providers.level_3_classic == False)).all()
+                        # else:
                             rulist=models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data) == None).filter((models.staging_providers.level_3_classic == None)|(models.staging_providers.level_3_classic == False)).all()     
-                    else:
-                        if getattr(models.staging_providers,formfilter.missing.data).property.columns[0].type.python_type==str:
-                        # if type(getattr(models.staging_providers.query.first(),formfilter.missing.data))=="float":
-                            rulist=models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data).like('')).filter((models.staging_providers.level_3_classic == 1)).all()
+                    # else:
+                    #     if getattr(models.staging_providers,formfilter.missing.data).property.columns[0].type.python_type==str:
+                    #     # if type(getattr(models.staging_providers.query.first(),formfilter.missing.data))=="float":
+                    #         rulist=models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data).like('')).filter((models.staging_providers.level_3_classic == 1)).all()
                         else:
                             rulist=models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data) == None).filter((models.staging_providers.level_3_classic == 1)).all()     
             else:#provsearch has something in it
@@ -421,20 +421,20 @@ def allrus():
                     if formfilter.missing.data=="None":
                         rulist= models.staging_providers.query.filter(( models.staging_providers.level_3_classic == None)|( models.staging_providers.level_3_classic == False)).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")).all()
                     else:
-                        if getattr(models.staging_providers,formfilter.missing.data).property.columns[0].type.python_type==str:
-                        #does not work yet need to add the ability to search by both
-                            rulist= models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data).like('')).filter(( models.staging_providers.level_3_classic == None)|( models.staging_providers.level_3_classic == False)).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")).all()        
-                        else:
+                        # if getattr(models.staging_providers,formfilter.missing.data).property.columns[0].type.python_type==str:
+                        # #does not work yet need to add the ability to search by both
+                        #     rulist= models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data).like('')).filter(( models.staging_providers.level_3_classic == None)|( models.staging_providers.level_3_classic == False)).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")).all()        
+                        # else:
                             rulist= models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data) == None).filter(( models.staging_providers.level_3_classic == None)|( models.staging_providers.level_3_classic == False)).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")).all()        
                 else:     
                     # import pdb;pdb.set_trace()
                     if formfilter.missing.data=="None":
                         rulist= models.staging_providers.query.filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")).all()
                     else:
-                        if getattr(models.staging_providers,formfilter.missing.data).property.columns[0].type.python_type==str:
-                        #does not work yet need to add the ability to search by both
-                            rulist= models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data).like('')).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")).all()        
-                        else:
+                        # if getattr(models.staging_providers,formfilter.missing.data).property.columns[0].type.python_type==str:
+                        # #does not work yet need to add the ability to search by both
+                        #     rulist= models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data).like('')).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")).all()        
+                        # else:
                             rulist= models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data) == None).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")).all()        
         except:
             rulist=['no results']
