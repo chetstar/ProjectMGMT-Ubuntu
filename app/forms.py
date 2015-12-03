@@ -239,7 +239,7 @@ images = UploadSet('images', IMAGES)
 
 
 class proced(Form):
-    service_category =  SelectField(u"Unit",coerce=unicode, choices=[
+    service_category =  SelectField(u"Service Category",coerce=unicode, choices=[
      ('',''),
 ('assessment','assessment'),
 ('court eval','court eval'),
@@ -284,7 +284,7 @@ class proced(Form):
 ('EKG/ECG','EKG/ECG'),
         ]     
         )
-    medi_cal_service_category =  SelectField(u"Unit",coerce=unicode, choices=[
+    medi_cal_service_category =  SelectField(u"MC Service Category",coerce=unicode, choices=[
         ('hours',"hours"),
     ('day','day'),
     ('minutes','minutes')
