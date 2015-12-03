@@ -409,11 +409,11 @@ def allrus():
                         #     rulist=models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data).like('')).filter((models.staging_providers.level_3_classic == None)|(models.staging_providers.level_3_classic == False)).all()
                         # else:
                             rulist=models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data) == None).filter((models.staging_providers.level_3_classic == None)|(models.staging_providers.level_3_classic == False)).all()     
-                    # else:
+                    else:
                     #     if getattr(models.staging_providers,formfilter.missing.data).property.columns[0].type.python_type==str:
                     #     # if type(getattr(models.staging_providers.query.first(),formfilter.missing.data))=="float":
                     #         rulist=models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data).like('')).filter((models.staging_providers.level_3_classic == 1)).all()
-                        else:
+                        # else:
                             rulist=models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data) == None).filter((models.staging_providers.level_3_classic == 1)).all()     
             else:#provsearch has something in it
                 if formfilter.level_3_classic.data==False:
