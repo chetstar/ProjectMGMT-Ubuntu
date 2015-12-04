@@ -974,6 +974,7 @@ report_author=form.report_author.data)
 @logged_in
 def tocquestion(id,action,sub):
     toc_row=models.dashboards.query.filter_by(id=id).first()
+    # import pdb;pdb.set_trace()
     # toc_row=db.session.query(models.dashboards_questions.question,models.dashboards.title,models.dashboards_questions.id).join(models.dashboards).filter_by(id=id).all()
     form=TOCquestions()
     form_review=TOCreview()

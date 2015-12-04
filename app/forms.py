@@ -284,13 +284,13 @@ class proced(Form):
 ('EKG/ECG','EKG/ECG'),
         ]     
         )
-    medi_cal_service_category =  SelectField(u"MC Service Category",coerce=unicode, choices=[
+    medi_cal_service_category =  SelectField(u"Unit",coerce=unicode, choices=[
         ('hours',"hours"),
     ('day','day'),
     ('minutes','minutes')
         ]     
         )
-    unit  =  SelectField(u"Unit",coerce=unicode, choices=[
+    medi_cal_service_category  =  SelectField(u"MC Service Category",coerce=unicode, choices=[
         ('N. Client Support Education','N. Client Support Education'),
 ('A. Case Management Services','A. Case Management Services'),
 ('V. OTHER','V. OTHER'),
@@ -534,7 +534,14 @@ class TOCsystems(Form):
     submitTOCsystem=SubmitField('Submit')
 
 class TOCreview(Form):
-    category = RadioField('Type of Review', choices=[('Code','Code'),('Report','Report')],coerce=unicode,validators=[validators.Required()])
+    category = RadioField('Type of Review', 
+        choices=[('1. Map','Map'),
+        ('2. Code','Code'),
+        ('3. Dashboard/Report Filters, Analytic Setup, colors, drill-throughs, functinality, and "walled-in"','Dashboard/Report Filters, Analytic Setup, colors, drill-throughs, functinality, and "walled-in"'),
+        ('4. "UnWall" Dash or Report','"UnWall" Dash or Report'),
+        ('5. Production update scheduled','Production update scheduled'),        
+        ('6. Follow-up 3 months:Filters, Drills, etc.','Follow-up 3 months:Filters, Drills, etc.'),
+        ],coerce=unicode,validators=[validators.Required()])
     reviewer = TextField("Reviewer")
     review_date = DateField( "Reviewed on..",validators=[validators.Required()])
     submitTOCreview=SubmitField('Submit')

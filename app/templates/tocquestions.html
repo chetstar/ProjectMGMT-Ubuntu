@@ -136,7 +136,7 @@ Reviewed by: {{name}}
 
 
 
-{% for item in toc_row.reviews %}
+{% for item in toc_row.reviews|sort(attribute='category')  %}
          <div class="well">
    <div class="row ">
     <div class="span8">
@@ -228,7 +228,7 @@ Reviewed by: {{name}}
    {{ form_review.hidden_tag() }}
 
 
-{% for item in toc_row.reviews %}
+{% for item in toc_row.reviews|sort(attribute='category')  %}
 </form>
          <div class="well">
    <div class="row ">
@@ -323,7 +323,7 @@ Reviewed by: {{name}}
 
 
 
-{% for item in toc_row.reviews %}
+{% for item in toc_row.reviews|sort(attribute='category')  %}
        
    <div class="row ">
     <div class="span1"></div><div class="span4"><div class="well">
