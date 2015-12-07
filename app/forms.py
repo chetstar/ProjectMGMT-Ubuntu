@@ -394,7 +394,7 @@ class rutable(Form):
     ('Day Treatment','Day Treatment'),
     ('SvcTeamFSP','SvcTeamFSP'),  
         ('Hospital','Hospital')
-        ]     
+        ]     ,filters = [lambda x: x or None]
         )
     # end_date        = DateTimeField('end_date')  
     epsdtgroup        =TextField('epsdtgroup')   
@@ -406,7 +406,7 @@ class rutable(Form):
     older_adult        = BooleanField('older_adult')  
     # old_ru     = IntegerField('old RU') 
     # cans        = BooleanField('cans') 
-    cans        =     RadioField('cans', choices=[('None','None'),(True,True),(False,False)],coerce=unicode) 
+    cans        =     SelectField('cans', choices=[(None,'None'),(True,True),(False,False)],) 
     out_of_county        = BooleanField('out_of_county')   
     program        = BooleanField('program')  
     # provider_name        =TextField('provname')  
@@ -479,8 +479,8 @@ class rutable(Form):
     submitRU=SubmitField('Submit')
 
 class cans(Form):
-    # cans = BooleanField('cans') 
-    cans        =     RadioField('cans', choices=[(None,'None'),('','Nope'),(True,True),(False,False)],coerce=unicode)
+    # cans = BooleanField('cans')     
+    cans        =     RadioField('cans', choices=[(None,'None'),(True,True),(False,False)]) 
     submitRU=SubmitField('Submit')
 
 # class TOC(Form):

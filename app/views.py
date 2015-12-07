@@ -332,8 +332,8 @@ def edit_ru(id,edit):
     if g.user.form_access=='all':
         form = rutable()
         form = rutable(obj=ru)
-        if ru.cans==None:
-            form.cans.data='None'
+        # if ru.cans==None:
+        #     form.cans.data='None'
         AT= list(set([h.agency for h in models.staging_providers.query.all()]))
         AT.append('')
         form.agency.choices=zip(sorted(AT),sorted(AT))       
@@ -355,19 +355,20 @@ def edit_ru(id,edit):
             # ru.modified_on=datetime.datetime.utcnow()
             # db.session.add(p) 
             # form.oldRU.data=ru.oldRU   
-            # import pdb;pdb.set_trace()
-            if form.dbservicemodality.data == '':
-                ru.dbservicemodality=None
-            if form.svctype.data == '':
-                ru.svctype=None
-            if form.psmasktext.data == '':
-                ru.psmasktext=None
-            if form.predesessor.data == '':
-                ru.predesessor=None
-            if form.school_cds_id.data == '':
-                ru.school_cds_id=None
-            if form.cans.data == 'None':
-                ru.cans=None
+            import pdb;pdb.set_trace()
+            if g.user.form_access=='all':
+                # if form.dbservicemodality.data == '':
+                #     ru.dbservicemodality=None
+                if form.svctype.data == '':
+                    ru.svctype=None
+                if form.psmasktext.data == '':
+                    ru.psmasktext=None
+                if form.predesessor.data == '':
+                    ru.predesessor=None
+                if form.school_cds_id.data == '':
+                    ru.school_cds_id=None
+            # if form.cans.data == 'None':
+            #     ru.cans=None
             ru.modified_by=g.user.name 
             db.session.commit()
         return redirect(url_for('allrus'))
