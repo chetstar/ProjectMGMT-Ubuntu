@@ -360,6 +360,10 @@ def edit_ru(id,edit):
                 ru.svctype=None
             if form.psmasktext == '':
                 ru.psmasktext=None
+            if form.predesessor == '':
+                ru.predesessor=None
+            if form.school_cds_id == '':
+                ru.school_cds_id=None
             ru.modified_by=g.user.name 
             db.session.commit()
         return redirect(url_for('allrus'))

@@ -240,7 +240,7 @@ images = UploadSet('images', IMAGES)
 
 class proced(Form):
     service_category =  SelectField(u"Service Category",coerce=unicode, choices=[
-     ('',''),
+     (None,None),
 ('assessment','assessment'),
 ('court eval','court eval'),
 ('Medical Ward Consultation','Medical Ward Consultation'),
@@ -285,12 +285,14 @@ class proced(Form):
         ]     
         )
     medi_cal_service_category =  SelectField(u"Unit",coerce=unicode, choices=[
+             (None,None),
         ('hours',"hours"),
     ('day','day'),
     ('minutes','minutes')
         ]     
         )
     medi_cal_service_category  =  SelectField(u"MC Service Category",coerce=unicode, choices=[
+             (None,None),
         ('N. Client Support Education','N. Client Support Education'),
 ('A. Case Management Services','A. Case Management Services'),
 ('V. OTHER','V. OTHER'),
@@ -383,7 +385,7 @@ class rutable(Form):
     county_run        = BooleanField('county')   
     day_treatment        = BooleanField('day_treatment')  
     dbservicemodality      =  SelectField(u"Service Modality",coerce=unicode, choices=[
-        ('',"None"),
+          (None,None),
     ('SubAcute','SubAcute'),
     ('Residential Treatment','Residential Treatment'),
     ('Outpatient Services','Outpatient Services'),
@@ -408,7 +410,7 @@ class rutable(Form):
     program        = BooleanField('program')  
     # provider_name        =TextField('provname')  
     psmasktext        = SelectField(u"PSmask Text",coerce=unicode, choices=[
-        ('',"None"),
+            (None,None),
 ("Children's Crisis Services","Children's Crisis Services"),
 ('MHRC/Subacute',' MHRC/Subacute'),
 ('Adult Residential Treament',' Adult Residential Treament'),
@@ -440,6 +442,7 @@ class rutable(Form):
     # start_date        = DateTimeField('start_date')  
     # mode_of_service        =TextField('mode_of_service')   
     svctype = SelectField(u"svctype",coerce=unicode, choices=[
+             (None,None),
                         ('School','School'),
                         ('CLC','CLC'),
                         ('Level 3','Level 3'),
