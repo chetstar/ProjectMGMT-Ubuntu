@@ -1,0 +1,495 @@
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+SET search_path = public, pg_catalog;
+
+ALTER TABLE ONLY public.procedures DROP CONSTRAINT procedures_pkey;
+DROP TABLE public.procedures;
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: procedures; Type: TABLE; Schema: public; Owner: greg; Tablespace: 
+--
+
+CREATE TABLE procedures (
+    procedure_code text NOT NULL,
+    short_procedure_name text,
+    procedure_name text,
+    service_category text,
+    medi_cal_service_category text,
+    billing_category text,
+    discounted boolean,
+    unit text,
+    ab3632_procedure boolean,
+    medi_cal_billable boolean,
+    no_show boolean DEFAULT false NOT NULL
+);
+
+
+ALTER TABLE public.procedures OWNER TO greg;
+
+--
+-- Data for Name: procedures; Type: TABLE DATA; Schema: public; Owner: greg
+--
+
+COPY procedures (procedure_code, short_procedure_name, procedure_name, service_category, medi_cal_service_category, billing_category, discounted, unit, ab3632_procedure, medi_cal_billable, no_show) FROM stdin;
+118	INIT HOSP	Initial Hospital Visit	\N	\N	\N	\N	\N	\N	\N	f
+119	SUB HOSP	Subsequent Hospital Visit	\N	\N	\N	\N	\N	\N	\N	f
+120	PHF N-C DY	PHF Non-Contract Day	\N	I. PHF	\N	\N	day	\N	\N	f
+338	ASM FFS ED	ASSESSMENT FFS ED	\N	\N	\N	\N	\N	\N	\N	f
+197	CG-INFO NT	CG-INFORMATIONAL NOTE	\N	\N	\N	\N	\N	\N	\N	t
+200	NO SHOW	Day Treatment No Show	\N	\N	\N	\N	\N	\N	\N	t
+300	NO SHOW	No Show	\N	\N	\N	\N	\N	\N	\N	t
+400	NO SHOW	No Show/Episode Admission	\N	\N	\N	\N	\N	\N	\N	t
+100	LOA AWOL	Leave Of Absence AWOL	\N	\N	\N	\N	\N	\N	\N	t
+800	PHARMACY	PHARMACY	PHARMACY	\N	\N	\N	\N	\N	\N	t
+801	LABORATORY	LABORATORY	LABORATORY	\N	\N	\N	\N	\N	\N	t
+802	MED/SURG	MEDICAL/SURGICAL SUPPLIES	MEDICAL/SURGICAL SUPPLIES	\N	\N	\N	\N	\N	\N	t
+803	EKG/ECG	EKG/ECG	EKG/ECG	\N	\N	\N	\N	\N	\N	t
+804	RADIOLOGY	RADIOLOGY	RADIOLOGY	\N	\N	\N	\N	\N	\N	t
+805	EEG	EEG	EEG	\N	\N	\N	\N	\N	\N	t
+806	CT SCAN	CT Scan	CT Scan	\N	\N	\N	\N	\N	\N	t
+807	CONREP TRO	CONREP Tox-Random Observed	\N	\N	\N	\N	\N	\N	\N	t
+808	CONREPTNRO	CONREP Tox-Non-Random Observed	\N	\N	\N	\N	\N	\N	\N	t
+809	CONREP TRU	CONREP Tox-Random Unobserved	\N	\N	\N	\N	\N	\N	\N	t
+810	CONREPTNRU	CONREP Tox-Non-Rand Unobserved	\N	\N	\N	\N	\N	\N	\N	t
+830	PROF COMP	Professional Component	Professional Component	\N	\N	\N	\N	\N	\N	t
+850	OPT PHARM	Outpatient Pharmacy Charge	\N	\N	\N	\N	\N	\N	\N	t
+739	DR WA IND	DR Work Adjustment-Individual	vocational	\N	\N	\N	minutes	\N	\N	f
+740	PT COL IMD	CM Placement Collateral IMD	\N	\N	\N	\N	\N	\N	\N	f
+741	CPLAC COLL	CM Placement Collateral	\N	\N	\N	\N	\N	\N	\N	f
+742	CPLAC 3632	CM Placement Coll AB3632	\N	\N	\N	\N	\N	t	\N	f
+743	PL C 3632R	CM Placement Coll AB3632 Res	\N	\N	\N	\N	\N	t	\N	f
+744	DR WA GRP	DR Work Adjustment-Group	vocational	\N	\N	\N	minutes	\N	\N	f
+745	DR JP OTH	DR Job Placement Other	\N	L. Vocational	\N	\N	\N	\N	\N	f
+750	AST CL IMD	CM Asst Daily Living Coll IMD	\N	\N	\N	\N	\N	\N	\N	f
+751	ASSIST COL	CM Assist Daily Living Coll	\N	\N	\N	\N	\N	\N	\N	f
+752	ASSIST 363	CM Assist Daily Liv Coll 3632	\N	\N	\N	\N	\N	t	\N	f
+753	AT C 3632R	CM Asst Daily Liv Col 3632 Res	\N	\N	\N	\N	\N	t	\N	f
+755	PARTIALHSP	Partial Hosp Prog (PHP)	\N	\N	\N	\N	\N	\N	\N	f
+760	LK COL IMD	CM Linkage & Advocacy Coll IMD	\N	\N	\N	\N	\N	\N	\N	f
+761	CLINK COLL	CM Linkage & Advocacy Coll	\N	\N	\N	\N	\N	\N	\N	f
+762	CLINK 3632	CM Link & Advoc Coll AB3632	\N	\N	\N	\N	\N	\N	\N	f
+763	LK C 3632R	CM Link & Advoc Coll 3632 Res	\N	\N	\N	\N	\N	\N	\N	f
+765	99201TELPY	99201 TELEPSY EM NEWOF SPL 10M	\N	\N	\N	\N	\N	\N	\N	f
+766	99202TELPY	99202 TELEPSY EM NEWOF EXP 20M	\N	\N	\N	\N	\N	\N	\N	f
+767	99203TELPY	99203 TELEPSY EM NEWOF DTL 30M	\N	\N	\N	\N	\N	\N	\N	f
+855	ELEC RX	ELECTRONIC PRESCRIPTION	\N	\N	\N	\N	\N	\N	\N	t
+860	M130-G8427	MEAS130-G8427 MEDS DOCS COMPLT	\N	\N	\N	\N	\N	\N	\N	t
+861	M130-G8430	MEAS130-G8430 NOT ELIG MEDSDOC	\N	\N	\N	\N	\N	\N	\N	t
+862	M130-G8428	Meas130-G8428 NoMedDocNoReason	\N	\N	\N	\N	\N	\N	\N	t
+900	TRANSFER	Balance Transfer	\N	\N	\N	\N	\N	\N	\N	t
+904	CHECK CHRG	Returned Check Charge	\N	\N	\N	\N	\N	\N	\N	t
+905	MISC DEBIT	Miscellaneous Debit	\N	\N	\N	\N	\N	\N	\N	t
+121	PHF CNT DY	PHF Contract Day	\N	I. PHF	\N	\N	day	\N	\N	f
+130	IMD N-C DY	IMD Non-Contract Day	IMD	I. IMD	\N	\N	day	\N	\N	f
+131	IMD DAY	IMD Day	IMD	I. IMD	\N	\N	day	\N	\N	f
+133	IMD BH DAY	IMD Bed Hold Day	IMD	I. IMD	\N	\N	day	\N	\N	f
+134	SNFINT N-C	SNF Intensive Non-Contract Day	\N	J. SNF	\N	\N	day	\N	\N	f
+135	SNFINT DAY	SNF Intensive Day	SNF	J. SNF	\N	\N	day	\N	\N	f
+136	SNFINT BHD	SNF Intensive Bed Hold Day	SNF	J. SNF	\N	\N	day	\N	\N	f
+137	SNFINTDYL2	SNF INTENSIVE DAY L2	\N	\N	\N	\N	\N	\N	\N	f
+138	SNFINTDYL3	SNF INTENSIVE DAY L3	\N	\N	\N	\N	\N	\N	\N	f
+139	SNFINTDYL4	SNF INTENSIVE DAY L4	\N	\N	\N	\N	\N	\N	\N	f
+141	CRISIS RES	Crisis Residential Day	crisis res day	H. Crisis Residential	\N	\N	day	\N	\N	f
+151	SNFNEURDAY	SNF NEUROBEHAVIORAL DAY	\N	\N	\N	\N	\N	\N	\N	f
+152	SNFPRIVDAY	SNF PRIVATE DAY	\N	\N	\N	\N	\N	\N	\N	f
+154	SNFSTP LV1	SNF STP LEVEL I	\N	\N	\N	\N	\N	\N	\N	f
+155	SNFSTP LV2	SNF STP LEVEL 2	\N	\N	\N	\N	\N	\N	\N	f
+156	SNFSTP LV3	SNF STP LEVEL 3	\N	\N	\N	\N	\N	\N	\N	f
+157	SNFSTP LV4	SNF STP LEVEL 4	\N	\N	\N	\N	\N	\N	\N	f
+160	RES AWOL	On Site Trans Residential-AWOL	trans residential	G. Residential	\N	\N	day	\N	\N	f
+161	RES DAY	On Site Trans Residential Day	res day	G. Residential	\N	\N	day	\N	\N	f
+195	HIGHEND PL	HIGH END PLACEMENT	\N	\N	\N	\N	\N	\N	\N	f
+198	CG FSP ADM	CLINICIANS GATEWAY FSP ADM USE	\N	\N	\N	\N	\N	\N	\N	f
+199	MHRC NC DY	MH REHAB CTR NON-CONTRACT DAY	MHRC-PHF	\N	\N	\N	day	\N	\N	f
+220	CRS STB CJ	Crisis Stabilization CJ	crisis stabilization	F. Crisis Stabilization	\N	\N	hours	\N	\N	f
+221	CRISIS STB	Crisis Stabilization	crisis stabilization	F. Crisis Stabilization	\N	\N	hours	\N	\N	f
+231	DT VOC	Day Trmt/Vocational	daytx Vocational	\N	\N	\N	day	\N	\N	f
+260	SNFAUG N-C	SNF Augmentation Non-Contract	\N	\N	\N	\N	\N	\N	\N	f
+261	SNFAUG DAY	SNF Augmentation Day	SNF AUG	J. SNF	\N	\N	day	\N	\N	f
+263	SNFAUG BHD	SNF Augmentation Bed Hold Day	\N	\N	\N	\N	\N	\N	\N	f
+264	SNFAUG SUP	SNF AUGMENTATION DAY SUPPLEMNT	\N	\N	\N	\N	\N	\N	\N	f
+273	ED/TR COMP	Ed/Training Medicare Component	\N	\N	\N	\N	\N	\N	\N	f
+274	PSYCH COMP	Psych Serv Medicare Component	\N	\N	\N	\N	\N	\N	\N	f
+275	INDIV COMP	Individual Medicare Component	\N	\N	\N	\N	\N	\N	\N	f
+276	GROUP COMP	Group Medicare Component	\N	\N	\N	\N	\N	\N	\N	f
+277	FMILY COMP	Family Ther Medicare Component	\N	\N	\N	\N	\N	\N	\N	f
+278	TEST COMP	Test/Diag Medicare Component	\N	\N	\N	\N	\N	\N	\N	f
+279	OT/COMP	Occupationl Ther Medicare Comp	\N	\N	\N	\N	\N	\N	\N	f
+281	DAY INT HF	Day Care Intens Half Day	day tx int 1/2	E. Day Tx	\N	\N	day	\N	\N	f
+282	DAY IH3632	Day Care Intens AB3632 Half	day tx int 1/2	E. Day Tx	\N	\N	day	\N	\N	f
+285	DAY INT FL	Day Care Intens Full Day	day tx int full	E. Day Tx	\N	\N	day	\N	\N	f
+286	DAY IF3632	Day Care Intens Full-AB3632	day tx int full	E. Day Tx	\N	\N	day	t	\N	f
+290	DAY R/TEMP	DAY REHAB TEMPORARY-NO BILL	\N	E. Day Tx	\N	\N	\N	\N	\N	f
+291	DAY REH HF	Day Care Rehab Half Day	day tx rehab 1/2	E. Day Tx	\N	\N	day	\N	\N	f
+292	DAY RH3632	Day Care Rehab Half-AB3632	\N	E. Day Tx	\N	\N	day	t	\N	f
+295	DAY REH FL	Day Care Rehab Full Day	day tx rehab full	E. Day Tx	\N	\N	day	\N	\N	f
+296	DAY RF3632	Day Care Rehab Full-AB3632	day tx rehab full	E. Day Tx	\N	\N	day	t	\N	f
+305	FFS BSUPPL	FFS Bilingual Supplement A	\N	\N	\N	\N	\N	\N	\N	f
+310	COLLCGIVER	COLLATERAL - CAREGIVER	\N	B. Mental Health Services	\N	\N	\N	\N	\N	f
+311	COLLATERAL	Collateral	collateral	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+312	COL 3632	Collateral-AB3632	collateral	B. Mental Health Services	1. Mental Health Services	\N	minutes	t	\N	f
+313	COL FFS NM	Collateral FFS Not Medi-Cal	collateral	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+314	COLLAT FFS	Collateral FFS	collateral	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+315	COL FFS IP	Collateral FFS Inpatient	collateral	\N	1. Mental Health Services	\N	\N	\N	\N	f
+316	COL FFS CW	Collateral FFS CalWORKS	collateral	\N	1. Mental Health Services	\N	\N	\N	\N	f
+317	COLFAMGRP	Collateral Family Group	family therapy	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+318	COL FAMILY	COLLATERAL FAMILY THERAPY	family therapy	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+319	COL FT3632	COL FAMILY THERAPY AB3632	family therapy	B. Mental Health Services	1. Mental Health Services	\N	minutes	t	\N	f
+321	EVALUATION	Evaluation	evaluation	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+322	EVAL 3632	Evaluation-AB3632	evaluation	B. Mental Health Services	1. Mental Health Services	\N	minutes	t	\N	f
+323	90791 EVAL	90791 Psychiatric Diag Eval	assessment	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+324	96151BEVAL	96151 Behavioral Eval	evaluation	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+325	90889PDENF	90889 PsyDiagEval nonface/face	evaluation	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+326	90889BENFF	90889 BehavEval non face/face	evaluation	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+327	90791TELEV	90791 TELEPSY DIAG EVAL	\N	\N	\N	\N	\N	\N	\N	f
+330	ASSMNT CJ	ASSESSMENT CJ	assessment	B. Mental Health Services	1. Mental Health Services	\N	\N	\N	\N	f
+331	ASSESSMENT	Assessment	assessment	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+332	ASMT 3632	Assessment-AB3632	assessment	B. Mental Health Services	1. Mental Health Services	\N	minutes	t	\N	f
+333	ASM FFS NM	Assessment FFS Not Medi-Cal	assessment	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+334	ASSMNT FFS	Assessment FFS	assessment	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+335	ASMT FFSIP	Assessment FFS Inpatient	assessment	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+336	ASMNT CW	Assessment Cal WORKS	assessment	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+337	ASMFFS3632	Assessment FFS AB3632	\N	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+341	IND-THERPY	Individual Therapy	ind therapy	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+342	IND T 3632	Individual Therapy-AB3632	ind therapy	B. Mental Health Services	1. Mental Health Services	\N	minutes	t	\N	f
+343	IND FFS NM	Individual FFS Not Medi-Cal	ind therapy	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+344	INDV T FFS	Individual Therapy FFS	ind therapy	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+345	IND FFS IP	Individual FFS Inpatient	ind therapy	\N	1. Mental Health Services	\N	\N	\N	\N	f
+346	IND CW	Individual Cal WORKS	ind therapy	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+351	GRP THERPY	Group Therapy	grp therapy	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+352	GRP T 3632	Group Therapy-AB3632	grp therapy	B. Mental Health Services	1. Mental Health Services	\N	minutes	t	\N	f
+353	GRP FFS NM	Group FFS Not Medi-Cal	grp therapy	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+354	GROUP FFS	Group Therapy FFS	grp therapy	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+356	GRP CW	Group CalWORKS	grp therapy	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+360	MED FFS	Medication Support FFS MediCal	meds	C. Medication Support	1. Mental Health Services	\N	\N	\N	\N	f
+361	MED SUPPRT	Medication Support	meds	C. Medication Support	1. Mental Health Services	\N	minutes	\N	\N	f
+362	MED 3632	Medication Support-AB3632	meds	C. Medication Support	1. Mental Health Services	\N	minutes	t	\N	f
+363	MED FFS NM	Medication Supprt FFS Not MCal	meds	C. Medication Support	1. Mental Health Services	\N	minutes	\N	\N	f
+364	MEDSUP FFS	Medication Support FFS	meds	C. Medication Support	1. Mental Health Services	\N	minutes	\N	\N	f
+365	MED FFS IP	Medication Support FFS Inpatnt	meds	C. Medication Support	1. Mental Health Services	\N	minutes	\N	\N	f
+366	MED CW	Medication Supprt CalWORKS	meds	C. Medication Support	1. Mental Health Services	\N	minutes	\N	\N	f
+367	MEDSTRNSPT	MEDICATION TRAINING & SUPPORT	meds	C. Medication Support	1. Mental Health Services	\N	minutes	\N	\N	f
+368	90863LCPHD	90863 +MEDS W PSYTHPY LCSW-PhD	meds	C. Medication Support	1. Mental Health Services	\N	minutes	\N	\N	f
+369	H2010RNLVN	MEDICATION MGMT BY RN LVN ONLY	meds	C. Medication Support	1. Mental Health Services	\N	minutes	\N	\N	f
+371	CRISIS	Crisis Intervention	crisis intervention	D. Crisis Intervention	1. Mental Health Services	\N	minutes	\N	\N	f
+372	CRIS 3632	Crisis Intervention-AB3632	crisis intervention	D. Crisis Intervention	1. Mental Health Services	\N	minutes	t	\N	f
+373	CRS FFS NM	Crisis Interv FFS Not MediCal	crisis intervention	D. Crisis Intervention	1. Mental Health Services	\N	\N	\N	\N	f
+374	CRISIS FFS	Crisis Intervention FFS	crisis intervention	D. Crisis Intervention	1. Mental Health Services	\N	minutes	\N	\N	f
+375	CRIS FFSIP	Crisis Intervention FFS Inpat	crisis intervention	D. Crisis Intervention	1. Mental Health Services	\N	\N	\N	\N	f
+376	CRISFFS CW	Crisis Interven FFS CalWORKS	crisis intervention	D. Crisis Intervention	1. Mental Health Services	\N	\N	\N	\N	f
+377	90839CR 60	90839 Crisis Thpy 60 min	crisis intervention	D. Crisis Intervention	1. Mental Health Services	\N	minutes	\N	\N	f
+378	90840CR+30	90840 + Crisis Thpy Add 30min	crisis intervention	D. Crisis Intervention	1. Mental Health Services	\N	minutes	\N	\N	f
+381	IND REHAB	Individual Rehabilitation	ind therapy	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+382	IND R 3632	Individual Rehab-AB3632	ind therapy	B. Mental Health Services	1. Mental Health Services	\N	minutes	t	\N	f
+385	INDFFSED30	INDIV THERAPY FFS ED 30MIN	\N	\N	\N	\N	\N	\N	\N	f
+386	INDFFSED45	INDIV THERAPY FFS ED 45 MIN	\N	\N	\N	\N	\N	\N	\N	f
+387	INDFFSED60	INDIV THERAPY FFS ED 60 MIN	\N	\N	\N	\N	\N	\N	\N	f
+388	FAMFFSED60	FAMILY THERAPY FFS ED 60 MIN	\N	\N	\N	\N	\N	\N	\N	f
+389	FAMFFSED90	FAMILY THERAPY FFS ED 90 MIN	\N	\N	\N	\N	\N	\N	\N	f
+391	GRP REHAB	Group Rehabilitation	grp therapy	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+392	GRP R 3632	Group Rehab-AB3632	grp therapy	B. Mental Health Services	1. Mental Health Services	\N	minutes	t	\N	f
+395	GRPFFSED60	GROUP FFS ED 60 MIN	\N	\N	\N	\N	\N	\N	\N	f
+396	GRPFFSED90	GROUP FFS ED 90 MIN	\N	\N	\N	\N	\N	\N	\N	f
+401	MH PROMO	Mental Health Promotion	\N	T. Other Reimbursable Services	5. Other Reimbursable Services	\N	\N	\N	\N	f
+402	CC ON SITE	Community/Client On Site	\N	T. Other Reimbursable Services	5. Other Reimbursable Services	\N	\N	\N	\N	f
+403	CC OFF STE	Community/Client Off Site	\N	T. Other Reimbursable Services	5. Other Reimbursable Services	\N	\N	\N	\N	f
+404	CONSULT	Consultation To Organizations	\N	T. Other Reimbursable Services	5. Other Reimbursable Services	\N	\N	\N	\N	f
+405	COMSV OTHR	Community Services Other	\N	T. Other Reimbursable Services	5. Other Reimbursable Services	\N	\N	\N	\N	f
+406	N-BILL SUP	Non-Billable Social Supprt Svs	\N	\N	\N	\N	\N	\N	\N	f
+411	IND/SO	Individual/Significant Other	\N	\N	\N	\N	\N	\N	\N	f
+412	INDSO/3632	Indiv/Significant Other AB3632	\N	\N	\N	\N	\N	\N	\N	f
+413	90846 COLL	90846 FAMILY PSYCH WO PATIENT	family therapy	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+415	96101 TEST	96101 PSYCH TESTING	\N	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+416	96102 TEST	96102 PSYCH TEST BY MFT/LCSW	\N	B. Mental Health Services	1. Mental Health Services	\N	\N	\N	\N	f
+417	96118 TEST	96118 NEUROPSYCH TESTING	\N	B. Mental Health Services	1. Mental Health Services	\N	\N	\N	\N	f
+421	PERF OUTCM	Performance Outcomes	evaluation	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+422	PERF 3632	Performance Outcomes AB3632	evaluation	B. Mental Health Services	1. Mental Health Services	\N	minutes	t	\N	f
+423	PRG SPHOUS	PROGRAM SUPPORT HOUSING	\N	R. MHSA Program Support Housing	3. MHSA Program Support Services	\N	\N	\N	\N	f
+424	PRG SP VOC	PROGRAM SUPPORT VOCATIONAL	\N	S. MHSA Program Support Vocational	3. MHSA Program Support Services	\N	\N	\N	\N	f
+425	PRG SP EDU	PROGRAM SUPPORT EDUCATIONS	\N	Q. MHSA Program Support Education	3. MHSA Program Support Services	\N	\N	\N	\N	f
+426	COM IND CO	COMMUNITY/INDIV CONSULTATION	\N	T. Other Reimbursable Services	\N	\N	\N	\N	\N	f
+427	COM FAM CO	COMMUNITY/FAMILY CONSULTATION	\N	T. Other Reimbursable Services	\N	\N	\N	\N	\N	f
+428	COM LIN CO	COMMUNITY/LINKAGE CONSULTATION	\N	T. Other Reimbursable Services	\N	\N	\N	\N	\N	f
+431	CT DX EVAL	Court Ordered Diagnostic Eval	court eval	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+433	90801 ASMT	90801 Initial Psych Evaluation	assessment	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+434	90802 IACT	90802 PSYCH DIAG INTERACTIVE	\N	B. Mental Health Services	\N	\N	\N	\N	\N	f
+437	96101 ASMT	96101 PSYCH TEST  INTERP RPT	unknown	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+438	96105 ASMT	96105 ASMT APHASIA, INTER, RPT	\N	\N	1. Mental Health Services	\N	\N	\N	\N	f
+439	96110 ASMT	96110 DEVELOP TEST, INTER, RPT	\N	\N	1. Mental Health Services	\N	\N	\N	\N	f
+441	90832 TX30	90832 Psychotherapy 30 min	ind therapy	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+442	90834 TX45	90834 Psychotherapy 45 min	ind therapy	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+443	90837 TX60	90837 Psychotherapy 60 min	ind therapy	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+444	90804 INDV	90804 Indiv Psy 20-30 min	ind therapy	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+445	90806 INDV	90806 INDV PSYCH 45-50 MIN	ind therapy	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+446	90808 INDV	90808 INDV PSYCH 75-80 MIN	ind therapy	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+447	90810 INDV	90810 IND PSYCH INTACT 20-30MN	\N	B. Mental Health Services	\N	\N	minutes	\N	\N	f
+448	90812 INDV	90812 IND PSYCH INT 40-50 MIN	ind therapy	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+449	90847 INDV	90847 FAMILY PSYCH W PATIENT	family therapy	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+450	90814 INDV	90814 IND PSYCH INTACT 75-80MN	ind therapy	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+455	90849 GRP	90849 MULTI FAMILY GRP PSYCH	family therapy	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+456	90853 GRP	90853 GROUP PSYCHOTHERAPY	grp therapy	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+457	90857 GRP	90857 GROUP PSYCH INTERACTIVE	grp therapy	B. Mental Health Services	1. Mental Health Services	\N	\N	\N	\N	f
+458	AVAIL	available	\N	B. Mental Health Services	\N	\N	\N	\N	\N	f
+459	AVAIL	available                    0	\N	B. Mental Health Services	\N	\N	\N	\N	\N	f
+461	MED RF/INJ	Medication Refill/Injection	meds	C. Medication Support	1. Mental Health Services	\N	\N	\N	\N	f
+462	M/INJ 3632	Medication Rf/Injection-AB3632	meds	C. Medication Support	1. Mental Health Services	\N	\N	t	\N	f
+463	90805 MEDS	90805 IND PSY W E&M 20-25 MIN	meds	C. Medication Support	1. Mental Health Services	\N	minutes	\N	\N	f
+464	90807 MEDS	90807 IND PSY W E&M 45-50 MIN	meds	C. Medication Support	1. Mental Health Services	\N	minutes	\N	\N	f
+465	90833+EM30	90833 +PsyThpy with E/M 30min	meds	C. Medication Support	1. Mental Health Services	\N	minutes	\N	\N	f
+466	90809 MEDS	90809 IND PSY W E&M 75-80 MIN	meds	C. Medication Support	1. Mental Health Services	\N	minutes	\N	\N	f
+467	90836+EM45	90836 + PsyThpy with E/M 45min	meds	C. Medication Support	1. Mental Health Services	\N	minutes	\N	\N	f
+468	90838+EM60	90838 + PsyThpy with E/M 60min	meds	C. Medication Support	1. Mental Health Services	\N	minutes	\N	\N	f
+469	90862 MEDS	90862 MEDICATION MANAGEMENT	meds	C. Medication Support	1. Mental Health Services	\N	minutes	\N	\N	f
+471	99341NHM20	99341 E/M HOME NEW PROBFOC 20M	meds	C. Medication Support	\N	\N	minutes	\N	\N	f
+472	99342NHM30	99342 E/M HOME NEW EXPAND 30M	meds	C. Medication Support	\N	\N	minutes	\N	\N	f
+473	99343NHM45	99343 E/M HOME NEW DETAIL 45M	meds	C. Medication Support	\N	\N	minutes	\N	\N	f
+474	99344NHM60	99344 E/M HOME NEW COMPRE 60M	meds	C. Medication Support	\N	\N	minutes	\N	\N	f
+475	99345NHM75	99345 E/M HOME NEW COMPLEX 75M	meds	C. Medication Support	\N	\N	minutes	\N	\N	f
+476	99347EHM15	99347 E/M HOME EST PROBFOC 15M	meds	C. Medication Support	\N	\N	minutes	\N	\N	f
+477	99348EHM25	99348 E/M HOME EST EXPAND 25M	meds	C. Medication Support	1. Mental Health Services	\N	minutes	\N	\N	f
+478	99349EHM40	99349 E/M HOME EST DETAIL 40M	meds	C. Medication Support	1. Mental Health Services	\N	minutes	\N	\N	f
+479	99350EHM60	99350 E/M HOME EST COMPLEX 60M	meds	C. Medication Support	1. Mental Health Services	\N	minutes	\N	\N	f
+480	PES CJ	CJ Psych Emergency Services	\N	\N	\N	\N	\N	\N	\N	f
+481	PES EVAL	Emergency Services Evaluation	\N	\N	\N	\N	\N	\N	\N	f
+482	PES/HW11/2	PES Eval/HW to 1 1/2 Hours	\N	\N	\N	\N	\N	\N	\N	f
+483	PES/HW 4	PES Eval/HW 1 1/2 To 4 Hours	\N	\N	\N	\N	\N	\N	\N	f
+484	PES/HW 12	PES Eval/HW 4 To 12 Hours	\N	\N	\N	\N	\N	\N	\N	f
+485	PES/HW 24	PES Eval/HW 12 To 24 Hours	\N	\N	\N	\N	\N	\N	\N	f
+486	MED CONSUL	Medical Ward Consultation	Medical Ward Consultation	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+491	90785+ITCM	90785 + Interactive Complexity	\N	B. Mental Health Services	\N	\N	\N	\N	\N	f
+496	DV BERK	DOMESTIC VIOLENCE SVC-BERKELEY	\N	\N	\N	\N	\N	\N	\N	f
+498	TBS	THERAPEUTIC BEHAVIORAL SVCS	tbs	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+502	MC ELIG IN	Medi-Cal Eligibility Intake	\N	M. MAA Services	4. MAA Services	f	\N	\N	\N	f
+504	INF MC SVS	Inform Elig About MC Services	\N	M. MAA Services	4. MAA Services	f	\N	\N	\N	f
+505	UNDERSTAND	Understand Need for MH Service	\N	M. MAA Services	4. MAA Services	f	\N	\N	\N	f
+506	ACCEPT SVS	Acceptance of MH Services	\N	M. MAA Services	4. MAA Services	f	\N	\N	\N	f
+508	CRISIS REF	Crisis Referral To MH Services	\N	M. MAA Services	4. MAA Services	t	\N	\N	\N	f
+510	CM EVL IMD	CM Evaluation IMD	\N	\N	\N	\N	\N	\N	\N	f
+511	CM EVAL	CM Evaluation	\N	\N	\N	\N	\N	\N	\N	f
+512	CEVAL3632	CM Evaluation AB3632	\N	\N	\N	\N	\N	t	\N	f
+513	CEVAL3632R	CM Evaluation AB3632 Resident	\N	\N	\N	\N	\N	t	\N	f
+514	RECRT PROV	Recruit Medi-Cal Providers	\N	\N	\N	\N	\N	\N	\N	f
+515	DEV CONTRT	Develop MC Provider Contracts	\N	\N	\N	\N	\N	\N	\N	f
+516	MONIT CONT	Monitor MC Provider Contracts	\N	\N	\N	\N	\N	\N	\N	f
+517	TECH ASST	Provide Technical Assistance	\N	\N	\N	\N	\N	\N	\N	f
+519	INF MH SVS	Inform At-Risk About MH Svs	\N	M. MAA Services	4. MAA Services	t	\N	\N	\N	f
+520	EVAL IMD	CM Plan Development IMD	\N	\N	\N	\N	\N	\N	\N	f
+521	CM PLAN	CM Plan Development	\N	\N	\N	\N	\N	\N	\N	f
+522	CPLAN 3632	CM Plan Development AB3632	\N	\N	\N	\N	\N	t	\N	f
+523	PD 3632 R	CM Plan Development AB3632 Res	\N	\N	\N	\N	\N	\N	\N	f
+524	REFERRAL	Tele/Drop-In Referral MH Svs	\N	M. MAA Services	4. MAA Services	t	\N	\N	\N	f
+526	SPMP TRAIN	SPMP Training  Given Or Recvd	\N	M. MAA Services	4. MAA Services	\N	\N	\N	\N	f
+527	SPMP INFO	SPMP Gather Info Re:Halth Nds	\N	M. MAA Services	4. MAA Services	\N	\N	\N	\N	f
+528	SPMP ASST	SPMP Assist Access To MC Svs	\N	M. MAA Services	4. MAA Services	\N	\N	\N	\N	f
+530	ER INT IMD	CM Emergency Intervention IMD	\N	\N	\N	\N	\N	\N	\N	f
+531	CM EMER	CM Emergency Intervention	\N	\N	\N	\N	\N	\N	\N	f
+532	CEMER 3632	CM Emergency Interv AB3632	\N	\N	\N	\N	\N	t	\N	f
+533	ER 3632 R	CM Emergency Interv AB3632 Res	\N	\N	\N	\N	\N	t	\N	f
+534	96118 ASMT	96118 NEUROPSY TEST INTERP RPT	\N	B. Mental Health Services	1. Mental Health Services	\N	\N	\N	\N	f
+535	96111 ASMT	96111 EXT DEV TEST  INTERP RPT	\N	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+536	96116 ASMT	96116 NEUROBEH ST EX INTER,RPT	\N	\N	1. Mental Health Services	\N	\N	\N	\N	f
+537	N-SPMP INF	Non-SPMP Gather Info Health Nd	\N	M. MAA Services	4. MAA Services	t	\N	\N	\N	f
+538	N-SPMP AST	Non-SPMP Assist Access To MC	\N	M. MAA Services	4. MAA Services	t	\N	\N	\N	f
+539	97532 ASMT	97532 COGNITIVE SKILLS DEVELOP	\N	\N	1. Mental Health Services	\N	\N	\N	\N	f
+540	PLMNT IMD	CM Placement Services IMD	\N	\N	\N	\N	\N	\N	\N	f
+541	CM PLACE	CM Placement Services	\N	\N	\N	\N	\N	\N	\N	f
+542	CPLAC 3632	CM Placement AB3632	\N	\N	\N	\N	\N	\N	\N	f
+543	PLT 3632 R	CM Placement AB3632 Res	\N	\N	\N	\N	\N	\N	\N	f
+545	99201 INDV	99201 E/M NEW OFC SIMPLE 10MIN	meds	C. Medication Support	1. Mental Health Services	\N	minutes	\N	\N	f
+546	99202 INDV	99202 E/M NEW OFC EXP 20MIN	meds	C. Medication Support	1. Mental Health Services	\N	minutes	\N	\N	f
+547	99203 INDV	99203 E/M NEW OFC DETAIL 30MIN	meds	C. Medication Support	1. Mental Health Services	\N	minutes	\N	\N	f
+548	99204 INDV	99204 E/M NEW OFC COMPRE 45MIN	meds	C. Medication Support	1. Mental Health Services	\N	minutes	\N	\N	f
+549	99205 INDV	99205 E/M NEW OFC COMPLEX60MIN	meds	C. Medication Support	1. Mental Health Services	\N	minutes	\N	\N	f
+550	ASSIST IMD	CM Assistance Daily Livng IMD	\N	\N	\N	\N	\N	\N	\N	f
+551	CM ASSIST	CM Assistance Daily Living	\N	\N	\N	\N	\N	\N	\N	f
+552	ASSIST 363	CM Assist Daily Living AB3632	\N	\N	\N	\N	\N	t	\N	f
+553	AST 3632 R	CM Asst Daily Livng AB3632 Res	\N	\N	\N	\N	\N	t	\N	f
+557	IHBSKATIEA	INT HOME-BAS SRV KATIE A(IHBS)	\N	B. Mental Health Services	\N	\N	minutes	\N	\N	f
+560	LINK IMD	CM Linkage & Advocacy IMD	\N	\N	\N	\N	\N	\N	\N	f
+561	CM LINK	CM Linkage & Advocacy	\N	\N	\N	\N	\N	\N	\N	f
+562	CLINK3632	CM Link & Advocacy AB3632	\N	\N	\N	\N	\N	t	\N	f
+563	LINK3632R	CM Link & Advocacy AB3632 Res	\N	\N	\N	\N	\N	t	\N	f
+564	M0064 MEDS	M0064 BRIEF MEDS MGT <15 MIN	meds	C. Medication Support	1. Mental Health Services	\N	minutes	\N	\N	f
+565	90792EVLMD	90792 Psy Diag Eval w-medical	meds	C. Medication Support	1. Mental Health Services	\N	minutes	\N	\N	f
+566	90792TELEV	90792 TELEPSY DIAG EVL MEDICAL	\N	\N	\N	\N	\N	\N	\N	f
+567	90833TELPY	90833 +TELEPSY WITH E/M 30MIN	\N	\N	\N	\N	\N	\N	\N	f
+568	90836TELPY	90836 +TELEPSY WITH E/M 45MIN	\N	\N	\N	\N	\N	\N	\N	f
+569	90838TELPY	90838 +TELEPSY WITH E/M 60MIN	\N	\N	\N	\N	\N	\N	\N	f
+570	BRKRGE IMD	Brokerage Services IMD	brokerage	A. Case Management Services	1. Mental Health Services	\N	minutes	\N	\N	f
+571	BROKERAGE	Brokerage Services	brokerage	A. Case Management Services	1. Mental Health Services	\N	minutes	\N	\N	f
+572	BROKR 3632	Brokerage Svs-AB3632	brokerage	A. Case Management Services	1. Mental Health Services	\N	minutes	t	\N	f
+573	BROK FFS N	Brokerage FFS Not Medi-Cal	brokerage	A. Case Management Services	1. Mental Health Services	\N	\N	\N	\N	f
+574	BROKGE FFS	Case Mgmnt Brokerage FFS	brokerage	A. Case Management Services	1. Mental Health Services	\N	\N	\N	\N	f
+576	BROK CW	Brokerage Case Mgt CalWORKS	brokerage	A. Case Management Services	1. Mental Health Services	\N	minutes	\N	\N	f
+577	ICC KATIEA	INTEN CARE CORD KATIE A (ICC)	\N	A. Case Management Services	\N	\N	\N	\N	\N	f
+581	PLAN DEV	Plan Development	planning	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+582	PL DEV3632	Plan Development-AB3632	planning	B. Mental Health Services	1. Mental Health Services	\N	minutes	t	\N	f
+585	99211TELPY	99211 TELEPSY EM ESTOP SPL 5M	\N	\N	\N	\N	\N	\N	\N	f
+586	99212TELPY	99212 TELPSY EM ESTOP PBFOC 10	\N	\N	\N	\N	\N	\N	\N	f
+587	99213TELPY	99213 TELEPSY EM ESTOP EXP 15M	\N	\N	\N	\N	\N	\N	\N	f
+588	99214TELPY	99214 TELEPSY EM ESTOP MCMP 25	\N	\N	\N	\N	\N	\N	\N	f
+589	99215TELPY	99215 TELEPSY EM ESTOP HCMP 40	\N	\N	\N	\N	\N	\N	\N	f
+590	NO CLM SVC	Non-Claimable Service	\N	B. Mental Health Services	1. Mental Health Services	\N	\N	\N	\N	f
+593	NOCLM BROK	Non Claimable Brokerage	\N	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+594	NO CLM MHS	Non Claimable MHS Serv	\N	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+595	NO CLM GRP	Non Claimable Group	\N	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+596	NOCLM MEDS	Non Claimable Medication Supt	\N	B. Mental Health Services	1. Mental Health Services	\N	\N	\N	\N	f
+597	NOCLM CRIS	Non Claimable Crisis Interven	\N	B. Mental Health Services	1. Mental Health Services	\N	\N	\N	\N	f
+598	NOCLCHOICE	NON-CLAIMABLE CHOICES AUTH ACT	\N	\N	\N	\N	\N	\N	\N	f
+602	MC ELIG CO	Medi-Cal Elig Intake Co-op	\N	\N	\N	\N	\N	\N	\N	f
+604	INF MC CO	Inform Elig MC Services Co-op	\N	\N	\N	\N	\N	\N	\N	f
+605	UNDERST CP	Understand Need MH Svs Co-op	\N	\N	\N	\N	\N	\N	\N	f
+606	ACPT SV CP	Acceptance MH Services Co-op	\N	\N	\N	\N	\N	\N	\N	f
+610	CONREPAREV	CONREP Annual Review	\N	T. Other Reimbursable Services	\N	\N	\N	\N	\N	f
+611	CONREPHVST	CONREP Home Visit	\N	T. Other Reimbursable Services	\N	\N	\N	\N	\N	f
+615	COLFFSEDPH	COLLATERAL PHONE FFS ED	\N	\N	\N	\N	\N	\N	\N	f
+616	COLFFSEDVS	COLLATERAL VISIT FFS ED	\N	\N	\N	\N	\N	\N	\N	f
+617	FAMFFSED60	COLLATERAL FAM FFSED WOCLT 60M	\N	\N	\N	\N	\N	\N	\N	f
+618	FAMFFSED90	COLLATERAL FAM FFSED WOCLT 90M	\N	\N	\N	\N	\N	\N	\N	f
+619	INF MH SVS	Inform At-Risk About MH Sv Voc	\N	\N	\N	\N	\N	\N	\N	f
+620	VOC REFER	Voc Tel/Drop-In Refferal MH Sv	\N	\N	\N	\N	\N	\N	\N	f
+621	CONS INVES	Conservatorship Investigation	\N	V. OTHER	\N	\N	\N	\N	\N	f
+622	NCLM CLSUP	NON CLAIMABLE CLIENT SUPPORT	\N	T. Other Reimbursable Services	\N	\N	minutes	\N	\N	f
+623	CL SPT HOU	CLIENT SUPPORT HOUSING	\N	O. Client Support Housing	2. MHSA Client Support Services	\N	minutes	\N	\N	f
+624	CL SPT VOC	CLIENT SUPPORT VOCATIONAL	\N	P. Client Support Vocational	2. MHSA Client Support Services	\N	minutes	\N	\N	f
+625	CL SPT EDU	CLIENT SUPPORT EDUCATION	\N	N. Client Support Education	2. MHSA Client Support Services	\N	minutes	\N	\N	f
+631	CONS ADMIN	Conservatorship Administration	\N	V. OTHER	\N	\N	\N	\N	\N	f
+635	IOP	INTENSIVE OUTPATIENT SERVICE	\N	\N	\N	\N	\N	\N	\N	f
+637	N-S INF CP	Non-SPMP Gather Info Health CP	\N	\N	\N	\N	\N	\N	\N	f
+638	N-SP ASTCP	Non-SPMP Assist Access Co-op	\N	\N	\N	\N	\N	\N	\N	f
+641	99211 INDV	99211 E/M EST OP SIMPLE 5 MIN	meds	C. Medication Support	1. Mental Health Services	\N	minutes	\N	\N	f
+643	99212 INDV	99212 E/M EST OP PRBFOCUS 10MN	meds	C. Medication Support	1. Mental Health Services	\N	minutes	\N	\N	f
+644	99213 INDV	99213 E/M EST OP EXPANDED 15MN	meds	C. Medication Support	1. Mental Health Services	\N	minutes	\N	\N	f
+645	99214 INDV	99214 E/M EST OP MOD COMPL 25M	meds	C. Medication Support	1. Mental Health Services	\N	minutes	\N	\N	f
+646	99215 INDV	99215 E/M EST OP HIGHCOMPL 40M	meds	C. Medication Support	1. Mental Health Services	\N	minutes	\N	\N	f
+650	99306SNFHC	99306 SNF E/M INIT HGHCOMP 45M	\N	\N	\N	\N	\N	\N	\N	f
+651	LEV I INH	Supp Res Care Level I-In House	\N	\N	\N	\N	\N	\N	\N	f
+652	LV I HOSP	Supp Res Care Level I-Hospital	\N	\N	\N	\N	\N	\N	\N	f
+653	99307SNFST	99307 SNF SUB E&M STRAIGHTFWD	meds	C. Medication Support	1. Mental Health Services	\N	\N	\N	\N	f
+654	99308SNFLO	99308 SNF SUB E&M LOW COMPLEX	meds	C. Medication Support	1. Mental Health Services	\N	\N	\N	\N	f
+655	99309SNFMD	99309 SNF SUB E&M MODERATE COM	meds	C. Medication Support	1. Mental Health Services	\N	\N	\N	\N	f
+656	99310SNFHG	99310 SNF SUB E&M HIGH COMPLEX	meds	C. Medication Support	1. Mental Health Services	\N	\N	\N	\N	f
+657	99304SNFLW	99304 SNF E/M INIT LOWCOMP 25M	meds	C. Medication Support	1. Mental Health Services	\N	\N	\N	\N	f
+658	99305SNFMD	99305 SNF E/M INIT MODCOMP 35M	meds	C. Medication Support	1. Mental Health Services	\N	\N	\N	\N	f
+659	AVAIL	available	meds	C. Medication Support	1. Mental Health Services	\N	\N	\N	\N	f
+660	99324NBD20	99324 E/M BRDCAR NEW PROBF 20M	meds	C. Medication Support	1. Mental Health Services	\N	\N	\N	\N	f
+661	99325NBD30	99325 E/M BRDCAR NEW EXPD 30M	meds	C. Medication Support	1. Mental Health Services	\N	\N	\N	\N	f
+662	99326NBD45	99326 E/M BRDCAR NEW DETAIL 45	meds	C. Medication Support	1. Mental Health Services	\N	\N	\N	\N	f
+663	99327NBD60	99327 E/M BRDCAR NEW COMPR 60M	meds	C. Medication Support	1. Mental Health Services	\N	\N	\N	\N	f
+664	99328NBD75	99328 E/M BRDCAR NEW COMPX 75M	meds	C. Medication Support	1. Mental Health Services	\N	\N	\N	\N	f
+665	99334EBD15	99334 E/M BRDCAR EST PROBF 15M	meds	C. Medication Support	1. Mental Health Services	\N	\N	\N	\N	f
+666	99335EBD25	99335 E/M BRDCAR EST EXPD 25M	meds	C. Medication Support	1. Mental Health Services	\N	\N	\N	\N	f
+667	99336EBD40	99336 E/MBRDCAR EST DETAIL 40M	meds	C. Medication Support	1. Mental Health Services	\N	\N	\N	\N	f
+668	99337EBD60	99337 E/M BRDCAR EST COMPX 60M	meds	C. Medication Support	1. Mental Health Services	\N	\N	\N	\N	f
+670	UR & QA	SPMP Utilization Review & QA	\N	M. MAA Services	4. MAA Services	\N	\N	\N	\N	f
+671	LEV II INH	Supp Res Care Level II-In Hous	\N	\N	\N	\N	\N	\N	\N	f
+672	LV II HOSP	Supp Res Care Level II-Hospita	\N	\N	\N	\N	\N	\N	\N	f
+674	NONSP UTIL	Non-SPMP Util Review & QA	\N	M. MAA Services	4. MAA Services	\N	\N	\N	\N	f
+680	GEN ADMIN	General Administration	\N	U. Non-Reimbursable Services	6. Non-Reimbursable Hours	\N	\N	\N	\N	f
+681	SUPERVISN	Supervision	\N	\N	\N	\N	\N	\N	\N	f
+682	STAFF MTG	Staff Meeting	\N	\N	\N	\N	\N	\N	\N	f
+684	PLAN & DEV	Program Planning & Development	\N	U. Non-Reimbursable Services	6. Non-Reimbursable Hours	\N	\N	\N	\N	f
+687	JOB COACH	Job Coaching-Voc Program	vocational	L. Vocational	1. Mental Health Services	\N	minutes	\N	\N	f
+688	EXT SVS	Extended Services-Voc Program	vocational	\N	1. Mental Health Services	\N	minutes	\N	\N	f
+689	FOLLOW UP	Follow Up-Vocational Program	vocational	L. Vocational	1. Mental Health Services	\N	minutes	\N	\N	f
+690	CCRPMOBILE	90839 CCRP Mobile Crisis 60min	CCRP Mobile Team Outreach	B. Mental Health Services	1. Mental Health Services	\N	minutes	\N	\N	f
+693	MAA ACT H	MAA ACTIVITY H	\N	M. MAA Services	4. MAA Services	\N	\N	\N	\N	f
+695	PD TME OFF	Paid Time Off	\N	U. Non-Reimbursable Services	6. Non-Reimbursable Hours	\N	\N	\N	\N	f
+696	MAAAODCONT	MAA AOD CONTRACT MANAGEMENT	\N	\N	\N	\N	\N	\N	\N	f
+697	MAA AODOTH	MAA AOD OTHER	\N	\N	\N	\N	\N	\N	\N	f
+698	MAA OTHCOM	MAA OTHER COMBINED	\N	\N	\N	\N	\N	\N	\N	f
+699	OTHER ACTV	Other Activity	\N	U. Non-Reimbursable Services	6. Non-Reimbursable Hours	\N	\N	\N	\N	f
+710	EV COL IMD	CM Evaluation Collateral IMD	\N	\N	\N	\N	\N	\N	\N	f
+711	CEVAL COLL	CM Evaluation Collateral	\N	\N	\N	\N	\N	\N	\N	f
+712	CEVAL 3632	CM Evaluation Coll AB3632	\N	\N	\N	\N	\N	t	\N	f
+713	E C 3632 R	CM Evaluation Coll AB3632 Res	\N	\N	\N	\N	\N	t	\N	f
+714	COLL CO-OP	Collateral Co-op	\N	L. Vocational	\N	\N	\N	\N	\N	f
+715	EVAL CO-OP	Evaluation Co-op	\N	L. Vocational	\N	\N	\N	\N	\N	f
+716	ASMT CO-OP	Assessment Co-op	\N	L. Vocational	\N	\N	\N	\N	\N	f
+717	CRIS CO-OP	Crisis Intervention Co-op	\N	L. Vocational	\N	\N	\N	\N	\N	f
+718	IND REH CO	Individual Rehabiliation Co-op	\N	L. Vocational	\N	\N	\N	\N	\N	f
+719	GRP REH CO	Group Rehabilitation Co-op	vocational	\N	\N	\N	minutes	\N	\N	f
+720	PD COL IMD	CM Plan Development Coll IMD	\N	\N	\N	\N	\N	\N	\N	f
+721	CPLAN COLL	CM Plan Development Collateral	\N	\N	\N	\N	\N	\N	\N	f
+722	CPLAN 3632	CM Plan Develop Coll AB3632	\N	\N	\N	\N	\N	t	\N	f
+723	PD C 3632R	CM Plan Develp Coll AB3632 Res	\N	\N	\N	\N	\N	t	\N	f
+724	BROKERG CO	Brokerage Services Co-op	vocational	L. Vocational	\N	\N	\N	\N	\N	f
+725	PLAN DEV C	Plan Development Co-op	vocational	L. Vocational	\N	\N	\N	\N	\N	f
+726	EXT SVS CO	Extended Service Co-op	vocational	L. Vocational	\N	\N	\N	\N	\N	f
+727	FOLLW UP C	Follow Up-Voc Program Co-op	vocational	\N	\N	\N	minutes	\N	\N	f
+728	AUX SVCS	DR Auxiliary Services	vocational	\N	\N	\N	minutes	\N	\N	f
+729	DR VA  IND	DR Vocational Assessment-Indiv	vocational	\N	\N	\N	minutes	\N	\N	f
+730	ER COL IMD	CM Emergency Collateral IMD	\N	\N	\N	\N	\N	\N	\N	f
+731	CEMER COLL	CM Emergency Collateral	\N	\N	\N	\N	\N	\N	\N	f
+732	CEMER 3632	CM Emergency Collateral AB3632	\N	\N	\N	\N	\N	t	\N	f
+733	CEMR 3632R	CM Emergency Coll AB3632 Res	\N	\N	\N	\N	\N	t	\N	f
+734	DR VA  GRP	DR Vocational Assessment-Group	vocational	\N	\N	\N	minutes	\N	\N	f
+735	DR SI ASMT	DR Situational Assessment	\N	L. Vocational	\N	\N	\N	\N	\N	f
+736	DR TEP GRP	DR Trans Employment Prep Group	\N	L. Vocational	\N	\N	\N	\N	\N	f
+737	DR ES IND	DR Employment Svcs-Individual	vocational	L. Vocational	\N	\N	minutes	\N	\N	f
+738	DR ES GRP	DR Employment Svcs-Group	vocational	\N	\N	\N	minutes	\N	\N	f
+768	99204TELPY	99204 TELEPSY EM NEWOF CMP 45M	\N	\N	\N	\N	\N	\N	\N	f
+769	99205TELPY	99205 TELEPSY EM NEWOF CMPX 60	\N	\N	\N	\N	\N	\N	\N	f
+774	N-SP UR CP	Non-SPMP Util Rev & QA Co-op	\N	\N	\N	\N	\N	\N	\N	f
+776	CFS CAREVL	CFS CAREGIVER COMP EVAL	\N	\N	\N	\N	\N	\N	\N	f
+777	CFS BONDST	CFS BONDING STUDY	\N	\N	\N	\N	\N	\N	\N	f
+780	GEN ADM CP	General Administration Co-op	\N	\N	\N	\N	\N	\N	\N	f
+103	STHOSP ACT	State Hospital Acute Day	\N	\N	\N	\N	\N	\N	\N	f
+104	STHOSP SNF	State Hospital SNF Day (70)	\N	\N	\N	\N	\N	\N	\N	f
+105	STHOSP ICF	State Hospital SbAcute (ICF90)	\N	\N	\N	\N	\N	\N	\N	f
+106	STHOSP ALT	State Hospital AltCare (ICF91)	\N	\N	\N	\N	\N	\N	\N	f
+110	INPT CJ	Local Inpatient Day CJ	hospital inpatient	K. Inpatient	\N	\N	day	\N	\N	f
+111	INPATIENT	Local Inpatient	hospital inpatient	K. Inpatient	\N	\N	day	\N	\N	f
+113	INPT AD MC	Local Inpatient Day Adm M-Cal	hospital admin day	K. Inpatient	\N	\N	day	\N	\N	f
+115	IPCJ COCO	Inpatient Day CJ Contra Costa	hospital inpatient	K. Inpatient	\N	\N	\N	\N	\N	f
+116	IPCJ MARIN	Inpatient Day CJ Marin Co	hospital inpatient	K. Inpatient	\N	\N	\N	\N	\N	f
+117	IPCJ MATEO	Inpatient Day CJ San Mateo Co	hospital inpatient	K. Inpatient	\N	\N	\N	\N	\N	f
+162	RES-AB3632	On Site Trans Res Day-AB3632	res day	G. Residential	\N	\N	day	t	\N	f
+165	AD RESID	Adult Residential Day	res day	G. Residential	\N	\N	day	\N	\N	f
+166	ADRESNOCAL	Adult Residental Day Non-M-Cal	\N	G. Residential	\N	\N	day	\N	\N	f
+170	RESADLSUP	RESIDENTIAL ADULT SUPPLEMENTAL	\N	\N	\N	\N	\N	\N	\N	f
+171	RES CHDSUP	RESIDENTIAL CHILD SUPPLEMENTAL	\N	\N	\N	\N	\N	\N	\N	f
+173	RESCHDERPL	RESIDENTIAL CHILD ER PLACEMENT	\N	\N	\N	\N	\N	\N	\N	f
+178	LNG TRM CR	Long Term Care	\N	\N	\N	\N	\N	\N	\N	f
+180	CH RESIDAY	CHILD RESIDENTIAL DAY	\N	\N	\N	\N	\N	\N	\N	f
+190	AOD DETOX	ALCOHOL OR DRUG DETOX PRGM DAY	\N	\N	\N	\N	day	\N	\N	f
+191	MHRC DAY	MH REHABILITATION CENTER DAY	MHRC-PHF	I. PHF	\N	\N	day	\N	\N	f
+192	MHRC DAYL2	MH REHAB CENTER DAY L2	\N	\N	\N	\N	\N	\N	\N	f
+193	MHRC DAYL3	MH REHAB CENTER DAY L3	\N	\N	\N	\N	\N	\N	\N	f
+194	MHRC DAYL4	MH REHAB CENTER DAY L4	\N	\N	\N	\N	\N	\N	\N	f
+784	VC PLAN/DV	Voc-Program Plan & Development	\N	L. Vocational	\N	\N	\N	\N	\N	f
+792	PROBRPTFEE	PROBATION REPORT FEE	\N	\N	\N	\N	\N	\N	\N	f
+793	CFS RPT NM	CFS Casework Report Not MediCl	CFS Reporting	V. OTHER	\N	\N	day	\N	\N	f
+794	CFS RPT	CFS Casework Report	CFS Reporting	V. OTHER	\N	\N	day	\N	\N	f
+796	CWENGAGFEE	CalWORKS Engagement Fee	CalWorks reporting	V. OTHER	\N	\N	\N	\N	\N	f
+797	CW I REPRT	CALWorks Initial Reporting Fee	CalWorks reporting	V. OTHER	1. Mental Health Services	\N	day	\N	\N	f
+798	CW F REPRT	CALWorks Followup Reportng Fee	CalWorks reporting	V. OTHER	1. Mental Health Services	\N	day	\N	\N	f
+\.
+
+
+--
+-- Name: procedures_pkey; Type: CONSTRAINT; Schema: public; Owner: greg; Tablespace: 
+--
+
+ALTER TABLE ONLY procedures
+    ADD CONSTRAINT procedures_pkey PRIMARY KEY (procedure_code);
+
+
+--
+-- PostgreSQL database dump complete
+--
+

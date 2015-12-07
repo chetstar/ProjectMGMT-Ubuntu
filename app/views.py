@@ -306,6 +306,8 @@ def edit_proced(id,edit):
     form = proced()
     form = proced(obj=p)
     form.populate_obj(p) 
+    if p.discounted==None:
+        form.discounted=''
     if request.method == 'POST' :
         # and form.validate_on_submit()
         if edit == '1':#editing exisitng
@@ -1021,8 +1023,10 @@ def tocquestion(id,action,sub):
 def alltoc():
     # toclist= models.TOC.query.order_by(models.Challenge.Priority).all()
     toclist= models.dashboards.query.all()
+    # toc_row=db.session.query(models.dashboards_reviews.category,models.dashboards.title,models.dashboards_reviews.id).outerjoin(models.dashboards,models.dashboards_reviews).all()
+    # import pdb;pdb.set_trace()
     # sorted(q_sum, key=lambda tup: tup[7])
-    return render_template("tocview.html",email=g.user.email,name=g.user.name,toclist=toclist)
+    return render_template("tocview.html",email=g.user.email,name=g.user.name,toclist=toclist,toc_row=toc_row)
 
 
 

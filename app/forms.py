@@ -319,6 +319,16 @@ class proced(Form):
     ab3632_procedure =BooleanField('3632', default=False)
     medi_cal_billable =BooleanField('MC billable', default=False)
     no_show =BooleanField('No Shows', default=False)
+    billing_category =  SelectField(u"Billing",coerce=unicode, choices=[
+     (None,None),
+     ('1. Mental Health Services','1. Mental Health Services'),
+ ('5. Other Reimbursable Services','5. Other Reimbursable Services'),
+ ('6. Non-Reimbursable Hours','6. Non-Reimbursable Hours'),
+ ('3. MHSA Program Support Services','3. MHSA Program Support Services'),
+ ('4. MAA Services','4. MAA Services'),
+ ('2. MHSA Client Support Services','2. MHSA Client Support Services')])
+    discounted =BooleanField('Discounted', default=False)
+    # discounted = RadioField(u"discounted",coerce=unicode, choices=[('None','None'),(True,True),(True,False)])
     submit=SubmitField('Submit')
 
 class rutablefilter(Form):
