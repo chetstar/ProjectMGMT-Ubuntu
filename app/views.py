@@ -311,11 +311,11 @@ def edit_proced(id,edit):
     if request.method == 'POST' :
         # and form.validate_on_submit()
         if edit == '1':#editing exisitng
-            if form.service_category == '':
+            if form.service_category.data == '':
                 ru.service_category=None
-            if form.medi_cal_service_category == '':
+            if form.medi_cal_service_category.data == '':
                 ru.medi_cal_service_category=None
-            if form.billing_category == '':
+            if form.billing_category.data == '':
                 ru.billing_category=None
             db.session.commit()
         return redirect(url_for('allproced'))
@@ -332,14 +332,15 @@ def edit_ru(id,edit):
     if g.user.form_access=='all':
         form = rutable()
         form = rutable(obj=ru)
-        form.populate_obj(ru) 
+        if ru.cans==None:
+            form.cans.data='None'
         AT= list(set([h.agency for h in models.staging_providers.query.all()]))
         AT.append('')
         form.agency.choices=zip(sorted(AT),sorted(AT))       
     elif g.user.form_access=='cans':
         form = cans()
         form = cans(obj=ru)
-        form.populate_obj(ru)
+        # form.populate_obj(ru)
         # ru.modified_by=g.user
     else:
         form=cans()
@@ -349,21 +350,24 @@ def edit_ru(id,edit):
     if request.method == 'POST' :
         # and form.validate_on_submit()
         if edit == '1':#editing exisitng
+            form.populate_obj(ru) 
             # ru.reviewEdit=True
             # ru.modified_on=datetime.datetime.utcnow()
             # db.session.add(p) 
             # form.oldRU.data=ru.oldRU   
             # import pdb;pdb.set_trace()
-            if form.dbservicemodality == '':
+            if form.dbservicemodality.data == '':
                 ru.dbservicemodality=None
-            if form.svctype == '':
+            if form.svctype.data == '':
                 ru.svctype=None
-            if form.psmasktext == '':
+            if form.psmasktext.data == '':
                 ru.psmasktext=None
-            if form.predesessor == '':
+            if form.predesessor.data == '':
                 ru.predesessor=None
-            if form.school_cds_id == '':
+            if form.school_cds_id.data == '':
                 ru.school_cds_id=None
+            if form.cans.data == 'None':
+                ru.cans=None
             ru.modified_by=g.user.name 
             db.session.commit()
         return redirect(url_for('allrus'))
@@ -1036,7 +1040,7 @@ def alltoc():
     # toc_row=db.session.query(models.dashboards_reviews.category,models.dashboards.title,models.dashboards_reviews.id).outerjoin(models.dashboards,models.dashboards_reviews).all()
     # import pdb;pdb.set_trace()
     # sorted(q_sum, key=lambda tup: tup[7])
-    return render_template("tocview.html",email=g.user.email,name=g.user.name,toclist=toclist,toc_row=toc_row)
+    return render_template("tocview.html",email=g.user.email,name=g.user.name,toclist=toclist)
 
 
 
