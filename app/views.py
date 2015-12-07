@@ -355,7 +355,7 @@ def edit_ru(id,edit):
             # ru.modified_on=datetime.datetime.utcnow()
             # db.session.add(p) 
             # form.oldRU.data=ru.oldRU   
-            import pdb;pdb.set_trace()
+            # import pdb;pdb.set_trace()
             if g.user.form_access=='all':
                 # if form.dbservicemodality.data == '':
                 #     ru.dbservicemodality=None

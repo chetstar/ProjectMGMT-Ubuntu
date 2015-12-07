@@ -406,7 +406,7 @@ class rutable(Form):
     older_adult        = BooleanField('older_adult')  
     # old_ru     = IntegerField('old RU') 
     # cans        = BooleanField('cans') 
-    cans        =     SelectField('cans', choices=[(None,'None'),(True,True),(False,False)],) 
+    cans        =     RadioField('cans', choices=[(None,'None'),(True,True),(False,False)],) 
     out_of_county        = BooleanField('out_of_county')   
     program        = BooleanField('program')  
     # provider_name        =TextField('provname')  
