@@ -306,11 +306,17 @@ def edit_proced(id,edit):
     form = proced()
     form = proced(obj=p)
     form.populate_obj(p) 
-    if p.discounted==None:
-        form.discounted=''
+    # if p.discounted==None:
+    #     form.discounted=''
     if request.method == 'POST' :
         # and form.validate_on_submit()
         if edit == '1':#editing exisitng
+            if form.service_category == '':
+                ru.service_category=None
+            if form.medi_cal_service_category == '':
+                ru.medi_cal_service_category=None
+            if form.billing_category == '':
+                ru.billing_category=None
             db.session.commit()
         return redirect(url_for('allproced'))
     return render_template('edit_proced.html',form=form,id=id,p=p,)
