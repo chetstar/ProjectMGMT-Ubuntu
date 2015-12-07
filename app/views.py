@@ -367,8 +367,8 @@ def edit_ru(id,edit):
                     ru.predesessor=None
                 if form.school_cds_id.data == '':
                     ru.school_cds_id=None
-            # if form.cans.data == 'None':
-            #     ru.cans=None
+            if form.cans.data == 'None':
+                ru.cans=None
             ru.modified_by=g.user.name 
             db.session.commit()
         return redirect(url_for('allrus'))
