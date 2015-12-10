@@ -343,7 +343,7 @@ def edit_ru(id,edit):
         # form.populate_obj(ru)
         # ru.modified_by=g.user
     else:
-        form=cans()
+        form=cans(obj=ru)
     # import pdb;pdb.set_trace()
     # if edit == '0' and request.method != 'POST' :
     #     form.Title.data="Copy "+form.Title.data
@@ -357,8 +357,8 @@ def edit_ru(id,edit):
             # form.oldRU.data=ru.oldRU   
             # import pdb;pdb.set_trace()
             if g.user.form_access=='all':
-                # if form.dbservicemodality.data == '':
-                #     ru.dbservicemodality=None
+                if form.dbservicemodality.data == '':
+                    ru.dbservicemodality=None
                 if form.svctype.data == '':
                     ru.svctype=None
                 if form.psmasktext.data == '':
@@ -367,10 +367,47 @@ def edit_ru(id,edit):
                     ru.predesessor=None
                 if form.school_cds_id.data == '':
                     ru.school_cds_id=None
+                if form.ab3632.data == 'None':
+                    ru.ab3632=None
+                if form.residential.data == 'None':
+                    ru.residential=None
+                if form.ab3632 .data == 'None': 
+                    ru.ab3632 =None
+                if form.calworks.data == 'None':    
+                    ru.calworks=None
+                if form.cesdc.data == 'None':   
+                    ru.cesdc=None
+                if form.county_run .data == 'None': 
+                    ru.county_run =None
+                if form.day_treatment.data == 'None':   
+                    ru.day_treatment=None
+                if form.kidsru .data == 'None': 
+                    ru.kidsru =None
+                if form.level_2 .data == 'None':    
+                    ru.level_2 =None
+                if form.level_3_classic .data == 'None':    
+                    ru.level_3_classic =None
+                if form.mhsa .data == 'None':   
+                    ru.mhsa =None
+                if form.older_adult .data == 'None':    
+                    ru.older_adult =None
+                if form.out_of_county .data == 'None':  
+                    ru.out_of_county =None
+                if form.program    .data == 'None': 
+                    ru.program    =None
+                if form.in_school.data == 'None':   
+                    ru.in_school=None
+                if form.tay .data == 'None':    
+                    ru.tay =None
+                if form.tbs .data == 'None':    
+                    ru.tbs =None
+                if form.cooked .data == 'None': 
+                    ru.cooked =None
             if form.cans.data == 'None':
                 ru.cans=None
             ru.modified_by=g.user.name 
             db.session.commit()
+            flash("Changes saved")
         return redirect(url_for('allrus'))
     return render_template('edit_ru.html',form=form,id=id,ru=ru,form_access=g.user.form_access)
 

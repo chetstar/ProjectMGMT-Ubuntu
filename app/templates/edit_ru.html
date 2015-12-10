@@ -122,46 +122,54 @@
     <div class="col-md-3">
     {{ wtf.form_field(form.predesessor) }}</div></div>
  <div class="row">
- <div class="col-md-2">
+ <div class="col-md-2">AB3632
    {{ wtf.form_field(form.ab3632) }}
  </div>
  <div class="col-md-2">
+ {{form.cesdc.label}}
    {{ wtf.form_field(form.cesdc) }}
+
  </div>
  <div class="col-md-2">
-
+ {{form.county_run.label}}
 {{ wtf.form_field(form.county_run) }}
  </div>
   <div class="col-md-2">
+   {{form.calworks.label}}
 {{ wtf.form_field(form.calworks) }}
  </div></div>
   <div class="row">
  <div class="col-md-2">
+  {{form.day_treatment.label}}
    {{ wtf.form_field(form.day_treatment) }}
  </div>
  <div class="col-md-2">
+  {{form.kidsru.label}}
 {{ wtf.form_field(form.kidsru) }}
  </div>
  <div class="col-md-2">
+  {{form.level_2.label}}
 {{ wtf.form_field(form.level_2) }}
  </div>
   <div class="col-md-2">
+   {{form.level_3_classic.label}}
 {{ wtf.form_field(form.level_3_classic) }}
  </div></div>
   <div class="row">
  <div class="col-md-2">
+  {{form.in_school.label}}
    {{ wtf.form_field(form.in_school) }}
  </div>
  <div class="col-md-2">
-   
+    {{form.tay.label}}
 {{ wtf.form_field(form.tay) }}
  </div>
  <div class="col-md-2">
-
+ {{form.tbs.label}}
 {{ wtf.form_field(form.tbs) }}
  </div>
   <div class="col-md-2">
-
+ {{form.mhsa.label}}
 {{ wtf.form_field(form.mhsa) }}
  </div></div>
   
@@ -171,28 +179,28 @@
 {{ wtf.form_field(form.cans) }}
 
  </div>
- <div class="col-md-2">
+ <div class="col-md-2">Residential
    {{ wtf.form_field(form.residential) }}
  </div>
  <div class="col-md-2">
-
+ {{form.program.label}}
 {{ wtf.form_field(form.program) }}
  </div>
   <div class="col-md-2">
-
+ {{form.out_of_county.label}}
 {{ wtf.form_field(form.out_of_county) }}
  </div></div>
    <div class="row">
- <div class="col-md-2"> {{ wtf.form_field(form.older_adult) }}
+ <div class="col-md-2">  {{form.older_adult.label}}{{ wtf.form_field(form.older_adult) }}
 </div></div>
-<div class="row"><div class="col-md-2"> {{ wtf.form_field(form.cooked) }}
+<div class="row"><div class="col-md-2">  {{form.cooked.label}}{{ wtf.form_field(form.cooked) }}
 </div></div>
 
 {{ wtf.form_field(form.submitRU) }}
 
 {% elif form_access == 'cans' %}
    <div class="row">
- <div class="col-md-2">
+ <div class="col-md-2">CANS
    {{ wtf.form_field(form.cans) }}
  </div>
  <div class="col-md-2">

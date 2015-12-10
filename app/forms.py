@@ -375,15 +375,15 @@ class rutablefilter(Form):
 
 class rutable(Form):
     # Tags = QuerySelectField(u'Category', query_factory=getTags, get_label='Category',default="Unassigned")
-    ab3632        = BooleanField('ab3632') 
+    ab3632        = RadioField('ab3632', choices=[(None,'None'),(True,True),(False,False)],) 
     # agency        =TextField('agency')
     agency = SelectField(u"Agency",coerce=unicode, )
     #QuerySelectField(u'agency', query_factory=getAgency, get_label='agency',default="Unassigned")  
-    calworks        = BooleanField('calworks')  
+    calworks        = RadioField('calworks', choices=[(None,'None'),(True,True),(False,False)],)   
     school_cds_id       =TextField('school_cds_id')  
-    cesdc        = BooleanField('cesdc')  
-    county_run        = BooleanField('county')   
-    day_treatment        = BooleanField('day_treatment')  
+    cesdc        = RadioField('cesdc', choices=[(None,'None'),(True,True),(False,False)],)   
+    county_run        = RadioField('county', choices=[(None,'None'),(True,True),(False,False)],)    
+    day_treatment        = RadioField('day_treatment', choices=[(None,'None'),(True,True),(False,False)],)   
     dbservicemodality      =  SelectField(u"Service Modality",coerce=unicode, choices=[
           (None,None),
     ('SubAcute','SubAcute'),
@@ -399,16 +399,19 @@ class rutable(Form):
     # end_date        = DateTimeField('end_date')  
     epsdtgroup        =TextField('epsdtgroup')   
     # financial_responsibility    = IntegerField('financial_responsibility')   
-    kidsru        = BooleanField('kidsru')  
-    level_2        = BooleanField('level_2') 
-    level_3_classic        = BooleanField('Level3Classic')  
-    mhsa        = BooleanField('mhsa')  
-    older_adult        = BooleanField('older_adult')  
+    kidsru        = RadioField('kidsru', choices=[(None,'None'),(True,True),(False,False)],)   
+    level_2        = RadioField('level_2', choices=[(None,'None'),(True,True),(False,False)],)  
+    level_3_classic        = RadioField('Level3Classic', choices=[(None,'None'),(True,True),(False,False)],)   
+    mhsa        = RadioField('mhsa', choices=[(None,'None'),(True,True),(False,False)],)   
+    older_adult        = RadioField('older_adult', choices=[(None,'None'),(True,True),(False,False)],)   
     # old_ru     = IntegerField('old RU') 
     # cans        = BooleanField('cans') 
     cans        =     RadioField('cans', choices=[(None,'None'),(True,True),(False,False)],) 
-    out_of_county        = BooleanField('out_of_county')   
-    program        = BooleanField('program')  
+    # cans = SelectField('cans', 
+    # choices=[(None, 'None'), (True, 'True'), (False, 'False')],
+    # coerce={"True": True, "False": False}.get)
+    out_of_county        = RadioField('out_of_county', choices=[(None,'None'),(True,True),(False,False)],)    
+    program        = RadioField('program', choices=[(None,'None'),(True,True),(False,False)],)   
     # provider_name        =TextField('provname')  
     psmasktext        = SelectField(u"PSmask Text",coerce=unicode, choices=[
             (None,None),
@@ -434,12 +437,12 @@ class rutable(Form):
 ("Other Children's Service"," Other Children's Service"),
         ]     
         )
-    residential= BooleanField('residential')  
+    residential= RadioField('residential', choices=[(None,'None'),(True,True),(False,False)],) 
     # reporting_unit        =TextField('ru') 
     predesessor        =TextField('RU2')   
     # city        =TextField('city')  
     # safe_passages        = BooleanField('safe_passages')
-    in_school        = BooleanField('school')    
+    in_school        = RadioField('school', choices=[(None,'None'),(True,True),(False,False)],)     
     # start_date        = DateTimeField('start_date')  
     # mode_of_service        =TextField('mode_of_service')   
     svctype = SelectField(u"svctype",coerce=unicode, choices=[
@@ -472,15 +475,18 @@ class rutable(Form):
                         ('0 to 5','0 to 5'),
                         ('CTF','CTF'),  ])                    
     svctype3        =TextField('svctype3')    
-    tay        = BooleanField('tay')   
-    tbs        = BooleanField('tbs') 
-    cooked        = BooleanField('cooked')  
+    tay        = RadioField('tay', choices=[(None,'None'),(True,True),(False,False)],)    
+    tbs        = RadioField('tbs', choices=[(None,'None'),(True,True),(False,False)],)  
+    cooked        = RadioField('cooked', choices=[(None,'None'),(True,True),(False,False)],)   
     # umbrella_organization        = IntegerField('umbrella_organization')  
     submitRU=SubmitField('Submit')
 
 class cans(Form):
     # cans = BooleanField('cans')     
-    cans        =     RadioField('cans', choices=[(None,'None'),(True,True),(False,False)]) 
+    cans        =     RadioField('cans', choices=[(None,'None'),(True,True),(False,False)])
+    # cans = SelectField('cans',  
+    # choices=[(None, 'None'), (True, 'True'), (False, 'False')],
+    # coerce={"True": True, "False": False}.get)
     submitRU=SubmitField('Submit')
 
 # class TOC(Form):
