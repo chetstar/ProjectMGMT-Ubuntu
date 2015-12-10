@@ -520,6 +520,54 @@ def stageupdate(rurow):
         ruprod=models.providers.query.filter_by(id=rurow).first()
         form = rutable(obj=staging_providers)
         form.populate_obj(ruprod)
+        if form.dbservicemodality.data == '':
+            ruprod.dbservicemodality=None
+        if form.svctype.data == '':
+            ruprod.svctype=None
+        if form.psmasktext.data == '':
+            ruprod.psmasktext=None
+        if form.predesessor.data == '':
+            ruprod.predesessor=None
+        if form.school_cds_id.data == '':
+            ruprod.school_cds_id=None
+        if form.ab3632.data == 'None':
+            ruprod.ab3632=None
+        if form.residential.data == 'None':
+            ruprod.residential=None
+        if form.ab3632 .data == 'None': 
+            ruprod.ab3632 =None
+        if form.calworks.data == 'None':    
+            ruprod.calworks=None
+        if form.cesdc.data == 'None':   
+            ruprod.cesdc=None
+        if form.county_run .data == 'None': 
+            ruprod.county_run =None
+        if form.day_treatment.data == 'None':   
+            ruprod.day_treatment=None
+        if form.kidsru .data == 'None': 
+            ruprod.kidsru =None
+        if form.level_2 .data == 'None':    
+            ruprod.level_2 =None
+        if form.level_3_classic .data == 'None':    
+            ruprod.level_3_classic =None
+        if form.mhsa .data == 'None':   
+            ruprod.mhsa =None
+        if form.older_adult .data == 'None':    
+            ruprod.older_adult =None
+        if form.out_of_county .data == 'None':  
+            ruprod.out_of_county =None
+        if form.program    .data == 'None': 
+            ruprod.program    =None
+        if form.in_school.data == 'None':   
+            ruprod.in_school=None
+        if form.tay .data == 'None':    
+            ruprod.tay =None
+        if form.tbs .data == 'None':    
+            ruprod.tbs =None
+        if form.cooked .data == 'None': 
+            ruprod.cooked =None
+        if form.cans.data == 'None':
+            ruprod.cans=None
     # else:
     #     ruprod=rutable(ru=staging_providers.reporting_unit)
     #     form = rutable(obj=staging_providers)
