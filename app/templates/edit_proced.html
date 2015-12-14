@@ -1,6 +1,8 @@
 <!-- extend base layout -->
-{% extends "index.html" %}
+
 {% import "bootstrap/wtf.html" as wtf %}
+{% extends "admin/master.html" %}
+{% import 'admin/lib.html' as lib with context %}
 
 {% block navbar %}
 
@@ -88,6 +90,12 @@
   </div>
     <div class="row">
 
+{% block head %}
+    {{ super() }}
+    {{ lib.form_css() }}
+{% endblock %}
+
+{% block body %}
 
 </div></div>
 <form method=post enctype="multipart/form-data" >   
@@ -98,6 +106,13 @@
 
  {{ wtf.quick_form(form) }} 
 
+
+{% endblock %}
+
+{% block tail %}
+    {{ super() }}
+    {{ lib.form_js() }}
+{% endblock %}
 
 
  </div></div>

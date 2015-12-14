@@ -593,11 +593,59 @@ def stagereject(rurow):
         form = rutable(obj=production)
         form.populate_obj(staging)
     # else:
-    #     ruprod=rutable(ru=staging_providers.reporting_unit)
+    #     staging=rutable(ru=staging_providers.reporting_unit)
     #     form = rutable(obj=staging_providers)
-    #     form.populate_obj(ruprod)
+    #     form.populate_obj(staging)
     # staging_providers.reviewEdit=False
-    # ruprod.reviewEdit=False
+    # staging.reviewEdit=False
+        if form.dbservicemodality.data == '':
+            staging.dbservicemodality=None
+        if form.svctype.data == '':
+            staging.svctype=None
+        if form.psmasktext.data == '':
+            staging.psmasktext=None
+        if form.predesessor.data == '':
+            staging.predesessor=None
+        if form.school_cds_id.data == '':
+            staging.school_cds_id=None
+        if form.ab3632.data == 'None':
+            staging.ab3632=None
+        if form.residential.data == 'None':
+            staging.residential=None
+        if form.ab3632 .data == 'None': 
+            staging.ab3632 =None
+        if form.calworks.data == 'None':    
+            staging.calworks=None
+        if form.cesdc.data == 'None':   
+            staging.cesdc=None
+        if form.county_run .data == 'None': 
+            staging.county_run =None
+        if form.day_treatment.data == 'None':   
+            staging.day_treatment=None
+        if form.kidsru .data == 'None': 
+            staging.kidsru =None
+        if form.level_2 .data == 'None':    
+            staging.level_2 =None
+        if form.level_3_classic .data == 'None':    
+            staging.level_3_classic =None
+        if form.mhsa .data == 'None':   
+            staging.mhsa =None
+        if form.older_adult .data == 'None':    
+            staging.older_adult =None
+        if form.out_of_county .data == 'None':  
+            staging.out_of_county =None
+        if form.program    .data == 'None': 
+            staging.program    =None
+        if form.in_school.data == 'None':   
+            staging.in_school=None
+        if form.tay .data == 'None':    
+            staging.tay =None
+        if form.tbs .data == 'None':    
+            staging.tbs =None
+        if form.cooked .data == 'None': 
+            staging.cooked =None
+        if form.cans.data == 'None':
+            staging.cans=None
         db.session.commit()
         # production=models.staging_providers.query.filter_by(id=rurow).first()
         print production.modified_on

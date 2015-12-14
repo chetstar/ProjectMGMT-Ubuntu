@@ -5,12 +5,13 @@ from wtforms import TextField, BooleanField, SubmitField, DateField,TextAreaFiel
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 import datetime
 from wtforms.fields.html5 import DateField
-from app.models import getStaff, getStatus,getAgency
+from app.models import getStaff, getStatus,getAgency,User
 from flask.ext.uploads import UploadSet, IMAGES
 from flask_wtf import Form
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 from wtforms.fields.html5 import URLField
 from wtforms.validators import url
+from flask_admin.form.fields import Select2Field
 
 agenList=[
 ('A Better Way','A Better Way'),
@@ -236,9 +237,13 @@ agenList=[
 images = UploadSet('images', IMAGES)
 
  
+from wtforms.ext.sqlalchemy.fields import QuerySelectField
+from flask_admin.form.widgets import Select2Widget
 
 
 class proced(Form):
+    test=    QuerySelectField(query_factory=getStaff,
+                           widget=Select2Widget())
     service_category =  SelectField(u"Service Category",coerce=unicode, choices=[
      (None,None),
 ('assessment','assessment'),
