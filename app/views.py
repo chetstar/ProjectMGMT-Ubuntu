@@ -454,8 +454,11 @@ def allrus():
         try:
             if formfilter.provsearch.data == '':
                 if formfilter.missing.data=="None":
-                    rulist= models.staging_providers.query.filter(models.staging_providers.level_3_classic.
-                        op("IS NOT")(True)).order_by(desc(models.staging_providers.last_change_stamp)).limit(100).all()
+                    if formfilter.level_3_classic.data==False:
+                        rulist= models.staging_providers.query.filter(models.staging_providers.level_3_classic.
+                            op("IS NOT")(True)).order_by(desc(models.staging_providers.last_change_stamp)).limit(400).all()
+                    else:
+                        rulist= models.staging_providers.query.order_by(desc(models.staging_providers.last_change_stamp)).limit(400).all()               
                 else:
                     if formfilter.level_3_classic.data==False:
                         # if getattr(models.staging_providers,formfilter.missing.data).property.columns[0].type.python_type==str:
@@ -493,8 +496,8 @@ def allrus():
         except:
             rulist=['no results']
     else:
-        rulist= models.staging_providers.query.filter(models.staging_providers.level_3_classic.op("IS NOT")(True)).filter(models.staging_providers.end_date == None).order_by(desc(models.staging_providers.last_change_stamp)).limit(666).all()
-        flash('showing last 666 results')
+        rulist= models.staging_providers.query.filter(models.staging_providers.end_date == None).order_by(desc(models.staging_providers.last_change_stamp)).limit(300).all()
+        flash('showing last 300 results with out end dates')
     # rulist= models.staging_providers.query.filter( models.staging_providers.level_3_classic != 1).all()
     # sorted(q_sum, key=lambda tup: tup[7])
     # import pdb;pdb.set_trace()
