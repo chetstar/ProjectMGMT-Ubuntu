@@ -493,8 +493,8 @@ def allrus():
         except:
             rulist=['no results']
     else:
-        rulist= models.staging_providers.query.filter(models.staging_providers.level_3_classic.
-                    op("IS NOT")(True)).order_by(desc(models.staging_providers.last_change_stamp)).limit(500).all()
+        rulist= models.staging_providers.query.filter(models.staging_providers.level_3_classic.op("IS NOT")(True)).filter(models.staging_providers.end_date == None).order_by(desc(models.staging_providers.last_change_stamp)).limit(666).all()
+        flash('showing last 666 results')
     # rulist= models.staging_providers.query.filter( models.staging_providers.level_3_classic != 1).all()
     # sorted(q_sum, key=lambda tup: tup[7])
     # import pdb;pdb.set_trace()
@@ -648,7 +648,7 @@ def stagereject(rurow):
             staging.cans=None
         db.session.commit()
         # production=models.staging_providers.query.filter_by(id=rurow).first()
-        print production.modified_on
+        # print production.modified_on
         production.modified_on=datetime.datetime.now()
         print production.modified_on
         db.session.commit()
