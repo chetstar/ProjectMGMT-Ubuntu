@@ -497,7 +497,7 @@ def allrus():
             rulist=['no results']
     else:
         rulist= models.staging_providers.query.filter(models.staging_providers.end_date == None).order_by((models.staging_providers.last_change_stamp.desc())).limit(333).all()
-        flash('showing last 300 results with out end dates')
+        flash('showing last 300 results without end dates')
     # rulist= models.staging_providers.query.filter( models.staging_providers.level_3_classic != 1).all()
     # sorted(q_sum, key=lambda tup: tup[7])
     # import pdb;pdb.set_trace()
