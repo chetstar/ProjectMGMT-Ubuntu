@@ -499,7 +499,7 @@ def allrus():
         rulist= (
             models.staging_providers.query
             .filter(models.staging_providers.end_date == None)
-            .order_by(desc(models.staging_providers.last_change_stamp))
+            .order_by((models.staging_providers.last_change_stamp.desc()))
             .limit(333).all()
             )
         flash('showing last 300 results without end dates')
