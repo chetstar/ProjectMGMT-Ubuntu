@@ -496,7 +496,7 @@ def allrus():
         except:
             rulist=['no results']
     else:
-        rulist= models.staging_providers.query.filter(models.staging_providers.end_date == None).order_by((models.staging_providers.last_change_stamp.desc())).limit(333).all()
+        rulist= models.staging_providers.query.filter(models.staging_providers.end_date == None).order_by(models.staging_providers.last_change_stamp.desc()).limit(333).all()
         flash('showing last 300 results without end dates')
     # rulist= models.staging_providers.query.filter( models.staging_providers.level_3_classic != 1).all()
     # sorted(q_sum, key=lambda tup: tup[7])
@@ -708,6 +708,8 @@ def adduser(name,emailx,r):
                     r[i[1]['displayName'][0] ]= 'Noemail@aol.com' 
                 else:
                     r['unknown'  ]= 'Noemail@aol.com'   
+        import ast
+        r=ast.literal_eval(r)
         return render_template("loginsearch.html", form=form,r=r) 
     if not models.User.query.filter_by(email=unicode(emailx)).first(): 
         p=models.User(name=name,email=emailx)
