@@ -496,7 +496,12 @@ def allrus():
         except:
             rulist=['no results']
     else:
-        rulist= models.staging_providers.query.filter(models.staging_providers.end_date == None).order_by(models.staging_providers.last_change_stamp.desc()).limit(333).all()
+        rulist= (
+            models.staging_providers.query
+            .filter(models.staging_providers.end_date == None)
+            .order_by(desc(models.staging_providers.last_change_stamp))
+            .limit(333).all()
+            )
         flash('showing last 300 results without end dates')
     # rulist= models.staging_providers.query.filter( models.staging_providers.level_3_classic != 1).all()
     # sorted(q_sum, key=lambda tup: tup[7])
@@ -664,35 +669,36 @@ def searchuser():
     form = AddUser()
     r={}
     if request.method == 'POST':
-        l = ldap.initialize("ldap://10.129.18.101")
-        l.simple_bind_s("program\%s" % form.username.data,form.password.data)
-        # print "Authentification Successful"
-        ldaplist=l.search_s('cn=Users,dc=BHCS,dc=Internal',ldap.SCOPE_SUBTREE,'(displayName=*%s*)' % form.search.data,['mail','objectGUID','displayName'])
-        # import pdb;pdb.set_trace()
-        for i in ldaplist:
-            if 'mail' in i[1]:
-                if 'displayName' in i[1]:
-                    r[i[1]['displayName'][0] ]= i[1]['mail'][0] 
+        if form.search.data != None:
+            l = ldap.initialize("ldap://10.129.18.101")
+            l.simple_bind_s("program\%s" % form.username.data,form.password.data)
+            # print "Authentification Successful"
+            ldaplist=l.search_s('cn=Users,dc=BHCS,dc=Internal',ldap.SCOPE_SUBTREE,'(displayName=*%s*)' % form.search.data,['mail','objectGUID','displayName'])
+            # import pdb;pdb.set_trace()
+            for i in ldaplist:
+                if 'mail' in i[1]:
+                    if 'displayName' in i[1]:
+                        r[i[1]['displayName'][0] ]= i[1]['mail'][0] 
+                    else:
+                        r['unknown' ]= i[1]['mail'][0] 
                 else:
-                    r['unknown' ]= i[1]['mail'][0] 
-            else:
-                if 'displayName' in i[1]:
-                    r[i[1]['displayName'][0] ]= 'Noemail@aol.com' 
-                else:
-                    r['unknown'  ]= 'Noemail@aol.com'              
-        # email=r[0][1]['mail'][0]   
-        # GUID=r[0][1]['objectGUID'][0]   
-        # FullName=r[0][1]['displayName'][0] 
+                    if 'displayName' in i[1]:
+                        r[i[1]['displayName'][0] ]= 'Noemail@aol.com' 
+                    else:
+                        r['unknown'  ]= 'Noemail@aol.com'              
+            # email=r[0][1]['mail'][0]   
+            # GUID=r[0][1]['objectGUID'][0]   
+            # FullName=r[0][1]['displayName'][0] 
 
-        # import uuid
-        # guid = uuid.UUID(bytes=GUID)
+            # import uuid
+            # guid = uuid.UUID(bytes=GUID)
     return render_template("loginsearch.html", form=form,r=r,user=g.user.admin)
 
 @app.route("/adduser/<name>/<emailx>/<r>", methods=["GET", "POST"])
 def adduser(name,emailx,r):
     form = AddUser()
     if request.method == 'POST': 
-        if form.password.data != None:
+        if form.search.data != None:
             l = ldap.initialize("ldap://10.129.18.101")
             l.simple_bind_s("program\%s" % form.username.data,form.password.data)
             # print "Authentification Successful"
