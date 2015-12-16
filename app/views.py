@@ -697,6 +697,7 @@ def adduser(name,emailx,r):
         # print "Authentification Successful"
         ldaplist=l.search_s('cn=Users,dc=BHCS,dc=Internal',ldap.SCOPE_SUBTREE,'(displayName=*%s*)' % form.search.data,['mail','objectGUID','displayName'])
         # import pdb;pdb.set_trace()
+        r={}
         for i in ldaplist:
             if 'mail' in i[1]:
                 if 'displayName' in i[1]:
