@@ -691,24 +691,27 @@ def searchuser():
 @app.route("/adduser/<name>/<emailx>/<r>", methods=["GET", "POST"])
 def adduser(name,emailx,r):
     form = AddUser()
-    if request.method == 'POST':
-        l = ldap.initialize("ldap://10.129.18.101")
-        l.simple_bind_s("program\%s" % form.username.data,form.password.data)
-        # print "Authentification Successful"
-        ldaplist=l.search_s('cn=Users,dc=BHCS,dc=Internal',ldap.SCOPE_SUBTREE,'(displayName=*%s*)' % form.search.data,['mail','objectGUID','displayName'])
-        # import pdb;pdb.set_trace()
-        r={}
-        for i in ldaplist:
-            if 'mail' in i[1]:
-                if 'displayName' in i[1]:
-                    r[i[1]['displayName'][0] ]= i[1]['mail'][0] 
+    if request.method == 'POST': 
+        if form.password.data != None:
+            l = ldap.initialize("ldap://10.129.18.101")
+            l.simple_bind_s("program\%s" % form.username.data,form.password.data)
+            # print "Authentification Successful"
+            ldaplist=l.search_s('cn=Users,dc=BHCS,dc=Internal',ldap.SCOPE_SUBTREE,'(displayName=*%s*)' % form.search.data,['mail','objectGUID','displayName'])
+            # import pdb;pdb.set_trace()
+            r={}
+            for i in ldaplist:
+                if 'mail' in i[1]:
+                    if 'displayName' in i[1]:
+                        r[i[1]['displayName'][0] ]= i[1]['mail'][0] 
+                    else:
+                        r['unknown' ]= i[1]['mail'][0] 
                 else:
-                    r['unknown' ]= i[1]['mail'][0] 
-            else:
-                if 'displayName' in i[1]:
-                    r[i[1]['displayName'][0] ]= 'Noemail@aol.com' 
-                else:
-                    r['unknown'  ]= 'Noemail@aol.com'   
+                    if 'displayName' in i[1]:
+                        r[i[1]['displayName'][0] ]= 'Noemail@aol.com' 
+                    else:
+                        r['unknown'  ]= 'Noemail@aol.com'   
+        else:
+            flash("That don't work")                
         return render_template("loginsearch.html", form=form,r=r) 
     if not models.User.query.filter_by(email=unicode(emailx)).first(): 
         p=models.User(name=name,email=emailx)
