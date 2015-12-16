@@ -709,8 +709,6 @@ def adduser(name,emailx,r):
                     r[i[1]['displayName'][0] ]= 'Noemail@aol.com' 
                 else:
                     r['unknown'  ]= 'Noemail@aol.com'   
-        import ast
-        r=ast.literal_eval(r)
         return render_template("loginsearch.html", form=form,r=r) 
     if not models.User.query.filter_by(email=unicode(emailx)).first(): 
         p=models.User(name=name,email=emailx)
