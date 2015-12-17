@@ -456,9 +456,9 @@ def allrus():
                 if formfilter.missing.data=="None":
                     if formfilter.level_3_classic.data==False:
                         rulist= models.staging_providers.query.filter(models.staging_providers.level_3_classic.
-                            op("IS NOT")(True)).order_by(desc(models.staging_providers.last_change_stamp)).limit(400).all()
+                            op("IS NOT")(True)).order_by(desc(models.staging_providers.last_change_stamp)).all()
                     else:
-                        rulist= models.staging_providers.query.order_by(desc(models.staging_providers.last_change_stamp)).limit(400).all()               
+                        rulist= models.staging_providers.query.order_by(desc(models.staging_providers.last_change_stamp)).all()               
                 else:
                     if formfilter.level_3_classic.data==False:
                         # if getattr(models.staging_providers,formfilter.missing.data).property.columns[0].type.python_type==str:
@@ -499,10 +499,10 @@ def allrus():
         rulist= (
             models.staging_providers.query
             .filter(models.staging_providers.end_date == None)
-            .order_by((models.staging_providers.last_change_stamp.desc()))
-            .limit(333).all()
+            .order_by(models.staging_providers.last_change_stamp.desc())
+            .limit(50).all()
             )
-        flash('showing last 300 results without end dates')
+        flash('showing last 50 results without end dates.  submit with no search criteria for full list')
     # rulist= models.staging_providers.query.filter( models.staging_providers.level_3_classic != 1).all()
     # sorted(q_sum, key=lambda tup: tup[7])
     # import pdb;pdb.set_trace()
