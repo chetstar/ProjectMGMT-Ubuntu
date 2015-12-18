@@ -500,9 +500,9 @@ def allrus():
             models.staging_providers.query
             .filter(models.staging_providers.end_date == None)
             .order_by(models.staging_providers.last_change_stamp.desc(),models.staging_providers.start_date.desc())
-            .limit(50).all()
+            .limit(250).all()
             )
-        flash('showing last 50 results without end dates.  submit with no search criteria for full list')
+        flash('showing last 250 results without end dates.  submit with no search criteria for full list')
     # rulist= models.staging_providers.query.filter( models.staging_providers.level_3_classic != 1).all()
     # sorted(q_sum, key=lambda tup: tup[7])
     # import pdb;pdb.set_trace()
