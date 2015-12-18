@@ -242,8 +242,8 @@ from flask_admin.form.widgets import Select2Widget
 
 
 class proced(Form):
-    test=    QuerySelectField(query_factory=getStaff,
-                           widget=Select2Widget())
+    # test=    QuerySelectField(query_factory=getStaff,
+    #                        widget=Select2Widget())
     service_category =  SelectField(u"Service Category",coerce=unicode, choices=[
      (None,None),
 ('assessment','assessment'),
