@@ -499,7 +499,7 @@ def allrus():
         rulist= (
             models.staging_providers.query
             .filter(models.staging_providers.end_date == None)
-            .order_by(models.staging_providers.last_change_stamp.desc())
+            .order_by(models.staging_providers.last_change_stamp.desc(),models.staging_providers.start_date.desc())
             .limit(50).all()
             )
         flash('showing last 50 results without end dates.  submit with no search criteria for full list')
