@@ -432,7 +432,7 @@ class rutable(Form):
 ('Child Community Support Services',' Child Community Support Services'),
 ('School-Based Outpatient Services',' School-Based Outpatient Services'),
 ("Children's Medication Clinics","Children's Medication Clinics"),
-('Child Day Treatment Hour Unit',' Child Day Treatment Hour Unit'),
+('CESDC','CESDC'),
 ('Adult Community Support Services',' Adult Community Support Services'),
 ('Children in Out-of-County Placeme',' Children in Out-of-County Placeme'),
 ('Support Services',' Support Services'),
