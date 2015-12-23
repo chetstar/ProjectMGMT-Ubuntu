@@ -339,7 +339,7 @@ class proced(Form):
     submit=SubmitField('Submit')
 
 class rutablefilter(Form):
-    provsearch=TextField('Search provider name')
+    provsearch=TextField('Search by provider name or reporting unit')
     level_3_classic=BooleanField('Include Level 3 (doctors)', default=False)
     missing    = SelectField(u"Show missing by....",coerce=unicode, choices=[('None','None'),
 ('ab3632','ab3632'),
@@ -428,11 +428,11 @@ class rutable(Form):
 ('Adult Medication Clinics',' Adult Medication Clinics'),
 ('MHSA Full Service Partnerships',' MHSA Full Service Partnerships'),
 ('Other MHS Adult',' Other MHS Adult'),
-( 'Child Day Treament Day Unit',' Child Day Treament Day Unit'),
+( 'Child Day Treament Hour Unit','Child Day Treament Hour Unit'),
 ('Child Community Support Services',' Child Community Support Services'),
 ('School-Based Outpatient Services',' School-Based Outpatient Services'),
 ("Children's Medication Clinics","Children's Medication Clinics"),
-('CESDC','CESDC'),
+('Child Day Treament','Child Day Treament'),
 ('Adult Community Support Services',' Adult Community Support Services'),
 ('Children in Out-of-County Placeme',' Children in Out-of-County Placeme'),
 ('Support Services',' Support Services'),
