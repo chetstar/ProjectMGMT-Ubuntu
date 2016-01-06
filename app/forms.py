@@ -371,8 +371,6 @@ class rutablefilter(Form):
 ('school_cds_id','school_cds_id'),
 ('start_date','start_date'),
 ('mode_of_service','mode_of_service'),
-('svctype','svctype'),
-('svctype3','svctype3'),
 ('tay','tay'),
 ('tbs','tbs'),
 ('umbrella_organization','umbrella_organization')],default="None") 
@@ -450,36 +448,42 @@ class rutable(Form):
     in_school        = SelectField('school', choices=[(None,'None'),(True,True),(False,False)],)     
     # start_date        = DateTimeField('start_date')  
     # mode_of_service        =TextField('mode_of_service')   
-    svctype = SelectField(u"svctype",coerce=unicode, choices=[
+    provider_level = SelectField(u"provider_level",coerce=unicode, choices=[
              (None,None),
-                        ('School','School'),
-                        ('CLC','CLC'),
-                        ('Level 3','Level 3'),
-                        ('Wellness Center','Wellness Center'),
-                        ('Foster','Foster'),
-                        ('Intensive','Intensive'),
-                        ('DayTx','DayTx'),
-                        ('Level 3 Org','Level 3 Org'),
-                        ('TAY','TAY'),
-                        ('DayTxMHS','DayTxMHS'),
-                        ('CSS','CSS'),
-                        ('Crisis','Crisis'),
-                        ('CJ','CJ'),
-                        ('Unknown','Unknown'),
-                        ('Hospital','Hospital'),
-                        ('JuvJustice','JuvJustice'),
-                        ('Level 3 Doc','Level 3 Doc'),
-                        ('Residential','Residential'),
-                        ('SubAcute','SubAcute'),
-                        ('PEI','PEI'),
-                        ('TBS','TBS'),
-                        ('Access','Access'),
-                        ('Destiny','Destiny'),
-                        ('PHF','PHF'),
-                        ('OutPt','OutPt'),
-                        ('0 to 5','0 to 5'),
-                        ('CTF','CTF'),  ])                    
-    svctype3        =TextField('svctype3')    
+             ("Level 3 Doctor","Level 3 Doctor"),
+             ("Level 1","Level 1"),
+             ("Level 3 Individual","Level 3 Individual"),
+             ("Level 3 Organization","Level 3 Organization"),
+             ("Level 2","Level 2"),
+             ("Level 3 Group Practice","Level 3 Group Practice"),])
+    #                     ('School','School'),
+    #                     ('CLC','CLC'),
+    #                     ('Level 3','Level 3'),
+    #                     ('Wellness Center','Wellness Center'),
+    #                     ('Foster','Foster'),
+    #                     ('Intensive','Intensive'),
+    #                     ('DayTx','DayTx'),
+    #                     ('Level 3 Org','Level 3 Org'),
+    #                     ('TAY','TAY'),
+    #                     ('DayTxMHS','DayTxMHS'),
+    #                     ('CSS','CSS'),
+    #                     ('Crisis','Crisis'),
+    #                     ('CJ','CJ'),
+    #                     ('Unknown','Unknown'),
+    #                     ('Hospital','Hospital'),
+    #                     ('JuvJustice','JuvJustice'),
+    #                     ('Level 3 Doc','Level 3 Doc'),
+    #                     ('Residential','Residential'),
+    #                     ('SubAcute','SubAcute'),
+    #                     ('PEI','PEI'),
+    #                     ('TBS','TBS'),
+    #                     ('Access','Access'),
+    #                     ('Destiny','Destiny'),
+    #                     ('PHF','PHF'),
+    #                     ('OutPt','OutPt'),
+    #                     ('0 to 5','0 to 5'),
+    #                     ('CTF','CTF'),  ])                    
+    # svctype3        =TextField('svctype3')    
     tay        = SelectField('tay', choices=[(None,'None'),(True,True),(False,False)],)    
     tbs        = SelectField('tbs', choices=[(None,'None'),(True,True),(False,False)],)  
     cooked        = SelectField('cooked', choices=[(None,'None'),(True,True),(False,False)],)   

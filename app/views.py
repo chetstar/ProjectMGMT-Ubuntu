@@ -359,8 +359,6 @@ def edit_ru(id,edit):
             if g.user.form_access=='all':
                 if form.dbservicemodality.data == '':
                     ru.dbservicemodality=None
-                if form.svctype.data == '':
-                    ru.svctype=None
                 if form.psmasktext.data == '':
                     ru.psmasktext=None
                 if form.predesessor.data == '':
@@ -502,7 +500,7 @@ def allrus():
             .order_by(models.staging_providers.last_change_stamp.desc(),models.staging_providers.start_date.desc())
             .limit(250).all()
             )
-        flash('showing last 250 results without end dates.  submit with no search criteria for full list')
+        flash('showing 250 results with no end-dates.  Submit with no search input for full list of providers')
     # rulist= models.staging_providers.query.filter( models.staging_providers.level_3_classic != 1).all()
     # sorted(q_sum, key=lambda tup: tup[7])
     # import pdb;pdb.set_trace()
@@ -530,8 +528,8 @@ def stageupdate(rurow):
         form.populate_obj(ruprod)
         if form.dbservicemodality.data == '':
             ruprod.dbservicemodality=None
-        if form.svctype.data == '':
-            ruprod.svctype=None
+        if form.provider_level.data == '':
+            ruprod.provider_level=None
         if form.psmasktext.data == '':
             ruprod.psmasktext=None
         if form.predesessor.data == '':
@@ -608,8 +606,8 @@ def stagereject(rurow):
     # staging.reviewEdit=False
         if form.dbservicemodality.data == '':
             staging.dbservicemodality=None
-        if form.svctype.data == '':
-            staging.svctype=None
+        if form.provider_level.data == '':
+            staging.provider_level=None
         if form.psmasktext.data == '':
             staging.psmasktext=None
         if form.predesessor.data == '':
