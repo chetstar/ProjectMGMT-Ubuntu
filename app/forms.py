@@ -487,6 +487,18 @@ class rutable(Form):
     tay        = SelectField('tay', choices=[(None,'None'),(True,True),(False,False)],)    
     tbs        = SelectField('tbs', choices=[(None,'None'),(True,True),(False,False)],)  
     cooked        = SelectField('cooked', choices=[(None,'None'),(True,True),(False,False)],)   
+    meds_fall_off = SelectField('meds_fall_off', choices=[(None,'None'),(True,True),(False,False)],) 
+    cesdc_model = SelectField('cesdc_model', choices=[
+        (None,'None'),("CESDC","CESDC"),("I-CESDC-NPS","I-CESDC-NPS"),("I-CESDC","I-CESDC")],) 
+    child_welfare = SelectField('child_welfare', choices=[(None,'None'),(True,True),(False,False)],) 
+    family_service_expected = SelectField('family_service_expected', choices=[(None,'None'),(True,True),(False,False)],) 
+    intensive_needs_clients = SelectField('intensive_needs_clients', choices=[(None,'None'),(True,True),(False,False)],) 
+    case_management = SelectField('case_management', choices=[(None,'None'),(True,True),(False,False)],) 
+    deliverable_exempt = SelectField('deliverable_exempt', choices=[(None,'None'),(True,True),(False,False)],) 
+    srp = SelectField('srp', choices=[(None,'None'),(True,True),(False,False)],) 
+    crisis = SelectField('crisis', choices=[(None,'None'),(True,True),(False,False)],) 
+    high_level = SelectField('high_level', choices=[(None,'None'),(True,True),(False,False)],) 
+    follow_up_care = SelectField('follow_up_care', choices=[(None,'None'),(True,True),(False,False)],) 
     # umbrella_organization        = IntegerField('umbrella_organization')  
     submitRU=SubmitField('Submit')
 

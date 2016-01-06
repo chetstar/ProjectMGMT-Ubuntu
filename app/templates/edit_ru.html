@@ -122,12 +122,23 @@
 {{ wtf.form_field(form.school_cds_id) }}</div>
     <div class="col-md-3">
     {{ wtf.form_field(form.predesessor) }}</div></div>
+     <div class="col-md-3"> 
+{{ wtf.form_field(form.cesdc_model) }} </div>
  <div class="row">
  <div class="col-md-3"></div></div><br>
  <div class="row">
  <div class="col-md-3">
   <!-- {{form.ab3632.label}} -->
    {{ wtf.form_field(form.ab3632) }}
+ </div>
+   <div class="col-md-3">
+   <!-- {{form.calworks.label}} -->
+{{ wtf.form_field(form.calworks) }}
+ </div>
+  <div class="col-md-3">
+  <!-- {{form.cans.label}} -->
+{{ wtf.form_field(form.cans) }}
+
  </div>
  <div class="col-md-3">
  <!-- {{form.cesdc.label}} -->
@@ -138,14 +149,37 @@
  <!-- {{form.county_run.label}} -->
 {{ wtf.form_field(form.county_run) }}
  </div>
-  <div class="col-md-3">
-   <!-- {{form.calworks.label}} -->
-{{ wtf.form_field(form.calworks) }}
- </div></div>
-  <div class="row">
- <div class="col-md-3">
-  <!-- {{form.day_treatment.label}} -->
+ <div class="col-md-3"> 
+
+ {{ wtf.form_field(form.crisis) }} </div> 
+
+<div class="col-md-3"> 
+
+{{ wtf.form_field(form.high_level) }} </div> 
+
+ <div class="col-md-3"> 
+{{ wtf.form_field(form.child_welfare) }} </div>
+ <div class="col-md-3"> 
+{{ wtf.form_field(form.case_management) }}  </div>
+<div class="col-md-3"> 
+
+{{ wtf.form_field(form.family_service_expected) }} </div>
+<div class="col-md-3"> 
+{{ wtf.form_field(form.deliverable_exempt) }}  </div>
+
+
+ <div class="col-md-3"> 
+{{ wtf.form_field(form.intensive_needs_clients) }} </div>
+<div class="col-md-3"> 
+
+{{ wtf.form_field(form.follow_up_care) }}  </div>
+<div class="col-md-3"> 
+
    {{ wtf.form_field(form.day_treatment) }}
+ </div>
+  <div class="col-md-3">
+  <!-- {{form.in_school.label}} -->
+   {{ wtf.form_field(form.in_school) }}
  </div>
  <div class="col-md-3">
   <!-- {{form.kidsru.label}} -->
@@ -158,11 +192,15 @@
   <div class="col-md-3">
    <!-- {{form.level_3_classic.label}} -->
 {{ wtf.form_field(form.level_3_classic) }}
- </div></div>
-  <div class="row">
+ </div>
+  <div class="col-md-3">
+ <!-- {{form.mhsa.label}} -->
+{{ wtf.form_field(form.mhsa) }}
+ </div>
+
  <div class="col-md-3">
-  <!-- {{form.in_school.label}} -->
-   {{ wtf.form_field(form.in_school) }}
+  <!-- {{form.residential.label}} -->
+   {{ wtf.form_field(form.residential) }}
  </div>
  <div class="col-md-3">
     <!-- {{form.tay.label}} -->
@@ -172,34 +210,25 @@
  <!-- {{form.tbs.label}} -->
 {{ wtf.form_field(form.tbs) }}
  </div>
-  <div class="col-md-3">
- <!-- {{form.mhsa.label}} -->
-{{ wtf.form_field(form.mhsa) }}
- </div></div>
-  
-    <div class="row">
- <div class="col-md-3">
-  <!-- {{form.cans.label}} -->
-{{ wtf.form_field(form.cans) }}
 
- </div>
- <div class="col-md-3">
-  <!-- {{form.residential.label}} -->
-   {{ wtf.form_field(form.residential) }}
+ <div class="col-md-3"> 
+{{ wtf.form_field(form.meds_fall_off) }} </div>
+ <div class="col-md-3"> 
+  <!-- {{form.older_adult.label}} -->
+ {{ wtf.form_field(form.older_adult) }}
+</div>
+  <div class="col-md-3">
+ <!-- {{form.out_of_county.label}} -->
+{{ wtf.form_field(form.out_of_county) }}
  </div>
  <div class="col-md-3">
  <!-- {{form.program.label}} -->
 {{ wtf.form_field(form.program) }}
  </div>
-  <div class="col-md-3">
- <!-- {{form.out_of_county.label}} -->
-{{ wtf.form_field(form.out_of_county) }}
- </div></div>
-   <div class="row">
+
+
  <div class="col-md-3"> 
-  <!-- {{form.older_adult.label}} -->
- {{ wtf.form_field(form.older_adult) }}
-</div>
+{{ wtf.form_field(form.srp) }} </div> 
 </div></div>
 
 {{ wtf.form_field(form.submitRU) }}
@@ -210,6 +239,7 @@
    {{ wtf.form_field(form.cans) }}
  </div>
  <div class="col-md-2">
+
 
  </div>
  <div class="col-md-2">  

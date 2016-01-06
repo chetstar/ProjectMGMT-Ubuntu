@@ -95,7 +95,7 @@
 <th>  psmask2 </th>
 <th>  epsdtgroup </th>
 
-<th>  svctype </th>
+
 
 <th>   </th>
 <th>   </th>
@@ -103,7 +103,7 @@
 <th>   </th>
 <th>   </th>
 <th>  mode_of_svc</th>
-<th>  svctype3 </th>
+
 <th>  umbrella </th>
 <th>  FRC </th>
 <th>  Start </th>
@@ -142,7 +142,6 @@
 <td> {% if field[0].psmasktext==field[1].psmasktext %} {{field[0].psmasktext}}{%else%}<FONT COLOR='red'>{{field[0].psmasktext}}</font>{% endif %}</td>
 
 <td> {% if field[0].epsdtgroup==field[1].epsdtgroup %} {{field[0].epsdtgroup}}{%else%}<FONT COLOR='red'>{{field[0].epsdtgroup}}</font>{% endif %}</td>
-<td> {% if field[0].svctype==field[1].svctype %} {{field[0].svctype}}{%else%}<FONT COLOR='red'>{{field[0].svctype}}</font>{% endif %}</td>
 
 
 <td>
@@ -174,10 +173,22 @@ school{% if field[0].in_school==field[1].in_school %} {{field[0].in_school}}{%el
 <td> 
 tay{% if field[0].tay==field[1].tay %} {{field[0].tay}}{%else%}<FONT COLOR='red'>{{field[0].tay}}</font>{% endif %}
 tbs{% if field[0].tbs==field[1].tbs %} {{field[0].tbs}}{%else%}<FONT COLOR='red'>{{field[0].tbs}}</font>{% endif %}
-CANS{% if field[0].cans==field[1].cans %} {{field[0].cans}}{%else%}<FONT COLOR='red'>{{field[0].cans}}</font>{% endif %}</td>
+CANS{% if field[0].cans==field[1].cans %} {{field[0].cans}}{%else%}<FONT COLOR='red'>{{field[0].cans}}</font>{% endif %}{% if field[0].meds_fall_off==field[1].meds_fall_off %} {{field[0].meds_fall_off}}{%else%} <FONT COLOR='red'>{{field[0].meds_fall_off}}</font>{% endif %}
+{% if field[0].cesdc_model==field[1].cesdc_model %} {{field[0].cesdc_model}}{%else%} <FONT COLOR='red'>{{field[0].cesdc_model}}</font>{% endif %}
+{% if field[0].child_welfare==field[1].child_welfare %} {{field[0].child_welfare}}{%else%} <FONT COLOR='red'>{{field[0].child_welfare}}</font>{% endif %}
+{% if field[0].family_service_expected==field[1].family_service_expected %} {{field[0].family_service_expected}}{%else%} <FONT COLOR='red'>{{field[0].family_service_expected}}</font>{% endif %}
+{% if field[0].intensive_needs_clients==field[1].intensive_needs_clients %} {{field[0].intensive_needs_clients}}{%else%} <FONT COLOR='red'>{{field[0].intensive_needs_clients}}</font>{% endif %}
+ {% if field[0].case_management==field[1].case_management %} {{field[0].case_management}}{%else%} <FONT COLOR='red'>{{field[0].case_management}}</font>{% endif %}
+{% if field[0].deliverable_exempt==field[1].deliverable_exempt %} {{field[0].deliverable_exempt}}{%else%} <FONT COLOR='red'>{{field[0].deliverable_exempt}}</font>{% endif %}
+{% if field[0].srp==field[1].srp %} {{field[0].srp}}{%else%} <FONT COLOR='red'>{{field[0].srp}}</font>{% endif %}</td>
+ {% if field[0].crisis==field[1].crisis %} {{field[0].crisis}}{%else%} <FONT COLOR='red'>{{field[0].crisis}}</font>{% endif %}
+{% if field[0].high_level==field[1].high_level %} {{field[0].high_level}}{%else%} <FONT COLOR='red'>{{field[0].high_level}}</font>{% endif %}
+ {% if field[0].follow_up_care==field[1].follow_up_care %} {{field[0].follow_up_care}}{%else%} <FONT COLOR='red'>{{field[0].follow_up_care}}</font>{% endif %}
+{% if field[0].follow_up_care==field[1].follow_up_care %} {{field[0].follow_up_care}}{%else%} <FONT COLOR='red'>{{field[0].follow_up_care}}</font>{% endif %}</td>
+
 
 <td> {% if field[0].mode_of_service==field[1].mode_of_service %} {{field[0].mode_of_service}}{%else%}<FONT COLOR='red'>{{field[0].mode_of_service}}</font>{% endif %}</td>
-<td> {% if field[0].svctype3==field[1].svctype3 %} {{field[0].svctype3}}{%else%}<FONT COLOR='red'>{{field[0].svctype3}}</font>{% endif %}</td>
+
 <td> {% if field[0].umbrella_organization==field[1].umbrella_organization %} {{field[0].umbrella_organization}}{%else%}<FONT COLOR='red'>{{field[0].umbrella_organization}}</font>{% endif %}</td>
 
 <td> {% if field[0].financial_responsibility==field[1].financial_responsibility %} {{field[0].financial_responsibility}}{%else%}<FONT COLOR='red'>{{field[0].financial_responsibility}}</font>{% endif %}</td>

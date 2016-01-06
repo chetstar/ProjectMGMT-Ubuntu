@@ -574,6 +574,32 @@ def stageupdate(rurow):
             ruprod.cooked =None
         if form.cans.data == 'None':
             ruprod.cans=None
+        if form.meds_fall_off.data == 'None':   
+            ruprod.meds_fall_off=None
+        if form.cesdc_model.data == 'None': 
+            ruprod.cesdc_model=None
+        if form.level_3_type.data == 'None':    
+            ruprod.level_3_type=None
+        if form.child_welfare.data == 'None':   
+            ruprod.child_welfare=None
+        if form.family_service_expected.data == 'None': 
+            ruprod.family_service_expected=None
+        if form.intensive_needs_clients.data == 'None': 
+            ruprod.intensive_needs_clients=None
+        if form.case_management.data == 'None': 
+            ruprod.case_management=None
+        if form.level_1.data == 'None': 
+            ruprod.level_1=None
+        if form.deliverable_exempt.data == 'None':  
+            ruprod.deliverable_exempt=None
+        if form.srp.data == 'None': 
+            ruprod.srp=None
+        if form.crisis.data == 'None':  
+            ruprod.crisis=None
+        if form.high_level.data == 'None':  
+            ruprod.high_level=None
+        if form.follow_up_care.data == 'None':  
+            ruprod.follow_up_care=None
     # else:
     #     ruprod=rutable(ru=staging_providers.reporting_unit)
     #     form = rutable(obj=staging_providers)
@@ -652,6 +678,32 @@ def stagereject(rurow):
             staging.cooked =None
         if form.cans.data == 'None':
             staging.cans=None
+        if form.meds_fall_off.data == 'None':   
+            staging.meds_fall_off=None
+        if form.cesdc_model.data == 'None': 
+            staging.cesdc_model=None
+        if form.level_3_type.data == 'None':    
+            staging.level_3_type=None
+        if form.child_welfare.data == 'None':   
+            staging.child_welfare=None
+        if form.family_service_expected.data == 'None': 
+            staging.family_service_expected=None
+        if form.intensive_needs_clients.data == 'None': 
+            staging.intensive_needs_clients=None
+        if form.case_management.data == 'None': 
+            staging.case_management=None
+        if form.level_1.data == 'None': 
+            staging.level_1=None
+        if form.deliverable_exempt.data == 'None':  
+            staging.deliverable_exempt=None
+        if form.srp.data == 'None': 
+            staging.srp=None
+        if form.crisis.data == 'None':  
+            staging.crisis=None
+        if form.high_level.data == 'None':  
+            staging.high_level=None
+        if form.follow_up_care.data == 'None':  
+            staging.follow_up_care=None
         db.session.commit()
         # production=models.staging_providers.query.filter_by(id=rurow).first()
         # print production.modified_on
