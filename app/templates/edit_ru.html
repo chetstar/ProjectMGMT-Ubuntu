@@ -41,7 +41,13 @@
         </div>
         <!-- /.container-fluid -->
     </nav>
-
+ <head>
+<style>
+a {
+    color: #24221C;
+}
+</style>
+</head>
   
  <header>
         <div class="container-fluid">
@@ -114,12 +120,12 @@
     <div class="col-md-3">{{ wtf.form_field(form.provider_level) }}</div>
   </div>
  <div class="row">
- <div class="col-md-3">
+ <div class="col-md-3"> 
 {{ wtf.form_field(form.psmasktext) }}</div>
 <!--  <div class="col-md-3">
 {{ wtf.form_field(form.epsdtgroup) }}</div> -->
- <div class="col-md-3">
-{{ wtf.form_field(form.school_cds_id) }}</div>
+ <div class="col-md-3"><a href="" data-toggle="tooltip" title="Hooray!">{{ wtf.form_field(form.school_cds_id) }}</a>
+</div>
     <div class="col-md-3">
     {{ wtf.form_field(form.predesessor) }}</div></div>
      <div class="col-md-3"> 
@@ -128,7 +134,7 @@
  <div class="col-md-3"></div></div><br>
  <div class="row">
  <div class="col-md-3">
-  <!-- {{form.ab3632.label}} -->
+
    {{ wtf.form_field(form.ab3632) }}
  </div>
    <div class="col-md-3">
