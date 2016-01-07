@@ -173,18 +173,19 @@ school{% if field[0].in_school==field[1].in_school %} {{field[0].in_school}}{%el
 <td> 
 tay{% if field[0].tay==field[1].tay %} {{field[0].tay}}{%else%}<FONT COLOR='red'>{{field[0].tay}}</font>{% endif %}
 tbs{% if field[0].tbs==field[1].tbs %} {{field[0].tbs}}{%else%}<FONT COLOR='red'>{{field[0].tbs}}</font>{% endif %}
-CANS{% if field[0].cans==field[1].cans %} {{field[0].cans}}{%else%}<FONT COLOR='red'>{{field[0].cans}}</font>{% endif %}{% if field[0].meds_fall_off==field[1].meds_fall_off %} {{field[0].meds_fall_off}}{%else%} <FONT COLOR='red'>{{field[0].meds_fall_off}}</font>{% endif %}
-{% if field[0].cesdc_model==field[1].cesdc_model %} {{field[0].cesdc_model}}{%else%} <FONT COLOR='red'>{{field[0].cesdc_model}}</font>{% endif %}
-{% if field[0].child_welfare==field[1].child_welfare %} {{field[0].child_welfare}}{%else%} <FONT COLOR='red'>{{field[0].child_welfare}}</font>{% endif %}
-{% if field[0].family_service_expected==field[1].family_service_expected %} {{field[0].family_service_expected}}{%else%} <FONT COLOR='red'>{{field[0].family_service_expected}}</font>{% endif %}
-{% if field[0].intensive_needs_clients==field[1].intensive_needs_clients %} {{field[0].intensive_needs_clients}}{%else%} <FONT COLOR='red'>{{field[0].intensive_needs_clients}}</font>{% endif %}
- {% if field[0].case_management==field[1].case_management %} {{field[0].case_management}}{%else%} <FONT COLOR='red'>{{field[0].case_management}}</font>{% endif %}
-{% if field[0].deliverable_exempt==field[1].deliverable_exempt %} {{field[0].deliverable_exempt}}{%else%} <FONT COLOR='red'>{{field[0].deliverable_exempt}}</font>{% endif %}
-{% if field[0].srp==field[1].srp %} {{field[0].srp}}{%else%} <FONT COLOR='red'>{{field[0].srp}}</font>{% endif %}</td>
- {% if field[0].crisis==field[1].crisis %} {{field[0].crisis}}{%else%} <FONT COLOR='red'>{{field[0].crisis}}</font>{% endif %}
-{% if field[0].high_level==field[1].high_level %} {{field[0].high_level}}{%else%} <FONT COLOR='red'>{{field[0].high_level}}</font>{% endif %}
- {% if field[0].follow_up_care==field[1].follow_up_care %} {{field[0].follow_up_care}}{%else%} <FONT COLOR='red'>{{field[0].follow_up_care}}</font>{% endif %}
-{% if field[0].follow_up_care==field[1].follow_up_care %} {{field[0].follow_up_care}}{%else%} <FONT COLOR='red'>{{field[0].follow_up_care}}</font>{% endif %}</td>
+CANS{% if field[0].cans==field[1].cans %} {{field[0].cans}}{%else%}<FONT COLOR='red'>{{field[0].cans}}</font>{% endif %}
+meds_falloff{% if field[0].meds_fall_off==field[1].meds_fall_off %} {{field[0].meds_fall_off}}{%else%} <FONT COLOR='red'>{{field[0].meds_fall_off}}</font>{% endif %}
+cesdc_model{% if field[0].cesdc_model==field[1].cesdc_model %} {{field[0].cesdc_model}}{%else%} <FONT COLOR='red'>{{field[0].cesdc_model}}</font>{% endif %}
+child_welfare{% if field[0].child_welfare==field[1].child_welfare %} {{field[0].child_welfare}}{%else%} <FONT COLOR='red'>{{field[0].child_welfare}}</font>{% endif %}
+fam_serv_expec{% if field[0].family_service_expected==field[1].family_service_expected %} {{field[0].family_service_expected}}{%else%} <FONT COLOR='red'>{{field[0].family_service_expected}}</font>{% endif %}
+IntensiveNeed{% if field[0].intensive_needs_clients==field[1].intensive_needs_clients %} {{field[0].intensive_needs_clients}}{%else%} <FONT COLOR='red'>{{field[0].intensive_needs_clients}}</font>{% endif %}
+case_mgmt{% if field[0].case_management==field[1].case_management %} {{field[0].case_management}}{%else%} <FONT COLOR='red'>{{field[0].case_management}}</font>{% endif %}
+deliv_exm{% if field[0].deliverable_exempt==field[1].deliverable_exempt %} {{field[0].deliverable_exempt}}{%else%} <FONT COLOR='red'>{{field[0].deliverable_exempt}}</font>{% endif %}
+srp{% if field[0].srp==field[1].srp %} {{field[0].srp}}{%else%} <FONT COLOR='red'>{{field[0].srp}}</font>{% endif %}
+ crisis{% if field[0].crisis==field[1].crisis %} {{field[0].crisis}}{%else%} <FONT COLOR='red'>{{field[0].crisis}}</font>{% endif %}
+high_level{% if field[0].high_level==field[1].high_level %} {{field[0].high_level}}{%else%} <FONT COLOR='red'>{{field[0].high_level}}</font>{% endif %}
+fol_up{% if field[0].follow_up_care==field[1].follow_up_care %} {{field[0].follow_up_care}}{%else%} <FONT COLOR='red'>{{field[0].follow_up_care}}</font>{% endif %}
+</td>
 
 
 <td> {% if field[0].mode_of_service==field[1].mode_of_service %} {{field[0].mode_of_service}}{%else%}<FONT COLOR='red'>{{field[0].mode_of_service}}</font>{% endif %}</td>
