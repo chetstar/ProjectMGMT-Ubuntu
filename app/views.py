@@ -357,6 +357,8 @@ def edit_ru(id,edit):
             # form.oldRU.data=ru.oldRU   
             # import pdb;pdb.set_trace()
             if g.user.form_access=='all':
+                if form.agency.data == '':
+                    ru.agency=None
                 if form.dbservicemodality.data == '':
                     ru.dbservicemodality=None
                 if form.psmasktext.data == '':
@@ -381,8 +383,8 @@ def edit_ru(id,edit):
                     ru.day_treatment=None
                 if form.kidsru .data == 'None': 
                     ru.kidsru =None
-                if form.level_2 .data == 'None':    
-                    ru.level_2 =None
+                # if form.level_2 .data == 'None':    
+                #     ru.level_2 =None
                 if form.level_3_classic .data == 'None':    
                     ru.level_3_classic =None
                 if form.mhsa .data == 'None':   
@@ -550,6 +552,8 @@ def stageupdate(rurow):
         ruprod=models.providers.query.filter_by(id=rurow).first()
         form = rutable(obj=staging_providers)
         form.populate_obj(ruprod)
+        if form.agency.data == '':
+            ruprod.agency=None
         if form.dbservicemodality.data == '':
             ruprod.dbservicemodality=None
         if form.provider_level.data == '':
@@ -576,8 +580,8 @@ def stageupdate(rurow):
             ruprod.day_treatment=None
         if form.kidsru .data == 'None': 
             ruprod.kidsru =None
-        if form.level_2 .data == 'None':    
-            ruprod.level_2 =None
+        # if form.level_2 .data == 'None':    
+        #     ruprod.level_2 =None
         if form.level_3_classic .data == 'None':    
             ruprod.level_3_classic =None
         if form.mhsa .data == 'None':   
@@ -656,6 +660,8 @@ def stagereject(rurow):
     # staging.reviewEdit=False
         if form.dbservicemodality.data == '':
             staging.dbservicemodality=None
+        if form.agency.data == '':
+            staging.agency=None
         if form.provider_level.data == '':
             staging.provider_level=None
         if form.psmasktext.data == '':
@@ -680,8 +686,8 @@ def stagereject(rurow):
             staging.day_treatment=None
         if form.kidsru .data == 'None': 
             staging.kidsru =None
-        if form.level_2 .data == 'None':    
-            staging.level_2 =None
+        # if form.level_2 .data == 'None':    
+        #     staging.level_2 =None
         if form.level_3_classic .data == 'None':    
             staging.level_3_classic =None
         if form.mhsa .data == 'None':   
