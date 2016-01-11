@@ -413,7 +413,7 @@ class rutable(Form):
     epsdtgroup        =TextField('epsdtgroup')   
     # financial_responsibility    = IntegerField('financial_responsibility')   
     kidsru        = SelectField('kidsru', choices=[(None,'None'),(True,True),(False,False)],)   
-    level_2        = SelectField('level_2', choices=[(None,'None'),(True,True),(False,False)],)  
+    # level_2        = SelectField('level_2', choices=[(None,'None'),(True,True),(False,False)],)  
     level_3_classic        = SelectField('Level3Classic', choices=[(None,'None'),(True,True),(False,False)],)   
     mhsa        = SelectField('mhsa', choices=[(None,'None'),(True,True),(False,False)],)   
     older_adult        = SelectField('older_adult', choices=[(None,'None'),(True,True),(False,False)],)   
