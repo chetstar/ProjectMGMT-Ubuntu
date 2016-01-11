@@ -563,11 +563,11 @@ def stageupdate(rurow):
         if form.dbservicemodality.data == '':
             ruprod.dbservicemodality=None
         if form.provider_level.data == '':
+            ruprod.provider_level=None
         if form.agency.data == 'None':
             ruprod.agency=None
         if form.dbservicemodality.data == 'None':
             ruprod.dbservicemodality=None
-            ruprod.provider_level=None
         if form.psmasktext.data == '':
             ruprod.psmasktext=None
         if form.predesessor.data == '':
