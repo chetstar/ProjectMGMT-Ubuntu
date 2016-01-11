@@ -363,6 +363,12 @@ def edit_ru(id,edit):
                     ru.dbservicemodality=None
                 if form.psmasktext.data == '':
                     ru.psmasktext=None
+                if form.agency.data == 'None':
+                    ru.agency=None
+                if form.dbservicemodality.data == 'None':
+                    ru.dbservicemodality=None
+                if form.psmasktext.data == 'None':
+                    ru.psmasktext=None
                 if form.predesessor.data == '':
                     ru.predesessor=None
                 if form.school_cds_id.data == '':
@@ -557,6 +563,10 @@ def stageupdate(rurow):
         if form.dbservicemodality.data == '':
             ruprod.dbservicemodality=None
         if form.provider_level.data == '':
+        if form.agency.data == 'None':
+            ruprod.agency=None
+        if form.dbservicemodality.data == 'None':
+            ruprod.dbservicemodality=None
             ruprod.provider_level=None
         if form.psmasktext.data == '':
             ruprod.psmasktext=None
@@ -661,6 +671,10 @@ def stagereject(rurow):
         if form.dbservicemodality.data == '':
             staging.dbservicemodality=None
         if form.agency.data == '':
+            staging.agency=None
+        if form.dbservicemodality.data == 'None':
+            staging.dbservicemodality=None
+        if form.agency.data == 'None':
             staging.agency=None
         if form.provider_level.data == '':
             staging.provider_level=None
