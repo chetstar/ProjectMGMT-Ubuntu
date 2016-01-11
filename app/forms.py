@@ -346,7 +346,6 @@ class rutablefilter(Form):
 ('agency','agency'),
 ('calworks','calworks'),
 ('cesdc','cesdc'),
-('cooked','cooked'),
 ('county_run','county_run'),
 ('day_treatment','day_treatment'),
 ('dbservicemodality','dbservicemodality'),
@@ -484,7 +483,7 @@ class rutable(Form):
     # svctype3        =TextField('svctype3')    
     tay        = SelectField('tay', choices=[(None,'None'),(True,True),(False,False)],)    
     tbs        = SelectField('tbs', choices=[(None,'None'),(True,True),(False,False)],)  
-    cooked        = SelectField('cooked', choices=[(None,'None'),(True,True),(False,False)],)   
+    # cooked        = SelectField('cooked', choices=[(None,'None'),(True,True),(False,False)],)   
     meds_fall_off = SelectField('meds_fall_off', choices=[(None,'None'),(True,True),(False,False)],) 
     cesdc_model = SelectField('cesdc_model', choices=[
         (None,'None'),("CESDC","CESDC"),("I-CESDC-NPS","I-CESDC-NPS"),("I-CESDC","I-CESDC")],) 
