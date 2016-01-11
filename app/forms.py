@@ -370,7 +370,20 @@ class rutablefilter(Form):
 ('mode_of_service','mode_of_service'),
 ('tay','tay'),
 ('tbs','tbs'),
-('umbrella_organization','umbrella_organization')],default="None") 
+('umbrella_organization','umbrella_organization'),
+("meds_fall_off","meds_fall_off"),                   
+("cesdc_model","cesdc_model"),                     
+("level_3_type","level_3_type"),                       
+("child_welfare","child_welfare"),                      
+("family_service_expected","family_service_expected"),            
+("intensive_needs_clients","intensive_needs_clients"),            
+("case_management","case_management"),                    
+("deliverable_exempt","deliverable_exempt"), 
+('srp','srp'),                                
+('crisis','crisis'),                             
+("high_level","high_level"),        
+("follow_up_care","follow_up_care"),    
+("provider_level","provider_level"  )],default="None") 
     submit=SubmitField('Submit')
 
 class rutable(Form):
@@ -486,7 +499,7 @@ class rutable(Form):
     # cooked        = SelectField('cooked', choices=[(None,'None'),(True,True),(False,False)],)   
     meds_fall_off = SelectField('meds_fall_off', choices=[(None,'None'),(True,True),(False,False)],) 
     cesdc_model = SelectField('cesdc_model', choices=[
-        (None,'None'),("CESDC","CESDC"),("I-CESDC-NPS","I-CESDC-NPS"),("I-CESDC","I-CESDC")],) 
+        (None,None),("CESDC","CESDC"),("I-CESDC-NPS","I-CESDC-NPS"),("I-CESDC","I-CESDC")],) 
     child_welfare = SelectField('child_welfare', choices=[(None,'None'),(True,True),(False,False)],) 
     family_service_expected = SelectField('family_service_expected', choices=[(None,'None'),(True,True),(False,False)],) 
     intensive_needs_clients = SelectField('intensive_needs_clients', choices=[(None,'None'),(True,True),(False,False)],) 
