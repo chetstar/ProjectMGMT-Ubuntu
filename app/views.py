@@ -578,8 +578,8 @@ def stageupdate(rurow):
             ruprod.meds_fall_off=None
         if form.cesdc_model.data == 'None': 
             ruprod.cesdc_model=None
-        if form.level_3_type.data == 'None':    
-            ruprod.level_3_type=None
+        # if form.level_3_type.data == 'None':    
+        #     ruprod.level_3_type=None
         if form.child_welfare.data == 'None':   
             ruprod.child_welfare=None
         if form.family_service_expected.data == 'None': 
@@ -682,8 +682,8 @@ def stagereject(rurow):
             staging.meds_fall_off=None
         if form.cesdc_model.data == 'None': 
             staging.cesdc_model=None
-        if form.level_3_type.data == 'None':    
-            staging.level_3_type=None
+        # if form.level_3_type.data == 'None':    
+        #     staging.level_3_type=None
         if form.child_welfare.data == 'None':   
             staging.child_welfare=None
         if form.family_service_expected.data == 'None': 
