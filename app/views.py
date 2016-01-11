@@ -399,8 +399,32 @@ def edit_ru(id,edit):
                     ru.tay =None
                 if form.tbs .data == 'None':    
                     ru.tbs =None
-                # if form.cooked .data == 'None': 
-                #     ru.cooked =None
+                if form.meds_fall_off.data == 'None':   
+                    ru.meds_fall_off=None
+                if form.cesdc_model.data == 'None': 
+                    ru.cesdc_model=None
+                # if form.level_3_type.data == 'None':    
+                #     ru.level_3_type=None
+                if form.child_welfare.data == 'None':   
+                    ru.child_welfare=None
+                if form.family_service_expected.data == 'None': 
+                    ru.family_service_expected=None
+                if form.intensive_needs_clients.data == 'None': 
+                    ru.intensive_needs_clients=None
+                if form.case_management.data == 'None': 
+                    ru.case_management=None
+                # if form.level_1.data == 'None': 
+                #     ru.level_1=None
+                if form.deliverable_exempt.data == 'None':  
+                    ru.deliverable_exempt=None
+                if form.srp.data == 'None': 
+                    ru.srp=None
+                if form.crisis.data == 'None':  
+                    ru.crisis=None
+                if form.high_level.data == 'None':  
+                    ru.high_level=None
+                if form.follow_up_care.data == 'None':  
+                    ru.follow_up_care=None
             if form.cans.data == 'None':
                 ru.cans=None
             ru.modified_by=g.user.name 
