@@ -399,8 +399,8 @@ def edit_ru(id,edit):
                     ru.tay =None
                 if form.tbs .data == 'None':    
                     ru.tbs =None
-                if form.cooked .data == 'None': 
-                    ru.cooked =None
+                # if form.cooked .data == 'None': 
+                #     ru.cooked =None
             if form.cans.data == 'None':
                 ru.cans=None
             ru.modified_by=g.user.name 
@@ -570,8 +570,8 @@ def stageupdate(rurow):
             ruprod.tay =None
         if form.tbs .data == 'None':    
             ruprod.tbs =None
-        if form.cooked .data == 'None': 
-            ruprod.cooked =None
+        # if form.cooked .data == 'None': 
+        #     ruprod.cooked =None
         if form.cans.data == 'None':
             ruprod.cans=None
         if form.meds_fall_off.data == 'None':   
@@ -588,8 +588,8 @@ def stageupdate(rurow):
             ruprod.intensive_needs_clients=None
         if form.case_management.data == 'None': 
             ruprod.case_management=None
-        if form.level_1.data == 'None': 
-            ruprod.level_1=None
+        # if form.level_1.data == 'None': 
+        #     ruprod.level_1=None
         if form.deliverable_exempt.data == 'None':  
             ruprod.deliverable_exempt=None
         if form.srp.data == 'None': 
@@ -674,8 +674,8 @@ def stagereject(rurow):
             staging.tay =None
         if form.tbs .data == 'None':    
             staging.tbs =None
-        if form.cooked .data == 'None': 
-            staging.cooked =None
+        # if form.cooked .data == 'None': 
+        #     staging.cooked =None
         if form.cans.data == 'None':
             staging.cans=None
         if form.meds_fall_off.data == 'None':   
@@ -692,8 +692,8 @@ def stagereject(rurow):
             staging.intensive_needs_clients=None
         if form.case_management.data == 'None': 
             staging.case_management=None
-        if form.level_1.data == 'None': 
-            staging.level_1=None
+        # if form.level_1.data == 'None': 
+        #     staging.level_1=None
         if form.deliverable_exempt.data == 'None':  
             staging.deliverable_exempt=None
         if form.srp.data == 'None': 
