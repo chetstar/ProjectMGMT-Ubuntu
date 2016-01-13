@@ -359,16 +359,16 @@ def edit_ru(id,edit):
             if g.user.form_access=='all':
                 if form.agency.data == '':
                     ru.agency=None
-                if form.dbservicemodality.data == '':
-                    ru.dbservicemodality=None
-                if form.psmasktext.data == '':
-                    ru.psmasktext=None
-                if form.agency.data == 'None':
-                    ru.agency=None
                 if form.dbservicemodality.data == 'None':
                     ru.dbservicemodality=None
                 if form.psmasktext.data == 'None':
                     ru.psmasktext=None
+                if form.agency.data == 'None':
+                    ru.agency=None
+                if form.provider_level.data == 'None':
+                    ru.dbservicemodality=None
+                if form.cesdc_model.data == 'None':
+                    ru.cesdc_model=None
                 if form.predesessor.data == '':
                     ru.predesessor=None
                 if form.school_cds_id.data == '':
@@ -560,16 +560,16 @@ def stageupdate(rurow):
         form.populate_obj(ruprod)
         if form.agency.data == '':
             ruprod.agency=None
-        if form.dbservicemodality.data == '':
-            ruprod.dbservicemodality=None
-        if form.provider_level.data == '':
-            ruprod.provider_level=None
-        if form.agency.data == 'None':
-            ruprod.agency=None
         if form.dbservicemodality.data == 'None':
             ruprod.dbservicemodality=None
-        if form.psmasktext.data == '':
+        if form.psmasktext.data == 'None':
             ruprod.psmasktext=None
+        if form.agency.data == 'None':
+            ruprod.agency=None
+        if form.provider_level.data == 'None':
+            ruprod.dbservicemodality=None
+        if form.cesdc_model.data == 'None':
+            ru.cesdc_model=None
         if form.predesessor.data == '':
             ruprod.predesessor=None
         if form.school_cds_id.data == '':
@@ -662,24 +662,18 @@ def stagereject(rurow):
         staging=models.staging_providers.query.filter_by(id=rurow).first()
         form = rutable(obj=production)
         form.populate_obj(staging)
-    # else:
-    #     staging=rutable(ru=staging_providers.reporting_unit)
-    #     form = rutable(obj=staging_providers)
-    #     form.populate_obj(staging)
-    # staging_providers.reviewEdit=False
-    # staging.reviewEdit=False
-        if form.dbservicemodality.data == '':
-            staging.dbservicemodality=None
         if form.agency.data == '':
             staging.agency=None
         if form.dbservicemodality.data == 'None':
             staging.dbservicemodality=None
+        if form.psmasktext.data == 'None':
+            stagingpsmasktext=None
         if form.agency.data == 'None':
             staging.agency=None
-        if form.provider_level.data == '':
-            staging.provider_level=None
-        if form.psmasktext.data == '':
-            staging.psmasktext=None
+        if form.provider_level.data == 'None':
+            staging.dbservicemodality=None
+        if form.cesdc_model.data == 'None':
+            ru.cesdc_model=None
         if form.predesessor.data == '':
             staging.predesessor=None
         if form.school_cds_id.data == '':
