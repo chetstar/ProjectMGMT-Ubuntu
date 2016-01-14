@@ -673,7 +673,7 @@ def stagereject(rurow):
         if form.provider_level.data == 'None':
             staging.dbservicemodality=None
         if form.cesdc_model.data == 'None':
-            ru.cesdc_model=None
+            staging.cesdc_model=None
         if form.predesessor.data == '':
             staging.predesessor=None
         if form.school_cds_id.data == '':
