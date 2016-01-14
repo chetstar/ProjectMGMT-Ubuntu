@@ -409,10 +409,6 @@ def edit_ru(id,edit):
                     ru.tbs =None
                 if form.meds_fall_off.data == 'None':   
                     ru.meds_fall_off=None
-                if form.cesdc_model.data == 'None': 
-                    ru.cesdc_model=None
-                # if form.level_3_type.data == 'None':    
-                #     ru.level_3_type=None
                 if form.child_welfare.data == 'None':   
                     ru.child_welfare=None
                 if form.family_service_expected.data == 'None': 
@@ -569,7 +565,7 @@ def stageupdate(rurow):
         if form.provider_level.data == 'None':
             ruprod.dbservicemodality=None
         if form.cesdc_model.data == 'None':
-            ru.cesdc_model=None
+            ruprod.cesdc_model=None
         if form.predesessor.data == '':
             ruprod.predesessor=None
         if form.school_cds_id.data == '':
