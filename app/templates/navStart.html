@@ -128,7 +128,17 @@
           {% endblock %}
 
 
- {% block scripts %}
+{% block scripts %}   
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/contact_me.js') }}"></script>
+<!-- <script type="text/javascript" src="{{ url_for('static', filename='js/agency.js') }}"></script> -->
+<script type="text/javascript" src="/static/js/agency.js"></script>
+
+
+                <script type="text/javascript" src="{{ url_for('static', filename='js/html5shiv.js') }}"></script>
+  
+    <script src="static/js/bootstrap.js"></script>
+
 
   <div id="footer">
         <div class="container">
@@ -140,9 +150,9 @@
         </div>
        
     </div> 
-           <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-datepicker.js') }}"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
 {% endblock %}
+
 
 
 </html>
