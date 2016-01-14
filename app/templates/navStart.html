@@ -1,6 +1,7 @@
 <!DOCTYPE html>
  {% extends "bootstrap/base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
+   {% import "bootstrap/fixes.html" as fixes %}
 
 
 <html lang="en">
@@ -57,10 +58,11 @@
       
 
 
- <div class="col-md-3">
+ <div class="col-md-5">
  <div class="well">
  {% if user == 1 %}
  <h2>In house Tools</h2><br>
+ <div class="alert alert-info" role="alert">
 <p></span><a class="btn btn-default" role="button" href="http://hpmxl2221nxk:5000/restart"><span class="glyphicon glyphicon-refresh" aria-hidden="true"> Server Restart Main</a>  </p>
 <p><a class="btn btn-default" role="button" href="http://bhcsweb3:5000/restart"><span class="glyphicon glyphicon-refresh " aria-hidden="true"></span> Server Restart Backup</a> </p>
 <p><a class="btn btn-default" role="button" href="http://winspssv4:5000/argonaut"><span class="glyphicon glyphicon-font" aria-hidden="true"></span> Argonaut stage and push</a></p>
@@ -73,12 +75,13 @@
 {% endif %}
 <p> <a class="btn btn-default" role="button"href="http://argonaut/rulist"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Edit Ru Table</a></p>
 <!-- <p></span><a class="btn btn-default" role="button" href="http://winspssv3:5000/admin/userview/"><span class="glyphicon glyphicon-user" aria-hidden="true"> User Account</a>  </p> -->
-</div></div>
+</div></div></div>
 
 
-         <div class="col-md-4 offset2">
+         <div class="col-md-5">
 <div class="well">
 <h2>For the User</h2><br>
+ <div class="alert alert-info" role="alert">
 <p></span><a class="btn btn-default" role="button" href="http://argonaut/pickaform"><span class="glyphicon glyphicon-signal" aria-hidden="true"> Request Center!</a>  </p>
   <p><a class="btn btn-default" role="button" href="http://winspssv4:5000/theportal"><span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> Data Portal</a> </p>
    {% if user == 1 %}
