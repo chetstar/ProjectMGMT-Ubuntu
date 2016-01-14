@@ -366,7 +366,7 @@ def edit_ru(id,edit):
                 if form.agency.data == 'None':
                     ru.agency=None
                 if form.provider_level.data == 'None':
-                    ru.dbservicemodality=None
+                    ru.provider_level=None
                 if form.cesdc_model.data == 'None':
                     ru.cesdc_model=None
                 if form.predesessor.data == '':
@@ -563,7 +563,7 @@ def stageupdate(rurow):
         if form.agency.data == 'None':
             ruprod.agency=None
         if form.provider_level.data == 'None':
-            ruprod.dbservicemodality=None
+            ruprod.provider_level=None
         if form.cesdc_model.data == 'None':
             ruprod.cesdc_model=None
         if form.predesessor.data == '':
@@ -663,11 +663,11 @@ def stagereject(rurow):
         if form.dbservicemodality.data == 'None':
             staging.dbservicemodality=None
         if form.psmasktext.data == 'None':
-            stagingpsmasktext=None
+            staging.psmasktext=None
         if form.agency.data == 'None':
             staging.agency=None
         if form.provider_level.data == 'None':
-            staging.dbservicemodality=None
+            staging.provider_level=None
         if form.cesdc_model.data == 'None':
             staging.cesdc_model=None
         if form.predesessor.data == '':
