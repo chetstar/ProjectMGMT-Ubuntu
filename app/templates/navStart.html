@@ -72,7 +72,7 @@
       
 
 
- <div class="col-md-5">
+ <div class="col-md-4">
  <div class="well">
  {% if user == 1 %}
  <h2>In house Tools</h2><br>
@@ -95,7 +95,7 @@
 </div></div></div>
 
 
-         <div class="col-md-5">
+         <div class="col-md-4">
 <div class="well">
 <h2>For the User</h2><br>
  <div class="alert alert-info" role="alert">
@@ -106,38 +106,22 @@
 <li class="list-group-item"><a href="http://CoveContext/RunReport.i4?reportUUID=cd521124-ac30-4c92-914e-23d9f793e0d2&primaryOrg=1&clientOrg=1">Project MGMT in Emanio</a></li>
  {% if user == 1 %}
 <li class="list-group-item"><a href="http://winspssv4:5000/argonaut/emanio"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Emanio Problems?</a></li>
-<li class="list-group-item"><a href="http://argonaut/procedlist"> <span class="glyphicon glyphicon-home" aria-hidden="true"></span> Draft BA Website</a></li>
+<li class="list-group-item"><a href="http://argonaut/main"> <span class="glyphicon glyphicon-home" aria-hidden="true"></span> Draft BA Website</a></li>
 
 </ul>
 {% endif %}
 
-</span></a></p></span></a></p></div></div></div></div></div>
+</span></a></p></span></a></p></div></div></div>
      
      
 <br>
   
 <br>
-      </div>
-    </div>
 
-     </div>
-    </div>   </div>
-    </div>
 
     
           {% endblock %}
 
-
-{% block scripts %}   
-
-<script type="text/javascript" src="{{ url_for('static', filename='js/contact_me.js') }}"></script>
-<!-- <script type="text/javascript" src="{{ url_for('static', filename='js/agency.js') }}"></script> -->
-<script type="text/javascript" src="/static/js/agency.js"></script>
-
-
-                <script type="text/javascript" src="{{ url_for('static', filename='js/html5shiv.js') }}"></script>
-  
-    <script src="static/js/bootstrap.js"></script>
 
 
   <div id="footer">
@@ -151,7 +135,6 @@
        
     </div> 
 
-{% endblock %}
 
 
 
