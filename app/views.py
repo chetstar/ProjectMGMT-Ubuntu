@@ -359,82 +359,82 @@ def edit_ru(id,edit):
             # ru.modified_on=datetime.datetime.utcnow()
             # db.session.add(p) 
             # form.oldRU.data=ru.oldRU   
-            import pdb;pdb.set_trace()
-            if g.user.form_access=='all':
-                if form.agency.data == '':
-                    ru.agency=None
-                if form.dbservicemodality.data == 'None':
-                    ru.dbservicemodality=None
-                if form.psmasktext.data == 'None':
-                    ru.psmasktext=None
-                if form.agency.data == 'None':
-                    ru.agency=None
-                if form.provider_level.data == 'None':
-                    ru.provider_level=None
-                if form.cesdc_model.data == 'None':
-                    ru.cesdc_model=None
-                if form.predesessor.data == '':
-                    ru.predesessor=None
-                if form.school_cds_id.data == '':
-                    ru.school_cds_id=None
-                if form.ab3632.data == 'None':
-                    ru.ab3632=None
-                if form.residential.data == 'None':
-                    ru.residential=None
-                if form.ab3632 .data == 'None': 
-                    ru.ab3632 =None
-                if form.calworks.data == 'None':    
-                    ru.calworks=None
-                if form.cesdc.data == 'None':   
-                    ru.cesdc=None
-                if form.county_run .data == 'None': 
-                    ru.county_run =None
-                if form.day_treatment.data == 'None':   
-                    ru.day_treatment=None
-                if form.kidsru .data == 'None': 
-                    ru.kidsru =None
-                # if form.level_2 .data == 'None':    
-                #     ru.level_2 =None
-                if form.level_3_classic .data == 'None':    
-                    ru.level_3_classic =None
-                if form.mhsa .data == 'None':   
-                    ru.mhsa =None
-                if form.older_adult .data == 'None':    
-                    ru.older_adult =None
-                if form.out_of_county .data == 'None':  
-                    ru.out_of_county =None
-                if form.program    .data == 'None': 
-                    ru.program    =None
-                if form.in_school.data == 'None':   
-                    ru.in_school=None
-                if form.tay .data == 'None':    
-                    ru.tay =None
-                if form.tbs .data == 'None':    
-                    ru.tbs =None
-                if form.meds_fall_off.data == 'None':   
-                    ru.meds_fall_off=None
-                if form.child_welfare.data == 'None':   
-                    ru.child_welfare=None
-                if form.family_service_expected.data == 'None': 
-                    ru.family_service_expected=None
-                if form.intensive_needs_clients.data == 'None': 
-                    ru.intensive_needs_clients=None
-                if form.case_management.data == 'None': 
-                    ru.case_management=None
-                # if form.level_1.data == 'None': 
-                #     ru.level_1=None
-                if form.deliverable_exempt.data == 'None':  
-                    ru.deliverable_exempt=None
-                if form.srp.data == 'None': 
-                    ru.srp=None
-                if form.crisis.data == 'None':  
-                    ru.crisis=None
-                if form.high_level.data == 'None':  
-                    ru.high_level=None
-                if form.follow_up_care.data == 'None':  
-                    ru.follow_up_care=None
-            if form.cans.data == 'None':
-                ru.cans=None
+            # import pdb;pdb.set_trace()
+            # if g.user.form_access=='all':
+            #     if form.agency.data == '':
+            #         ru.agency=None
+            #     if form.dbservicemodality.data == 'None':
+            #         ru.dbservicemodality=None
+            #     if form.psmasktext.data == 'None':
+            #         ru.psmasktext=None
+            #     if form.agency.data == 'None':
+            #         ru.agency=None
+            #     if form.provider_level.data == 'None':
+            #         ru.provider_level=None
+            #     if form.cesdc_model.data == 'None':
+            #         ru.cesdc_model=None
+            #     if form.predesessor.data == '':
+            #         ru.predesessor=None
+            #     if form.school_cds_id.data == '':
+            #         ru.school_cds_id=None
+            #     if form.ab3632.data == 'None':
+            #         ru.ab3632=None
+            #     if form.residential.data == 'None':
+            #         ru.residential=None
+            #     if form.ab3632 .data == 'None': 
+            #         ru.ab3632 =None
+            #     if form.calworks.data == 'None':    
+            #         ru.calworks=None
+            #     if form.cesdc.data == 'None':   
+            #         ru.cesdc=None
+            #     if form.county_run .data == 'None': 
+            #         ru.county_run =None
+            #     if form.day_treatment.data == 'None':   
+            #         ru.day_treatment=None
+            #     if form.kidsru .data == 'None': 
+            #         ru.kidsru =None
+            #     # if form.level_2 .data == 'None':    
+            #     #     ru.level_2 =None
+            #     if form.level_3_classic .data == 'None':    
+            #         ru.level_3_classic =None
+            #     if form.mhsa .data == 'None':   
+            #         ru.mhsa =None
+            #     if form.older_adult .data == 'None':    
+            #         ru.older_adult =None
+            #     if form.out_of_county .data == 'None':  
+            #         ru.out_of_county =None
+            #     if form.program    .data == 'None': 
+            #         ru.program    =None
+            #     if form.in_school.data == 'None':   
+            #         ru.in_school=None
+            #     if form.tay .data == 'None':    
+            #         ru.tay =None
+            #     if form.tbs .data == 'None':    
+            #         ru.tbs =None
+            #     if form.meds_fall_off.data == 'None':   
+            #         ru.meds_fall_off=None
+            #     if form.child_welfare.data == 'None':   
+            #         ru.child_welfare=None
+            #     if form.family_service_expected.data == 'None': 
+            #         ru.family_service_expected=None
+            #     if form.intensive_needs_clients.data == 'None': 
+            #         ru.intensive_needs_clients=None
+            #     if form.case_management.data == 'None': 
+            #         ru.case_management=None
+            #     # if form.level_1.data == 'None': 
+            #     #     ru.level_1=None
+            #     if form.deliverable_exempt.data == 'None':  
+            #         ru.deliverable_exempt=None
+            #     if form.srp.data == 'None': 
+            #         ru.srp=None
+            #     if form.crisis.data == 'None':  
+            #         ru.crisis=None
+            #     if form.high_level.data == 'None':  
+            #         ru.high_level=None
+            #     if form.follow_up_care.data == 'None':  
+            #         ru.follow_up_care=None
+            # if form.cans.data == 'None':
+            #     ru.cans=None
             ru.modified_by=g.user.name 
             db.session.commit()
             flash("Changes saved")
@@ -557,87 +557,90 @@ def stageupdate(rurow):
     if db.session.query(exists().where(models.providers.id == rurow)).scalar():
         ruprod=models.providers.query.filter_by(id=rurow).first()
         form = rutable(obj=staging_providers)
+        for field in form:
+            if field.data == 'None':
+                getattr(form,str(field.name)).data = None
         form.populate_obj(ruprod)
-        if form.agency.data == '':
-            ruprod.agency=None
-        if form.dbservicemodality.data == 'None':
-            ruprod.dbservicemodality=None
-        if form.psmasktext.data == 'None':
-            ruprod.psmasktext=None
-        if form.agency.data == 'None':
-            ruprod.agency=None
-        if form.provider_level.data == 'None':
-            ruprod.provider_level=None
-        if form.cesdc_model.data == 'None':
-            ruprod.cesdc_model=None
-        if form.predesessor.data == '':
-            ruprod.predesessor=None
-        if form.school_cds_id.data == '':
-            ruprod.school_cds_id=None
-        if form.ab3632.data == 'None':
-            ruprod.ab3632=None
-        if form.residential.data == 'None':
-            ruprod.residential=None
-        if form.ab3632 .data == 'None': 
-            ruprod.ab3632 =None
-        if form.calworks.data == 'None':    
-            ruprod.calworks=None
-        if form.cesdc.data == 'None':   
-            ruprod.cesdc=None
-        if form.county_run .data == 'None': 
-            ruprod.county_run =None
-        if form.day_treatment.data == 'None':   
-            ruprod.day_treatment=None
-        if form.kidsru .data == 'None': 
-            ruprod.kidsru =None
-        # if form.level_2 .data == 'None':    
-        #     ruprod.level_2 =None
-        if form.level_3_classic .data == 'None':    
-            ruprod.level_3_classic =None
-        if form.mhsa .data == 'None':   
-            ruprod.mhsa =None
-        if form.older_adult .data == 'None':    
-            ruprod.older_adult =None
-        if form.out_of_county .data == 'None':  
-            ruprod.out_of_county =None
-        if form.program    .data == 'None': 
-            ruprod.program    =None
-        if form.in_school.data == 'None':   
-            ruprod.in_school=None
-        if form.tay .data == 'None':    
-            ruprod.tay =None
-        if form.tbs .data == 'None':    
-            ruprod.tbs =None
-        # if form.cooked .data == 'None': 
-        #     ruprod.cooked =None
-        if form.cans.data == 'None':
-            ruprod.cans=None
-        if form.meds_fall_off.data == 'None':   
-            ruprod.meds_fall_off=None
-        if form.cesdc_model.data == 'None': 
-            ruprod.cesdc_model=None
-        # if form.level_3_type.data == 'None':    
-        #     ruprod.level_3_type=None
-        if form.child_welfare.data == 'None':   
-            ruprod.child_welfare=None
-        if form.family_service_expected.data == 'None': 
-            ruprod.family_service_expected=None
-        if form.intensive_needs_clients.data == 'None': 
-            ruprod.intensive_needs_clients=None
-        if form.case_management.data == 'None': 
-            ruprod.case_management=None
-        # if form.level_1.data == 'None': 
-        #     ruprod.level_1=None
-        if form.deliverable_exempt.data == 'None':  
-            ruprod.deliverable_exempt=None
-        if form.srp.data == 'None': 
-            ruprod.srp=None
-        if form.crisis.data == 'None':  
-            ruprod.crisis=None
-        if form.high_level.data == 'None':  
-            ruprod.high_level=None
-        if form.follow_up_care.data == 'None':  
-            ruprod.follow_up_care=None
+        # if form.agency.data == '':
+        #     ruprod.agency=None
+        # if form.dbservicemodality.data == 'None':
+        #     ruprod.dbservicemodality=None
+        # if form.psmasktext.data == 'None':
+        #     ruprod.psmasktext=None
+        # if form.agency.data == 'None':
+        #     ruprod.agency=None
+        # if form.provider_level.data == 'None':
+        #     ruprod.provider_level=None
+        # if form.cesdc_model.data == 'None':
+        #     ruprod.cesdc_model=None
+        # if form.predesessor.data == '':
+        #     ruprod.predesessor=None
+        # if form.school_cds_id.data == '':
+        #     ruprod.school_cds_id=None
+        # if form.ab3632.data == 'None':
+        #     ruprod.ab3632=None
+        # if form.residential.data == 'None':
+        #     ruprod.residential=None
+        # if form.ab3632 .data == 'None': 
+        #     ruprod.ab3632 =None
+        # if form.calworks.data == 'None':    
+        #     ruprod.calworks=None
+        # if form.cesdc.data == 'None':   
+        #     ruprod.cesdc=None
+        # if form.county_run .data == 'None': 
+        #     ruprod.county_run =None
+        # if form.day_treatment.data == 'None':   
+        #     ruprod.day_treatment=None
+        # if form.kidsru .data == 'None': 
+        #     ruprod.kidsru =None
+        # # if form.level_2 .data == 'None':    
+        # #     ruprod.level_2 =None
+        # if form.level_3_classic .data == 'None':    
+        #     ruprod.level_3_classic =None
+        # if form.mhsa .data == 'None':   
+        #     ruprod.mhsa =None
+        # if form.older_adult .data == 'None':    
+        #     ruprod.older_adult =None
+        # if form.out_of_county .data == 'None':  
+        #     ruprod.out_of_county =None
+        # if form.program    .data == 'None': 
+        #     ruprod.program    =None
+        # if form.in_school.data == 'None':   
+        #     ruprod.in_school=None
+        # if form.tay .data == 'None':    
+        #     ruprod.tay =None
+        # if form.tbs .data == 'None':    
+        #     ruprod.tbs =None
+        # # if form.cooked .data == 'None': 
+        # #     ruprod.cooked =None
+        # if form.cans.data == 'None':
+        #     ruprod.cans=None
+        # if form.meds_fall_off.data == 'None':   
+        #     ruprod.meds_fall_off=None
+        # if form.cesdc_model.data == 'None': 
+        #     ruprod.cesdc_model=None
+        # # if form.level_3_type.data == 'None':    
+        # #     ruprod.level_3_type=None
+        # if form.child_welfare.data == 'None':   
+        #     ruprod.child_welfare=None
+        # if form.family_service_expected.data == 'None': 
+        #     ruprod.family_service_expected=None
+        # if form.intensive_needs_clients.data == 'None': 
+        #     ruprod.intensive_needs_clients=None
+        # if form.case_management.data == 'None': 
+        #     ruprod.case_management=None
+        # # if form.level_1.data == 'None': 
+        # #     ruprod.level_1=None
+        # if form.deliverable_exempt.data == 'None':  
+        #     ruprod.deliverable_exempt=None
+        # if form.srp.data == 'None': 
+        #     ruprod.srp=None
+        # if form.crisis.data == 'None':  
+        #     ruprod.crisis=None
+        # if form.high_level.data == 'None':  
+        #     ruprod.high_level=None
+        # if form.follow_up_care.data == 'None':  
+        #     ruprod.follow_up_care=None
     # else:
     #     ruprod=rutable(ru=staging_providers.reporting_unit)
     #     form = rutable(obj=staging_providers)
@@ -661,87 +664,90 @@ def stagereject(rurow):
     if db.session.query(exists().where(models.providers.id == rurow)).scalar():
         staging=models.staging_providers.query.filter_by(id=rurow).first()
         form = rutable(obj=production)
+        for field in form:
+            if field.data == 'None':
+                getattr(form,str(field.name)).data = None
         form.populate_obj(staging)
-        if form.agency.data == '':
-            staging.agency=None
-        if form.dbservicemodality.data == 'None':
-            staging.dbservicemodality=None
-        if form.psmasktext.data == 'None':
-            staging.psmasktext=None
-        if form.agency.data == 'None':
-            staging.agency=None
-        if form.provider_level.data == 'None':
-            staging.provider_level=None
-        if form.cesdc_model.data == 'None':
-            staging.cesdc_model=None
-        if form.predesessor.data == '':
-            staging.predesessor=None
-        if form.school_cds_id.data == '':
-            staging.school_cds_id=None
-        if form.ab3632.data == 'None':
-            staging.ab3632=None
-        if form.residential.data == 'None':
-            staging.residential=None
-        if form.ab3632 .data == 'None': 
-            staging.ab3632 =None
-        if form.calworks.data == 'None':    
-            staging.calworks=None
-        if form.cesdc.data == 'None':   
-            staging.cesdc=None
-        if form.county_run .data == 'None': 
-            staging.county_run =None
-        if form.day_treatment.data == 'None':   
-            staging.day_treatment=None
-        if form.kidsru .data == 'None': 
-            staging.kidsru =None
-        # if form.level_2 .data == 'None':    
-        #     staging.level_2 =None
-        if form.level_3_classic .data == 'None':    
-            staging.level_3_classic =None
-        if form.mhsa .data == 'None':   
-            staging.mhsa =None
-        if form.older_adult .data == 'None':    
-            staging.older_adult =None
-        if form.out_of_county .data == 'None':  
-            staging.out_of_county =None
-        if form.program    .data == 'None': 
-            staging.program    =None
-        if form.in_school.data == 'None':   
-            staging.in_school=None
-        if form.tay .data == 'None':    
-            staging.tay =None
-        if form.tbs .data == 'None':    
-            staging.tbs =None
-        # if form.cooked .data == 'None': 
-        #     staging.cooked =None
-        if form.cans.data == 'None':
-            staging.cans=None
-        if form.meds_fall_off.data == 'None':   
-            staging.meds_fall_off=None
-        if form.cesdc_model.data == 'None': 
-            staging.cesdc_model=None
-        # if form.level_3_type.data == 'None':    
-        #     staging.level_3_type=None
-        if form.child_welfare.data == 'None':   
-            staging.child_welfare=None
-        if form.family_service_expected.data == 'None': 
-            staging.family_service_expected=None
-        if form.intensive_needs_clients.data == 'None': 
-            staging.intensive_needs_clients=None
-        if form.case_management.data == 'None': 
-            staging.case_management=None
-        # if form.level_1.data == 'None': 
-        #     staging.level_1=None
-        if form.deliverable_exempt.data == 'None':  
-            staging.deliverable_exempt=None
-        if form.srp.data == 'None': 
-            staging.srp=None
-        if form.crisis.data == 'None':  
-            staging.crisis=None
-        if form.high_level.data == 'None':  
-            staging.high_level=None
-        if form.follow_up_care.data == 'None':  
-            staging.follow_up_care=None
+        # if form.agency.data == '':
+        #     staging.agency=None
+        # if form.dbservicemodality.data == 'None':
+        #     staging.dbservicemodality=None
+        # if form.psmasktext.data == 'None':
+        #     staging.psmasktext=None
+        # if form.agency.data == 'None':
+        #     staging.agency=None
+        # if form.provider_level.data == 'None':
+        #     staging.provider_level=None
+        # if form.cesdc_model.data == 'None':
+        #     staging.cesdc_model=None
+        # if form.predesessor.data == '':
+        #     staging.predesessor=None
+        # if form.school_cds_id.data == '':
+        #     staging.school_cds_id=None
+        # if form.ab3632.data == 'None':
+        #     staging.ab3632=None
+        # if form.residential.data == 'None':
+        #     staging.residential=None
+        # if form.ab3632 .data == 'None': 
+        #     staging.ab3632 =None
+        # if form.calworks.data == 'None':    
+        #     staging.calworks=None
+        # if form.cesdc.data == 'None':   
+        #     staging.cesdc=None
+        # if form.county_run .data == 'None': 
+        #     staging.county_run =None
+        # if form.day_treatment.data == 'None':   
+        #     staging.day_treatment=None
+        # if form.kidsru .data == 'None': 
+        #     staging.kidsru =None
+        # # if form.level_2 .data == 'None':    
+        # #     staging.level_2 =None
+        # if form.level_3_classic .data == 'None':    
+        #     staging.level_3_classic =None
+        # if form.mhsa .data == 'None':   
+        #     staging.mhsa =None
+        # if form.older_adult .data == 'None':    
+        #     staging.older_adult =None
+        # if form.out_of_county .data == 'None':  
+        #     staging.out_of_county =None
+        # if form.program    .data == 'None': 
+        #     staging.program    =None
+        # if form.in_school.data == 'None':   
+        #     staging.in_school=None
+        # if form.tay .data == 'None':    
+        #     staging.tay =None
+        # if form.tbs .data == 'None':    
+        #     staging.tbs =None
+        # # if form.cooked .data == 'None': 
+        # #     staging.cooked =None
+        # if form.cans.data == 'None':
+        #     staging.cans=None
+        # if form.meds_fall_off.data == 'None':   
+        #     staging.meds_fall_off=None
+        # if form.cesdc_model.data == 'None': 
+        #     staging.cesdc_model=None
+        # # if form.level_3_type.data == 'None':    
+        # #     staging.level_3_type=None
+        # if form.child_welfare.data == 'None':   
+        #     staging.child_welfare=None
+        # if form.family_service_expected.data == 'None': 
+        #     staging.family_service_expected=None
+        # if form.intensive_needs_clients.data == 'None': 
+        #     staging.intensive_needs_clients=None
+        # if form.case_management.data == 'None': 
+        #     staging.case_management=None
+        # # if form.level_1.data == 'None': 
+        # #     staging.level_1=None
+        # if form.deliverable_exempt.data == 'None':  
+        #     staging.deliverable_exempt=None
+        # if form.srp.data == 'None': 
+        #     staging.srp=None
+        # if form.crisis.data == 'None':  
+        #     staging.crisis=None
+        # if form.high_level.data == 'None':  
+        #     staging.high_level=None
+        # if form.follow_up_care.data == 'None':  
+        #     staging.follow_up_care=None
         db.session.commit()
         # production=models.staging_providers.query.filter_by(id=rurow).first()
         # print production.modified_on
