@@ -109,6 +109,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         if app.config['ENVIRONMENT']=='dev':
+            # import pdb;pdb.set_trace()
             try:
                 print "Authentification Successful" 
                 # import pdb;pdb.set_trace()
@@ -350,12 +351,15 @@ def edit_ru(id,edit):
     if request.method == 'POST' :
         # and form.validate_on_submit()
         if edit == '1':#editing exisitng
+            for field in form:
+                if field.data == 'None':
+                    getattr(form,str(field.name)).data = None
             form.populate_obj(ru) 
             # ru.reviewEdit=True
             # ru.modified_on=datetime.datetime.utcnow()
             # db.session.add(p) 
             # form.oldRU.data=ru.oldRU   
-            # import pdb;pdb.set_trace()
+            import pdb;pdb.set_trace()
             if g.user.form_access=='all':
                 if form.agency.data == '':
                     ru.agency=None
