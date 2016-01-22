@@ -809,7 +809,7 @@ def navstart():
     AS=None
     # import pdb;pdb.set_trace()
     if 'Explore' in request.headers.get('User-Agent'):
-                flash("You are using Internet Explorer. Switch to firefox/chrome or not all features will render!")
+                flash("You are using Internet Explorer. Switch to firefox/chrome or not all features will render!",request.headers.get('User-Agent'))
     if aform.validate_on_submit():
         import sys
         import ldap
