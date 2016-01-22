@@ -553,18 +553,18 @@ def adduser(name,emailx,r):
 @logged_in
 def myrequest():
     requestlist= models.Request.query.filter_by(email=g.user.email).all() 
-    return render_template("followup.html",email=g.user.email,name=g.user.name,requestlist=requestlist)
+    return render_template("requests.html",email=g.user.email,name=g.user.name,requestlist=requestlist)
 
 @app.route('/viewrequest/<id>/', methods=['GET', 'POST'])
 @logged_in
 def view_request(id):
     test=models.Request.query.filter_by(id=int(id)).first() 
     form=RequestData(obj=test)
-    # test
     if form.submitRequest.data:
         form.agency.data=','.join(form.agency.data)
         for field in requestvars:
             fbool_value=getattr(test,"RejBool"+field)
+
             if fbool_value==True:
                 f_value =getattr(test,field)
                 fform_value=getattr(form,field).data
