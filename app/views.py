@@ -107,6 +107,8 @@ def before_request():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     form = LoginForm()
+    if 'Explore' in request.headers.get('User-Agent'):
+                flash("Not customized for Internet Explorer!")
     if form.validate_on_submit():
         if app.config['ENVIRONMENT']=='dev':
             # import pdb;pdb.set_trace()
@@ -552,7 +554,11 @@ def adduser(name,emailx,r):
 @app.route("/myrequest",methods=["GET","POST"])
 @logged_in
 def myrequest():
-    requestlist= models.Request.query.filter_by(email=g.user.email).all() 
+    import pdb;pdb.set_trace()
+    if g.user.admin == True:
+        requestlist= models.Request.query.all() 
+    else:
+        requestlist= models.Request.query.filter_by(email=g.user.email).all() 
     return render_template("requests.html",email=g.user.email,name=g.user.name,requestlist=requestlist)
 
 @app.route('/viewrequest/<id>/', methods=['GET', 'POST'])
@@ -784,7 +790,7 @@ def requestform(WHICH):
       db.session.add(p)
       db.session.commit()
       #send email to user and admin
-      return redirect(url_for('Request_management'))
+      return redirect(url_for('followup'))
     else:
         flash_errors(form)
     if WHICH=='1':
@@ -801,6 +807,9 @@ def navstart():
     aform=ldapA()
     email=None
     AS=None
+    # import pdb;pdb.set_trace()
+    if 'Explore' in request.headers.get('User-Agent'):
+                flash("Not customized for Internet Explorer!")
     if aform.validate_on_submit():
         import sys
         import ldap
@@ -864,7 +873,6 @@ def edit_toc(id):
     toc=models.dashboards.query.filter_by(id=id).first()
     # delete_form=DeleteRow_form()
     form = TOC(obj=toc)
-    # import pdb;pdb.set_trace()
     if toc.went_live_on:
         form.went_live_on.data = form.went_live_on.data.strftime("%m/%d/%Y")
     # form.went_live_on.data = toc.went_live_on.strftime("%Y/%m/%d")

@@ -61,7 +61,16 @@
   <div class="panel-body">
    <h1> Welcome to AC Buisness Analytics </h1>
   </div>
-</div>
+</div>{% with messages = get_flashed_messages() %}
+      {% if messages %} <div class="alert alert-danger" role="alert">
+        <ul>
+        {% for message in messages %}
+            <li>{{ message }} </li>
+        {% endfor %}
+        </ul></div>
+      {% endif %}
+    {% endwith %}
+
   <div class="row">
 
        <div class="col-md-8 offset2">

@@ -1,5 +1,5 @@
 
-{% extends "index.html" %}
+{% extends "baser.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block navbar %}
@@ -48,8 +48,10 @@
   <h1>Thank you for submitting.</h1>
   <h2>We will respond to {{email}}</h2><br>
 <br></p>
+
 </div>
-</div>
+<a class="page-scroll" href="{{ url_for('myrequest')}}"><span class="glyphicon glyphicon-th-list" aria-hidden="true"> view my requests
+    </span></a></div>
  </div></div></div>
     </div></div>
 </div></div></body>
