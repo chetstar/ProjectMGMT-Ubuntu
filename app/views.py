@@ -355,86 +355,6 @@ def edit_ru(id,edit):
                 if field.data == 'None':
                     getattr(form,str(field.name)).data = None
             form.populate_obj(ru) 
-            # ru.reviewEdit=True
-            # ru.modified_on=datetime.datetime.utcnow()
-            # db.session.add(p) 
-            # form.oldRU.data=ru.oldRU   
-            # import pdb;pdb.set_trace()
-            # if g.user.form_access=='all':
-            #     if form.agency.data == '':
-            #         ru.agency=None
-            #     if form.dbservicemodality.data == 'None':
-            #         ru.dbservicemodality=None
-            #     if form.psmasktext.data == 'None':
-            #         ru.psmasktext=None
-            #     if form.agency.data == 'None':
-            #         ru.agency=None
-            #     if form.provider_level.data == 'None':
-            #         ru.provider_level=None
-            #     if form.cesdc_model.data == 'None':
-            #         ru.cesdc_model=None
-            #     if form.predesessor.data == '':
-            #         ru.predesessor=None
-            #     if form.school_cds_id.data == '':
-            #         ru.school_cds_id=None
-            #     if form.ab3632.data == 'None':
-            #         ru.ab3632=None
-            #     if form.residential.data == 'None':
-            #         ru.residential=None
-            #     if form.ab3632 .data == 'None': 
-            #         ru.ab3632 =None
-            #     if form.calworks.data == 'None':    
-            #         ru.calworks=None
-            #     if form.cesdc.data == 'None':   
-            #         ru.cesdc=None
-            #     if form.county_run .data == 'None': 
-            #         ru.county_run =None
-            #     if form.day_treatment.data == 'None':   
-            #         ru.day_treatment=None
-            #     if form.kidsru .data == 'None': 
-            #         ru.kidsru =None
-            #     # if form.level_2 .data == 'None':    
-            #     #     ru.level_2 =None
-            #     if form.level_3_classic .data == 'None':    
-            #         ru.level_3_classic =None
-            #     if form.mhsa .data == 'None':   
-            #         ru.mhsa =None
-            #     if form.older_adult .data == 'None':    
-            #         ru.older_adult =None
-            #     if form.out_of_county .data == 'None':  
-            #         ru.out_of_county =None
-            #     if form.program    .data == 'None': 
-            #         ru.program    =None
-            #     if form.in_school.data == 'None':   
-            #         ru.in_school=None
-            #     if form.tay .data == 'None':    
-            #         ru.tay =None
-            #     if form.tbs .data == 'None':    
-            #         ru.tbs =None
-            #     if form.meds_fall_off.data == 'None':   
-            #         ru.meds_fall_off=None
-            #     if form.child_welfare.data == 'None':   
-            #         ru.child_welfare=None
-            #     if form.family_service_expected.data == 'None': 
-            #         ru.family_service_expected=None
-            #     if form.intensive_needs_clients.data == 'None': 
-            #         ru.intensive_needs_clients=None
-            #     if form.case_management.data == 'None': 
-            #         ru.case_management=None
-            #     # if form.level_1.data == 'None': 
-            #     #     ru.level_1=None
-            #     if form.deliverable_exempt.data == 'None':  
-            #         ru.deliverable_exempt=None
-            #     if form.srp.data == 'None': 
-            #         ru.srp=None
-            #     if form.crisis.data == 'None':  
-            #         ru.crisis=None
-            #     if form.high_level.data == 'None':  
-            #         ru.high_level=None
-            #     if form.follow_up_care.data == 'None':  
-            #         ru.follow_up_care=None
-            # if form.cans.data == 'None':
-            #     ru.cans=None
             ru.modified_by=g.user.name 
             db.session.commit()
             flash("Changes saved")
@@ -491,37 +411,19 @@ def allrus():
                         rulist= models.staging_providers.query.order_by(desc(models.staging_providers.last_change_stamp)).all()               
                 else:
                     if formfilter.level_3_classic.data==False:
-                        # if getattr(models.staging_providers,formfilter.missing.data).property.columns[0].type.python_type==str:
-                        # if type(getattr(models.staging_providers.query.first(),formfilter.missing.data))=="float":
-                        #     rulist=models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data).like('')).filter((models.staging_providers.level_3_classic == None)|(models.staging_providers.level_3_classic == False)).all()
-                        # else:
                             rulist=models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data) == None).filter((models.staging_providers.level_3_classic == None)|(models.staging_providers.level_3_classic == False)).all()     
                     else:
-                    #     if getattr(models.staging_providers,formfilter.missing.data).property.columns[0].type.python_type==str:
-                    #     # if type(getattr(models.staging_providers.query.first(),formfilter.missing.data))=="float":
-                    #         rulist=models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data).like('')).filter((models.staging_providers.level_3_classic == 1)).all()
-                        # else:
-                            rulist=models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data) == None).filter((models.staging_providers.level_3_classic == 1)).all()     
+                        rulist=models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data) == None).filter((models.staging_providers.level_3_classic == 1)).all()     
             else:#provsearch has something in it
                 if formfilter.level_3_classic.data==False:
-                    # import pdb;pdb.set_trace()
                     if formfilter.missing.data=="None":
                         rulist= models.staging_providers.query.filter(( models.staging_providers.level_3_classic == None)|( models.staging_providers.level_3_classic == False)).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")|models.staging_providers.reporting_unit.ilike("%"+formfilter.provsearch.data+"%")).all()
                     else:
-                        # if getattr(models.staging_providers,formfilter.missing.data).property.columns[0].type.python_type==str:
-                        # #does not work yet need to add the ability to search by both
-                        #     rulist= models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data).like('')).filter(( models.staging_providers.level_3_classic == None)|( models.staging_providers.level_3_classic == False)).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")|models.staging_providers.reporting_unit.ilike("%"+formfilter.provsearch.data+"%")).all()        
-                        # else:
                             rulist= models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data) == None).filter(( models.staging_providers.level_3_classic == None)|( models.staging_providers.level_3_classic == False)).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")|models.staging_providers.reporting_unit.ilike("%"+formfilter.provsearch.data+"%")).all()        
                 else:     
-                    # import pdb;pdb.set_trace()
                     if formfilter.missing.data=="None":
                         rulist= models.staging_providers.query.filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")|models.staging_providers.reporting_unit.ilike("%"+formfilter.provsearch.data+"%")).all()
                     else:
-                        # if getattr(models.staging_providers,formfilter.missing.data).property.columns[0].type.python_type==str:
-                        # #does not work yet need to add the ability to search by both
-                        #     rulist= models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data).like('')).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")|models.staging_providers.reporting_unit.ilike("%"+formfilter.provsearch.data+"%")).all()        
-                        # else:
                             rulist= models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data) == None).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")|models.staging_providers.reporting_unit.ilike("%"+formfilter.provsearch.data+"%")).all()        
         except:
             rulist=['no results']
@@ -561,100 +463,7 @@ def stageupdate(rurow):
             if field.data == 'None':
                 getattr(form,str(field.name)).data = None
         form.populate_obj(ruprod)
-        # if form.agency.data == '':
-        #     ruprod.agency=None
-        # if form.dbservicemodality.data == 'None':
-        #     ruprod.dbservicemodality=None
-        # if form.psmasktext.data == 'None':
-        #     ruprod.psmasktext=None
-        # if form.agency.data == 'None':
-        #     ruprod.agency=None
-        # if form.provider_level.data == 'None':
-        #     ruprod.provider_level=None
-        # if form.cesdc_model.data == 'None':
-        #     ruprod.cesdc_model=None
-        # if form.predesessor.data == '':
-        #     ruprod.predesessor=None
-        # if form.school_cds_id.data == '':
-        #     ruprod.school_cds_id=None
-        # if form.ab3632.data == 'None':
-        #     ruprod.ab3632=None
-        # if form.residential.data == 'None':
-        #     ruprod.residential=None
-        # if form.ab3632 .data == 'None': 
-        #     ruprod.ab3632 =None
-        # if form.calworks.data == 'None':    
-        #     ruprod.calworks=None
-        # if form.cesdc.data == 'None':   
-        #     ruprod.cesdc=None
-        # if form.county_run .data == 'None': 
-        #     ruprod.county_run =None
-        # if form.day_treatment.data == 'None':   
-        #     ruprod.day_treatment=None
-        # if form.kidsru .data == 'None': 
-        #     ruprod.kidsru =None
-        # # if form.level_2 .data == 'None':    
-        # #     ruprod.level_2 =None
-        # if form.level_3_classic .data == 'None':    
-        #     ruprod.level_3_classic =None
-        # if form.mhsa .data == 'None':   
-        #     ruprod.mhsa =None
-        # if form.older_adult .data == 'None':    
-        #     ruprod.older_adult =None
-        # if form.out_of_county .data == 'None':  
-        #     ruprod.out_of_county =None
-        # if form.program    .data == 'None': 
-        #     ruprod.program    =None
-        # if form.in_school.data == 'None':   
-        #     ruprod.in_school=None
-        # if form.tay .data == 'None':    
-        #     ruprod.tay =None
-        # if form.tbs .data == 'None':    
-        #     ruprod.tbs =None
-        # # if form.cooked .data == 'None': 
-        # #     ruprod.cooked =None
-        # if form.cans.data == 'None':
-        #     ruprod.cans=None
-        # if form.meds_fall_off.data == 'None':   
-        #     ruprod.meds_fall_off=None
-        # if form.cesdc_model.data == 'None': 
-        #     ruprod.cesdc_model=None
-        # # if form.level_3_type.data == 'None':    
-        # #     ruprod.level_3_type=None
-        # if form.child_welfare.data == 'None':   
-        #     ruprod.child_welfare=None
-        # if form.family_service_expected.data == 'None': 
-        #     ruprod.family_service_expected=None
-        # if form.intensive_needs_clients.data == 'None': 
-        #     ruprod.intensive_needs_clients=None
-        # if form.case_management.data == 'None': 
-        #     ruprod.case_management=None
-        # # if form.level_1.data == 'None': 
-        # #     ruprod.level_1=None
-        # if form.deliverable_exempt.data == 'None':  
-        #     ruprod.deliverable_exempt=None
-        # if form.srp.data == 'None': 
-        #     ruprod.srp=None
-        # if form.crisis.data == 'None':  
-        #     ruprod.crisis=None
-        # if form.high_level.data == 'None':  
-        #     ruprod.high_level=None
-        # if form.follow_up_care.data == 'None':  
-        #     ruprod.follow_up_care=None
-    # else:
-    #     ruprod=rutable(ru=staging_providers.reporting_unit)
-    #     form = rutable(obj=staging_providers)
-    #     form.populate_obj(ruprod)
-    # staging_providers.reviewEdit=False
-    # ruprod.reviewEdit=False
-        # ruprod.modified_on=datetime.datetime.utcnow()
         db.session.commit()
-        # ruprod.modified_on=datetime.datetime.now()
-        # production=models.staging_providers.query.filter_by(id=rurow).first()
-        # print production.modified_on
-        # production.modified_on=datetime.datetime.utcnow()
-        # print production.modified_on
-        # db.session.commit()
     return redirect(url_for('rureview'))
 
 @app.route("/stagereject/<rurow>",methods=["GET","POST"])
@@ -668,86 +477,6 @@ def stagereject(rurow):
             if field.data == 'None':
                 getattr(form,str(field.name)).data = None
         form.populate_obj(staging)
-        # if form.agency.data == '':
-        #     staging.agency=None
-        # if form.dbservicemodality.data == 'None':
-        #     staging.dbservicemodality=None
-        # if form.psmasktext.data == 'None':
-        #     staging.psmasktext=None
-        # if form.agency.data == 'None':
-        #     staging.agency=None
-        # if form.provider_level.data == 'None':
-        #     staging.provider_level=None
-        # if form.cesdc_model.data == 'None':
-        #     staging.cesdc_model=None
-        # if form.predesessor.data == '':
-        #     staging.predesessor=None
-        # if form.school_cds_id.data == '':
-        #     staging.school_cds_id=None
-        # if form.ab3632.data == 'None':
-        #     staging.ab3632=None
-        # if form.residential.data == 'None':
-        #     staging.residential=None
-        # if form.ab3632 .data == 'None': 
-        #     staging.ab3632 =None
-        # if form.calworks.data == 'None':    
-        #     staging.calworks=None
-        # if form.cesdc.data == 'None':   
-        #     staging.cesdc=None
-        # if form.county_run .data == 'None': 
-        #     staging.county_run =None
-        # if form.day_treatment.data == 'None':   
-        #     staging.day_treatment=None
-        # if form.kidsru .data == 'None': 
-        #     staging.kidsru =None
-        # # if form.level_2 .data == 'None':    
-        # #     staging.level_2 =None
-        # if form.level_3_classic .data == 'None':    
-        #     staging.level_3_classic =None
-        # if form.mhsa .data == 'None':   
-        #     staging.mhsa =None
-        # if form.older_adult .data == 'None':    
-        #     staging.older_adult =None
-        # if form.out_of_county .data == 'None':  
-        #     staging.out_of_county =None
-        # if form.program    .data == 'None': 
-        #     staging.program    =None
-        # if form.in_school.data == 'None':   
-        #     staging.in_school=None
-        # if form.tay .data == 'None':    
-        #     staging.tay =None
-        # if form.tbs .data == 'None':    
-        #     staging.tbs =None
-        # # if form.cooked .data == 'None': 
-        # #     staging.cooked =None
-        # if form.cans.data == 'None':
-        #     staging.cans=None
-        # if form.meds_fall_off.data == 'None':   
-        #     staging.meds_fall_off=None
-        # if form.cesdc_model.data == 'None': 
-        #     staging.cesdc_model=None
-        # # if form.level_3_type.data == 'None':    
-        # #     staging.level_3_type=None
-        # if form.child_welfare.data == 'None':   
-        #     staging.child_welfare=None
-        # if form.family_service_expected.data == 'None': 
-        #     staging.family_service_expected=None
-        # if form.intensive_needs_clients.data == 'None': 
-        #     staging.intensive_needs_clients=None
-        # if form.case_management.data == 'None': 
-        #     staging.case_management=None
-        # # if form.level_1.data == 'None': 
-        # #     staging.level_1=None
-        # if form.deliverable_exempt.data == 'None':  
-        #     staging.deliverable_exempt=None
-        # if form.srp.data == 'None': 
-        #     staging.srp=None
-        # if form.crisis.data == 'None':  
-        #     staging.crisis=None
-        # if form.high_level.data == 'None':  
-        #     staging.high_level=None
-        # if form.follow_up_care.data == 'None':  
-        #     staging.follow_up_care=None
         db.session.commit()
         # production=models.staging_providers.query.filter_by(id=rurow).first()
         # print production.modified_on
@@ -780,12 +509,6 @@ def searchuser():
                         r[i[1]['displayName'][0] ]= 'Noemail@aol.com' 
                     else:
                         r['unknown'  ]= 'Noemail@aol.com'              
-            # email=r[0][1]['mail'][0]   
-            # GUID=r[0][1]['objectGUID'][0]   
-            # FullName=r[0][1]['displayName'][0] 
-
-            # import uuid
-            # guid = uuid.UUID(bytes=GUID)
     return render_template("loginsearch.html", form=form,r=r,user=g.user.admin)
 
 @app.route("/adduser/<name>/<emailx>/<r>", methods=["GET", "POST"])
@@ -849,8 +572,6 @@ def view_request(id):
                 setattr(test, field, fform_value)   
         test.UserAction=form.UserAction.data        
         db.session.commit()   
-    # if form.validate_on_submit():
-        # form.assigned.data=form.assigned.data.staff
         if form.status.data=="Complete":
             if ''.join(get_history(test,'status')[1])==(form.status.data) and test.completeDate != None:
                 print 'still complete'
@@ -858,21 +579,11 @@ def view_request(id):
                 test.completeDate=datetime.datetime.utcnow()
         else:
             test.completeDate=None
-        # form.populate_obj(reqest.form, test)
-        # db.session.commit()
         flash("Changes saved")
         return redirect(url_for('followup'))
         # else:
         #     flash_errors(form)
     form.agency.data=''.join(form.agency.data).split(',')
-    # else:
-    #     flash_errors(form)
-    #     test.note=form.note.data
-    #     db.session.commit()
-    # if delete_form.validate_on_submit():
-    #     db.session.delete(ptask)
-    #     db.session.commit()
-    #     return redirect(url_for('task_outline',name=name,goal=goal,strategy=strategy))
     return render_template('view_request.html',request_to_edit =test,name=g.user.name,form=form)
 
 
@@ -982,10 +693,6 @@ def edit_request(id):
         request_to_edit.note=form.note.data
         db.session.commit()
         return redirect(url_for('myrequest'))
-    # if delete_form.validate_on_submit():
-    #     db.session.delete(ptask)
-    #     db.session.commit()
-    #     return redirect(url_for('task_outline',name=name,goal=goal,strategy=strategy))
     return render_template('edit_request.html',request_to_edit=request_to_edit ,name=g.user.name,form=form)
 
 
@@ -1003,17 +710,6 @@ def followup():
 def Request_management():
     form=filterRequests()
     formRequest = RequestData( )
-      # db.session.query(models.Request).filter(models.Request.requestedBy.like('2'))\
-      # .filter(models.Request.requestedBy.like('2'))\
-      # .filter(models.Request.assigned.like('Unassigned')).all()
-      # p=models.Request(email=g.user.email,username=g.user.name,jobTitle=form.jobTitle.data,deadlinedate=form.deadlinedate.data,emanio=form.emanio.data,MHorSUD=form.MHorSUD.data,
-      #   keyQuestions=form.keyQuestions.data, problem=form.problem.data,specialFacts=form.specialFacts.data,requestedBy=form.requestedBy.data, priority=form.priority.data,
-      #   timeframe=form.timeframe.data,timeBreakdown=form.timeBreakdown.data,specialPop=form.specialPop.data,agency=form.agency.data,ru=form.ru.data,
-      #    specialInstructions=form.specialInstructions.data, typeOfService=form.typeOfService.data, timeframestart=form.timeframestart.data, timeframeend=form.timeframeend.data, 
-      #    longDescription=form.longDescription.data, requestDate=datetime.datetime.utcnow(),assigned="Unassigned",
-      #    audience=form.audience.data,  columnsRequired=form.columnsRequired.data, deadlinetime=form.deadlinetime.data, deadlineWhy=form.deadlineWhy.data)
-      # db.session.add(p)
-      # db.session.commit() 
     RB= list(set([h.requestedBy for h in models.Request.query.all()]))
     RB.append('No Filter')
     form.requestedBy.choices=zip(RB,RB)
@@ -1051,9 +747,6 @@ def Request_management():
         form.status.data='No Filter'  
         form.assigned.data='No Filter'  
         form.requestedBy.data='No Filter'
-                              # requestlist = db.session.query(models.Request).filter(models.Request.statusback.has(status=form.status.data))\
-      # .filter(models.Request.requestedBy.like('2'))\
-      # .filter(models.Request.assigned.like('Unassigned')).all()
     return render_template("request_management.html",email=g.user.email,name=g.user.name,requestlist=requestlist,form=form,formRequest=formRequest,
      s=form.status.data,a= form.assigned.data,r= form.requestedBy.data)
 
@@ -1064,7 +757,6 @@ def flash_errors(form):
                 getattr(form, field).label.text,
                 error
             ))
-# agency=','.join(form.agency.data)
 
 @app.route("/requestform/<WHICH>",methods=["GET","POST"])
 @logged_in
@@ -1073,10 +765,6 @@ def requestform(WHICH):
     # form.staffback.data=models.Staff.query.filter_by(staff="Unassigned").first()
     if form.validate_on_submit():
       print 'submit'
-      # p=models.Request(email=g.user.email,username=g.user.name,
-      #  requestDate=datetime.datetime.utcnow(),assigned="Unassigned",status="Pending Review")
-      # form.agency.data=', '.join(form.agency.data)
-      # form.populate_obj(p)
       if form.emanio.data==True:
         form.emanio.data=1
       else:
@@ -1129,7 +817,6 @@ def navstart():
             print 'Failed'
             AS=0
         print email
-        # return render_template("navStart.html",aform=aform,email=email,AS=AS)
     return render_template("navStart.html",aform=aform,email=email,AS=AS,user=g.user.admin)
 
 
