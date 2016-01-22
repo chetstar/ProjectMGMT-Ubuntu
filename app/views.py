@@ -108,7 +108,7 @@ def before_request():
 def login():
     form = LoginForm()
     if 'Explore' in request.headers.get('User-Agent'):
-                flash("Not customized for Internet Explorer!")
+                flash("You are using Internet Explorer. Switch to firefox/chrome or not all features will render!")
     if form.validate_on_submit():
         if app.config['ENVIRONMENT']=='dev':
             # import pdb;pdb.set_trace()
@@ -809,7 +809,7 @@ def navstart():
     AS=None
     # import pdb;pdb.set_trace()
     if 'Explore' in request.headers.get('User-Agent'):
-                flash("Not customized for Internet Explorer!")
+                flash("You are using Internet Explorer. Switch to firefox/chrome or not all features will render!")
     if aform.validate_on_submit():
         import sys
         import ldap
