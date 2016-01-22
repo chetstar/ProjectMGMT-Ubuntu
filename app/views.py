@@ -804,29 +804,12 @@ def requestform(WHICH):
 @app.route('/navstart', methods=['GET','POST'])
 @logged_in
 def navstart():
-    aform=ldapA()
-    email=None
-    AS=None
     # import pdb;pdb.set_trace()
-    if 'Explore' in request.headers.get('User-Agent'):
-                flash("You are using Internet Explorer. Switch to firefox/chrome or not all features will render!",request.headers.get('User-Agent'))
-    if aform.validate_on_submit():
-        import sys
-        import ldap
-        l = ldap.initialize("ldap://10.129.18.101")
-        email=None
-        try:
-            l.simple_bind_s("program\%s" % aform.username.data,aform.password.data)
-            print "Authentification Successful"
-            r=l.search_s('cn=Users,dc=BHCS,dc=Internal',ldap.SCOPE_SUBTREE,'(sAMAccountName=*%s*)' % aform.username.data,['mail'])
-            email=r[0][1]['mail']
-            AS=1
-            print email
-        except:
-            print 'Failed'
-            AS=0
-        print email
-    return render_template("navStart.html",aform=aform,email=email,AS=AS,user=g.user.admin)
+    browser=request.headers.get('User-Agent')
+    if any(word in browser for word in ('Windo','MSIE','Netscape','Trident','Chrome')):
+    # if 'Windo' in browser or 'MSIE' in browser:
+        flash("You are using Internet Explorer-not all features will render! Switch to firefox/chrome")
+    return render_template("navStart.html",email=g.user.email,user=g.user.admin)
 
 
 
