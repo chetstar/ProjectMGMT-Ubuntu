@@ -107,7 +107,8 @@ def before_request():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     form = LoginForm()
-    if 'Explore' in request.headers.get('User-Agent'):
+    browser=request.headers.get('User-Agent')
+    if any(word in browser for word in ('Windo','MSIE','Netscape','Trident')):
                 flash("You are using Internet Explorer. Switch to firefox/chrome or not all features will render!")
     if form.validate_on_submit():
         if app.config['ENVIRONMENT']=='dev':
@@ -806,7 +807,7 @@ def requestform(WHICH):
 def navstart():
     # import pdb;pdb.set_trace()
     browser=request.headers.get('User-Agent')
-    if any(word in browser for word in ('Windo','MSIE','Netscape','Trident','Chrome')):
+    if any(word in browser for word in ('Windo','MSIE','Netscape','Trident')):
     # if 'Windo' in browser or 'MSIE' in browser:
         flash("You are using Internet Explorer-not all features will render! Switch to firefox/chrome")
     return render_template("navStart.html",email=g.user.email,user=g.user.admin)
