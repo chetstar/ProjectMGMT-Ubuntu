@@ -810,7 +810,7 @@ def navstart():
     if any(word in browser for word in ('Windo','MSIE','Netscape','Trident')):
     # if 'Windo' in browser or 'MSIE' in browser:
         flash("You are using Internet Explorer-not all features will render! Switch to firefox/chrome")
-    return render_template("navStart.html",email=g.user.email,user=g.user.admin)
+    return render_template("navStart.html",email=g.user.email,user=g.user.admin,browser=browser)
 
 
 
