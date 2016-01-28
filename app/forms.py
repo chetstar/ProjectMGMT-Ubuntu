@@ -339,7 +339,7 @@ class proced(Form):
     submit=SubmitField('Submit')
 
 class rutablefilter(Form):
-    provsearch=TextField('Search by provider name or reporting unit')
+    provsearch=TextField('Search by provider Name or Reporting Unit# or Service Modality')
     level_3_classic=BooleanField('Include Level 3 (doctors)', default=False)
     missing    = SelectField(u"Show missing by....",coerce=unicode, choices=[('None','None'),
 ('ab3632','ab3632'),

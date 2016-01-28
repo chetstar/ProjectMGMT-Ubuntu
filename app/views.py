@@ -420,14 +420,14 @@ def allrus():
             else:#provsearch has something in it
                 if formfilter.level_3_classic.data==False:
                     if formfilter.missing.data=="None":
-                        rulist= models.staging_providers.query.filter(( models.staging_providers.level_3_classic == None)|( models.staging_providers.level_3_classic == False)).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")|models.staging_providers.reporting_unit.ilike("%"+formfilter.provsearch.data+"%")).all()
+                        rulist= models.staging_providers.query.filter(( models.staging_providers.level_3_classic == None)|( models.staging_providers.level_3_classic == False)).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")|models.staging_providers.reporting_unit.ilike("%"+formfilter.provsearch.data+"%")|models.staging_providers.dbservicemodality.ilike("%"+formfilter.provsearch.data+"%")).all()
                     else:
-                            rulist= models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data) == None).filter(( models.staging_providers.level_3_classic == None)|( models.staging_providers.level_3_classic == False)).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")|models.staging_providers.reporting_unit.ilike("%"+formfilter.provsearch.data+"%")).all()        
+                            rulist= models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data) == None).filter(( models.staging_providers.level_3_classic == None)|( models.staging_providers.level_3_classic == False)).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")|models.staging_providers.reporting_unit.ilike("%"+formfilter.provsearch.data+"%")|models.staging_providers.dbservicemodality.ilike("%"+formfilter.provsearch.data+"%")).all()        
                 else:     
                     if formfilter.missing.data=="None":
-                        rulist= models.staging_providers.query.filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")|models.staging_providers.reporting_unit.ilike("%"+formfilter.provsearch.data+"%")).all()
+                        rulist= models.staging_providers.query.filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")|models.staging_providers.reporting_unit.ilike("%"+formfilter.provsearch.data+"%")|models.staging_providers.dbservicemodality.ilike("%"+formfilter.provsearch.data+"%")).all()
                     else:
-                            rulist= models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data) == None).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")|models.staging_providers.reporting_unit.ilike("%"+formfilter.provsearch.data+"%")).all()        
+                            rulist= models.staging_providers.query.filter(getattr(models.staging_providers, formfilter.missing.data) == None).filter(models.staging_providers.provider_name.ilike("%"+formfilter.provsearch.data+"%")|models.staging_providers.reporting_unit.ilike("%"+formfilter.provsearch.data+"%")|models.staging_providers.dbservicemodality.ilike("%"+formfilter.provsearch.data+"%")).all()        
         except:
             rulist=['no results']
     else:
